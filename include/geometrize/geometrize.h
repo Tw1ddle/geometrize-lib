@@ -290,6 +290,7 @@ rgba getAverageImageColor(const BitmapData& image)
 {
     const std::vector<unsigned char>& data{image.getDataRef()};
     const size_t size{data.size()};
+    const size_t numPixels{data.size() / 4};
 
     int totalRed{0};
     int totalGreen{0};
@@ -300,7 +301,7 @@ rgba getAverageImageColor(const BitmapData& image)
         totalBlue += data[i + 2];
     }
 
-    return rgba{static_cast<unsigned char>(totalRed / size), static_cast<unsigned char>(totalGreen / size), static_cast<unsigned char>(totalBlue / size), 255};
+    return rgba{static_cast<unsigned char>(totalRed / numPixels), static_cast<unsigned char>(totalGreen / numPixels), static_cast<unsigned char>(totalBlue / numPixels), 255};
 }
 
 /**
