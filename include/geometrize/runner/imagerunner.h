@@ -59,7 +59,7 @@ public:
      * @brief Gets the current bitmap with the primitives drawn on it.
      * @return The current bitmap.
      */
-    const BitmapData& getImageData()
+    BitmapData& getBitmapData()
     {
         return m_model.getCurrent();
     }
