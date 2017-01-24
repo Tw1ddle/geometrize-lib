@@ -1,5 +1,7 @@
 #pragma once
 
+#include <algorithm>
+
 #include "shape.h"
 #include "../util.h"
 
@@ -31,7 +33,7 @@ public:
         std::vector<Scanline> lines;
         for(int y = m_y1; y < m_y2; y++) {
             if(m_x1 != m_x2) {
-                lines.push_back(Scanline(y, std::min(m_x1, m_x2), std::max(m_x1, m_x2), 0xFFFF));
+                lines.push_back(Scanline(y, (std::min)(m_x1, m_x2), (std::max)(m_x1, m_x2), 0xFFFF));
             }
         }
         return lines;

@@ -1,8 +1,9 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
-#include "../model.h"
+#include "../shaperesult.h"
 
 namespace geometrize
 {
@@ -15,7 +16,7 @@ namespace exporter
  * @param data The shape data to export.
  * @return A string containing the exported JSON.
  */
-std::string exportShapeJson(const std::vector<ShapeResult>& data)
+inline std::string exportShapeJson(const std::vector<ShapeResult>& data)
 {
     return "TODO";
 }

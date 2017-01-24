@@ -69,6 +69,8 @@ public:
      */
     static Shape* randomShapeOf(const shapes::ShapeTypes t, const int xBound, const int yBound)
     {
+        return new Rectangle(xBound, yBound); // TODO
+
         const std::bitset<32> b(t);
         std::vector<int> bits;
         for(unsigned int bit = 0; bit < b.count(); bit++) {

@@ -1,12 +1,13 @@
 #pragma once
 
-#include <memory>
+#include <vector>
 
 #include "bitmap/bitmapdata.h"
-#include "geometrize.h"
+#include "core.h"
 #include "shape/shape.h"
 #include "shape/shapefactory.h"
 #include "shape/shapetypes.h"
+#include "scanline.h"
 
 namespace geometrize
 {

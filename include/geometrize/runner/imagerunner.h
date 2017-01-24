@@ -1,24 +1,15 @@
 #pragma once
 
-#include <array>
+#include <vector>
 
 #include "../bitmap/bitmapdata.h"
-#include "../geometrize.h"
+#include "../core.h"
 #include "../model.h"
 #include "../shape/shapetypes.h"
+#include "imagerunneroptions.h"
 
 namespace geometrize
 {
-
-/**
- * @brief The RunParams class encapsulates the parameters that may be passed to the runner.
- * @author Sam Twidale (http://samcodes.co.uk/)
- */
-struct RunParams
-{
-    int primitiveCount = 50;
-    shapes::ShapeTypes shapeTypes = shapes::ShapeTypes::RECTANGLE;
-};
 
 /**
  * @brief The ImageRunner class is a helper class for creating a set of primitives from a single source image.
@@ -34,7 +25,7 @@ public:
 
     /**
      * @brief Updates runner until the number of primitives specified in the runner options are added.
-     * @return An array containing data about the shapes added to the model in this step.
+     * @return A vector containing data about the shapes added to the model in this step.
      */
     std::vector<ShapeResult> run()
     {
@@ -48,7 +39,7 @@ public:
 
     /**
      * @brief Updates the model once.
-     * @return An array containing data about the shapes just added to the model.
+     * @return A vector containing data about the shapes just added to the model.
      */
     std::vector<ShapeResult> step()
     {
@@ -75,7 +66,7 @@ public:
 
 private:
     Model m_model; ///< The model for the primitive optimization/fitting algorithm.
-    RunParams m_options; ///< The runtime configuration parameters for the runner.
+    ImageRunnerOptions m_options; ///< The runtime configuration parameters for the runner.
 };
 
 }

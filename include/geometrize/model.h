@@ -1,23 +1,15 @@
 #pragma once
 
-#include "model.h"
-#include "bitmap/rgba.h"
+#include <vector>
+
+#include "bitmap/bitmapdata.h"
+#include "core.h"
 #include "shape/shape.h"
-#include "state.h"
+#include "shaperesult.h"
+#include "shape/shapetypes.h"
 
 namespace geometrize
 {
-
-/**
- * @brief The ShapeResult struct is a container for info about a shape added to the model.
- * @author Sam Twidale (http://samcodes.co.uk/)
- */
-struct ShapeResult
-{
-    float score;
-    rgba color;
-    Shape* shape;
-};
 
 /**
  * @brief The Model class is the model for the primitive optimization/fitting algorithm.
@@ -75,7 +67,7 @@ public:
      * @param repeats How many times to repeat the stepping process with reduced search (per step), adding additional shapes.
      * @return A vector containing data about the shapes added to the model in this step.
      */
-    std::vector<ShapeResult> step(const geometrize::shapes::ShapeTypes shapeTypes, const uint16_t alpha, const int repeats)
+    std::vector<geometrize::ShapeResult> step(const geometrize::shapes::ShapeTypes shapeTypes, const unsigned short alpha, const int repeats)
     {
         State state{geometrize::core::bestHillClimbState(shapeTypes, alpha, 1000, 100, 16, m_target, m_current, m_buffer)}; // TODO
         std::vector<ShapeResult> results;
@@ -99,7 +91,7 @@ public:
      * @param alpha The alpha/opacity of the shape.
      * @return Data about the shape added to the model.
      */
-    ShapeResult addShape(Shape* shape, const uint16_t alpha)
+    ShapeResult addShape(Shape* shape, const unsigned short alpha)
     {
         const BitmapData before{m_current};
         const std::vector<Scanline> lines{shape->rasterize()};

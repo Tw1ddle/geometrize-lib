@@ -16,22 +16,13 @@ namespace util
 class Random {
 public:
     /**
-     * @brief seed Seeds the random number generator.
-     * @param seed The seed.
-     */
-    inline static void seed(const int seed)
-    {
-        m_seed = seed;
-    }
-
-    /**
      * @brief fastRand A fast implementation of the rand() function from the C library.
      * @return A random integer.
      */
-    inline static int fastRand()
+    inline static int fastRand(int seed = 12345)
     {
-        m_seed = (214013 * m_seed + 2531011);
-        return (m_seed >> 16) & 0x7FFF;
+        seed = (214013 * seed + 2531011);
+        return (seed >> 16) & 0x7FFF;
     }
 
     /**
@@ -45,12 +36,7 @@ public:
         assert(min <= max);
         return fastRand() % (max + 1 - min) + min; // Note this is biased
     }
-
-private:
-    static unsigned int m_seed; ///< Random seed
 };
-
-unsigned int Random::m_seed = 0;
 
 /**
  * Clamps a value within a range.
@@ -61,7 +47,7 @@ unsigned int Random::m_seed = 0;
  */
 template<typename T> T clamp(const T& value, const T& lower, const T& upper)
 {
-    return std::max(lower, std::min(value, upper));
+    return (std::max)(lower, (std::min)(value, upper));
 }
 
 }
