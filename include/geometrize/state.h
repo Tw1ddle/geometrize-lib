@@ -38,8 +38,22 @@ public:
     {}
 
     inline ~State() = default;
-    inline State& operator=(const State& other) = default;
-    inline State(const State& other) = default;
+    inline State& operator=(const State& other)
+    {
+        if(this != &other) {
+            m_shape = other.m_shape->clone();
+            m_score = other.m_score;
+            m_alpha = other.m_alpha;
+        }
+        return *this;
+    }
+
+    inline State(const State& other)
+    {
+        m_shape = other.m_shape->clone();
+        m_score = other.m_score;
+        m_alpha = other.m_alpha;
+    }
 
     /**
      * @brief Calculates a measure of the improvement drawing the primitive to the current bitmap will have.
@@ -65,6 +79,7 @@ public:
         return oldState;
     }
 
+    // TODO watch memory leaks
     Shape* m_shape; ///< The geometric primitive owned by the state.
     float m_score; ///< The score of the state, a measure of the improvement applying the state to the current bitmap will have.
     int m_alpha; ///< The alpha of the shape.

@@ -14,6 +14,17 @@ namespace geometrize
 class Shape
 {
 public:
+    inline Shape() {}
+    inline ~Shape() = default;
+    inline Shape& operator=(const Shape& other) = default;
+    inline Shape(const Shape& other) = default;
+
+    /**
+     * @brief clone Clones the shape, a virtual copy constructor.
+     * @return A clone of the shape.
+     */
+    virtual Shape* clone() const = 0;
+
     /**
      * @brief rasterize Creates a raster scanline representation of the shape.
      * @return Raster scanlines representing the shape.

@@ -28,6 +28,16 @@ public:
         m_y2 = util::clamp(m_y1 + util::Random::randomRange(0, util::Random::randomRange(0, 32) + 1), 0, m_yBound);
     }
 
+    virtual Shape* clone() const
+    {
+        Rectangle* rect{new Rectangle(m_xBound, m_yBound)};
+        rect->m_x1 = m_x1;
+        rect->m_y1 = m_y1;
+        rect->m_x2 = m_x2;
+        rect->m_y2 = m_y2;
+        return rect;
+    }
+
     virtual std::vector<Scanline> rasterize() const override
     {
         std::vector<Scanline> lines;

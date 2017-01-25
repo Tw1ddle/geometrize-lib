@@ -23,6 +23,11 @@ public:
         // TODO
     }
 
+    virtual Shape* clone() const
+    {
+        return new RotatedRectangle(m_xBound, m_yBound); // TODO
+    }
+
     virtual std::vector<Scanline> rasterize() const override
     {
         std::vector<Scanline> lines;

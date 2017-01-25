@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include <vector>
 
 #include "state.h"
@@ -193,7 +194,7 @@ inline float differencePartial(const BitmapData& target, const BitmapData& befor
             total += (dtar * dtar + dtag * dtag + dtab * dtab);
         }
     }
-    return sqrt(total / rgbCount) / 255;
+    return std::sqrt(total / rgbCount) / 255;
 }
 
 /**
