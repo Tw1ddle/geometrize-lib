@@ -11,7 +11,7 @@ namespace geometrize
  */
 struct ImageRunnerOptions
 {
-    int primitiveCount = 50;
+    int primitiveCount = 50; // TODO remove defaults?
     shapes::ShapeTypes shapeTypes = shapes::ShapeTypes::RECTANGLE;
 };
 

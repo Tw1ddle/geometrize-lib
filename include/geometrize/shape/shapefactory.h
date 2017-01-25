@@ -26,7 +26,7 @@ public:
      * @param yBound The y-bound of the whole canvas.
      * @return The new shape.
      */
-    static Shape* create(shapes::ShapeTypes t, const int xBound, const int yBound)
+    inline static Shape* create(shapes::ShapeTypes t, const int xBound, const int yBound)
     {
         switch(t) {
             case shapes::ShapeTypes::CIRCLE:
@@ -55,7 +55,7 @@ public:
      * @param yBound The y-bound of the whole canvas.
      * @return The new shape.
      */
-    static Shape* randomShape(const int xBound, const int yBound)
+    inline  static Shape* randomShape(const int xBound, const int yBound)
     {
         return create(shapes::allShapes[util::Random::randomRange(0, static_cast<int>(shapes::allShapes.size()) - 1)], xBound, yBound);
     }
@@ -67,7 +67,7 @@ public:
      * @param yBound The y-bound of the whole canvas.
      * @return The new shape.
      */
-    static Shape* randomShapeOf(const shapes::ShapeTypes t, const int xBound, const int yBound)
+    inline static Shape* randomShapeOf(const shapes::ShapeTypes t, const int xBound, const int yBound)
     {
         return new Rectangle(xBound, yBound); // TODO
 

@@ -18,16 +18,16 @@ namespace geometrize
 class ImageRunner
 {
 public:
-    ImageRunner(BitmapData& bitmap) : m_model{bitmap, geometrize::core::getAverageImageColor(bitmap)} {} // TODO set the starting color optionally
-    ~ImageRunner() = default;
-    ImageRunner& operator=(const ImageRunner&) = delete;
-    ImageRunner(const ImageRunner&) = delete;
+    inline ImageRunner(BitmapData& bitmap) : m_model{bitmap, geometrize::core::getAverageImageColor(bitmap)} {} // TODO set the starting color optionally
+    inline ~ImageRunner() = default;
+    inline ImageRunner& operator=(const ImageRunner&) = delete;
+    inline ImageRunner(const ImageRunner&) = delete;
 
     /**
      * @brief Updates runner until the number of primitives specified in the runner options are added.
      * @return A vector containing data about the shapes added to the model in this step.
      */
-    std::vector<ShapeResult> run()
+    inline std::vector<ShapeResult> run()
     {
         std::vector<ShapeResult> results(m_options.primitiveCount);
         while(results.size() <= m_options.primitiveCount) {
@@ -41,7 +41,7 @@ public:
      * @brief Updates the model once.
      * @return A vector containing data about the shapes just added to the model.
      */
-    std::vector<ShapeResult> step()
+    inline std::vector<ShapeResult> step()
     {
         return m_model.step(m_options.shapeTypes, 128, 0); // TODO alpha, repeat params from config etc
     }
@@ -50,7 +50,7 @@ public:
      * @brief Gets the current bitmap with the primitives drawn on it.
      * @return The current bitmap.
      */
-    BitmapData& getBitmapData()
+    inline BitmapData& getBitmapData()
     {
         return m_model.getCurrent();
     }
@@ -59,7 +59,7 @@ public:
      * @brief Gets data about the shapes added to the model so far.
      * @return The shape results.
      */
-    std::vector<ShapeResult>& getShapeResults()
+    inline std::vector<ShapeResult>& getShapeResults()
     {
         return m_model.getShapeResults();
     }

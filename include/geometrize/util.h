@@ -19,7 +19,7 @@ public:
      * @brief fastRand A fast implementation of the rand() function from the C library.
      * @return A random integer.
      */
-    inline static int fastRand(int seed = 12345)
+    inline static int fastRand(int seed = 12345) // TODO make it possible to manipulate the seed?
     {
         seed = (214013 * seed + 2531011);
         return (seed >> 16) & 0x7FFF;

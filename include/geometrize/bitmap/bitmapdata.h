@@ -22,15 +22,11 @@ public:
      */
     inline BitmapData(const unsigned int width, const unsigned int height, const rgba color) : m_width{width}, m_height{height}, m_data(width * height * 4)
     {
-        if(color.r == 0 && color.g == 0 && color.b == 0 && color.a == 0) {
-            return;
-        }
-
         for(unsigned int i = 0; i < m_data.size(); i+=4) {
             m_data[i] = color.r;
-            m_data[i + 1] = color.g;
-            m_data[i + 2] = color.b;
-            m_data[i + 3] = color.a;
+            m_data[i + 1u] = color.g;
+            m_data[i + 2u] = color.b;
+            m_data[i + 3u] = color.a;
         }
     }
 
@@ -42,9 +38,9 @@ public:
      */
     inline BitmapData(const unsigned int width, const unsigned int height, const std::vector<unsigned char>& data) : m_width{width}, m_height{height}, m_data{data} {}
 
-    ~BitmapData() = default;
-    BitmapData& operator=(const BitmapData&) = default;
-    BitmapData(const BitmapData&) = default;
+    inline ~BitmapData() = default;
+    inline BitmapData& operator=(const BitmapData&) = default;
+    inline BitmapData(const BitmapData&) = default;
 
     /**
      * @brief getWidth Gets the width of the bitmap.
@@ -102,9 +98,9 @@ public:
     {
         const std::size_t index{m_width * y + x};
         m_data[index] = color.r;
-        m_data[index + 1] = color.g;
-        m_data[index + 2] = color.b;
-        m_data[index + 3] = color.a;
+        m_data[index + 1u] = color.g;
+        m_data[index + 2u] = color.b;
+        m_data[index + 3u] = color.a;
     }
 
 private:

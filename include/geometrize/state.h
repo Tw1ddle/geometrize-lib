@@ -33,13 +33,13 @@ public:
      * @param current The current bitmap.
      * @param buffer The buffer bitmap.
      */
-    State(const shapes::ShapeTypes shapeTypes, const int alpha, const int width, const int height) :
+    inline State(const shapes::ShapeTypes shapeTypes, const int alpha, const int width, const int height) :
         m_score{-1.0f}, m_alpha{alpha}, m_shape{ShapeFactory::randomShapeOf(shapeTypes, width, height)}
     {}
 
-    ~State() = default;
-    State& operator=(const State& other) = default;
-    State(const State& other) = default;
+    inline ~State() = default;
+    inline State& operator=(const State& other) = default;
+    inline State(const State& other) = default;
 
     /**
      * @brief Calculates a measure of the improvement drawing the primitive to the current bitmap will have.

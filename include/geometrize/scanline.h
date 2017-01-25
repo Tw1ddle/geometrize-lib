@@ -25,9 +25,9 @@ public:
      */
     inline Scanline(const int y, const int x1, const int x2, const int alpha) : y{y}, x1{x1}, x2{x2}, alpha{alpha} {}
 
-    ~Scanline() = default;
-    Scanline& operator=(const Scanline&) = default;
-    Scanline(const Scanline&) = default;
+    inline ~Scanline() = default;
+    inline Scanline& operator=(const Scanline&) = default;
+    inline Scanline(const Scanline&) = default;
 
     // TODO modify the scanlines in-place?
 
@@ -38,7 +38,7 @@ public:
      * @param h The height to crop.
      * @return A new vector of cropped scanlines.
      */
-    static inline std::vector<Scanline> trim(std::vector<Scanline>& scanlines, const int w, const int h)
+    inline static std::vector<Scanline> trim(std::vector<Scanline>& scanlines, const int w, const int h)
     {
         std::vector<Scanline> trimmedScanlines;
 

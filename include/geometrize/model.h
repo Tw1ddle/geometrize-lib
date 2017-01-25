@@ -18,15 +18,15 @@ namespace geometrize
 class Model
 {
 public:
-    Model(const BitmapData& target, const rgba backgroundColor) :
+    inline Model(const BitmapData& target, const rgba backgroundColor) :
         m_target(target),
         m_current(target.getWidth(), target.getHeight(), backgroundColor),
         m_buffer(target.getWidth(), target.getHeight(), backgroundColor),
         m_score{geometrize::core::differenceFull(m_target, m_current)}
     {}
 
-    Model() = delete;
-    ~Model() = default;
+    inline Model() = delete;
+    inline ~Model() = default;
     Model& operator=(const Model&) = delete;
     Model(const Model&) = delete;
 
@@ -34,7 +34,7 @@ public:
      * @brief getWidth Gets the width of the target bitmap.
      * @return The width of the target bitmap.
      */
-    std::size_t getWidth() const
+    inline std::size_t getWidth() const
     {
         return m_target.getWidth();
     }
@@ -43,7 +43,7 @@ public:
      * @brief getHeight Gets the height of the target bitmap.
      * @return The height of the target bitmap.
      */
-    std::size_t getHeight() const
+    inline std::size_t getHeight() const
     {
         return m_target.getHeight();
     }
@@ -52,7 +52,7 @@ public:
      * @brief getAspectRatio Gets the aspect ratio of the target bitmap.
      * @return The aspect ratio of the target bitmap.
      */
-    float getAspectRatio() const
+    inline float getAspectRatio() const
     {
         if(m_target.getWidth() == 0 || m_target.getHeight() == 0) {
             return 0;
@@ -67,7 +67,7 @@ public:
      * @param repeats How many times to repeat the stepping process with reduced search (per step), adding additional shapes.
      * @return A vector containing data about the shapes added to the model in this step.
      */
-    std::vector<geometrize::ShapeResult> step(const geometrize::shapes::ShapeTypes shapeTypes, const unsigned short alpha, const int repeats)
+    inline std::vector<geometrize::ShapeResult> step(const geometrize::shapes::ShapeTypes shapeTypes, const unsigned short alpha, const int repeats)
     {
         State state{geometrize::core::bestHillClimbState(shapeTypes, alpha, 1000, 100, 16, m_target, m_current, m_buffer)}; // TODO
         std::vector<ShapeResult> results;
@@ -91,7 +91,7 @@ public:
      * @param alpha The alpha/opacity of the shape.
      * @return Data about the shape added to the model.
      */
-    ShapeResult addShape(Shape* shape, const unsigned short alpha)
+    inline ShapeResult addShape(Shape* shape, const unsigned short alpha)
     {
         const BitmapData before{m_current};
         const std::vector<Scanline> lines{shape->rasterize()};
@@ -110,7 +110,7 @@ public:
      * @brief getCurrent Gets the current bitmap.
      * @return The current bitmap.
      */
-    BitmapData& getCurrent()
+    inline BitmapData& getCurrent()
     {
         return m_current;
     }
@@ -119,7 +119,7 @@ public:
      * @brief getShapeResults Gets the results data with info about the shapes added to the model so far.
      * @return The shape results data.
      */
-    std::vector<ShapeResult>& getShapeResults()
+    inline std::vector<ShapeResult>& getShapeResults()
     {
         return m_shapeResults;
     }
