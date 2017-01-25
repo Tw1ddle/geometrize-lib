@@ -29,10 +29,10 @@ namespace core
  */
 inline rgba computeColor(const BitmapData& target, const BitmapData& current, const std::vector<Scanline>& lines, const unsigned char alpha)
 {
-    long long totalRed{0};
-    long long totalGreen{0};
-    long long totalBlue{0};
-    long long count{0};
+    long long int totalRed{0};
+    long long int totalGreen{0};
+    long long int totalBlue{0};
+    long long int count{0};
 
     const int a = 257.0f * 255.0f / alpha;
 
@@ -138,8 +138,8 @@ inline float differenceFull(const BitmapData& first, const BitmapData& second)
     assert(first.getWidth() == second.getWidth());
     assert(first.getHeight() == second.getHeight());
 
-    const size_t width{first.getWidth()};
-    const size_t height{first.getHeight()};
+    const std::size_t width{first.getWidth()};
+    const std::size_t height{first.getHeight()};
     unsigned int total{0};
 
     for(unsigned int y = 0; y < height; y++) {
@@ -154,7 +154,7 @@ inline float differenceFull(const BitmapData& first, const BitmapData& second)
         }
     }
 
-    return sqrt(total / (width * height * 3.0f)) / 255.0f;
+    return std::sqrt(total / (width * height * 3.0f)) / 255.0f;
 }
 
 /**
@@ -169,9 +169,9 @@ inline float differenceFull(const BitmapData& first, const BitmapData& second)
  */
 inline float differencePartial(const BitmapData& target, const BitmapData& before, const BitmapData& after, const float score, const std::vector<Scanline>& lines)
 {
-    const size_t width{target.getWidth()};
-    const size_t height{target.getHeight()};
-    const size_t rgbCount{width * height * 3};
+    const std::size_t width{target.getWidth()};
+    const std::size_t height{target.getHeight()};
+    const std::size_t rgbCount{width * height * 3};
     float total{std::pow(score * 255.0f, 2) * rgbCount};
 
     for(const Scanline& line : lines) {
@@ -289,13 +289,13 @@ inline State bestHillClimbState(const shapes::ShapeTypes shapeTypes, const int a
 inline rgba getAverageImageColor(const BitmapData& image)
 {
     const std::vector<unsigned char>& data{image.getDataRef()};
-    const size_t size{data.size()};
-    const size_t numPixels{data.size() / 4};
+    const std::size_t size{data.size()};
+    const std::size_t numPixels{data.size() / 4};
 
     int totalRed{0};
     int totalGreen{0};
     int totalBlue{0};
-    for(size_t i = 0; i < size; i += 4) {
+    for(std::size_t i = 0; i < size; i += 4) {
         totalRed += data[i];
         totalGreen += data[i + 1];
         totalBlue += data[i + 2];

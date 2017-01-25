@@ -18,7 +18,13 @@ namespace exporter
  */
 inline std::string exportShapeJson(const std::vector<ShapeResult>& data)
 {
-    return "TODO";
+    std::string result;
+
+    for(const ShapeResult& s : data) {
+        // TODO write shape attribs, type and vertex positions
+    }
+
+    return result;
 }
 
 }

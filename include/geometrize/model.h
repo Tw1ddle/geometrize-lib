@@ -69,7 +69,7 @@ public:
      */
     inline std::vector<geometrize::ShapeResult> step(const geometrize::shapes::ShapeTypes shapeTypes, const unsigned short alpha, const int repeats)
     {
-        State state{geometrize::core::bestHillClimbState(shapeTypes, alpha, 1000, 100, 16, m_target, m_current, m_buffer)}; // TODO
+        State state{geometrize::core::bestHillClimbState(shapeTypes, alpha, 1000, 100, 16, m_target, m_current, m_buffer)}; // TODO pass more params
         std::vector<ShapeResult> results;
         results.push_back(addShape(state.m_shape, alpha));
 
