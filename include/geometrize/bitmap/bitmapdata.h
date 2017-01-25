@@ -84,7 +84,7 @@ public:
      */
     inline rgba getPixel(const int x, const int y) const
     {
-        const std::size_t index{m_width * y + x};
+        const std::size_t index{(m_width * y + x) * 4};
         return rgba{m_data[index], m_data[index + 1], m_data[index + 2], m_data[index + 3]};
     }
 
@@ -96,7 +96,7 @@ public:
      */
     inline void setPixel(const int x, const int y, const rgba color)
     {
-        const std::size_t index{m_width * y + x};
+        const std::size_t index{(m_width * y + x) * 4};
         m_data[index] = color.r;
         m_data[index + 1u] = color.g;
         m_data[index + 2u] = color.b;
