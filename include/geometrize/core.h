@@ -236,12 +236,12 @@ inline State hillClimb(const State& state, const unsigned int maxAge, const Bitm
 {
     State s(state); // TODO?
     State bestState(state);
-    float bestEnergy{s.calculateEnergy(current, target, buffer)};
+    float bestEnergy{s.calculateEnergy(target, current, buffer)};
 
     unsigned int age{0};
     while(age < maxAge) {
         const State undo{s.mutate()};
-        const float energy{s.calculateEnergy(current, target, buffer)};
+        const float energy{s.calculateEnergy(target, current, buffer)};
         if(energy >= bestEnergy) {
             s = undo;
         } else {

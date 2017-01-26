@@ -3,7 +3,6 @@
 #include <vector>
 
 #include "bitmap/bitmap.h"
-#include "core.h"
 #include "shape/shape.h"
 #include "shape/shapefactory.h"
 #include "shape/shapetypes.h"

@@ -63,4 +63,14 @@ public:
     const int alpha; ///< The alpha/opacity of the scanline.
 };
 
+inline bool operator==(const Scanline& lhs, const Scanline& rhs)
+{
+    return lhs.y == rhs.y && lhs.x1 == rhs.x1 && lhs.x2 == rhs.x2 && lhs.alpha == rhs.alpha;
+}
+
+inline bool operator!=(const Scanline& lhs, const Scanline& rhs)
+{
+    return !(lhs == rhs);
+}
+
 }
