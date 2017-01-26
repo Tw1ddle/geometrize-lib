@@ -29,9 +29,8 @@ public:
      * @brief Creates a new state.
      * @param shapeTypes The types of geometric primitive to select.
      * @param alpha The color alpha of the geometric shape.
-     * @param target The target bitmap.
-     * @param current The current bitmap.
-     * @param buffer The buffer bitmap.
+     * @param width The width of the bitmap.
+     * @param height The height of the bitmap.
      */
     inline State(const shapes::ShapeTypes shapeTypes, const int alpha, const int width, const int height) :
         m_score{-1.0f}, m_alpha{alpha}, m_shape{ShapeFactory::randomShapeOf(shapeTypes, width, height)}

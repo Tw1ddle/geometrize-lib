@@ -227,6 +227,9 @@ inline State bestRandomState(const shapes::ShapeTypes shapeTypes, const int alph
  * @brief hillClimb Hill climbing optimization algorithm, attempts to minimize energy (the error/difference).
  * @param state The state to optimize.
  * @param maxAge The maximum age.
+ * @param target The target bitmap.
+ * @param current The current bitmap.
+ * @param buffer The buffer bitmap.
  * @return The best state found from hillclimbing.
  */
 inline State hillClimb(const State& state, const unsigned int maxAge, const Bitmap& target, const Bitmap& current, Bitmap& buffer)
