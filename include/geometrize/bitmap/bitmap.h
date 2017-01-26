@@ -11,16 +11,16 @@ namespace geometrize
  * Helper class for working with bitmap data.
  * @author Sam Twidale (http://samcodes.co.uk/)
  */
-class BitmapData
+class Bitmap
 {
 public:
     /**
-     * @brief BitmapData Creates a new bitmap.
+     * @brief Bitmap Creates a new bitmap.
      * @param width The width of the bitmap.
      * @param height The height of the bitmap.
      * @param color The starting color of the bitmap (RGBA format).
      */
-    inline BitmapData(const unsigned int width, const unsigned int height, const rgba color) : m_width{width}, m_height{height}, m_data(width * height * 4)
+    inline Bitmap(const unsigned int width, const unsigned int height, const rgba color) : m_width{width}, m_height{height}, m_data(width * height * 4)
     {
         for(unsigned int i = 0; i < m_data.size(); i+=4) {
             m_data[i] = color.r;
@@ -31,16 +31,16 @@ public:
     }
 
     /**
-     * @brief BitmapData Creates a new bitmap from the supplied byte data.
+     * @brief Bitmap Creates a new bitmap from the supplied byte data.
      * @param width The width of the bitmap.
      * @param height The height of the bitmap.
      * @param data The byte data to fill the bitmap with, must be width * height * depth (4) long.
      */
-    inline BitmapData(const unsigned int width, const unsigned int height, const std::vector<unsigned char>& data) : m_width{width}, m_height{height}, m_data{data} {}
+    inline Bitmap(const unsigned int width, const unsigned int height, const std::vector<unsigned char>& data) : m_width{width}, m_height{height}, m_data{data} {}
 
-    inline ~BitmapData() = default;
-    inline BitmapData& operator=(const BitmapData&) = default;
-    inline BitmapData(const BitmapData&) = default;
+    inline ~Bitmap() = default;
+    inline Bitmap& operator=(const Bitmap&) = default;
+    inline Bitmap(const Bitmap&) = default;
 
     /**
      * @brief getWidth Gets the width of the bitmap.

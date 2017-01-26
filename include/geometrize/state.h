@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "bitmap/bitmapdata.h"
+#include "bitmap/bitmap.h"
 #include "core.h"
 #include "shape/shape.h"
 #include "shape/shapefactory.h"
@@ -16,7 +16,7 @@ namespace core
 {
     // Forward declare energy function
     // TODO
-    float energy(const std::vector<Scanline>& lines, const int alpha, const BitmapData& target, const BitmapData& current, BitmapData& buffer, const float score);
+    float energy(const std::vector<Scanline>& lines, const int alpha, const Bitmap& target, const Bitmap& current, Bitmap& buffer, const float score);
 }
 
 /**
@@ -60,7 +60,7 @@ public:
      * The lower the energy, the better. The score is cached, set it to < 0 to recalculate it.
      * @return The energy measure.
      */
-    inline float calculateEnergy(const BitmapData& target, const BitmapData& current, BitmapData& buffer)
+    inline float calculateEnergy(const Bitmap& target, const Bitmap& current, Bitmap& buffer)
     {
         if(m_score < 0) {
             m_score = geometrize::core::energy(m_shape->rasterize(), m_alpha, target, current, buffer, m_score); // TODO

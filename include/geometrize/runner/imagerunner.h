@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "../bitmap/bitmapdata.h"
+#include "../bitmap/bitmap.h"
 #include "../core.h"
 #include "../model.h"
 #include "../shape/shapetypes.h"
@@ -18,7 +18,7 @@ namespace geometrize
 class ImageRunner
 {
 public:
-    inline ImageRunner(BitmapData& bitmap) : m_model{bitmap, geometrize::core::getAverageImageColor(bitmap)} {} // TODO set the starting color optionally
+    inline ImageRunner(Bitmap& bitmap) : m_model{bitmap, geometrize::core::getAverageImageColor(bitmap)} {} // TODO set the starting color optionally
     inline ~ImageRunner() = default;
     inline ImageRunner& operator=(const ImageRunner&) = delete;
     inline ImageRunner(const ImageRunner&) = delete;
@@ -50,7 +50,7 @@ public:
      * @brief Gets the current bitmap with the primitives drawn on it.
      * @return The current bitmap.
      */
-    inline BitmapData& getBitmapData()
+    inline Bitmap& getBitmap()
     {
         return m_model.getCurrent();
     }

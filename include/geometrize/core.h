@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "state.h"
-#include "bitmap/bitmapdata.h"
+#include "bitmap/bitmap.h"
 #include "bitmap/rgba.h"
 #include "scanline.h"
 #include "shape/shapetypes.h"
@@ -28,7 +28,7 @@ namespace core
  * @param alpha The alpha of the scanline.
  * @return The color of the scanlines.
  */
-inline rgba computeColor(const BitmapData& target, const BitmapData& current, const std::vector<Scanline>& lines, const unsigned char alpha)
+inline rgba computeColor(const Bitmap& target, const Bitmap& current, const std::vector<Scanline>& lines, const unsigned char alpha)
 {
     long long int totalRed{0};
     long long int totalGreen{0};
@@ -72,7 +72,7 @@ inline rgba computeColor(const BitmapData& target, const BitmapData& current, co
  * @param color The color of the scanlines.
  * @param lines The scanlines to draw.
  */
-inline void drawLines(BitmapData& image, const rgba color, const std::vector<Scanline>& lines)
+inline void drawLines(Bitmap& image, const rgba color, const std::vector<Scanline>& lines)
 {
     // Convert the non-premultiplied color to alpha-premultiplied 16-bits per channel RGBA
     // In other words, scale the rgb color components by the alpha component
@@ -118,7 +118,7 @@ inline void drawLines(BitmapData& image, const rgba color, const std::vector<Sca
  * @param source The source bitmap to copy the lines from.
  * @param lines The scanlines that comprise the source to destination copying mask.
  */
-inline void copyLines(BitmapData& destination, const BitmapData& source, const std::vector<Scanline>& lines)
+inline void copyLines(Bitmap& destination, const Bitmap& source, const std::vector<Scanline>& lines)
 {
     for(const Scanline& line : lines) {
         const int y{line.y};
@@ -134,7 +134,7 @@ inline void copyLines(BitmapData& destination, const BitmapData& source, const s
  * @param second The second bitmap.
  * @return The difference/error measure between the two bitmaps.
  */
-inline float differenceFull(const BitmapData& first, const BitmapData& second)
+inline float differenceFull(const Bitmap& first, const Bitmap& second)
 {
     assert(first.getWidth() == second.getWidth());
     assert(first.getHeight() == second.getHeight());
@@ -168,7 +168,7 @@ inline float differenceFull(const BitmapData& first, const BitmapData& second)
  * @param lines The scanlines.
  * @return The difference/error between the two bitmaps, masked by the scanlines.
  */
-inline float differencePartial(const BitmapData& target, const BitmapData& before, const BitmapData& after, const float score, const std::vector<Scanline>& lines)
+inline float differencePartial(const Bitmap& target, const Bitmap& before, const Bitmap& after, const float score, const std::vector<Scanline>& lines)
 {
     const std::size_t width{target.getWidth()};
     const std::size_t height{target.getHeight()};
@@ -207,7 +207,7 @@ inline float differencePartial(const BitmapData& target, const BitmapData& befor
  * @param buffer The buffer bitmap.
  * @return The best random state i.e. the one with the lowest energy.
  */
-inline State bestRandomState(const shapes::ShapeTypes shapeTypes, const int alpha, const int n, const BitmapData& target, const BitmapData& current, BitmapData& buffer)
+inline State bestRandomState(const shapes::ShapeTypes shapeTypes, const int alpha, const int n, const Bitmap& target, const Bitmap& current, Bitmap& buffer)
 {
     float bestEnergy{0.0f};
     State bestState(shapeTypes, alpha, current.getWidth(), current.getHeight()); // TODO?
@@ -229,7 +229,7 @@ inline State bestRandomState(const shapes::ShapeTypes shapeTypes, const int alph
  * @param maxAge The maximum age.
  * @return The best state found from hillclimbing.
  */
-inline State hillClimb(const State& state, const unsigned int maxAge, const BitmapData& target, const BitmapData& current, BitmapData& buffer)
+inline State hillClimb(const State& state, const unsigned int maxAge, const Bitmap& target, const Bitmap& current, Bitmap& buffer)
 {
     State s(state); // TODO?
     State bestState(state);
@@ -264,7 +264,7 @@ inline State hillClimb(const State& state, const unsigned int maxAge, const Bitm
  * @param buffer The buffer bitmap.
  * @return The best state acquired from hill climbing i.e. the one with the lowest energy.
  */
-inline State bestHillClimbState(const shapes::ShapeTypes shapeTypes, const int alpha, const int n, const int age, const int m, const BitmapData& target, const BitmapData& current, BitmapData& buffer)
+inline State bestHillClimbState(const shapes::ShapeTypes shapeTypes, const int alpha, const int n, const int age, const int m, const Bitmap& target, const Bitmap& current, Bitmap& buffer)
 {
     float bestEnergy{0.0f};
 
@@ -287,7 +287,7 @@ inline State bestHillClimbState(const shapes::ShapeTypes shapeTypes, const int a
  * @param image The image whose average color will be calculated.
  * @return The average RGB color of the image, RGBA8888 format. Alpha is set to opaque (255).
  */
-inline rgba getAverageImageColor(const BitmapData& image)
+inline rgba getAverageImageColor(const Bitmap& image)
 {
     const std::vector<unsigned char>& data{image.getDataRef()};
     const std::size_t size{data.size()};
@@ -315,7 +315,7 @@ inline rgba getAverageImageColor(const BitmapData& image)
  * @param score The score.
  * @return The energy measure.
  */
-inline float energy(const std::vector<Scanline>& lines, const int alpha, const BitmapData& target, const BitmapData& current, BitmapData& buffer, const float score)
+inline float energy(const std::vector<Scanline>& lines, const int alpha, const Bitmap& target, const Bitmap& current, Bitmap& buffer, const float score)
 {
     // Calculates the best color for the area covered by the scanlines
     const rgba color{computeColor(target, current, lines, alpha)};

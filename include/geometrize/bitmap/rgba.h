@@ -14,4 +14,14 @@ struct rgba
     unsigned char a; ///> The alpha component (0-255).
 };
 
+inline bool operator==(const rgba& lhs, const rgba& rhs)
+{
+    return lhs.r == rhs.r && lhs.g == rhs.g && lhs.b == rhs.b && lhs.a == rhs.a;
+}
+
+inline bool operator!=(const rgba& lhs, const rgba& rhs)
+{
+    return !(lhs == rhs);
+}
+
 }

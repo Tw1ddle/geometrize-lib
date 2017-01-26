@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "bitmap/bitmapdata.h"
+#include "bitmap/bitmap.h"
 #include "shape/shapetypes.h"
 #include "util.h"
 

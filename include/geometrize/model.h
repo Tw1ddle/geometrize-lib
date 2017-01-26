@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "bitmap/bitmapdata.h"
+#include "bitmap/bitmap.h"
 #include "core.h"
 #include "shape/shape.h"
 #include "shaperesult.h"
@@ -18,7 +18,7 @@ namespace geometrize
 class Model
 {
 public:
-    inline Model(const BitmapData& target, const rgba backgroundColor) :
+    inline Model(const Bitmap& target, const rgba backgroundColor) :
         m_target(target),
         m_current(target.getWidth(), target.getHeight(), backgroundColor),
         m_buffer(target.getWidth(), target.getHeight(), backgroundColor),
@@ -93,7 +93,7 @@ public:
      */
     inline ShapeResult addShape(Shape* shape, const unsigned short alpha)
     {
-        const BitmapData before{m_current};
+        const Bitmap before{m_current};
         const std::vector<Scanline> lines{shape->rasterize()};
         const rgba color{geometrize::core::computeColor(m_target, m_current, lines, alpha)};
         geometrize::core::drawLines(m_current, color, lines);
@@ -110,7 +110,7 @@ public:
      * @brief getCurrent Gets the current bitmap.
      * @return The current bitmap.
      */
-    inline BitmapData& getCurrent()
+    inline Bitmap& getCurrent()
     {
         return m_current;
     }
@@ -125,9 +125,9 @@ public:
     }
 
 private:
-    BitmapData m_target; ///< The target bitmap, the bitmap we aim to approximate.
-    BitmapData m_current; ///< The current bitmap.
-    BitmapData m_buffer; ///< Buffer bitmap.
+    Bitmap m_target; ///< The target bitmap, the bitmap we aim to approximate.
+    Bitmap m_current; ///< The current bitmap.
+    Bitmap m_buffer; ///< Buffer bitmap.
     float m_score; ///< Score derived from calculating the difference between bitmaps.
     std::vector<ShapeResult> m_shapeResults; ///< The results data with info about the shapes added to the model so far.
 };

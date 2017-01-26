@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
-#include "tests/bitmap/bitmapdatatest.h"
+#include "tests/bitmap/bitmaptest.h"
 #include "tests/bitmap/rgbatest.h"
 #include "tests/exporters/shapearrayexportertest.h"
 #include "tests/exporters/shapejsonexportertest.h"
