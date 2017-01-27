@@ -40,7 +40,7 @@ inline rgba computeColor(const Bitmap& target, const Bitmap& current, const std:
     // For each scanline
     for(const Scanline& line : lines) {
         const int y{line.y};
-        for(int x = line.x1; x <= line.x2; x++) {
+        for(int x = line.x1; x < line.x2; x++) {
             // Get the overlapping target and current colors
             const rgba t{target.getPixel(x, y)};
             const rgba c{current.getPixel(x, y)};
@@ -60,9 +60,9 @@ inline rgba computeColor(const Bitmap& target, const Bitmap& current, const std:
 
     // Scale totals down to 0-255 range and return average blended color
     return rgba{
-        static_cast<unsigned char>((totalRed / count) >> 8),
-        static_cast<unsigned char>((totalGreen / count) >> 8),
-        static_cast<unsigned char>((totalBlue / count) >> 8),
+        static_cast<unsigned char>(util::clamp((totalRed / count) >> 8, 0LL, 255LL)),
+        static_cast<unsigned char>(util::clamp((totalGreen / count) >> 8, 0LL, 255LL)),
+        static_cast<unsigned char>(util::clamp((totalBlue / count) >> 8, 0LL, 255LL)),
         alpha};
 }
 
