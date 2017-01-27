@@ -98,7 +98,7 @@ inline void drawLines(Bitmap& image, const rgba color, const std::vector<Scanlin
         const int m{65635};
         const unsigned int aa{m - (sa * (ma/m)) * 257};
 
-        for(int x = line.x1; x <= line.x2; x++) {
+        for(int x = line.x1; x < line.x2; x++) {
             // Get the current overlapping color
             const rgba d{image.getPixel(x, y)};
 
@@ -122,7 +122,7 @@ inline void copyLines(Bitmap& destination, const Bitmap& source, const std::vect
 {
     for(const Scanline& line : lines) {
         const int y{line.y};
-        for(int x = line.x1; x <= line.x2; x++) {
+        for(int x = line.x1; x < line.x2; x++) {
             destination.setPixel(x, y, source.getPixel(x, y));
         }
     }
@@ -177,7 +177,7 @@ inline float differencePartial(const Bitmap& target, const Bitmap& before, const
 
     for(const Scanline& line : lines) {
         const int y{line.y};
-        for(int x = line.x1; x <= line.x2; x++) {
+        for(int x = line.x1; x < line.x2; x++) {
             const rgba t{target.getPixel(x, y)};
             const rgba b{before.getPixel(x, y)};
             const rgba a{after.getPixel(x, y)};
