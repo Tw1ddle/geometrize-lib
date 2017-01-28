@@ -73,7 +73,7 @@ public:
         std::vector<ShapeResult> results;
         results.push_back(addShape(state.m_shape, alpha));
 
-        for(int i = 0; i <= repeats; i++) {
+        for(int i = 0; i < repeats; i++) {
             const float before{state.calculateEnergy(m_target, m_current, m_buffer)};
             state = geometrize::core::hillClimb(state, 100, m_target, m_current, m_buffer);
             const float after{state.calculateEnergy(m_target, m_current, m_buffer)};

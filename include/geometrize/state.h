@@ -14,7 +14,6 @@ namespace geometrize
 namespace core
 {
     // Forward declare energy function
-    // TODO
     float energy(const std::vector<Scanline>& lines, const int alpha, const Bitmap& target, const Bitmap& current, Bitmap& buffer, const float score);
 }
 
@@ -61,7 +60,7 @@ public:
     inline float calculateEnergy(const Bitmap& target, const Bitmap& current, Bitmap& buffer)
     {
         if(m_score < 0) {
-            m_score = geometrize::core::energy(m_shape->rasterize(), m_alpha, target, current, buffer, m_score); // TODO
+            m_score = geometrize::core::energy(m_shape->rasterize(), m_alpha, target, current, buffer, m_score);
         }
         return m_score;
     }
@@ -73,6 +72,7 @@ public:
     inline State mutate()
     {
         State oldState(*this);
+        oldState.m_score = -1;
         m_shape->mutate();
         return oldState;
     }

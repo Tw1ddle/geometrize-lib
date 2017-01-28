@@ -96,7 +96,8 @@ inline void drawLines(Bitmap& image, const rgba color, const std::vector<Scanlin
         const int y{line.y};
         const int ma{line.alpha};
         const int m{65635};
-        const unsigned int aa{m - (sa * (ma/m)) * 257};
+        const float aa = (m - (sa * (ma/m))) * 257;
+        const int as = std::floor(aa);
 
         for(int x = line.x1; x < line.x2; x++) {
             // Get the current overlapping color
@@ -210,9 +211,10 @@ inline float differencePartial(const Bitmap& target, const Bitmap& before, const
 inline State bestRandomState(const shapes::ShapeTypes shapeTypes, const int alpha, const int n, const Bitmap& target, const Bitmap& current, Bitmap& buffer)
 {
     float bestEnergy{0.0f};
-    State bestState(shapeTypes, alpha, current.getWidth(), current.getHeight()); // TODO?
+    State bestState(shapeTypes, alpha, current.getWidth(), current.getHeight());
     for(int i = 0; i <= n; i++) {
         State state(shapeTypes, alpha, current.getWidth(), current.getHeight());
+        state.m_score = -1;
         const float energy{state.calculateEnergy(target, current, buffer)};
         if(i == 0 || energy < bestEnergy) {
             bestEnergy = energy;
@@ -234,8 +236,10 @@ inline State bestRandomState(const shapes::ShapeTypes shapeTypes, const int alph
  */
 inline State hillClimb(const State& state, const unsigned int maxAge, const Bitmap& target, const Bitmap& current, Bitmap& buffer)
 {
-    State s(state); // TODO?
+    State s(state);
+    s.m_score = -1;
     State bestState(state);
+    bestState.m_score = -1;
     float bestEnergy{s.calculateEnergy(target, current, buffer)};
 
     unsigned int age{0};
@@ -247,6 +251,7 @@ inline State hillClimb(const State& state, const unsigned int maxAge, const Bitm
         } else {
             bestEnergy = energy;
             bestState = s;
+            bestState.m_score = -1;
             age = -1;
         }
         age++;
@@ -271,7 +276,7 @@ inline State bestHillClimbState(const shapes::ShapeTypes shapeTypes, const int a
 {
     float bestEnergy{0.0f};
 
-    State bestState{bestRandomState(shapeTypes, alpha, n, target, current, buffer)}; // TODO
+    State bestState{bestRandomState(shapeTypes, alpha, n, target, current, buffer)};
     for(int i = 0; i < m; i++) {
         State state = bestRandomState(shapeTypes, alpha, n, target, current, buffer);
         const float before{state.calculateEnergy(target, current, buffer)};
