@@ -28,6 +28,8 @@ namespace core
  * @param alpha The alpha of the scanline.
  * @return The color of the scanlines.
  */
+
+// TODO 1 off e.g. red is 254
 inline rgba computeColor(const Bitmap& target, const Bitmap& current, const std::vector<Scanline>& lines, const unsigned char alpha)
 {
     long long int totalRed{0};
@@ -96,17 +98,22 @@ inline void drawLines(Bitmap& image, const rgba color, const std::vector<Scanlin
         const int y{line.y};
         const int ma{line.alpha};
         const int m{65635};
-        const float aa = (m - (sa * (ma/m))) * 257;
-        const int as = std::floor(aa);
+        const int aa = (m - sa * ma / m) * 0x101;
 
-        for(int x = line.x1; x < line.x2; x++) {
+        for(int x = line.x1; x < line.x2; x++) { // TODO < or <=?
             // Get the current overlapping color
             const rgba d{image.getPixel(x, y)};
 
-            const unsigned int r{((d.r * aa + sr * ma) / m) >> 8};
-            const unsigned int g{((d.g * aa + sg * ma) / m) >> 8};
-            const unsigned int b{((d.b * aa + sb * ma) / m) >> 8};
-            const unsigned int a{((d.a * aa + sa * ma) / m) >> 8};
+            // TODO this seems wrong
+            const unsigned int dr{d.r};
+            const unsigned int dg{d.g};
+            const unsigned int db{d.b};
+            const unsigned int da{d.a};
+
+            const unsigned char r = (dr * aa + sr * ma) / m >> 8;
+            const unsigned char g = (dg * aa + sg * ma) / m >> 8;
+            const unsigned char b = (db * aa + sb * ma) / m >> 8;
+            const unsigned char a = 255; //(da * aa + sa * ma) / m >> 8; // TODO fix, aa looks slightly too big?
 
             image.setPixel(x, y, rgba{static_cast<unsigned char>(r), static_cast<unsigned char>(g), static_cast<unsigned char>(b), static_cast<unsigned char>(a)});
         }
@@ -174,7 +181,7 @@ inline float differencePartial(const Bitmap& target, const Bitmap& before, const
     const std::size_t width{target.getWidth()};
     const std::size_t height{target.getHeight()};
     const std::size_t rgbCount{width * height * 3};
-    float total{std::pow(score * 255.0f, 2) * rgbCount};
+    unsigned int total{static_cast<unsigned int>(std::pow(score * 255.0f, 2) * rgbCount)};
 
     for(const Scanline& line : lines) {
         const int y{line.y};

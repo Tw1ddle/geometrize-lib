@@ -74,6 +74,7 @@ public:
         State oldState(*this);
         oldState.m_score = -1;
         m_shape->mutate();
+        m_score = -1;
         return oldState;
     }
 
