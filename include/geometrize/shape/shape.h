@@ -42,6 +42,12 @@ public:
      * @return The ShapeType of the shape.
      */
     virtual shapes::ShapeTypes getType() const = 0;
+
+    /**
+     * @brief getShapeData Gets a vector of data that represents the shape geometry, varies depending on the ShapeType.
+     * @return The shape data.
+     */
+    virtual std::vector<std::int32_t> getShapeData() const = 0;
 };
 
 }

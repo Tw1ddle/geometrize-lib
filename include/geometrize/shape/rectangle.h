@@ -69,6 +69,16 @@ public:
         return shapes::ShapeTypes::RECTANGLE;
     }
 
+    virtual std::vector<std::int32_t> getShapeData() const override
+    {
+        return {
+            static_cast<std::int32_t>(m_x1),
+            static_cast<std::int32_t>(m_y1),
+            static_cast<std::int32_t>(m_x2),
+            static_cast<std::int32_t>(m_y2)
+        };
+    }
+
 private:
     const std::uint32_t m_xBound; ///< The x-bound of the whole canvas.
     const std::uint32_t m_yBound; ///< The y-bound of the whole canvas.

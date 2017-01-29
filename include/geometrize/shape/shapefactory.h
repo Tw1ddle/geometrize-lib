@@ -56,7 +56,7 @@ public:
      * @param yBound The y-bound of the whole canvas.
      * @return The new shape.
      */
-    inline  static Shape* randomShape(const std::uint32_t xBound, const std::uint32_t yBound)
+    inline static Shape* randomShape(const std::uint32_t xBound, const std::uint32_t yBound)
     {
         return create(shapes::allShapes[util::Random::randomRange(0, static_cast<int>(shapes::allShapes.size()) - 1)], xBound, yBound);
     }

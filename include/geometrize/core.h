@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <stdint.h>
 #include <vector>
 
 #include "state.h"
@@ -40,7 +41,7 @@ inline geometrize::rgba computeColor(
     std::uint64_t totalGreen{0};
     std::uint64_t totalBlue{0};
     std::uint64_t count{0};
-    const std::uint32_t a = static_cast<std::uint32_t>(257.0f * 255.0f / alpha);
+    const std::int32_t a{static_cast<std::int32_t>(257.0f * 255.0f / alpha)};
 
     // For each scanline
     for(const geometrize::Scanline& line : lines) {
@@ -165,7 +166,6 @@ inline float differenceFull(const geometrize::Bitmap& first, const geometrize::B
             total += (dr * dr + dg * dg + db * db);
         }
     }
-
     return std::sqrtf(total / (width * height * 3.0f)) / 255.0f;
 }
 

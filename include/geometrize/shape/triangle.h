@@ -46,6 +46,11 @@ public:
         return shapes::ShapeTypes::TRIANGLE;
     }
 
+    virtual std::vector<std::int32_t> getShapeData() const override
+    {
+        return {};
+    }
+
 private:
     const std::uint32_t m_xBound; ///< The x-bound of the whole canvas.
     const std::uint32_t m_yBound; ///< The y-bound of the whole canvas.
