@@ -43,9 +43,6 @@ public:
 
         // TODO modify the scanlines in-place?
         for(geometrize::Scanline& line : scanlines) {
-            if(line.y < 0 || line.y >= h || line.x1 > w || line.x2 < 0) {
-                continue;
-            }
             line.x1 = geometrize::util::clamp(line.x1, 0U, w - 1);
             line.x2 = geometrize::util::clamp(line.x2, 0U, w - 1);
             if(line.x1 > line.x2) {

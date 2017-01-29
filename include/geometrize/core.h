@@ -114,10 +114,10 @@ inline void drawLines(geometrize::Bitmap& image, const geometrize::rgba color, c
             const std::uint32_t db{d.b};
             const std::uint32_t da{d.a};
 
-            const std::uint8_t r = (dr * aa + sr * ma) / m >> 8;
-            const std::uint8_t g = (dg * aa + sg * ma) / m >> 8;
-            const std::uint8_t b = (db * aa + sb * ma) / m >> 8;
-            const std::uint8_t a = 255; //(da * aa + sa * ma) / m >> 8; // TODO fix, aa looks slightly too big?
+            const std::uint8_t r = ((dr * aa + sr * ma) / m) >> 8;
+            const std::uint8_t g = ((dg * aa + sg * ma) / m) >> 8;
+            const std::uint8_t b = ((db * aa + sb * ma) / m) >> 8;
+            const std::uint8_t a = 255; //((da * aa + sa * ma) / m) >> 8; // TODO fix, aa looks slightly too big?
 
             image.setPixel(x, y, geometrize::rgba{static_cast<std::uint8_t>(r), static_cast<std::uint8_t>(g), static_cast<std::uint8_t>(b), static_cast<std::uint8_t>(a)});
         }
