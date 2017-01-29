@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #include "shape.h"
 #include "../util.h"
 
@@ -18,19 +20,19 @@ public:
      * @param xBound xBound	The x-bound of the whole canvas.
      * @param yBound yBound	The y-bound of the whole canvas.
      */
-    Circle(const int xBound, const int yBound) : m_xBound(xBound), m_yBound(yBound)
+    Circle(const std::uint32_t xBound, const std::uint32_t yBound) : m_xBound(xBound), m_yBound(yBound)
     {
         // TODO
     }
 
-    virtual Shape* clone() const
+    virtual geometrize::Shape* clone() const
     {
         return new Circle(m_xBound, m_yBound); // TODO
     }
 
-    virtual std::vector<Scanline> rasterize() const override
+    virtual std::vector<geometrize::Scanline> rasterize() const override
     {
-        std::vector<Scanline> lines;
+        std::vector<geometrize::Scanline> lines;
         return lines; // TODO
     }
 
@@ -39,14 +41,14 @@ public:
         // TODO
     }
 
-    virtual shapes::ShapeTypes getType() const override
+    virtual geometrize::shapes::ShapeTypes getType() const override
     {
-        return shapes::ShapeTypes::CIRCLE;
+        return geometrize::shapes::ShapeTypes::CIRCLE;
     }
 
 private:
-    const int m_xBound; ///< The x-bound of the whole canvas.
-    const int m_yBound; ///< The y-bound of the whole canvas.
+    const std::uint32_t m_xBound; ///< The x-bound of the whole canvas.
+    const std::uint32_t m_yBound; ///< The y-bound of the whole canvas.
 };
 
 }

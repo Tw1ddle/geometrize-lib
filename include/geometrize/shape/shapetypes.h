@@ -14,13 +14,13 @@ namespace shapes
  */
 enum ShapeTypes
 {
-    RECTANGLE = 1,
-    ROTATED_RECTANGLE = 2,
-    TRIANGLE = 4,
-    ELLIPSE = 8,
-    ROTATED_ELLIPSE = 16,
-    CIRCLE = 32,
-    SHAPE_COUNT = 6
+    RECTANGLE = 1U,
+    ROTATED_RECTANGLE = 2U,
+    TRIANGLE = 4U,
+    ELLIPSE = 8U,
+    ROTATED_ELLIPSE = 16U,
+    CIRCLE = 32U,
+    SHAPE_COUNT = 6U
 };
 
 static const std::array<ShapeTypes, ShapeTypes::SHAPE_COUNT> allShapes = { RECTANGLE, ROTATED_RECTANGLE, TRIANGLE, ELLIPSE, ROTATED_ELLIPSE, CIRCLE };

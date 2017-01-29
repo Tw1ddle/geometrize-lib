@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #include "../shape/shapetypes.h"
 
 namespace geometrize
@@ -11,8 +13,8 @@ namespace geometrize
  */
 struct ImageRunnerOptions
 {
-    int primitiveCount = 50; // TODO remove defaults?
-    shapes::ShapeTypes shapeTypes = shapes::ShapeTypes::RECTANGLE;
+    std::int32_t primitiveCount = 50; // TODO remove defaults?
+    geometrize::shapes::ShapeTypes shapeTypes = geometrize::shapes::ShapeTypes::RECTANGLE;
 };
 
 }

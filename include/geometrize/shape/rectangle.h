@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <cstdint>
 
 #include "shape.h"
 #include "../util.h"
@@ -20,12 +21,12 @@ public:
      * @param xBound xBound	The x-bound of the whole canvas.
      * @param yBound yBound	The y-bound of the whole canvas.
      */
-    Rectangle(const int xBound, const int yBound) : m_xBound(xBound), m_yBound(yBound)
+    Rectangle(const std::uint32_t xBound, const std::uint32_t yBound) : m_xBound(xBound), m_yBound(yBound)
     {
         m_x1 = util::Random::randomRange(0, m_xBound);
         m_y1 = util::Random::randomRange(0, m_yBound);
-        m_x2 = util::clamp(m_x1 + util::Random::randomRange(0, util::Random::randomRange(0, 32) + 1), 0, m_xBound);
-        m_y2 = util::clamp(m_y1 + util::Random::randomRange(0, util::Random::randomRange(0, 32) + 1), 0, m_yBound);
+        m_x2 = util::clamp(m_x1 + util::Random::randomRange(0, util::Random::randomRange(0, 32) + 1), 0U, m_xBound);
+        m_y2 = util::clamp(m_y1 + util::Random::randomRange(0, util::Random::randomRange(0, 32) + 1), 0U, m_yBound);
     }
 
     virtual Shape* clone() const
@@ -41,7 +42,7 @@ public:
     virtual std::vector<Scanline> rasterize() const override
     {
         std::vector<Scanline> lines;
-        for(int y = m_y1; y < m_y2; y++) {
+        for(std::uint32_t y = m_y1; y < m_y2; y++) {
             if(m_x1 != m_x2) {
                 lines.push_back(Scanline(y, (std::min)(m_x1, m_x2), (std::max)(m_x1, m_x2), 0xFFFF));
             }
@@ -55,11 +56,11 @@ public:
 
         switch(r) {
         case 0:
-            m_x1 = util::clamp(m_x1 + util::Random::randomRange(-16, 16), 0, m_xBound - 1);
-            m_y1 = util::clamp(m_y1 + util::Random::randomRange(-16, 16), 0, m_yBound - 1);
+            m_x1 = util::clamp(m_x1 + util::Random::randomRange(-16, 16), 0U, m_xBound - 1);
+            m_y1 = util::clamp(m_y1 + util::Random::randomRange(-16, 16), 0U, m_yBound - 1);
         case 1:
-            m_x2 = util::clamp(m_x2 + util::Random::randomRange(-16, 16), 0, m_xBound - 1);
-            m_y2 = util::clamp(m_y2 + util::Random::randomRange(-16, 16), 0, m_yBound - 1);
+            m_x2 = util::clamp(m_x2 + util::Random::randomRange(-16, 16), 0U, m_xBound - 1);
+            m_y2 = util::clamp(m_y2 + util::Random::randomRange(-16, 16), 0U, m_yBound - 1);
         }
     }
 
@@ -69,13 +70,13 @@ public:
     }
 
 private:
-    const int m_xBound; ///< The x-bound of the whole canvas.
-    const int m_yBound; ///< The y-bound of the whole canvas.
+    const std::uint32_t m_xBound; ///< The x-bound of the whole canvas.
+    const std::uint32_t m_yBound; ///< The y-bound of the whole canvas.
 
-    int m_x1; ///< Left coordinate.
-    int m_y1; ///< Top coordinate.
-    int m_x2; ///< Right coordinate.
-    int m_y2; ///< Bottom coordinate.
+    std::uint32_t m_x1; ///< Left coordinate.
+    std::uint32_t m_y1; ///< Top coordinate.
+    std::uint32_t m_x2; ///< Right coordinate.
+    std::uint32_t m_y2; ///< Bottom coordinate.
 };
 
 }

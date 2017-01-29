@@ -1,6 +1,7 @@
 #pragma once
 
 #include <bitset>
+#include <cstdint>
 #include <memory>
 
 #include "shape.h"
@@ -26,7 +27,7 @@ public:
      * @param yBound The y-bound of the whole canvas.
      * @return The new shape.
      */
-    inline static Shape* create(shapes::ShapeTypes t, const int xBound, const int yBound)
+    inline static Shape* create(shapes::ShapeTypes t, const std::uint32_t xBound, const std::uint32_t yBound)
     {
         switch(t) {
             case shapes::ShapeTypes::CIRCLE:
@@ -55,7 +56,7 @@ public:
      * @param yBound The y-bound of the whole canvas.
      * @return The new shape.
      */
-    inline  static Shape* randomShape(const int xBound, const int yBound)
+    inline  static Shape* randomShape(const std::uint32_t xBound, const std::uint32_t yBound)
     {
         return create(shapes::allShapes[util::Random::randomRange(0, static_cast<int>(shapes::allShapes.size()) - 1)], xBound, yBound);
     }
@@ -67,18 +68,18 @@ public:
      * @param yBound The y-bound of the whole canvas.
      * @return The new shape.
      */
-    inline static Shape* randomShapeOf(const shapes::ShapeTypes t, const int xBound, const int yBound)
+    inline static Shape* randomShapeOf(const shapes::ShapeTypes t, const std::uint32_t xBound, const std::uint32_t yBound)
     {
         return new Rectangle(xBound, yBound); // TODO
 
         const std::bitset<32> b(t);
-        std::vector<int> bits;
+        std::vector<std::uint32_t> bits;
         for(unsigned int bit = 0; bit < b.count(); bit++) {
             if(bit) {
                 bits.push_back(1 << bit);
             }
         }
-        return create(static_cast<shapes::ShapeTypes>(bits[util::Random::randomRange(0, static_cast<int>(bits.size()))]), xBound, yBound);
+        return create(static_cast<shapes::ShapeTypes>(bits[util::Random::randomRange(0, static_cast<std::int32_t>(bits.size()))]), xBound, yBound);
     }
 };
 

@@ -18,7 +18,7 @@ namespace geometrize
 class ImageRunner
 {
 public:
-    inline ImageRunner(Bitmap& bitmap) : m_model{bitmap, geometrize::core::getAverageImageColor(bitmap)} {} // TODO set the starting color optionally
+    inline ImageRunner(geometrize::Bitmap& bitmap) : m_model{bitmap, geometrize::core::getAverageImageColor(bitmap)} {} // TODO set the starting color optionally
     inline ~ImageRunner() = default;
     inline ImageRunner& operator=(const ImageRunner&) = delete;
     inline ImageRunner(const ImageRunner&) = delete;
@@ -27,11 +27,11 @@ public:
      * @brief Updates runner until the number of primitives specified in the runner options are added.
      * @return A vector containing data about the shapes added to the model in this step.
      */
-    inline std::vector<ShapeResult> run()
+    inline std::vector<geometrize::ShapeResult> run()
     {
-        std::vector<ShapeResult> results(m_options.primitiveCount);
+        std::vector<geometrize::ShapeResult> results(m_options.primitiveCount);
         while(results.size() <= m_options.primitiveCount) {
-            std::vector<ShapeResult> shapes{m_model.step(m_options.shapeTypes, 128, 0)}; // TODO alpha, repeat etc
+            std::vector<geometrize::ShapeResult> shapes{m_model.step(m_options.shapeTypes, 128, 0)}; // TODO alpha, repeat etc
             std::move(shapes.begin(), shapes.end(), std::back_inserter(results));
         }
         return results;
@@ -41,7 +41,7 @@ public:
      * @brief Updates the model once.
      * @return A vector containing data about the shapes just added to the model.
      */
-    inline std::vector<ShapeResult> step()
+    inline std::vector<geometrize::ShapeResult> step()
     {
         return m_model.step(m_options.shapeTypes, 128, 0); // TODO alpha, repeat params from config etc
     }
@@ -50,7 +50,7 @@ public:
      * @brief Gets the current bitmap with the primitives drawn on it.
      * @return The current bitmap.
      */
-    inline Bitmap& getBitmap()
+    inline geometrize::Bitmap& getBitmap()
     {
         return m_model.getCurrent();
     }
@@ -59,14 +59,14 @@ public:
      * @brief Gets data about the shapes added to the model so far.
      * @return The shape results.
      */
-    inline std::vector<ShapeResult>& getShapeResults()
+    inline std::vector<geometrize::ShapeResult>& getShapeResults()
     {
         return m_model.getShapeResults();
     }
 
 private:
-    Model m_model; ///< The model for the primitive optimization/fitting algorithm.
-    ImageRunnerOptions m_options; ///< The runtime configuration parameters for the runner.
+    geometrize::Model m_model; ///< The model for the primitive optimization/fitting algorithm.
+    geometrize::ImageRunnerOptions m_options; ///< The runtime configuration parameters for the runner.
 };
 
 }

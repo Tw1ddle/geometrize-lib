@@ -13,8 +13,8 @@ namespace geometrize
 struct ShapeResult
 {
     float score;
-    rgba color;
-    Shape* shape;
+    geometrize::rgba color;
+    geometrize::Shape* shape;
 };
 
 }

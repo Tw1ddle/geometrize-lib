@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #include "shape.h"
 #include "../util.h"
 
@@ -18,7 +20,7 @@ public:
      * @param xBound xBound	The x-bound of the whole canvas.
      * @param yBound yBound	The y-bound of the whole canvas.
      */
-    RotatedEllipse(const int xBound, const int yBound) : m_xBound(xBound), m_yBound(yBound)
+    RotatedEllipse(const std::uint32_t xBound, const std::uint32_t yBound) : m_xBound(xBound), m_yBound(yBound)
     {
         // TODO
     }
@@ -45,8 +47,8 @@ public:
     }
 
 private:
-    const int m_xBound; ///< The x-bound of the whole canvas.
-    const int m_yBound; ///< The y-bound of the whole canvas.
+    const std::uint32_t m_xBound; ///< The x-bound of the whole canvas.
+    const std::uint32_t m_yBound; ///< The y-bound of the whole canvas.
 };
 
 }
