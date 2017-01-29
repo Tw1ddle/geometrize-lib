@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <vector>
 
 #include "bitmap/bitmap.h"
@@ -18,7 +19,7 @@ namespace geometrize
 class Model
 {
 public:
-    inline Model(const Bitmap& target, const rgba backgroundColor) :
+    inline Model(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) :
         m_target(target),
         m_current(target.getWidth(), target.getHeight(), backgroundColor),
         m_buffer(target.getWidth(), target.getHeight(), backgroundColor),
@@ -67,13 +68,13 @@ public:
      * @param repeats How many times to repeat the stepping process with reduced search (per step), adding additional shapes.
      * @return A vector containing data about the shapes added to the model in this step.
      */
-    inline std::vector<geometrize::ShapeResult> step(const geometrize::shapes::ShapeTypes shapeTypes, const unsigned short alpha, const int repeats)
+    inline std::vector<geometrize::ShapeResult> step(const geometrize::shapes::ShapeTypes shapeTypes, const std::uint8_t alpha, const std::uint32_t repeats)
     {
-        State state{geometrize::core::bestHillClimbState(shapeTypes, alpha, 1000, 100, 16, m_target, m_current, m_buffer)}; // TODO pass more params
-        std::vector<ShapeResult> results;
+        geometrize::State state{geometrize::core::bestHillClimbState(shapeTypes, alpha, 1000, 100, 16, m_target, m_current, m_buffer)}; // TODO pass more params
+        std::vector<geometrize::ShapeResult> results;
         results.push_back(addShape(state.m_shape, alpha));
 
-        for(int i = 0; i < repeats; i++) {
+        for(std::uint32_t i = 0; i < repeats; i++) {
             const float before{state.calculateEnergy(m_target, m_current, m_buffer)};
             state = geometrize::core::hillClimb(state, 100, m_target, m_current, m_buffer);
             const float after{state.calculateEnergy(m_target, m_current, m_buffer)};
@@ -91,16 +92,16 @@ public:
      * @param alpha The alpha/opacity of the shape.
      * @return Data about the shape added to the model.
      */
-    inline ShapeResult addShape(Shape* shape, const unsigned short alpha)
+    inline geometrize::ShapeResult addShape(geometrize::Shape* shape, const std::uint8_t alpha)
     {
-        const Bitmap before{m_current};
-        const std::vector<Scanline> lines{shape->rasterize()};
-        const rgba color{geometrize::core::computeColor(m_target, m_current, lines, alpha)};
+        const geometrize::Bitmap before{m_current};
+        const std::vector<geometrize::Scanline> lines{shape->rasterize()};
+        const geometrize::rgba color{geometrize::core::computeColor(m_target, m_current, lines, alpha)};
         geometrize::core::drawLines(m_current, color, lines);
 
         m_score = geometrize::core::differencePartial(m_target, before, m_current, m_score, lines);
 
-        ShapeResult result{m_score, color, shape};
+        geometrize::ShapeResult result{m_score, color, shape};
         m_shapeResults.push_back(result);
 
         return result;
@@ -110,7 +111,7 @@ public:
      * @brief getCurrent Gets the current bitmap.
      * @return The current bitmap.
      */
-    inline Bitmap& getCurrent()
+    inline geometrize::Bitmap& getCurrent()
     {
         return m_current;
     }
@@ -119,17 +120,17 @@ public:
      * @brief getShapeResults Gets the results data with info about the shapes added to the model so far.
      * @return The shape results data.
      */
-    inline std::vector<ShapeResult>& getShapeResults()
+    inline std::vector<geometrize::ShapeResult>& getShapeResults()
     {
         return m_shapeResults;
     }
 
 private:
-    Bitmap m_target; ///< The target bitmap, the bitmap we aim to approximate.
-    Bitmap m_current; ///< The current bitmap.
-    Bitmap m_buffer; ///< Buffer bitmap.
+    geometrize::Bitmap m_target; ///< The target bitmap, the bitmap we aim to approximate.
+    geometrize::Bitmap m_current; ///< The current bitmap.
+    geometrize::Bitmap m_buffer; ///< Buffer bitmap.
     float m_score; ///< Score derived from calculating the difference between bitmaps.
-    std::vector<ShapeResult> m_shapeResults; ///< The results data with info about the shapes added to the model so far.
+    std::vector<geometrize::ShapeResult> m_shapeResults; ///< The results data with info about the shapes added to the model so far.
 };
 
 }

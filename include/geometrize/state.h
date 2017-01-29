@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <vector>
 
 #include "bitmap/bitmap.h"
@@ -14,7 +15,12 @@ namespace geometrize
 namespace core
 {
     // Forward declare energy function
-    float energy(const std::vector<Scanline>& lines, const int alpha, const Bitmap& target, const Bitmap& current, Bitmap& buffer, const float score);
+    float energy(const std::vector<geometrize::Scanline>& lines,
+                 const std::uint32_t alpha,
+                 const geometrize::Bitmap& target,
+                 const geometrize::Bitmap& current,
+                 geometrize::Bitmap& buffer,
+                 const float score);
 }
 
 /**
@@ -30,12 +36,12 @@ public:
      * @param width The width of the bitmap.
      * @param height The height of the bitmap.
      */
-    inline State(const shapes::ShapeTypes shapeTypes, const int alpha, const int width, const int height) :
+    inline State(const shapes::ShapeTypes shapeTypes, const std::uint32_t alpha, const std::uint32_t width, const std::uint32_t height) :
         m_score{-1.0f}, m_alpha{alpha}, m_shape{ShapeFactory::randomShapeOf(shapeTypes, width, height)}
     {}
 
     inline ~State() = default;
-    inline State& operator=(const State& other)
+    inline geometrize::State& operator=(const geometrize::State& other)
     {
         if(this != &other) {
             m_shape = other.m_shape->clone();
@@ -45,7 +51,7 @@ public:
         return *this;
     }
 
-    inline State(const State& other)
+    inline geometrize::State(const geometrize::State& other)
     {
         m_shape = other.m_shape->clone();
         m_score = other.m_score;
@@ -57,7 +63,7 @@ public:
      * The lower the energy, the better. The score is cached, set it to < 0 to recalculate it.
      * @return The energy measure.
      */
-    inline float calculateEnergy(const Bitmap& target, const Bitmap& current, Bitmap& buffer)
+    inline float calculateEnergy(const geometrize::Bitmap& target, const geometrize::Bitmap& current, geometrize::Bitmap& buffer)
     {
         if(m_score < 0) {
             m_score = geometrize::core::energy(m_shape->rasterize(), m_alpha, target, current, buffer, m_score);
@@ -69,19 +75,18 @@ public:
      * @brief mutate Modifies the current state in a random fashion.
      * @return The old state - in case we want to go back to the old state.
      */
-    inline State mutate()
+    inline geometrize::State mutate()
     {
-        State oldState(*this);
+        geometrize::State oldState(*this);
         oldState.m_score = -1;
         m_shape->mutate();
         m_score = -1;
         return oldState;
     }
 
-    // TODO watch memory leaks
-    Shape* m_shape; ///< The geometric primitive owned by the state.
     float m_score; ///< The score of the state, a measure of the improvement applying the state to the current bitmap will have.
-    int m_alpha; ///< The alpha of the shape.
+    std::uint32_t m_alpha; ///< The alpha of the shape.
+    geometrize::Shape* m_shape; ///< The geometric primitive owned by the state. // TODO watch memory leaks!!!!!!!!!!!!!!!!!!!!!!!!!!
 };
 
 }

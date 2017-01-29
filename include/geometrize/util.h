@@ -2,6 +2,8 @@
 
 #include <algorithm>
 #include <assert.h>
+#include <cstdint>
+#include <random>
 
 namespace geometrize
 {
@@ -21,7 +23,7 @@ public:
      * @param max The upper bound.
      * @return The random integer in the range.
      */
-    inline static int randomRange(const int min, const int max)
+    inline static std::int32_t randomRange(const std::int32_t min, const std::int32_t max)
     {
         assert(min <= max);
         return min + (rand() % (max - min + 1)); // Note this is biased
