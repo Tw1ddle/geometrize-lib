@@ -1,5 +1,7 @@
 #include "../catch.hpp"
 
+#include <cstdint>
+
 #include "geometrize/bitmap/bitmap.h"
 #include "geometrize/bitmap/rgba.h"
 #include "geometrize/core.h"
@@ -20,8 +22,6 @@ TEST_CASE("Test computation of scanline color for whole image", "[core]")
     const geometrize::rgba expected{23, 0, 0, 128};
     const geometrize::rgba result{computeScanlinesColor(geometrize::rgba{12, 12, 12, 0}, geometrize::rgba{0, 212, 62, 0}, 128)};
     REQUIRE(expected == result);
-
-
 }
 
 TEST_CASE("Test drawing of scanlines", "[core]")
@@ -52,8 +52,8 @@ TEST_CASE("Test copying of scanlines", "[core]")
     geometrize::core::copyLines(destination, source, scanlines);
 
     for(const geometrize::Scanline& line : scanlines) {
-        const int y{line.y};
-        for(int x = line.x1; x < line.x2; x++) {
+        const std::uint32_t y{line.y};
+        for(std::uint32_t x = line.x1; x < line.x2; x++) {
             REQUIRE(destination.getPixel(x, y) == color);
         }
     }
