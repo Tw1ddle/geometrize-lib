@@ -1,6 +1,6 @@
 #include "../catch.hpp"
 
-#include "geometrize/util.h"
+#include "geometrize/commonutil.h"
 
 TEST_CASE("Test clamp", "[util]")
 {
@@ -9,7 +9,7 @@ TEST_CASE("Test clamp", "[util]")
         const int min{-5};
         const int max{5};
         for(int i = -10; i < 10; i++) {
-            const int clamped{geometrize::util::clamp(i, min, max)};
+            const int clamped{geometrize::commonutil::clamp(i, min, max)};
             REQUIRE((clamped >= min && clamped <= max));
         }
     }
@@ -22,7 +22,7 @@ TEST_CASE("Test random range", "[util]")
         const int min{-30};
         const int max{30};
         for(int i = 0; i < 10000; i++) {
-            const int random{geometrize::util::Random::randomRange(min, max)};
+            const int random{geometrize::commonutil::randomRange(min, max)};
             if(random < min || random > max) {
                 FAIL("Out of range value generated");
             }
