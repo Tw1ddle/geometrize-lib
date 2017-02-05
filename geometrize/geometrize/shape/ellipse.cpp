@@ -1,6 +1,7 @@
 #include "ellipse.h"
 
 #include <cstdint>
+#include <memory>
 
 #include "shape.h"
 #include "../commonutil.h"
@@ -13,9 +14,9 @@ Ellipse::Ellipse(const std::uint32_t xBound, const std::uint32_t yBound) : m_xBo
     // TODO
 }
 
-geometrize::Shape* Ellipse::clone() const
+std::shared_ptr<geometrize::Shape> Ellipse::clone() const
 {
-    return new Ellipse(m_xBound, m_yBound); // TODO
+    return std::make_shared<geometrize::Ellipse>(m_xBound, m_yBound); // TODO
 }
 
 std::vector<geometrize::Scanline> Ellipse::rasterize() const

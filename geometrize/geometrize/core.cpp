@@ -85,7 +85,7 @@ void drawLines(geometrize::Bitmap& image, const geometrize::rgba color, const st
     for(const geometrize::Scanline& line : lines) {
         const std::uint32_t y{line.y};
         const std::uint32_t ma{line.alpha};
-        const std::uint32_t m{65635U};
+        const std::uint32_t m{UINT16_MAX};
         const std::uint32_t aa = (m - sa * ma / m) * 0x101;
 
         for(std::uint32_t x = line.x1; x < line.x2; x++) { // TODO < or <=?
@@ -265,12 +265,14 @@ geometrize::rgba getAverageImageColor(const geometrize::Bitmap& image)
         totalBlue += data[i + 2];
     }
 
-    return geometrize::rgba{
+    const geometrize::rgba result{
         static_cast<std::uint8_t>(totalRed / numPixels),
         static_cast<std::uint8_t>(totalGreen / numPixels),
         static_cast<std::uint8_t>(totalBlue / numPixels),
-        static_cast<std::uint8_t>(255U)
+        static_cast<std::uint8_t>(UINT8_MAX)
     };
+
+    return result;
 }
 
 float energy(

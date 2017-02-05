@@ -62,7 +62,7 @@ std::vector<geometrize::ShapeResult> Model::step(const geometrize::shapes::Shape
     return results;
 }
 
-geometrize::ShapeResult Model::addShape(geometrize::Shape* shape, const std::uint8_t alpha)
+geometrize::ShapeResult Model::addShape(std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)
 {
     const geometrize::Bitmap before{m_current};
     const std::vector<geometrize::Scanline> lines{shape->rasterize()};

@@ -27,12 +27,6 @@ public:
     ImageRunner(const ImageRunner&) = delete;
 
     /**
-     * @brief Updates runner until the number of primitives specified in the runner options are added.
-     * @return A vector containing data about the shapes added to the model in this step.
-     */
-    std::vector<geometrize::ShapeResult> run();
-
-    /**
      * @brief Updates the model once.
      * @return A vector containing data about the shapes just added to the model.
      */

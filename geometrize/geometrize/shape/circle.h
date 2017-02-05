@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <memory>
 
 #include "shape.h"
 
@@ -21,7 +22,7 @@ public:
      */
     Circle(const std::uint32_t xBound, const std::uint32_t yBound);
 
-    virtual geometrize::Shape* clone() const;
+    virtual std::shared_ptr<geometrize::Shape> clone() const;
     virtual std::vector<geometrize::Scanline> rasterize() const override;
     virtual void mutate() override;
     virtual geometrize::shapes::ShapeTypes getType() const override;

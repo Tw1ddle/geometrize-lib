@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cstdint>
+#include <memory>
 
 #include "shape.h"
 #include "../commonutil.h"
@@ -17,9 +18,9 @@ Rectangle::Rectangle(const std::uint32_t xBound, const std::uint32_t yBound) : m
     m_y2 = commonutil::clamp(m_y1 + commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1), 0U, m_yBound);
 }
 
-geometrize::Shape* Rectangle::clone() const
+std::shared_ptr<geometrize::Shape> Rectangle::clone() const
 {
-    geometrize::Rectangle* rect{new Rectangle(m_xBound, m_yBound)};
+    std::shared_ptr<geometrize::Rectangle> rect{std::make_shared<geometrize::Rectangle>(m_xBound, m_yBound)};
     rect->m_x1 = m_x1;
     rect->m_y1 = m_y1;
     rect->m_x2 = m_x2;
@@ -27,7 +28,7 @@ geometrize::Shape* Rectangle::clone() const
     return rect;
 }
 
-std::vector<Scanline> Rectangle::rasterize() const
+std::vector<geometrize::Scanline> Rectangle::rasterize() const
 {
     std::vector<geometrize::Scanline> lines;
     for(std::uint32_t y = m_y1; y < m_y2; y++) {

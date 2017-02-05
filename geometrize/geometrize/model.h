@@ -68,7 +68,7 @@ public:
      * @param alpha The alpha/opacity of the shape.
      * @return Data about the shape added to the model.
      */
-    geometrize::ShapeResult addShape(geometrize::Shape* shape, const std::uint8_t alpha);
+    geometrize::ShapeResult addShape(std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha);
 
     /**
      * @brief getCurrent Gets the current bitmap.

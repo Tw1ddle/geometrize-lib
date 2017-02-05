@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <memory>
 #include <vector>
 
 #include "bitmap/bitmap.h"
@@ -46,7 +47,7 @@ public:
 
     float m_score; ///< The score of the state, a measure of the improvement applying the state to the current bitmap will have.
     std::uint32_t m_alpha; ///< The alpha of the shape.
-    geometrize::Shape* m_shape; ///< The geometric primitive owned by the state. // TODO watch memory leaks!!!!!!!!!!!!!!!!!!!!!!!!!!
+    std::shared_ptr<geometrize::Shape> m_shape; ///< The geometric primitive owned by the state. // TODO watch memory leaks!!!!!!!!!!!!!!!!!!!!!!!!!!
 };
 
 }

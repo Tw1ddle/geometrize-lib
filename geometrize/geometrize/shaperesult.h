@@ -14,7 +14,7 @@ struct ShapeResult
 {
     float score;
     geometrize::rgba color;
-    geometrize::Shape* shape;
+    std::shared_ptr<geometrize::Shape> shape;
 };
 
 }

@@ -1,6 +1,7 @@
 #include "rotatedellipse.h"
 
 #include <cstdint>
+#include <memory>
 
 #include "shape.h"
 #include "../commonutil.h"
@@ -13,12 +14,12 @@ RotatedEllipse::RotatedEllipse(const std::uint32_t xBound, const std::uint32_t y
     // TODO
 }
 
-geometrize::Shape* RotatedEllipse::clone() const
+std::shared_ptr<geometrize::Shape> RotatedEllipse::clone() const
 {
-    return new geometrize::RotatedEllipse(m_xBound, m_yBound); // TODO
+    return std::make_shared<geometrize::RotatedEllipse>(m_xBound, m_yBound); // TODO
 }
 
-std::vector<Scanline> RotatedEllipse::rasterize() const
+std::vector<geometrize::Scanline> RotatedEllipse::rasterize() const
 {
     std::vector<geometrize::Scanline> lines;
     return lines; // TODO

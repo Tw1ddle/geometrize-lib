@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 
 #include "../scanline.h"
@@ -24,7 +25,7 @@ public:
      * @brief clone Clones the shape, a virtual copy constructor.
      * @return A clone of the shape.
      */
-    virtual geometrize::Shape* clone() const = 0;
+    virtual std::shared_ptr<geometrize::Shape> clone() const = 0;
 
     /**
      * @brief rasterize Creates a raster scanline representation of the shape.

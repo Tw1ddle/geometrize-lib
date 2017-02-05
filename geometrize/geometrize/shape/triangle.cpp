@@ -1,6 +1,7 @@
 #include "triangle.h"
 
 #include <cstdint>
+#include <memory>
 
 #include "shape.h"
 #include "../commonutil.h"
@@ -13,9 +14,9 @@ Triangle::Triangle(const std::uint32_t xBound, const std::uint32_t yBound) : m_x
     // TODO
 }
 
-geometrize::Shape* Triangle::clone() const
+std::shared_ptr<geometrize::Shape> Triangle::clone() const
 {
-    return new geometrize::Triangle(m_xBound, m_yBound); // TODO
+    return std::make_shared<geometrize::Triangle>(m_xBound, m_yBound); // TODO
 }
 
 std::vector<geometrize::Scanline> Triangle::rasterize() const

@@ -1,6 +1,7 @@
 #include "rotatedrectangle.h"
 
 #include <cstdint>
+#include <memory>
 
 #include "shape.h"
 #include "../commonutil.h"
@@ -13,9 +14,9 @@ RotatedRectangle::RotatedRectangle(const std::uint32_t xBound, const std::uint32
     // TODO
 }
 
-geometrize::Shape* RotatedRectangle::clone() const
+std::shared_ptr<geometrize::Shape> RotatedRectangle::clone() const
 {
-    return new geometrize::RotatedRectangle(m_xBound, m_yBound); // TODO
+    return std::make_shared<geometrize::RotatedRectangle>(m_xBound, m_yBound); // TODO
 }
 
 std::vector<geometrize::Scanline> RotatedRectangle::rasterize() const

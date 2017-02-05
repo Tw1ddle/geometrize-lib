@@ -18,37 +18,37 @@
 namespace geometrize
 {
 
-geometrize::Shape* create(geometrize::shapes::ShapeTypes t, const std::uint32_t xBound, const std::uint32_t yBound)
+std::shared_ptr<geometrize::Shape> create(geometrize::shapes::ShapeTypes t, const std::uint32_t xBound, const std::uint32_t yBound)
 {
     switch(t) {
         case geometrize::shapes::ShapeTypes::CIRCLE:
-            return new Circle(xBound, yBound);
+            return std::make_shared<Circle>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::ELLIPSE:
-            return new Ellipse(xBound, yBound);
+            return std::make_shared<Ellipse>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::ROTATED_ELLIPSE:
-            return new RotatedEllipse(xBound, yBound);
+            return std::make_shared<RotatedEllipse>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::ROTATED_RECTANGLE:
-            return new RotatedRectangle(xBound, yBound);
+            return std::make_shared<RotatedRectangle>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::TRIANGLE:
-            return new Triangle(xBound, yBound);
+            return std::make_shared<Triangle>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::RECTANGLE:
-            return new Rectangle(xBound, yBound);
+            return std::make_shared<Rectangle>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::SHAPE_COUNT:
          assert(0 && "Bad shape value");
     };
 
     assert(0 && "Unhandled shape type encountered");
-    return new Rectangle(xBound, yBound);
+    return std::make_shared<Rectangle>(xBound, yBound);
 }
 
-geometrize::Shape* randomShape(const std::uint32_t xBound, const std::uint32_t yBound)
+std::shared_ptr<geometrize::Shape> randomShape(const std::uint32_t xBound, const std::uint32_t yBound)
 {
     return create(geometrize::shapes::allShapes[commonutil::randomRange(0, static_cast<int>(geometrize::shapes::allShapes.size()) - 1)], xBound, yBound);
 }
 
-geometrize::Shape* randomShapeOf(const shapes::ShapeTypes t, const std::uint32_t xBound, const std::uint32_t yBound)
+std::shared_ptr<geometrize::Shape>  randomShapeOf(const shapes::ShapeTypes t, const std::uint32_t xBound, const std::uint32_t yBound)
 {
-    return new Rectangle(xBound, yBound); // TODO
+    return std::make_shared<Rectangle>(xBound, yBound); // TODO
 
     const std::bitset<32> b(t);
     std::vector<std::uint32_t> bits;
