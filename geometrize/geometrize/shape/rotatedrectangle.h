@@ -23,7 +23,7 @@ public:
     RotatedRectangle(const std::uint32_t xBound, const std::uint32_t yBound);
 
     virtual std::shared_ptr<geometrize::Shape> clone() const;
-    virtual std::vector<Scanline> rasterize() const override;
+    virtual std::vector<geometrize::Scanline> rasterize() const override;
     virtual void mutate() override;
     virtual geometrize::shapes::ShapeTypes getType() const override;
     virtual std::vector<std::int32_t> getShapeData() const override;

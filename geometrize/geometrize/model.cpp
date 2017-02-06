@@ -54,6 +54,7 @@ public:
 
     std::vector<geometrize::ShapeResult> step(const geometrize::shapes::ShapeTypes shapeTypes, const std::uint8_t alpha, const std::uint32_t repeats)
     {
+        // TODO use multiple buffers and multithread this
         geometrize::State state{geometrize::core::bestHillClimbState(shapeTypes, alpha, 1000, 100, 16, m_target, m_current, m_buffer)}; // TODO pass more params
         std::vector<geometrize::ShapeResult> results;
         results.push_back(addShape(state.m_shape, alpha));

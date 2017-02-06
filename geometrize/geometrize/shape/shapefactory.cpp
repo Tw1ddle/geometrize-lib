@@ -22,17 +22,17 @@ std::shared_ptr<geometrize::Shape> create(geometrize::shapes::ShapeTypes t, cons
 {
     switch(t) {
         case geometrize::shapes::ShapeTypes::CIRCLE:
-            return std::make_shared<Circle>(xBound, yBound);
+            return std::make_shared<geometrize::shapes::Circle>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::ELLIPSE:
-            return std::make_shared<Ellipse>(xBound, yBound);
+            return std::make_shared<geometrize::shapes::Ellipse>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::ROTATED_ELLIPSE:
-            return std::make_shared<RotatedEllipse>(xBound, yBound);
+            return std::make_shared<geometrize::shapes::RotatedEllipse>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::ROTATED_RECTANGLE:
-            return std::make_shared<RotatedRectangle>(xBound, yBound);
+            return std::make_shared<geometrize::shapes::RotatedRectangle>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::TRIANGLE:
-            return std::make_shared<Triangle>(xBound, yBound);
+            return std::make_shared<geometrize::shapes::Triangle>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::RECTANGLE:
-            return std::make_shared<Rectangle>(xBound, yBound);
+            return std::make_shared<geometrize::shapes::Rectangle>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::SHAPE_COUNT:
          assert(0 && "Bad shape value");
     };

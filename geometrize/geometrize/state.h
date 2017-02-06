@@ -47,7 +47,7 @@ public:
 
     float m_score; ///< The score of the state, a measure of the improvement applying the state to the current bitmap will have.
     std::uint32_t m_alpha; ///< The alpha of the shape.
-    std::shared_ptr<geometrize::Shape> m_shape; ///< The geometric primitive owned by the state. // TODO watch memory leaks!!!!!!!!!!!!!!!!!!!!!!!!!!
+    std::shared_ptr<geometrize::Shape> m_shape; ///< The geometric primitive owned by the state.
 };
 
 }
