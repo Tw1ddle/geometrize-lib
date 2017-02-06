@@ -1,9 +1,8 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 
-#include "imagerunneroptions.h"
-#include "../model.h"
 #include "../shaperesult.h"
 
 namespace geometrize
@@ -22,13 +21,13 @@ class ImageRunner
 {
 public:
     ImageRunner(geometrize::Bitmap& bitmap);
-    ~ImageRunner() = default;
+    ~ImageRunner();
     ImageRunner& operator=(const ImageRunner&) = delete;
     ImageRunner(const ImageRunner&) = delete;
 
     /**
-     * @brief Updates the model once.
-     * @return A vector containing data about the shapes just added to the model.
+     * @brief Updates the internal model once.
+     * @return A vector containing data about the shapes just added to the internal model.
      */
     std::vector<geometrize::ShapeResult> step();
 
@@ -39,8 +38,8 @@ public:
     geometrize::Bitmap& getBitmap();
 
 private:
-    geometrize::Model m_model; ///< The model for the primitive optimization/fitting algorithm.
-    geometrize::ImageRunnerOptions m_options; ///< The runtime configuration parameters for the runner.
+    class ImageRunnerImpl;
+    std::unique_ptr<ImageRunner::ImageRunnerImpl> d;
 };
 
 }

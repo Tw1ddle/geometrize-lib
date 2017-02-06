@@ -1,14 +1,15 @@
 #pragma once
 
 #include <cstdint>
+#include <memory>
 #include <vector>
 
-#include "bitmap/bitmap.h"
 #include "shaperesult.h"
 #include "shape/shapetypes.h"
 
 namespace geometrize
 {
+class Bitmap;
 class Shape;
 }
 
@@ -23,9 +24,7 @@ class Model
 {
 public:
     Model(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor);
-
-    inline Model() = delete;
-    inline ~Model() = default;
+    ~Model();
     Model& operator=(const Model&) = delete;
     Model(const Model&) = delete;
 
@@ -77,10 +76,8 @@ public:
     geometrize::Bitmap& getCurrent();
 
 private:
-    geometrize::Bitmap m_target; ///< The target bitmap, the bitmap we aim to approximate.
-    geometrize::Bitmap m_current; ///< The current bitmap.
-    geometrize::Bitmap m_buffer; ///< Buffer bitmap.
-    float m_score; ///< Score derived from calculating the difference between bitmaps.
+    class ModelImpl;
+    std::unique_ptr<Model::ModelImpl> d;
 };
 
 }
