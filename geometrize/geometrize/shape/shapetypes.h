@@ -23,7 +23,7 @@ enum ShapeTypes
     SHAPE_COUNT = 6U
 };
 
-static const std::array<ShapeTypes, ShapeTypes::SHAPE_COUNT> allShapes = { RECTANGLE, ROTATED_RECTANGLE, TRIANGLE, ELLIPSE, ROTATED_ELLIPSE, CIRCLE };
+static const std::array<ShapeTypes, ShapeTypes::SHAPE_COUNT> allShapes = { RECTANGLE, ROTATED_RECTANGLE, TRIANGLE, ELLIPSE, ROTATED_ELLIPSE, CIRCLE }; ///< An array of all shape types.
 
 }
 

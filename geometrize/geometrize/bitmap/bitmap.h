@@ -47,13 +47,13 @@ public:
 
     /**
      * @brief copyData Gets a copy of the raw bitmap data.
-     * @return	The bitmap data.
+     * @return The bitmap data.
      */
     std::vector<std::uint8_t> copyData() const;
 
     /**
      * @brief getDataRef Gets a reference to the raw bitmap data.
-     * @return  The bitmap data.
+     * @return The bitmap data.
      */
     const std::vector<std::uint8_t>& getDataRef() const;
 

@@ -22,23 +22,23 @@ std::shared_ptr<geometrize::Shape> create(geometrize::shapes::ShapeTypes t, cons
 {
     switch(t) {
         case geometrize::shapes::ShapeTypes::CIRCLE:
-            return std::make_shared<geometrize::shapes::Circle>(xBound, yBound);
+            return std::make_shared<geometrize::Circle>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::ELLIPSE:
-            return std::make_shared<geometrize::shapes::Ellipse>(xBound, yBound);
+            return std::make_shared<geometrize::Ellipse>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::ROTATED_ELLIPSE:
-            return std::make_shared<geometrize::shapes::RotatedEllipse>(xBound, yBound);
+            return std::make_shared<geometrize::RotatedEllipse>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::ROTATED_RECTANGLE:
-            return std::make_shared<geometrize::shapes::RotatedRectangle>(xBound, yBound);
+            return std::make_shared<geometrize::RotatedRectangle>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::TRIANGLE:
-            return std::make_shared<geometrize::shapes::Triangle>(xBound, yBound);
+            return std::make_shared<geometrize::Triangle>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::RECTANGLE:
-            return std::make_shared<geometrize::shapes::Rectangle>(xBound, yBound);
+            return std::make_shared<geometrize::Rectangle>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::SHAPE_COUNT:
          assert(0 && "Bad shape value");
     };
 
     assert(0 && "Unhandled shape type encountered");
-    return std::make_shared<Rectangle>(xBound, yBound);
+    return std::make_shared<geometrize::Rectangle>(xBound, yBound);
 }
 
 std::shared_ptr<geometrize::Shape> randomShape(const std::uint32_t xBound, const std::uint32_t yBound)
@@ -48,7 +48,7 @@ std::shared_ptr<geometrize::Shape> randomShape(const std::uint32_t xBound, const
 
 std::shared_ptr<geometrize::Shape>  randomShapeOf(const shapes::ShapeTypes t, const std::uint32_t xBound, const std::uint32_t yBound)
 {
-    return std::make_shared<Rectangle>(xBound, yBound); // TODO
+    return std::make_shared<geometrize::Rectangle>(xBound, yBound); // TODO
 
     const std::bitset<32> b(t);
     std::vector<std::uint32_t> bits;
