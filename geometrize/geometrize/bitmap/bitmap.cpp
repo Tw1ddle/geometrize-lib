@@ -39,13 +39,13 @@ const std::vector<std::uint8_t>& Bitmap::getDataRef() const
 
 geometrize::rgba Bitmap::getPixel(const std::uint32_t x, const std::uint32_t y) const
 {
-    const std::size_t index{(m_width * y + x) * 4};
+    const std::uint32_t index{(m_width * y + x) * 4};
     return geometrize::rgba{m_data[index], m_data[index + 1], m_data[index + 2], m_data[index + 3]};
 }
 
 void Bitmap::setPixel(const std::uint32_t x, const std::uint32_t y, const geometrize::rgba color)
 {
-    const std::size_t index{(m_width * y + x) * 4};
+    const std::uint32_t index{(m_width * y + x) * 4};
     m_data[index] = color.r;
     m_data[index + 1u] = color.g;
     m_data[index + 2u] = color.b;
@@ -54,7 +54,7 @@ void Bitmap::setPixel(const std::uint32_t x, const std::uint32_t y, const geomet
 
 void Bitmap::fill(const geometrize::rgba color)
 {
-    for(std::size_t i = 0; i < m_data.size(); i += 4u) {
+    for(std::uint32_t i = 0; i < m_data.size(); i += 4u) {
         m_data[i] = color.r;
         m_data[i + 1u] = color.g;
         m_data[i + 2u] = color.b;
