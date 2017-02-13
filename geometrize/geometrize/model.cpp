@@ -56,6 +56,7 @@ public:
     {
         // TODO use multiple buffers and multithread this
         geometrize::State state{geometrize::core::bestHillClimbState(shapeTypes, alpha, 1000, 100, 16, m_target, m_current, m_buffer)}; // TODO pass more params
+
         std::vector<geometrize::ShapeResult> results;
         results.push_back(addShape(state.m_shape, alpha));
 

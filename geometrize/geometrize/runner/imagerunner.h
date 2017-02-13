@@ -20,7 +20,7 @@ namespace geometrize
 class ImageRunner
 {
 public:
-    ImageRunner(geometrize::Bitmap& bitmap);
+    ImageRunner(const geometrize::Bitmap& bitmap);
     ~ImageRunner();
     ImageRunner& operator=(const ImageRunner&) = delete;
     ImageRunner(const ImageRunner&) = delete;

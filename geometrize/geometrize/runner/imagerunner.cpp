@@ -15,7 +15,7 @@ namespace geometrize
 class ImageRunner::ImageRunnerImpl
 {
 public:
-    ImageRunnerImpl(geometrize::Bitmap& bitmap) : m_model{bitmap, geometrize::core::getAverageImageColor(bitmap)} {} // TODO set the starting color optionally
+    ImageRunnerImpl(const geometrize::Bitmap& bitmap) : m_model{bitmap, geometrize::core::getAverageImageColor(bitmap)} {} // TODO set the starting color optionally
     ~ImageRunnerImpl() = default;
     ImageRunnerImpl& operator=(const ImageRunnerImpl&) = delete;
     ImageRunnerImpl(const ImageRunnerImpl&) = delete;
@@ -35,7 +35,7 @@ private:
     geometrize::ImageRunnerOptions m_options; ///< The runtime configuration parameters for the runner.
 };
 
-ImageRunner::ImageRunner(geometrize::Bitmap& bitmap) : d{std::make_unique<ImageRunner::ImageRunnerImpl>(bitmap)}
+ImageRunner::ImageRunner(const geometrize::Bitmap& bitmap) : d{std::make_unique<ImageRunner::ImageRunnerImpl>(bitmap)}
 {}
 
 ImageRunner::~ImageRunner()
