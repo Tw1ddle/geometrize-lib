@@ -19,6 +19,8 @@ namespace geometrize
 class State
 {
 public:
+    State(); // TODO why is this required for futures?
+
     /**
      * @brief Creates a new state.
      * @param shapeTypes The types of geometric primitive to select.

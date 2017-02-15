@@ -62,12 +62,12 @@ public:
     std::vector<geometrize::ShapeResult> step(const geometrize::shapes::ShapeTypes shapeTypes, const std::uint8_t alpha, const std::uint32_t repeats);
 
     /**
-     * @brief addShape Adds a shape to the model.
-     * @param shape The shape to add.
+     * @brief drawShape Draws a shape on the model.
+     * @param shape The shape to draw.
      * @param alpha The alpha/opacity of the shape.
-     * @return Data about the shape added to the model.
+     * @return Data about the shape drawn on the model.
      */
-    geometrize::ShapeResult addShape(std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha);
+    geometrize::ShapeResult drawShape(std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha);
 
     /**
      * @brief getCurrent Gets the current bitmap.

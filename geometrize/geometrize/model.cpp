@@ -1,6 +1,8 @@
 #include "model.h"
 
+#include <algorithm>
 #include <cstdint>
+#include <future>
 #include <memory>
 #include <vector>
 
@@ -19,7 +21,6 @@ public:
     ModelImpl(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) :
         m_target(target),
         m_current(target.getWidth(), target.getHeight(), backgroundColor),
-        m_buffer(target.getWidth(), target.getHeight(), backgroundColor),
         m_score{geometrize::core::differenceFull(m_target, m_current)}
     {}
 
@@ -30,7 +31,6 @@ public:
     void reset(const geometrize::rgba backgroundColor)
     {
         m_current.fill(backgroundColor);
-        m_buffer.fill(backgroundColor);
         m_score = geometrize::core::differenceFull(m_target, m_current);
     }
 
@@ -52,27 +52,52 @@ public:
         return static_cast<float>(m_target.getWidth()) / static_cast<float>(m_target.getHeight());
     }
 
+    std::vector<geometrize::State> getHillClimbState(const geometrize::shapes::ShapeTypes shapeTypes, const std::uint8_t alpha)
+    {
+        std::vector<std::future<geometrize::State>> futures;
+
+        const std::uint32_t maxThreads{8};
+        for(std::uint32_t i = 0; i < maxThreads; i++) {
+            std::future<geometrize::State> handle{std::async(std::launch::async, [&]() {
+                geometrize::Bitmap buffer{m_current};
+                return state;
+            })};
+            futures.push_back(std::move(handle));
+        }
+
+        std::vector<geometrize::State> states;
+        for(auto& f : futures) {
+            states.push_back(f.get());
+        }
+        return states;
+    }
+
     std::vector<geometrize::ShapeResult> step(const geometrize::shapes::ShapeTypes shapeTypes, const std::uint8_t alpha, const std::uint32_t repeats)
     {
-        // TODO use multiple buffers and multithread this
-        geometrize::State state{geometrize::core::bestHillClimbState(shapeTypes, alpha, 1000, 100, 16, m_target, m_current, m_buffer)}; // TODO pass more params
+        std::vector<geometrize::State> states{getHillClimbState(shapeTypes, alpha)};
+        std::vector<geometrize::State>::iterator it = std::min_element(states.begin(), states.end(), [](const geometrize::State& a, const geometrize::State& b) {
+            return a.m_score < b.m_score;
+        });
 
         std::vector<geometrize::ShapeResult> results;
-        results.push_back(addShape(state.m_shape, alpha));
+        results.push_back(drawShape((*it).m_shape, alpha));
 
+        /*
         for(std::uint32_t i = 0; i < repeats; i++) {
-            const float before{state.calculateEnergy(m_target, m_current, m_buffer)};
-            state = geometrize::core::hillClimb(state, 100, m_target, m_current, m_buffer);
-            const float after{state.calculateEnergy(m_target, m_current, m_buffer)};
+            const float before{state.calculateEnergy(m_target, m_current, buffer)};
+            state = geometrize::core::hillClimb(state, 100, m_target, m_current, buffer);
+            const float after{state.calculateEnergy(m_target, m_current, buffer)};
             if(before == after) {
                 break;
             }
-            results.push_back(addShape(state.m_shape, state.m_alpha));
+            results.push_back(drawShape(state.m_shape, state.m_alpha));
         }
+        */
+
         return results;
     }
 
-    geometrize::ShapeResult addShape(std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)
+    geometrize::ShapeResult drawShape(std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)
     {
         const geometrize::Bitmap before{m_current};
         const std::vector<geometrize::Scanline> lines{shape->rasterize()};
@@ -93,7 +118,6 @@ public:
 private:
     geometrize::Bitmap m_target; ///< The target bitmap, the bitmap we aim to approximate.
     geometrize::Bitmap m_current; ///< The current bitmap.
-    geometrize::Bitmap m_buffer; ///< Buffer bitmap.
     float m_score; ///< Score derived from calculating the difference between bitmaps.
 };
 
@@ -128,9 +152,9 @@ std::vector<geometrize::ShapeResult> Model::step(const geometrize::shapes::Shape
     return d->step(shapeTypes, alpha, repeats);
 }
 
-geometrize::ShapeResult Model::addShape(std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)
+geometrize::ShapeResult Model::drawShape(std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)
 {
-    return d->addShape(shape, alpha);
+    return d->drawShape(shape, alpha);
 }
 
 geometrize::Bitmap& Model::getCurrent()
