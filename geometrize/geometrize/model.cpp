@@ -56,7 +56,7 @@ public:
     {
         std::vector<std::future<geometrize::State>> futures;
 
-        const std::uint32_t maxThreads{8};
+        const std::uint32_t maxThreads{std::max(1U, std::thread::hardware_concurrency())};
         for(std::uint32_t i = 0; i < maxThreads; i++) {
             std::future<geometrize::State> handle{std::async(std::launch::async, [&]() {
                 geometrize::Bitmap buffer{m_current};
