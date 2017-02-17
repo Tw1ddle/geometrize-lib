@@ -62,10 +62,10 @@ bool exportBitmap(const geometrize::Bitmap& bitmapData, const std::string& fileP
     const std::uint32_t BITMAP_FILE_HEADER_SIZE{14U};
     const std::uint32_t BITMAP_INFORMATION_HEADER_SIZE{40U};
 
-    const std::uint32_t width{bitmapData.getWidth()}; // The width of the image, in pixels.
-    const std::uint32_t height{bitmapData.getHeight()}; // The height of the image. in pixels.
+    const std::uint32_t width{bitmapData.getWidth()}; // The width of the image in pixels.
+    const std::uint32_t height{bitmapData.getHeight()}; // The height of the image in pixels.
 
-    // Set pad byte count per row, for ensuring that each row is a multiple of 4 bytes.
+    // Per row pad byte count, used to ensure that each row is a multiple of 4 bytes.
     const std::uint32_t padding{ ((width * 3) % 4 != 0) ? 4 - ((width * 3) % 4) : 0};
 
     // Bitmap Information Header
