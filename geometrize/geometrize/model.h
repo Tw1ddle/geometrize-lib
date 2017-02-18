@@ -75,6 +75,12 @@ public:
      */
     geometrize::Bitmap& getCurrent();
 
+    /**
+     * @brief getTarget Gets the target bitmap.
+     * @return The target bitmap.
+     */
+    geometrize::Bitmap& getTarget();
+
 private:
     class ModelImpl;
     std::unique_ptr<Model::ModelImpl> d;

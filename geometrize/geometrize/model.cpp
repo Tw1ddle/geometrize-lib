@@ -110,6 +110,11 @@ public:
         return result;
     }
 
+    geometrize::Bitmap& getTarget()
+    {
+        return m_target;
+    }
+
     geometrize::Bitmap& getCurrent()
     {
         return m_current;
@@ -155,6 +160,11 @@ std::vector<geometrize::ShapeResult> Model::step(const geometrize::shapes::Shape
 geometrize::ShapeResult Model::drawShape(std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)
 {
     return d->drawShape(shape, alpha);
+}
+
+geometrize::Bitmap& Model::getTarget()
+{
+    return d->getTarget();
 }
 
 geometrize::Bitmap& Model::getCurrent()

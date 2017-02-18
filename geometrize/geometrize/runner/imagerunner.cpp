@@ -25,9 +25,14 @@ public:
         return m_model.step(m_options.shapeTypes, 128, 0); // TODO alpha, repeat params from config etc
     }
 
-    geometrize::Bitmap& getBitmap()
+    geometrize::Bitmap& getCurrent()
     {
         return m_model.getCurrent();
+    }
+
+    geometrize::Bitmap& getTarget()
+    {
+        return m_model.getTarget();
     }
 
 private:
@@ -46,9 +51,14 @@ std::vector<geometrize::ShapeResult> ImageRunner::step()
     return d->step();
 }
 
-geometrize::Bitmap& ImageRunner::getBitmap()
+geometrize::Bitmap& ImageRunner::getCurrent()
 {
-    return d->getBitmap();
+    return d->getCurrent();
+}
+
+geometrize::Bitmap& ImageRunner::getTarget()
+{
+    return d->getTarget();
 }
 
 }

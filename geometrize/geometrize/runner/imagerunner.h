@@ -26,16 +26,22 @@ public:
     ImageRunner(const ImageRunner&) = delete;
 
     /**
-     * @brief Updates the internal model once.
+     * @brief step Updates the internal model once.
      * @return A vector containing data about the shapes just added to the internal model.
      */
     std::vector<geometrize::ShapeResult> step();
 
     /**
-     * @brief Gets the current bitmap with the primitives drawn on it.
+     * @brief getCurrent Gets the current bitmap with the primitives drawn on it.
      * @return The current bitmap.
      */
-    geometrize::Bitmap& getBitmap();
+    geometrize::Bitmap& getCurrent();
+
+    /**
+     * @brief getTarget Gets the target bitmap.
+     * @return The target bitmap.
+     */
+    geometrize::Bitmap& getTarget();
 
 private:
     class ImageRunnerImpl;
