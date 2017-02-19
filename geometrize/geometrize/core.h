@@ -126,7 +126,7 @@ geometrize::State hillClimb(
  * @return The best state acquired from hill climbing i.e. the one with the lowest energy.
  */
 geometrize::State bestHillClimbState(
-        const geometrize::shapes::ShapeTypes shapeTypes,
+        geometrize::shapes::ShapeTypes shapeTypes,
         std::uint32_t alpha,
         std::uint32_t n,
         std::uint32_t age,

@@ -21,7 +21,7 @@ public:
      * @param height The height of the bitmap.
      * @param color The starting color of the bitmap (RGBA format).
      */
-    Bitmap(std::uint32_t width, std::uint32_t height, const geometrize::rgba color);
+    Bitmap(std::uint32_t width, std::uint32_t height, geometrize::rgba color);
 
     /**
      * @brief Bitmap Creates a new bitmap from the supplied byte data.
