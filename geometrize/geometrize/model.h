@@ -23,7 +23,7 @@ namespace geometrize
 class Model
 {
 public:
-    Model(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor);
+    Model(const geometrize::Bitmap& target, geometrize::rgba backgroundColor);
     ~Model();
     Model& operator=(const Model&) = delete;
     Model(const Model&) = delete;
@@ -32,7 +32,7 @@ public:
      * @brief reset Resets the model back to the state it was in when it was created.
      * @param backgroundColor The starting background color to use.
      */
-    void reset(const geometrize::rgba backgroundColor);
+    void reset(geometrize::rgba backgroundColor);
 
     /**
      * @brief getWidth Gets the width of the target bitmap.
@@ -59,7 +59,7 @@ public:
      * @param repeats How many times to repeat the stepping process with reduced search (per step), adding additional shapes.
      * @return A vector containing data about the shapes added to the model in this step.
      */
-    std::vector<geometrize::ShapeResult> step(const geometrize::shapes::ShapeTypes shapeTypes, const std::uint8_t alpha, const std::uint32_t repeats);
+    std::vector<geometrize::ShapeResult> step(geometrize::shapes::ShapeTypes shapeTypes, std::uint8_t alpha, std::uint32_t repeats);
 
     /**
      * @brief drawShape Draws a shape on the model.
@@ -67,7 +67,7 @@ public:
      * @param alpha The alpha/opacity of the shape.
      * @return Data about the shape drawn on the model.
      */
-    geometrize::ShapeResult drawShape(std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha);
+    geometrize::ShapeResult drawShape(std::shared_ptr<geometrize::Shape> shape, std::uint8_t alpha);
 
     /**
      * @brief getCurrent Gets the current bitmap.

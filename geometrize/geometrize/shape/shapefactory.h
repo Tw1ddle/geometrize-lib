@@ -20,7 +20,7 @@ namespace geometrize
  * @param yBound The y-bound of the whole canvas.
  * @return The new shape.
  */
-std::shared_ptr<geometrize::Shape> create(geometrize::shapes::ShapeTypes t, const std::uint32_t xBound, const std::uint32_t yBound);
+std::shared_ptr<geometrize::Shape> create(geometrize::shapes::ShapeTypes t, std::uint32_t xBound, std::uint32_t yBound);
 
 /**
  * @brief randomShape Creates a random shape.
@@ -28,7 +28,7 @@ std::shared_ptr<geometrize::Shape> create(geometrize::shapes::ShapeTypes t, cons
  * @param yBound The y-bound of the whole canvas.
  * @return The new shape.
  */
-std::shared_ptr<geometrize::Shape> randomShape(const std::uint32_t xBound, const std::uint32_t yBound);
+std::shared_ptr<geometrize::Shape> randomShape(std::uint32_t xBound, std::uint32_t yBound);
 
 /**
  * @brief randomShapeOf Creates a random shape from the types supplied.
@@ -37,6 +37,6 @@ std::shared_ptr<geometrize::Shape> randomShape(const std::uint32_t xBound, const
  * @param yBound The y-bound of the whole canvas.
  * @return The new shape.
  */
-std::shared_ptr<geometrize::Shape> randomShapeOf(const geometrize::shapes::ShapeTypes t, const std::uint32_t xBound, const std::uint32_t yBound);
+std::shared_ptr<geometrize::Shape> randomShapeOf(geometrize::shapes::ShapeTypes t, std::uint32_t xBound, std::uint32_t yBound);
 
 }

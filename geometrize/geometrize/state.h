@@ -28,7 +28,7 @@ public:
      * @param width The width of the bitmap.
      * @param height The height of the bitmap.
      */
-    State(const shapes::ShapeTypes shapeTypes, const std::uint32_t alpha, const std::uint32_t width, const std::uint32_t height);
+    State(shapes::ShapeTypes shapeTypes, std::uint32_t alpha, std::uint32_t width, std::uint32_t height);
 
     ~State() = default;
     geometrize::State(const geometrize::State& other);

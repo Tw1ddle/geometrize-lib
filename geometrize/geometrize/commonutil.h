@@ -15,7 +15,7 @@ namespace commonutil
  * @param max The upper bound.
  * @return The random integer in the range.
  */
-std::int32_t randomRange(const std::int32_t min, const std::int32_t max);
+std::int32_t randomRange(std::int32_t min, std::int32_t max);
 
 /**
  * Clamps a value within a range.

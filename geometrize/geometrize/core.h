@@ -36,7 +36,7 @@ geometrize::rgba computeColor(
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
         const std::vector<geometrize::Scanline>& lines,
-        const std::uint8_t alpha);
+        std::uint8_t alpha);
 
 /**
  * @brief drawLines Draws scanlines onto an image.
@@ -44,7 +44,7 @@ geometrize::rgba computeColor(
  * @param color The color of the scanlines.
  * @param lines The scanlines to draw.
  */
-void drawLines(geometrize::Bitmap& image, const geometrize::rgba color, const std::vector<geometrize::Scanline>& lines);
+void drawLines(geometrize::Bitmap& image, geometrize::rgba color, const std::vector<geometrize::Scanline>& lines);
 
 /**
  * @brief copyLines Copies source pixels to a destination defined by a set of scanlines.
@@ -76,7 +76,7 @@ float differencePartial(
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& before,
         const geometrize::Bitmap& after,
-        const float score,
+        float score,
         const std::vector<Scanline>& lines);
 
 /**
@@ -91,8 +91,8 @@ float differencePartial(
  */
 geometrize::State bestRandomState(
         const geometrize::shapes::ShapeTypes shapeTypes,
-        const std::uint32_t alpha,
-        const std::uint32_t n,
+        std::uint32_t alpha,
+        std::uint32_t n,
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
         geometrize::Bitmap& buffer);
@@ -108,7 +108,7 @@ geometrize::State bestRandomState(
  */
 geometrize::State hillClimb(
         const geometrize::State& state,
-        const std::uint32_t maxAge,
+        std::uint32_t maxAge,
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
         geometrize::Bitmap& buffer);
@@ -127,10 +127,10 @@ geometrize::State hillClimb(
  */
 geometrize::State bestHillClimbState(
         const geometrize::shapes::ShapeTypes shapeTypes,
-        const std::uint32_t alpha,
-        const std::uint32_t n,
-        const std::uint32_t age,
-        const std::uint32_t m,
+        std::uint32_t alpha,
+        std::uint32_t n,
+        std::uint32_t age,
+        std::uint32_t m,
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
         geometrize::Bitmap& buffer);
@@ -154,11 +154,11 @@ geometrize::rgba getAverageImageColor(const geometrize::Bitmap& image);
  */
 float energy(
         const std::vector<geometrize::Scanline>& lines,
-        const std::uint32_t alpha,
+        std::uint32_t alpha,
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
         geometrize::Bitmap& buffer,
-        const float score);
+        float score);
 
 }
 
