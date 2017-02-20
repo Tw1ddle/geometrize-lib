@@ -45,11 +45,11 @@ void Rectangle::mutate()
 
     switch(r) {
     case 0:
-        m_x1 = commonutil::clamp(m_x1 + commonutil::randomRange(-16, 16), 0U, m_xBound - 1);
-        m_y1 = commonutil::clamp(m_y1 + commonutil::randomRange(-16, 16), 0U, m_yBound - 1);
+        m_x1 = commonutil::clamp(m_x1 + commonutil::randomRange(-16, 16), 0U, m_xBound);
+        m_y1 = commonutil::clamp(m_y1 + commonutil::randomRange(-16, 16), 0U, m_yBound);
     case 1:
-        m_x2 = commonutil::clamp(m_x2 + commonutil::randomRange(-16, 16), 0U, m_xBound - 1);
-        m_y2 = commonutil::clamp(m_y2 + commonutil::randomRange(-16, 16), 0U, m_yBound - 1);
+        m_x2 = commonutil::clamp(m_x2 + commonutil::randomRange(-16, 16), 0U, m_xBound);
+        m_y2 = commonutil::clamp(m_y2 + commonutil::randomRange(-16, 16), 0U, m_yBound);
     }
 }
 
