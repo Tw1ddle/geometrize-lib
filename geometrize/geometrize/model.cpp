@@ -60,7 +60,7 @@ public:
         for(std::uint32_t i = 0; i < maxThreads; i++) {
             std::future<geometrize::State> handle{std::async(std::launch::async, [&]() {
                 geometrize::Bitmap buffer{m_current};
-                return state;
+                return core::bestHillClimbState(shapeTypes, alpha, 1000, 100, 16, m_target, m_current, buffer);
             })};
             futures.push_back(std::move(handle));
         }

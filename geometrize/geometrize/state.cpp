@@ -1,5 +1,6 @@
 #include "state.h"
 
+#include <assert.h>
 #include <cstdint>
 #include <vector>
 
@@ -21,6 +22,8 @@ State::State(const shapes::ShapeTypes shapeTypes, const std::uint32_t alpha, con
 
 State& State::operator=(const geometrize::State& other)
 {
+    assert(this != other);
+
     if(this != &other) {
         m_shape = other.m_shape->clone();
         m_score = other.m_score;
@@ -29,11 +32,8 @@ State& State::operator=(const geometrize::State& other)
     return *this;
 }
 
-State::State(const geometrize::State& other)
+State::State(const geometrize::State& other) : m_shape{other.m_shape->clone()}, m_score{other.m_score}, m_alpha{other.m_alpha}
 {
-    m_shape = other.m_shape->clone();
-    m_score = other.m_score;
-    m_alpha = other.m_alpha;
 }
 
 float State::calculateEnergy(const geometrize::Bitmap& target, const geometrize::Bitmap& current, geometrize::Bitmap& buffer)
