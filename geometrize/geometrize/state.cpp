@@ -22,8 +22,6 @@ State::State(const shapes::ShapeTypes shapeTypes, const std::uint32_t alpha, con
 
 State& State::operator=(const geometrize::State& other)
 {
-    assert(this != other);
-
     if(this != &other) {
         m_shape = other.m_shape->clone();
         m_score = other.m_score;
