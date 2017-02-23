@@ -18,31 +18,35 @@ std::string exportShapeJson(const std::vector<geometrize::ShapeResult>& data)
     std::stringstream stream;
     stream << "{\n";
 
-    for(const geometrize::ShapeResult& s : data) {
+    for(std::size_t i = 0; i < data.size(); i++) {
+        const geometrize::ShapeResult& s{data[i]};
+
+        stream << "\"shape_" << i << "\":" << "\n{\n";
+
         const geometrize::shapes::ShapeTypes type{s.shape->getType()};
-        const std::vector<std::int32_t> data{s.shape->getShapeData()};
+        stream << "\"type\":" << type << ",\n";
+
         const geometrize::rgba color{s.color};
+        const std::int32_t colorValue{(color.r << 24) + (color.g << 16) + (color.b << 8) + color.a};
+        stream << "\"color\":" << static_cast<std::uint32_t>(colorValue) << "," << "\n";
 
-        stream << "\"shape\":" << "{\n";
-
-        stream << "\"type\"" << type << ",\n";
-
-        const std::int32_t iColor{(color.r << 24) + (color.g << 16) + (color.b << 8) + color.a};
-        stream << "\"color\":" << iColor << "," << "\n";
-
+        const std::vector<std::int32_t> shapeData{s.shape->getShapeData()};
         stream << "\"data\":" << "[";
-        for(std::size_t i = 0; i < data.size(); i++) {
-            stream << i;
-            if(i != data.size()) {
+        for(std::size_t d = 0; d < shapeData.size(); d++) {
+            stream << shapeData[d];
+            if(d <= shapeData.size() - 2) {
                 stream << ",";
             }
         }
         stream << "]";
+        stream << "\n}";
 
-        stream << "}\n";
+        if(i <= data.size() - 2) {
+            stream << ",\n";
+        }
     }
 
-    stream << "}\n";
+    stream << "\n}";
     return stream.str();
 }
 
