@@ -22,7 +22,7 @@ public:
 
     std::vector<geometrize::ShapeResult> step()
     {
-        return m_model.step(m_options.shapeTypes, 128, 0); // TODO alpha, repeat params from config etc
+        return m_model.step(m_options.shapeTypes, 128); // TODO alpha, repeat params from config etc
     }
 
     geometrize::Bitmap& getCurrent()

@@ -56,18 +56,25 @@ public:
      * @brief step Steps the primitive optimization/fitting algorithm.
      * @param shapeTypes The types of shape to use.
      * @param alpha The alpha of the shape.
-     * @param repeats How many times to repeat the stepping process with reduced search (per step), adding additional shapes.
      * @return A vector containing data about the shapes added to the model in this step.
      */
-    std::vector<geometrize::ShapeResult> step(geometrize::shapes::ShapeTypes shapeTypes, std::uint8_t alpha, std::uint32_t repeats);
+    std::vector<geometrize::ShapeResult> step(geometrize::shapes::ShapeTypes shapeTypes, std::uint8_t alpha);
 
     /**
-     * @brief drawShape Draws a shape on the model.
+     * @brief drawShape Draws a shape on the model. The appropriate color to use is determined by the model.
      * @param shape The shape to draw.
      * @param alpha The alpha/opacity of the shape.
      * @return Data about the shape drawn on the model.
      */
     geometrize::ShapeResult drawShape(std::shared_ptr<geometrize::Shape> shape, std::uint8_t alpha);
+
+    /**
+     * @brief drawShape Draws a shape on the model.
+     * @param shape The shape to draw.
+     * @param color The color (including alpha) of the shape.
+     * @return Data about the shape drawn on the model.
+     */
+    geometrize::ShapeResult drawShape(std::shared_ptr<geometrize::Shape> shape, geometrize::rgba color);
 
     /**
      * @brief getCurrent Gets the current bitmap.

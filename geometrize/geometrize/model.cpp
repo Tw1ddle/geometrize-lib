@@ -72,36 +72,36 @@ public:
         return states;
     }
 
-    std::vector<geometrize::ShapeResult> step(const geometrize::shapes::ShapeTypes shapeTypes, const std::uint8_t alpha, const std::uint32_t repeats)
+    std::vector<geometrize::ShapeResult> step(const geometrize::shapes::ShapeTypes shapeTypes, const std::uint8_t alpha)
     {
         std::vector<geometrize::State> states{getHillClimbState(shapeTypes, alpha)};
         std::vector<geometrize::State>::iterator it = std::min_element(states.begin(), states.end(), [](const geometrize::State& a, const geometrize::State& b) {
-            return a.m_score < b.m_score;
+            return a.m_score <= b.m_score;
         });
 
         std::vector<geometrize::ShapeResult> results;
         results.push_back(drawShape((*it).m_shape, alpha));
-
-        /*
-        for(std::uint32_t i = 0; i < repeats; i++) {
-            const float before{state.calculateEnergy(m_target, m_current, buffer)};
-            state = geometrize::core::hillClimb(state, 100, m_target, m_current, buffer);
-            const float after{state.calculateEnergy(m_target, m_current, buffer)};
-            if(before == after) {
-                break;
-            }
-            results.push_back(drawShape(state.m_shape, state.m_alpha));
-        }
-        */
 
         return results;
     }
 
     geometrize::ShapeResult drawShape(std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)
     {
-        const geometrize::Bitmap before{m_current};
         const std::vector<geometrize::Scanline> lines{shape->rasterize()};
         const geometrize::rgba color{geometrize::core::computeColor(m_target, m_current, lines, alpha)};
+        const geometrize::Bitmap before{m_current};
+        geometrize::core::drawLines(m_current, color, lines);
+
+        m_score = geometrize::core::differencePartial(m_target, before, m_current, m_score, lines);
+
+        geometrize::ShapeResult result{m_score, color, shape};
+        return result;
+    }
+
+    geometrize::ShapeResult drawShape(std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)
+    {
+        const std::vector<geometrize::Scanline> lines{shape->rasterize()};
+        const geometrize::Bitmap before{m_current};
         geometrize::core::drawLines(m_current, color, lines);
 
         m_score = geometrize::core::differencePartial(m_target, before, m_current, m_score, lines);
@@ -152,9 +152,9 @@ float Model::getAspectRatio() const
     return d->getAspectRatio();
 }
 
-std::vector<geometrize::ShapeResult> Model::step(const geometrize::shapes::ShapeTypes shapeTypes, const std::uint8_t alpha, const std::uint32_t repeats)
+std::vector<geometrize::ShapeResult> Model::step(const geometrize::shapes::ShapeTypes shapeTypes, const std::uint8_t alpha)
 {
-    return d->step(shapeTypes, alpha, repeats);
+    return d->step(shapeTypes, alpha);
 }
 
 geometrize::ShapeResult Model::drawShape(std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)
