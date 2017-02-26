@@ -76,7 +76,7 @@ public:
     {
         std::vector<geometrize::State> states{getHillClimbState(shapeTypes, alpha)};
         std::vector<geometrize::State>::iterator it = std::min_element(states.begin(), states.end(), [](const geometrize::State& a, const geometrize::State& b) {
-            return a.m_score <= b.m_score;
+            return a.m_score < b.m_score;
         });
 
         std::vector<geometrize::ShapeResult> results;
