@@ -145,7 +145,7 @@ float differencePartial(
     const std::size_t width{target.getWidth()};
     const std::size_t height{target.getHeight()};
     const std::size_t rgbCount{width * height * 3};
-    std::uint32_t total{static_cast<std::uint32_t>(std::pow(score * 255.0f, 2) * rgbCount)};
+    std::uint64_t total{static_cast<std::uint32_t>(std::pow(score * 255.0f, 2) * rgbCount)};
 
     for(const geometrize::Scanline& line : lines) {
         const std::uint32_t y{line.y};
