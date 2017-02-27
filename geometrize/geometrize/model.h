@@ -17,13 +17,26 @@ namespace geometrize
 {
 
 /**
- * @brief The Model class is the model for the primitive optimization/fitting algorithm.
+ * @brief The Model class is the model for the core optimization/fitting algorithm.
  * @author Sam Twidale (http://samcodes.co.uk/)
  */
 class Model
 {
 public:
+    /**
+     * @brief Model Creates a model that will aim to replicate the target bitmap with shapes, starting from a bitmap with the given background color.
+     * @param target The target bitmap to replicate with shapes.
+     * @param backgroundColor The background color of the starting bitmap.
+     */
     Model(const geometrize::Bitmap& target, geometrize::rgba backgroundColor);
+
+    /**
+     * @brief Model Creates a model that will optimize for the given target bitmap, starting from the given initial bitmap.
+     * The target bitmap and initial bitmap must be the same size (width and height).
+     * @param target The target bitmap to replicate with shapes.
+     * @param initial The starting bitmap.
+     */
+    Model(const geometrize::Bitmap& target, const geometrize::Bitmap& initial);
     ~Model();
     Model& operator=(const Model&) = delete;
     Model(const Model&) = delete;

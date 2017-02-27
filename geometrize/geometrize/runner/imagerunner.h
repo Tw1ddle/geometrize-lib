@@ -20,7 +20,19 @@ namespace geometrize
 class ImageRunner
 {
 public:
-    ImageRunner(const geometrize::Bitmap& bitmap);
+    /**
+     * @brief ImageRunner Creates an new image runner with the given target bitmap. Uses the average color of the target as the starting image.
+     * @param targetBitmap The target bitmap to replicate with shapes.
+     */
+    ImageRunner(const geometrize::Bitmap& targetBitmap);
+
+    /**
+     * @brief ImageRunner Creates an image runner with the given target bitmap, starting from the given initial bitmap.
+     * The target bitmap and initial bitmap must be the same size (width and height).
+     * @param targetBitmap The target bitmap to replicate with shapes.
+     * @param initialBitmap The starting bitmap.
+     */
+    ImageRunner(const geometrize::Bitmap& targetBitmap, const geometrize::Bitmap& initialBitmap);
     ~ImageRunner();
     ImageRunner& operator=(const ImageRunner&) = delete;
     ImageRunner(const ImageRunner&) = delete;

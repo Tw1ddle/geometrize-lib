@@ -1,6 +1,7 @@
 #include "model.h"
 
 #include <algorithm>
+#include <assert.h>
 #include <cstdint>
 #include <future>
 #include <memory>
@@ -19,10 +20,19 @@ class Model::ModelImpl
 {
 public:
     ModelImpl(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) :
-        m_target(target),
-        m_current(target.getWidth(), target.getHeight(), backgroundColor),
+        m_target{target},
+        m_current{target.getWidth(), target.getHeight(), backgroundColor},
         m_score{geometrize::core::differenceFull(m_target, m_current)}
     {}
+
+    ModelImpl(const geometrize::Bitmap& target, const geometrize::Bitmap& initial) :
+        m_target{target},
+        m_current{initial},
+        m_score{geometrize::core::differenceFull(m_target, m_current)}
+    {
+        assert(m_target.getWidth() == m_current.getWidth());
+        assert(m_target.getHeight() == m_current.getHeight());
+    }
 
     ~ModelImpl() = default;
     ModelImpl& operator=(const ModelImpl&) = delete;
@@ -127,6 +137,9 @@ private:
 };
 
 Model::Model(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) : d{std::make_unique<Model::ModelImpl>(target, backgroundColor)}
+{}
+
+Model::Model(const geometrize::Bitmap& target, const geometrize::Bitmap& initial) : d{std::make_unique<Model::ModelImpl>(target, initial)}
 {}
 
 Model::~Model()
