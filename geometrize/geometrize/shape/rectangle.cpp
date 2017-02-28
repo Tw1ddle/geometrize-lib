@@ -45,13 +45,15 @@ void Rectangle::mutate()
     const std::int32_t r{commonutil::randomRange(0, 1)};
 
     switch(r) {
-    case 0:
-        m_x1 = commonutil::clamp(m_x1 + commonutil::randomRange(-16, 16), 0, m_xBound);
-        m_y1 = commonutil::clamp(m_y1 + commonutil::randomRange(-16, 16), 0, m_yBound);
-    case 1:
-        m_x2 = commonutil::clamp(m_x2 + commonutil::randomRange(-16, 16), 0, m_xBound);
-        m_y2 = commonutil::clamp(m_y2 + commonutil::randomRange(-16, 16), 0, m_yBound);
-    }
+        case 0:
+            m_x1 = commonutil::clamp(m_x1 + commonutil::randomRange(-16, 16), 0, m_xBound);
+            m_y1 = commonutil::clamp(m_y1 + commonutil::randomRange(-16, 16), 0, m_yBound);
+            break;
+        case 1:
+            m_x2 = commonutil::clamp(m_x2 + commonutil::randomRange(-16, 16), 0, m_xBound);
+            m_y2 = commonutil::clamp(m_y2 + commonutil::randomRange(-16, 16), 0, m_yBound);
+            break;
+        }
 }
 
 geometrize::shapes::ShapeTypes Rectangle::getType() const

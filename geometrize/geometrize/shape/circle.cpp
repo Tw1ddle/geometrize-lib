@@ -42,7 +42,7 @@ std::vector<geometrize::Scanline> Circle::rasterize() const
             const std::int32_t fy{m_y + y};
             const std::int32_t x1{commonutil::clamp(m_x + xScan.front(), 0, m_xBound)};
             const std::int32_t x2{commonutil::clamp(m_x + xScan.back(), 0, m_xBound)};
-            lines.push_back(geometrize::Scanline(static_cast<std::uint32_t>(fy), static_cast<std::uint32_t>(x1), static_cast<std::uint32_t>(x2), 0xFFFF));
+            lines.push_back(geometrize::Scanline(fy, x1, x2, 0xFFFF));
         }
     }
 
