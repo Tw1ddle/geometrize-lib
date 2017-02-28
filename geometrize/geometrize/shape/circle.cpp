@@ -29,9 +29,6 @@ std::vector<geometrize::Scanline> Circle::rasterize() const
 {
     std::vector<geometrize::Scanline> lines;
 
-    const std::int32_t w{m_xBound};
-    const std::int32_t h{m_yBound};
-
     const std::int32_t r{static_cast<std::int32_t>(m_r)};
     for(std::int32_t y = -r; y <= r; y++) {
         std::vector<std::int32_t> xScan;
