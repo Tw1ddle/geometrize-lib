@@ -8,6 +8,7 @@
 #include "shape.h"
 #include "circle.h"
 #include "ellipse.h"
+#include "spline.h"
 #include "rectangle.h"
 #include "rotatedellipse.h"
 #include "rotatedrectangle.h"
@@ -21,6 +22,8 @@ namespace geometrize
 std::shared_ptr<geometrize::Shape> create(geometrize::shapes::ShapeTypes t, const std::uint32_t xBound, const std::uint32_t yBound)
 {
     switch(t) {
+        case geometrize::shapes::ShapeTypes::SPLINE:
+            return std::make_shared<geometrize::Spline>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::CIRCLE:
             return std::make_shared<geometrize::Circle>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::ELLIPSE:
