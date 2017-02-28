@@ -9,7 +9,7 @@
 namespace geometrize
 {
 
-Circle::Circle(const std::uint32_t xBound, const std::uint32_t yBound) : m_xBound(xBound), m_yBound(yBound)
+Circle::Circle(const std::int32_t xBound, const std::int32_t yBound) : m_xBound(xBound), m_yBound(yBound)
 {
     m_x = commonutil::randomRange(0, m_xBound);
     m_y = commonutil::randomRange(0, m_yBound);
@@ -29,8 +29,8 @@ std::vector<geometrize::Scanline> Circle::rasterize() const
 {
     std::vector<geometrize::Scanline> lines;
 
-    const std::uint32_t w{m_xBound};
-    const std::uint32_t h{m_yBound};
+    const std::int32_t w{m_xBound};
+    const std::int32_t h{m_yBound};
 
     const std::int32_t r{static_cast<std::int32_t>(m_r)};
     for(std::int32_t y = -r; y <= r; y++) {
@@ -42,14 +42,14 @@ std::vector<geometrize::Scanline> Circle::rasterize() const
         }
 
         if(!xScan.empty()) {
-            const std::uint32_t fy{commonutil::clamp(m_y + y, 0U, h - 1)};
-            const std::uint32_t x1{commonutil::clamp(m_x + xScan.front(), 0U, w - 1)};
-            const std::uint32_t x2{commonutil::clamp(m_x + xScan.back(), 0U, w - 1)};
-            lines.push_back(geometrize::Scanline(fy, x1, x2, 0xFFFF));
+            const std::int32_t fy{m_y + y};
+            const std::int32_t x1{commonutil::clamp(m_x + xScan.front(), 0, m_xBound)};
+            const std::int32_t x2{commonutil::clamp(m_x + xScan.back(), 0, m_xBound)};
+            lines.push_back(geometrize::Scanline(static_cast<std::uint32_t>(fy), static_cast<std::uint32_t>(x1), static_cast<std::uint32_t>(x2), 0xFFFF));
         }
     }
 
-    return lines;
+    return geometrize::Scanline::trim(lines, m_xBound, m_yBound);
 }
 
 void Circle::mutate()
@@ -58,13 +58,13 @@ void Circle::mutate()
     switch(r) {
         case 0:
         {
-            m_y = commonutil::clamp(m_x + commonutil::randomRange(-16, 16), 0U, m_xBound);
-            m_y = commonutil::clamp(m_y + commonutil::randomRange(-16, 16), 0U, m_yBound);
+            m_y = commonutil::clamp(m_x + commonutil::randomRange(-16, 16), 0, m_xBound);
+            m_y = commonutil::clamp(m_y + commonutil::randomRange(-16, 16), 0, m_yBound);
             break;
         }
         case 1:
         {
-            m_r = commonutil::clamp(m_r + commonutil::randomRange(-16, 16), 1U, m_xBound);
+            m_r = commonutil::clamp(m_r + commonutil::randomRange(-16, 16), 1, m_xBound);
             break;
         }
     }
@@ -77,7 +77,7 @@ geometrize::shapes::ShapeTypes Circle::getType() const
 
 std::vector<std::int32_t> Circle::getShapeData() const
 {
-    return { static_cast<std::int32_t>(m_x), static_cast<std::int32_t>(m_y), static_cast<std::int32_t>(m_r) };
+    return { m_x, m_y, m_r };
 }
 
 }

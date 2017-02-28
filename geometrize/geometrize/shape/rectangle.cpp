@@ -10,12 +10,12 @@
 namespace geometrize
 {
 
-Rectangle::Rectangle(const std::uint32_t xBound, const std::uint32_t yBound) : m_xBound(xBound), m_yBound(yBound)
+Rectangle::Rectangle(const std::int32_t xBound, const std::int32_t yBound) : m_xBound(xBound), m_yBound(yBound)
 {
     m_x1 = commonutil::randomRange(0, m_xBound);
     m_y1 = commonutil::randomRange(0, m_yBound);
-    m_x2 = commonutil::clamp(m_x1 + commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1), 0U, m_xBound);
-    m_y2 = commonutil::clamp(m_y1 + commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1), 0U, m_yBound);
+    m_x2 = commonutil::clamp(m_x1 + commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1), 0, m_xBound);
+    m_y2 = commonutil::clamp(m_y1 + commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1), 0, m_yBound);
 }
 
 std::shared_ptr<geometrize::Shape> Rectangle::clone() const
@@ -30,11 +30,11 @@ std::shared_ptr<geometrize::Shape> Rectangle::clone() const
 
 std::vector<geometrize::Scanline> Rectangle::rasterize() const
 {
-    const std::uint32_t y1{(std::min)(m_y1, m_y2)};
-    const std::uint32_t y2{(std::max)(m_y1, m_y2)};
+    const std::int32_t y1{(std::min)(m_y1, m_y2)};
+    const std::int32_t y2{(std::max)(m_y1, m_y2)};
 
     std::vector<geometrize::Scanline> lines;
-    for(std::uint32_t y = y1; y < y2; y++) {
+    for(std::int32_t y = y1; y < y2; y++) {
         lines.push_back(geometrize::Scanline(y, (std::min)(m_x1, m_x2), (std::max)(m_x1, m_x2), 0xFFFF));
     }
     return lines;
@@ -46,11 +46,11 @@ void Rectangle::mutate()
 
     switch(r) {
     case 0:
-        m_x1 = commonutil::clamp(m_x1 + commonutil::randomRange(-16, 16), 0U, m_xBound);
-        m_y1 = commonutil::clamp(m_y1 + commonutil::randomRange(-16, 16), 0U, m_yBound);
+        m_x1 = commonutil::clamp(m_x1 + commonutil::randomRange(-16, 16), 0, m_xBound);
+        m_y1 = commonutil::clamp(m_y1 + commonutil::randomRange(-16, 16), 0, m_yBound);
     case 1:
-        m_x2 = commonutil::clamp(m_x2 + commonutil::randomRange(-16, 16), 0U, m_xBound);
-        m_y2 = commonutil::clamp(m_y2 + commonutil::randomRange(-16, 16), 0U, m_yBound);
+        m_x2 = commonutil::clamp(m_x2 + commonutil::randomRange(-16, 16), 0, m_xBound);
+        m_y2 = commonutil::clamp(m_y2 + commonutil::randomRange(-16, 16), 0, m_yBound);
     }
 }
 
@@ -62,10 +62,10 @@ geometrize::shapes::ShapeTypes Rectangle::getType() const
 std::vector<std::int32_t> Rectangle::getShapeData() const
 {
     return {
-        static_cast<std::int32_t>((std::min)(m_x1, m_x2)),
-        static_cast<std::int32_t>((std::min)(m_y1, m_y2)),
-        static_cast<std::int32_t>((std::max)(m_x1, m_x2)),
-        static_cast<std::int32_t>((std::max)(m_y1, m_y2))
+        ((std::min)(m_x1, m_x2)),
+        ((std::min)(m_y1, m_y2)),
+        ((std::max)(m_x1, m_x2)),
+        ((std::max)(m_y1, m_y2))
     };
 }
 
