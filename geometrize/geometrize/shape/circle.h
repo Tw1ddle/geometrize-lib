@@ -31,6 +31,10 @@ public:
 private:
     const std::uint32_t m_xBound; ///< The x-bound of the whole canvas.
     const std::uint32_t m_yBound; ///< The y-bound of the whole canvas.
+
+    std::uint32_t m_x; ///< x-coordinate.
+    std::uint32_t m_y; ///< y-coordinate.
+    std::uint32_t m_r; ///< Radius.
 };
 
 }

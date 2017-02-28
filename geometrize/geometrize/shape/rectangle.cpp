@@ -30,18 +30,19 @@ std::shared_ptr<geometrize::Shape> Rectangle::clone() const
 
 std::vector<geometrize::Scanline> Rectangle::rasterize() const
 {
+    const std::uint32_t y1{(std::min)(m_y1, m_y2)};
+    const std::uint32_t y2{(std::max)(m_y1, m_y2)};
+
     std::vector<geometrize::Scanline> lines;
-    for(std::uint32_t y = m_y1; y < m_y2; y++) {
-        if(m_x1 != m_x2) {
-            lines.push_back(geometrize::Scanline(y, (std::min)(m_x1, m_x2), (std::max)(m_x1, m_x2), 0xFFFF));
-        }
+    for(std::uint32_t y = y1; y < y2; y++) {
+        lines.push_back(geometrize::Scanline(y, (std::min)(m_x1, m_x2), (std::max)(m_x1, m_x2), 0xFFFF));
     }
     return lines;
 }
 
 void Rectangle::mutate()
 {
-    const int r = commonutil::randomRange(0, 1);
+    const std::int32_t r{commonutil::randomRange(0, 1)};
 
     switch(r) {
     case 0:
@@ -61,10 +62,10 @@ geometrize::shapes::ShapeTypes Rectangle::getType() const
 std::vector<std::int32_t> Rectangle::getShapeData() const
 {
     return {
-        static_cast<std::int32_t>(m_x1),
-        static_cast<std::int32_t>(m_y1),
-        static_cast<std::int32_t>(m_x2),
-        static_cast<std::int32_t>(m_y2)
+        static_cast<std::int32_t>((std::min)(m_x1, m_x2)),
+        static_cast<std::int32_t>((std::min)(m_y1, m_y2)),
+        static_cast<std::int32_t>((std::max)(m_x1, m_x2)),
+        static_cast<std::int32_t>((std::max)(m_y1, m_y2))
     };
 }
 

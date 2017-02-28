@@ -46,18 +46,15 @@ std::shared_ptr<geometrize::Shape> randomShape(const std::uint32_t xBound, const
     return create(geometrize::shapes::allShapes[commonutil::randomRange(0, static_cast<int>(geometrize::shapes::allShapes.size()) - 1)], xBound, yBound);
 }
 
-std::shared_ptr<geometrize::Shape>  randomShapeOf(const shapes::ShapeTypes t, const std::uint32_t xBound, const std::uint32_t yBound)
+std::shared_ptr<geometrize::Shape> randomShapeOf(const shapes::ShapeTypes types, const std::uint32_t xBound, const std::uint32_t yBound)
 {
-    return std::make_shared<geometrize::Rectangle>(xBound, yBound); // TODO
-
-    const std::bitset<32> b(t);
-    std::vector<std::uint32_t> bits;
-    for(unsigned int bit = 0; bit < b.count(); bit++) {
-        if(bit) {
-            bits.push_back(1 << bit);
+    std::vector<shapes::ShapeTypes> typeVector;
+    for(shapes::ShapeTypes type : shapes::allShapes) {
+        if((type & types) == type) {
+            typeVector.push_back(type);
         }
     }
-    return create(static_cast<geometrize::shapes::ShapeTypes>(bits[commonutil::randomRange(0, static_cast<std::int32_t>(bits.size()))]), xBound, yBound);
+    return create(typeVector.at(commonutil::randomRange(0, static_cast<std::int32_t>(typeVector.size() - 1))), xBound, yBound);
 }
 
 }
