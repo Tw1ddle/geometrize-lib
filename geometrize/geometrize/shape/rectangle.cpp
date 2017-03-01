@@ -65,7 +65,7 @@ geometrize::shapes::ShapeTypes Rectangle::getType() const
     return geometrize::shapes::ShapeTypes::RECTANGLE;
 }
 
-std::vector<std::int32_t> Rectangle::getShapeData() const
+std::vector<std::int32_t> Rectangle::getRawShapeData() const
 {
     return {
         ((std::min)(m_x1, m_x2)),
@@ -73,6 +73,11 @@ std::vector<std::int32_t> Rectangle::getShapeData() const
         ((std::max)(m_x1, m_x2)),
         ((std::max)(m_y1, m_y2))
     };
+}
+
+std::string Rectangle::getSvgShapeData() const
+{
+    return "TODO";
 }
 
 }

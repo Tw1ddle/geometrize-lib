@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "../scanline.h"
@@ -18,8 +19,8 @@ class Shape
 public:
     Shape() = default;
      ~Shape() = default;
-    Shape& operator=(const Shape& other) = default;
-    Shape(const Shape& other) = default;
+    Shape& operator=(const geometrize::Shape& other) = default;
+    Shape(const geometrize::Shape& other) = default;
 
     /**
      * @brief clone Clones the shape, a virtual copy constructor.
@@ -46,10 +47,16 @@ public:
     virtual geometrize::shapes::ShapeTypes getType() const = 0;
 
     /**
-     * @brief getShapeData Gets a vector of data that represents the shape geometry, varies depending on the ShapeType.
+     * @brief getRawShapeData Gets a vector of data that represents the shape geometry, the format varies depending on the ShapeType.
      * @return The shape data.
      */
-    virtual std::vector<std::int32_t> getShapeData() const = 0;
+    virtual std::vector<std::int32_t> getRawShapeData() const = 0;
+
+    /**
+     * @brief getSvgShapeData Gets a string that represents a SVG element that describes the shape geometry.
+     * @return The SVG shape data that represents this shape.
+     */
+    virtual std::string getSvgShapeData() const = 0;
 };
 
 }

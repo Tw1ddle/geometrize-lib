@@ -65,9 +65,14 @@ geometrize::shapes::ShapeTypes Triangle::getType() const
     return shapes::ShapeTypes::TRIANGLE;
 }
 
-std::vector<std::int32_t> Triangle::getShapeData() const
+std::vector<std::int32_t> Triangle::getRawShapeData() const
 {
     return { m_x1, m_y1, m_x2, m_y2, m_x3, m_y3 };
+}
+
+std::string Triangle::getSvgShapeData() const
+{
+    return "TODO";
 }
 
 }

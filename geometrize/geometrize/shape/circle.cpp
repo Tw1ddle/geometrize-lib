@@ -72,9 +72,14 @@ geometrize::shapes::ShapeTypes Circle::getType() const
     return geometrize::shapes::ShapeTypes::CIRCLE;
 }
 
-std::vector<std::int32_t> Circle::getShapeData() const
+std::vector<std::int32_t> Circle::getRawShapeData() const
 {
     return { m_x, m_y, m_r };
+}
+
+std::string Circle::getSvgShapeData() const
+{
+    return "TODO";
 }
 
 }

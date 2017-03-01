@@ -71,9 +71,14 @@ geometrize::shapes::ShapeTypes RotatedEllipse::getType() const
     return geometrize::shapes::ShapeTypes::ROTATED_ELLIPSE;
 }
 
-std::vector<std::int32_t> RotatedEllipse::getShapeData() const
+std::vector<std::int32_t> RotatedEllipse::getRawShapeData() const
 {
     return { m_x, m_y, m_rx, m_ry, m_angle };
+}
+
+std::string RotatedEllipse::getSvgShapeData() const
+{
+    return "TODO";
 }
 
 }

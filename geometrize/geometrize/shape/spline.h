@@ -40,7 +40,8 @@ public:
     virtual std::vector<geometrize::Scanline> rasterize() const override;
     virtual void mutate() override;
     virtual geometrize::shapes::ShapeTypes getType() const override;
-    virtual std::vector<std::int32_t> getShapeData() const override;
+    virtual std::vector<std::int32_t> getRawShapeData() const override;
+    virtual std::string getSvgShapeData() const override;
 
 private:
     const std::int32_t m_xBound; ///< The x-bound of the whole canvas.

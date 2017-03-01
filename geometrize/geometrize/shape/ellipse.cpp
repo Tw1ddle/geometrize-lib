@@ -93,9 +93,14 @@ geometrize::shapes::ShapeTypes Ellipse::getType() const
     return geometrize::shapes::ShapeTypes::ELLIPSE;
 }
 
-std::vector<std::int32_t> Ellipse::getShapeData() const
+std::vector<std::int32_t> Ellipse::getRawShapeData() const
 {
     return { m_x, m_y, m_rx, m_ry };
+}
+
+std::string Ellipse::getSvgShapeData() const
+{
+    return "TODO";
 }
 
 }

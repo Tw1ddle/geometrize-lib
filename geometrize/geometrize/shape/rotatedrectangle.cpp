@@ -68,7 +68,7 @@ geometrize::shapes::ShapeTypes RotatedRectangle::getType() const
     return geometrize::shapes::ShapeTypes::ROTATED_RECTANGLE;
 }
 
-std::vector<std::int32_t> RotatedRectangle::getShapeData() const
+std::vector<std::int32_t> RotatedRectangle::getRawShapeData() const
 {
     return {
         ((std::min)(m_x1, m_x2)),
@@ -77,6 +77,11 @@ std::vector<std::int32_t> RotatedRectangle::getShapeData() const
         ((std::max)(m_y1, m_y2)),
         m_angle
     };
+}
+
+std::string RotatedRectangle::getSvgShapeData() const
+{
+    return "TODO";
 }
 
 }
