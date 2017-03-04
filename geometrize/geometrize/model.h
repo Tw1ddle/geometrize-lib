@@ -69,9 +69,17 @@ public:
      * @brief step Steps the primitive optimization/fitting algorithm.
      * @param shapeTypes The types of shape to use.
      * @param alpha The alpha of the shape.
+     * @param shapeCount The number of random shapes to generate (only 1 is chosen in the end).
+     * @param maxShapeMutations The maximum number of times to mutate each random shape.
+     * @param passes The number of passes the fitting algorithm uses.
      * @return A vector containing data about the shapes added to the model in this step.
      */
-    std::vector<geometrize::ShapeResult> step(geometrize::shapes::ShapeTypes shapeTypes, std::uint8_t alpha);
+    std::vector<geometrize::ShapeResult> step(
+            geometrize::shapes::ShapeTypes shapeTypes,
+            std::uint8_t alpha,
+            std::uint32_t shapeCount,
+            std::uint32_t maxShapeMutations,
+            std::uint32_t passes);
 
     /**
      * @brief drawShape Draws a shape on the model. The appropriate color to use is determined by the model.

@@ -21,9 +21,9 @@ public:
     ImageRunnerImpl& operator=(const ImageRunnerImpl&) = delete;
     ImageRunnerImpl(const ImageRunnerImpl&) = delete;
 
-    std::vector<geometrize::ShapeResult> step()
+    std::vector<geometrize::ShapeResult> step(const geometrize::ImageRunnerOptions& options)
     {
-        return m_model.step(m_options.shapeTypes, 128); // TODO alpha, repeat params from config etc
+        return m_model.step(options.shapeTypes, options.alpha, options.shapeCount, options.shapeTypes, options.passes);
     }
 
     geometrize::Bitmap& getCurrent()
@@ -38,7 +38,6 @@ public:
 
 private:
     geometrize::Model m_model; ///< The model for the primitive optimization/fitting algorithm.
-    geometrize::ImageRunnerOptions m_options; ///< The runtime configuration parameters for the runner.
 };
 
 ImageRunner::ImageRunner(const geometrize::Bitmap& targetBitmap) :
@@ -52,9 +51,9 @@ ImageRunner::ImageRunner(const geometrize::Bitmap& targetBitmap,  const geometri
 ImageRunner::~ImageRunner()
 {}
 
-std::vector<geometrize::ShapeResult> ImageRunner::step()
+std::vector<geometrize::ShapeResult> ImageRunner::step(const geometrize::ImageRunnerOptions& options)
 {
-    return d->step();
+    return d->step(options);
 }
 
 geometrize::Bitmap& ImageRunner::getCurrent()

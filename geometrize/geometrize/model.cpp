@@ -22,13 +22,13 @@ public:
     ModelImpl(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) :
         m_target{target},
         m_current{target.getWidth(), target.getHeight(), backgroundColor},
-        m_score{geometrize::core::differenceFull(m_target, m_current)}
+        m_lastScore{geometrize::core::differenceFull(m_target, m_current)}
     {}
 
     ModelImpl(const geometrize::Bitmap& target, const geometrize::Bitmap& initial) :
         m_target{target},
         m_current{initial},
-        m_score{geometrize::core::differenceFull(m_target, m_current)}
+        m_lastScore{geometrize::core::differenceFull(m_target, m_current)}
     {
         assert(m_target.getWidth() == m_current.getWidth());
         assert(m_target.getHeight() == m_current.getHeight());
@@ -41,7 +41,7 @@ public:
     void reset(const geometrize::rgba backgroundColor)
     {
         m_current.fill(backgroundColor);
-        m_score = geometrize::core::differenceFull(m_target, m_current);
+        m_lastScore = geometrize::core::differenceFull(m_target, m_current);
     }
 
     std::uint32_t getWidth() const
@@ -62,7 +62,12 @@ public:
         return static_cast<float>(m_target.getWidth()) / static_cast<float>(m_target.getHeight());
     }
 
-    std::vector<geometrize::State> getHillClimbState(const geometrize::shapes::ShapeTypes shapeTypes, const std::uint8_t alpha)
+    std::vector<geometrize::State> getHillClimbState(
+            const geometrize::shapes::ShapeTypes shapeTypes,
+            const std::uint8_t alpha,
+            const std::uint32_t shapeCount,
+            const std::uint32_t maxShapeMutations,
+            const std::uint32_t passes)
     {
         std::vector<std::future<geometrize::State>> futures;
 
@@ -70,7 +75,7 @@ public:
         for(std::uint32_t i = 0; i < maxThreads; i++) {
             std::future<geometrize::State> handle{std::async(std::launch::async, [&]() {
                 geometrize::Bitmap buffer{m_current};
-                return core::bestHillClimbState(shapeTypes, alpha, 1000, 100, 16, m_target, m_current, buffer);
+                return core::bestHillClimbState(shapeTypes, alpha, shapeCount, maxShapeMutations, passes, m_target, m_current, buffer);
             })};
             futures.push_back(std::move(handle));
         }
@@ -82,9 +87,14 @@ public:
         return states;
     }
 
-    std::vector<geometrize::ShapeResult> step(const geometrize::shapes::ShapeTypes shapeTypes, const std::uint8_t alpha)
+    std::vector<geometrize::ShapeResult> step(
+            const geometrize::shapes::ShapeTypes shapeTypes,
+            const std::uint8_t alpha,
+            const std::uint32_t shapeCount,
+            const std::uint32_t maxShapeMutations,
+            const std::uint32_t passes)
     {
-        std::vector<geometrize::State> states{getHillClimbState(shapeTypes, alpha)};
+        std::vector<geometrize::State> states{getHillClimbState(shapeTypes, alpha, shapeCount, maxShapeMutations, passes)};
         std::vector<geometrize::State>::iterator it = std::min_element(states.begin(), states.end(), [](const geometrize::State& a, const geometrize::State& b) {
             return a.m_score < b.m_score;
         });
@@ -95,16 +105,18 @@ public:
         return results;
     }
 
-    geometrize::ShapeResult drawShape(std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)
+    geometrize::ShapeResult drawShape(
+            std::shared_ptr<geometrize::Shape> shape,
+            const std::uint8_t alpha)
     {
         const std::vector<geometrize::Scanline> lines{shape->rasterize()};
         const geometrize::rgba color{geometrize::core::computeColor(m_target, m_current, lines, alpha)};
         const geometrize::Bitmap before{m_current};
         geometrize::core::drawLines(m_current, color, lines);
 
-        m_score = geometrize::core::differencePartial(m_target, before, m_current, m_score, lines);
+        m_lastScore = geometrize::core::differencePartial(m_target, before, m_current, m_lastScore, lines);
 
-        geometrize::ShapeResult result{m_score, color, shape};
+        geometrize::ShapeResult result{m_lastScore, color, shape};
         return result;
     }
 
@@ -114,9 +126,9 @@ public:
         const geometrize::Bitmap before{m_current};
         geometrize::core::drawLines(m_current, color, lines);
 
-        m_score = geometrize::core::differencePartial(m_target, before, m_current, m_score, lines);
+        m_lastScore = geometrize::core::differencePartial(m_target, before, m_current, m_lastScore, lines);
 
-        geometrize::ShapeResult result{m_score, color, shape};
+        geometrize::ShapeResult result{m_lastScore, color, shape};
         return result;
     }
 
@@ -133,7 +145,7 @@ public:
 private:
     geometrize::Bitmap m_target; ///< The target bitmap, the bitmap we aim to approximate.
     geometrize::Bitmap m_current; ///< The current bitmap.
-    float m_score; ///< Score derived from calculating the difference between bitmaps.
+    float m_lastScore; ///< Score derived from calculating the difference between bitmaps.
 };
 
 Model::Model(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) : d{std::make_unique<Model::ModelImpl>(target, backgroundColor)}
@@ -165,9 +177,14 @@ float Model::getAspectRatio() const
     return d->getAspectRatio();
 }
 
-std::vector<geometrize::ShapeResult> Model::step(const geometrize::shapes::ShapeTypes shapeTypes, const std::uint8_t alpha)
+std::vector<geometrize::ShapeResult> Model::step(
+        const geometrize::shapes::ShapeTypes shapeTypes,
+        const std::uint8_t alpha,
+        std::uint32_t shapeCount,
+        std::uint32_t maxShapeMutations,
+        std::uint32_t passes)
 {
-    return d->step(shapeTypes, alpha);
+    return d->step(shapeTypes, alpha, shapeCount, maxShapeMutations, passes);
 }
 
 geometrize::ShapeResult Model::drawShape(std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)

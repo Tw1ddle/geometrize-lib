@@ -8,6 +8,7 @@
 namespace geometrize
 {
 class Bitmap;
+struct ImageRunnerOptions;
 }
 
 namespace geometrize
@@ -39,9 +40,10 @@ public:
 
     /**
      * @brief step Updates the internal model once.
+     * @param options Various configurable settings for doing the step e.g. the shape types to consider.
      * @return A vector containing data about the shapes just added to the internal model.
      */
-    std::vector<geometrize::ShapeResult> step();
+    std::vector<geometrize::ShapeResult> step(const geometrize::ImageRunnerOptions& options);
 
     /**
      * @brief getCurrent Gets the current bitmap with the primitives drawn on it.
