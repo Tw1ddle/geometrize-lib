@@ -60,12 +60,6 @@ public:
     std::uint32_t getHeight() const;
 
     /**
-     * @brief getAspectRatio Gets the aspect ratio of the target bitmap.
-     * @return The aspect ratio of the target bitmap.
-     */
-    float getAspectRatio() const;
-
-    /**
      * @brief step Steps the primitive optimization/fitting algorithm.
      * @param shapeTypes The types of shape to use.
      * @param alpha The alpha of the shape.

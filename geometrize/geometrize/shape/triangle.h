@@ -7,6 +7,11 @@
 
 namespace geometrize
 {
+class Model;
+}
+
+namespace geometrize
+{
 
 /**
  * @brief The Triangle class represents a triangle.
@@ -17,10 +22,11 @@ class Triangle : public Shape
 public:
     /**
      * @brief Triangle Creates a new triangle.
+     * @param model The model that created this shape.
      * @param xBound xBound	The x-bound of the whole canvas.
      * @param yBound yBound	The y-bound of the whole canvas.
      */
-    Triangle(std::int32_t xBound, std::int32_t yBound);
+    Triangle(const geometrize::Model& model, std::int32_t xBound, std::int32_t yBound);
 
     virtual std::shared_ptr<geometrize::Shape> clone() const;
     virtual std::vector<geometrize::Scanline> rasterize() const override;
@@ -30,6 +36,8 @@ public:
     virtual std::string getSvgShapeData() const override;
 
 private:
+    const geometrize::Model& m_model; ///< The model that produces the shape.
+
     const std::int32_t m_xBound; ///< The x-bound of the whole canvas.
     const std::int32_t m_yBound; ///< The y-bound of the whole canvas.
 

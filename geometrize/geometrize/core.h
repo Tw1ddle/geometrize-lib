@@ -90,6 +90,7 @@ float differencePartial(
  * @return The best random state i.e. the one with the lowest energy.
  */
 geometrize::State bestRandomState(
+        const geometrize::Model& model,
         const geometrize::shapes::ShapeTypes shapeTypes,
         std::uint32_t alpha,
         std::uint32_t n,
@@ -125,6 +126,7 @@ geometrize::State hillClimb(
  * @return The best state acquired from hill climbing i.e. the one with the lowest energy.
  */
 geometrize::State bestHillClimbState(
+        const geometrize::Model& model,
         geometrize::shapes::ShapeTypes shapeTypes,
         std::uint32_t alpha,
         std::uint32_t n,

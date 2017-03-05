@@ -4,12 +4,13 @@
 #include <memory>
 
 #include "shape.h"
+#include "../model.h"
 #include "../commonutil.h"
 
 namespace geometrize
 {
 
-Circle::Circle(const std::int32_t xBound, const std::int32_t yBound) : m_xBound(xBound), m_yBound(yBound)
+Circle::Circle(const geometrize::Model& model, const std::int32_t xBound, const std::int32_t yBound) :m_model{model},  m_xBound(xBound), m_yBound(yBound)
 {
     m_x = commonutil::randomRange(0, m_xBound - 1);
     m_y = commonutil::randomRange(0, m_yBound - 1);
@@ -18,7 +19,7 @@ Circle::Circle(const std::int32_t xBound, const std::int32_t yBound) : m_xBound(
 
 std::shared_ptr<geometrize::Shape> Circle::clone() const
 {
-    std::shared_ptr<geometrize::Circle> circle{std::make_shared<geometrize::Circle>(m_xBound, m_yBound)};
+    std::shared_ptr<geometrize::Circle> circle{std::make_shared<geometrize::Circle>(m_model, m_xBound, m_yBound)};
     circle->m_x = m_x;
     circle->m_y = m_y;
     circle->m_r = m_r;

@@ -19,13 +19,15 @@ namespace geometrize
 class Model::ModelImpl
 {
 public:
-    ModelImpl(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) :
+    ModelImpl(geometrize::Model* pQ, const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) :
+        q{pQ},
         m_target{target},
         m_current{target.getWidth(), target.getHeight(), backgroundColor},
         m_lastScore{geometrize::core::differenceFull(m_target, m_current)}
     {}
 
-    ModelImpl(const geometrize::Bitmap& target, const geometrize::Bitmap& initial) :
+    ModelImpl(geometrize::Model* pQ, const geometrize::Bitmap& target, const geometrize::Bitmap& initial) :
+        q{pQ},
         m_target{target},
         m_current{initial},
         m_lastScore{geometrize::core::differenceFull(m_target, m_current)}
@@ -54,14 +56,6 @@ public:
         return m_target.getHeight();
     }
 
-    float getAspectRatio() const
-    {
-        if(m_target.getWidth() == 0 || m_target.getHeight() == 0) {
-            return 0;
-        }
-        return static_cast<float>(m_target.getWidth()) / static_cast<float>(m_target.getHeight());
-    }
-
     std::vector<geometrize::State> getHillClimbState(
             const geometrize::shapes::ShapeTypes shapeTypes,
             const std::uint8_t alpha,
@@ -74,7 +68,7 @@ public:
         for(std::uint32_t i = 0; i < maxThreads; i++) {
             std::future<geometrize::State> handle{std::async(std::launch::async, [&]() {
                 geometrize::Bitmap buffer{m_current};
-                return core::bestHillClimbState(shapeTypes, alpha, shapeCount, maxShapeMutations, m_target, m_current, buffer);
+                return core::bestHillClimbState(*q, shapeTypes, alpha, shapeCount, maxShapeMutations, m_target, m_current, buffer);
             })};
             futures.push_back(std::move(handle));
         }
@@ -141,15 +135,16 @@ public:
     }
 
 private:
+    geometrize::Model* q;
     geometrize::Bitmap m_target; ///< The target bitmap, the bitmap we aim to approximate.
     geometrize::Bitmap m_current; ///< The current bitmap.
     float m_lastScore; ///< Score derived from calculating the difference between bitmaps.
 };
 
-Model::Model(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) : d{std::make_unique<Model::ModelImpl>(target, backgroundColor)}
+Model::Model(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) : d{std::make_unique<Model::ModelImpl>(this, target, backgroundColor)}
 {}
 
-Model::Model(const geometrize::Bitmap& target, const geometrize::Bitmap& initial) : d{std::make_unique<Model::ModelImpl>(target, initial)}
+Model::Model(const geometrize::Bitmap& target, const geometrize::Bitmap& initial) : d{std::make_unique<Model::ModelImpl>(this, target, initial)}
 {}
 
 Model::~Model()
@@ -168,11 +163,6 @@ std::uint32_t Model::getWidth() const
 std::uint32_t Model::getHeight() const
 {
     return d->getHeight();
-}
-
-float Model::getAspectRatio() const
-{
-    return d->getAspectRatio();
 }
 
 std::vector<geometrize::ShapeResult> Model::step(

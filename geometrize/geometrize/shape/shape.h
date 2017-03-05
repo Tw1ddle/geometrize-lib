@@ -11,7 +11,7 @@ namespace geometrize
 {
 
 /**
- * Interface for shape rasterization and manipulation.
+ * Base class for shape rasterization and manipulation.
  * @author Sam Twidale (http://samcodes.co.uk/)
  */
 class Shape

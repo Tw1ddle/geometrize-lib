@@ -4,12 +4,13 @@
 #include <memory>
 
 #include "shape.h"
+#include "../model.h"
 #include "../commonutil.h"
 
 namespace geometrize
 {
 
-RotatedRectangle::RotatedRectangle(const std::int32_t xBound, const std::int32_t yBound) : m_xBound(xBound), m_yBound(yBound)
+RotatedRectangle::RotatedRectangle(const geometrize::Model& model, const std::int32_t xBound, const std::int32_t yBound) : m_model{model}, m_xBound(xBound), m_yBound(yBound)
 {
     m_x1 = commonutil::randomRange(0, m_xBound - 1);
     m_y1 = commonutil::randomRange(0, m_yBound - 1);
@@ -20,7 +21,7 @@ RotatedRectangle::RotatedRectangle(const std::int32_t xBound, const std::int32_t
 
 std::shared_ptr<geometrize::Shape> RotatedRectangle::clone() const
 {
-    std::shared_ptr<geometrize::RotatedRectangle> rect{std::make_shared<geometrize::RotatedRectangle>(m_xBound, m_yBound)};
+    std::shared_ptr<geometrize::RotatedRectangle> rect{std::make_shared<geometrize::RotatedRectangle>(m_model, m_xBound, m_yBound)};
     rect->m_x1 = m_x1;
     rect->m_y1 = m_y1;
     rect->m_x2 = m_x2;

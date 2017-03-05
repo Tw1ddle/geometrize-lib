@@ -7,6 +7,11 @@
 
 namespace geometrize
 {
+class Model;
+}
+
+namespace geometrize
+{
 
 /**
  * @brief The RotatedRectangle class represents a rotated rectangle.
@@ -17,10 +22,11 @@ class RotatedRectangle : public Shape
 public:
     /**
      * @brief RotatedRectangle Creates a new rotated rectangle.
+     * @param model The model that created this shape.
      * @param xBound xBound	The x-bound of the whole canvas.
      * @param yBound yBound	The y-bound of the whole canvas.
      */
-    RotatedRectangle(std::int32_t xBound, std::int32_t yBound);
+    RotatedRectangle(const geometrize::Model& model, std::int32_t xBound, std::int32_t yBound);
 
     virtual std::shared_ptr<geometrize::Shape> clone() const;
     virtual std::vector<geometrize::Scanline> rasterize() const override;
@@ -30,6 +36,8 @@ public:
     virtual std::string getSvgShapeData() const override;
 
 private:
+    const geometrize::Model& m_model; ///< The model that produces the shape.
+
     const std::int32_t m_xBound; ///< The x-bound of the whole canvas.
     const std::int32_t m_yBound; ///< The y-bound of the whole canvas.
 

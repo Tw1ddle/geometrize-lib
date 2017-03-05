@@ -4,12 +4,13 @@
 #include <memory>
 
 #include "shape.h"
+#include "../model.h"
 #include "../commonutil.h"
 
 namespace geometrize
 {
 
-Ellipse::Ellipse(const std::int32_t xBound, const std::int32_t yBound) : m_xBound(xBound), m_yBound(yBound)
+Ellipse::Ellipse(const geometrize::Model& model, const std::int32_t xBound, const std::int32_t yBound) : m_model{model}, m_xBound(xBound), m_yBound(yBound)
 {
     m_x = commonutil::randomRange(0, m_xBound - 1);
     m_y = commonutil::randomRange(0, m_yBound - 1);
@@ -19,7 +20,7 @@ Ellipse::Ellipse(const std::int32_t xBound, const std::int32_t yBound) : m_xBoun
 
 std::shared_ptr<geometrize::Shape> Ellipse::clone() const
 {
-    std::shared_ptr<geometrize::Ellipse> ellipse{std::make_shared<geometrize::Ellipse>(m_xBound, m_yBound)};
+    std::shared_ptr<geometrize::Ellipse> ellipse{std::make_shared<geometrize::Ellipse>(m_model, m_xBound, m_yBound)};
     ellipse->m_x = m_x;
     ellipse->m_y = m_y;
     ellipse->m_rx = m_rx;

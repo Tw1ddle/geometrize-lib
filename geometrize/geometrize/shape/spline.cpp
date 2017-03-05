@@ -4,12 +4,13 @@
 #include <memory>
 
 #include "shape.h"
+#include "../model.h"
 #include "../commonutil.h"
 
 namespace geometrize
 {
 
-Spline::Spline(const std::int32_t xBound, const std::int32_t yBound) : m_xBound(xBound), m_yBound(yBound), m_interpolationMode{SplineInterpolationMode::LINEAR}
+Spline::Spline(const geometrize::Model& model, const std::int32_t xBound, const std::int32_t yBound) :m_model{model}, m_xBound(xBound), m_yBound(yBound)
 {
     const std::pair<std::int32_t, std::int32_t> startingPoint{std::make_pair(commonutil::randomRange(0, m_xBound), commonutil::randomRange(0, m_yBound - 1))};
     for(std::int32_t i = 0; i < 4; i++) {
@@ -23,8 +24,7 @@ Spline::Spline(const std::int32_t xBound, const std::int32_t yBound) : m_xBound(
 
 std::shared_ptr<geometrize::Shape> Spline::clone() const
 {
-    std::shared_ptr<geometrize::Spline> spline{std::make_shared<geometrize::Spline>(m_xBound, m_yBound)};
-    spline->m_interpolationMode = m_interpolationMode;
+    std::shared_ptr<geometrize::Spline> spline{std::make_shared<geometrize::Spline>(m_model, m_xBound, m_yBound)};
     spline->m_controlPoints = m_controlPoints;
     return spline;
 }
@@ -38,35 +38,9 @@ std::vector<geometrize::Scanline> Spline::rasterize() const
         const std::pair<std::int32_t, std::int32_t> m1{m_controlPoints[i]};
         const std::pair<std::int32_t, std::int32_t> m2{i < (m_controlPoints.size() - 1) ? m_controlPoints[i + 1] : m_controlPoints[i]};
 
-        switch(m_interpolationMode) {
-            case SplineInterpolationMode::CARDINAL:
-            {
-                break;
-            }
-            case SplineInterpolationMode::MONOTONE:
-            {
-                break;
-            }
-            case SplineInterpolationMode::BASIS:
-            {
-                break;
-            }
-            case SplineInterpolationMode::LINEAR:
-            {
-                const auto points{commonutil::bresenham(m1.first, m1.second, m2.first, m2.second)};
-                for(const auto& point : points) {
-                    lines.push_back(geometrize::Scanline(point.second, point.first, point.first, 0xFFFF));
-                }
-                break;
-            }
-            case SplineInterpolationMode::STEP_BEFORE:
-            {
-                break;
-            }
-            case SplineInterpolationMode::STEP_AFTER:
-            {
-                break;
-            }
+        const auto points{commonutil::bresenham(m1.first, m1.second, m2.first, m2.second)};
+        for(const auto& point : points) {
+            lines.push_back(geometrize::Scanline(point.second, point.first, point.first, 0xFFFF));
         }
     }
 
@@ -92,8 +66,6 @@ geometrize::shapes::ShapeTypes Spline::getType() const
 std::vector<std::int32_t> Spline::getRawShapeData() const
 {
     std::vector<std::int32_t> data;
-    data.push_back(static_cast<std::int32_t>(m_interpolationMode));
-
     for(std::int32_t i = 0; i < m_controlPoints.size(); i++) {
         data.push_back(m_controlPoints[i].first);
         data.push_back(m_controlPoints[i].second);

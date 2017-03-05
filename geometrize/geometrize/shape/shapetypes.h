@@ -26,7 +26,6 @@ enum ShapeTypes : std::uint32_t
     SHAPE_COUNT = 8U
 };
 
-///< An array of all shape types.
 static const std::array<ShapeTypes, static_cast<std::size_t>(ShapeTypes::SHAPE_COUNT)> allShapes =
 {
     ShapeTypes::RECTANGLE,

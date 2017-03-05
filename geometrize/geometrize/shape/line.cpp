@@ -4,12 +4,13 @@
 #include <memory>
 
 #include "shape.h"
+#include "../model.h"
 #include "../commonutil.h"
 
 namespace geometrize
 {
 
-Line::Line(const std::int32_t xBound, const std::int32_t yBound) : m_xBound(xBound), m_yBound(yBound)
+Line::Line(const geometrize::Model& model, const std::int32_t xBound, const std::int32_t yBound) : m_model{model}, m_xBound(xBound), m_yBound(yBound)
 {
     const std::pair<std::int32_t, std::int32_t> startingPoint{std::make_pair(commonutil::randomRange(0, m_xBound), commonutil::randomRange(0, m_yBound - 1))};
 
@@ -21,7 +22,7 @@ Line::Line(const std::int32_t xBound, const std::int32_t yBound) : m_xBound(xBou
 
 std::shared_ptr<geometrize::Shape> Line::clone() const
 {
-    std::shared_ptr<geometrize::Line> line{std::make_shared<geometrize::Line>(m_xBound, m_yBound)};
+    std::shared_ptr<geometrize::Line> line{std::make_shared<geometrize::Line>(m_model, m_xBound, m_yBound)};
     line->m_x1 = m_x1;
     line->m_y1 = m_y1;
     line->m_x2 = m_x2;

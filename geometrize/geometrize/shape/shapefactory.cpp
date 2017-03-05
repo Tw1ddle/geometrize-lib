@@ -20,39 +20,39 @@
 namespace geometrize
 {
 
-std::shared_ptr<geometrize::Shape> create(geometrize::shapes::ShapeTypes t, const std::uint32_t xBound, const std::uint32_t yBound)
+std::shared_ptr<geometrize::Shape> create(const geometrize::Model& model, geometrize::shapes::ShapeTypes t, const std::uint32_t xBound, const std::uint32_t yBound)
 {
     switch(t) {
         case geometrize::shapes::ShapeTypes::SPLINE:
-            return std::make_shared<geometrize::Spline>(xBound, yBound);
+            return std::make_shared<geometrize::Spline>(model, xBound, yBound);
         case geometrize::shapes::ShapeTypes::CIRCLE:
-            return std::make_shared<geometrize::Circle>(xBound, yBound);
+            return std::make_shared<geometrize::Circle>(model, xBound, yBound);
         case geometrize::shapes::ShapeTypes::ELLIPSE:
-            return std::make_shared<geometrize::Ellipse>(xBound, yBound);
+            return std::make_shared<geometrize::Ellipse>(model, xBound, yBound);
         case geometrize::shapes::ShapeTypes::ROTATED_ELLIPSE:
-            return std::make_shared<geometrize::RotatedEllipse>(xBound, yBound);
+            return std::make_shared<geometrize::RotatedEllipse>(model, xBound, yBound);
         case geometrize::shapes::ShapeTypes::ROTATED_RECTANGLE:
-            return std::make_shared<geometrize::RotatedRectangle>(xBound, yBound);
+            return std::make_shared<geometrize::RotatedRectangle>(model, xBound, yBound);
         case geometrize::shapes::ShapeTypes::TRIANGLE:
-            return std::make_shared<geometrize::Triangle>(xBound, yBound);
+            return std::make_shared<geometrize::Triangle>(model, xBound, yBound);
         case geometrize::shapes::ShapeTypes::RECTANGLE:
-            return std::make_shared<geometrize::Rectangle>(xBound, yBound);
+            return std::make_shared<geometrize::Rectangle>(model, xBound, yBound);
         case geometrize::shapes::ShapeTypes::LINE:
-            return std::make_shared<geometrize::Line>(xBound, yBound);
+            return std::make_shared<geometrize::Line>(model, xBound, yBound);
         default:
             assert(0 && "Bad shape value");
     };
 
     assert(0 && "Unhandled shape type encountered");
-    return std::make_shared<geometrize::Rectangle>(xBound, yBound);
+    return std::make_shared<geometrize::Rectangle>(model, xBound, yBound);
 }
 
-std::shared_ptr<geometrize::Shape> randomShape(const std::uint32_t xBound, const std::uint32_t yBound)
+std::shared_ptr<geometrize::Shape> randomShape(const geometrize::Model& model, const std::uint32_t xBound, const std::uint32_t yBound)
 {
-    return create(geometrize::shapes::allShapes[commonutil::randomRange(0, static_cast<int>(geometrize::shapes::allShapes.size()) - 1)], xBound, yBound);
+    return create(model, geometrize::shapes::allShapes[commonutil::randomRange(0, static_cast<int>(geometrize::shapes::allShapes.size()) - 1)], xBound, yBound);
 }
 
-std::shared_ptr<geometrize::Shape> randomShapeOf(const shapes::ShapeTypes types, const std::uint32_t xBound, const std::uint32_t yBound)
+std::shared_ptr<geometrize::Shape> randomShapeOf(const geometrize::Model& model, const shapes::ShapeTypes types, const std::uint32_t xBound, const std::uint32_t yBound)
 {
     std::vector<shapes::ShapeTypes> typeVector;
     for(shapes::ShapeTypes type : shapes::allShapes) {
@@ -62,10 +62,10 @@ std::shared_ptr<geometrize::Shape> randomShapeOf(const shapes::ShapeTypes types,
     }
 
     if(typeVector.size() == 0) {
-        return randomShape(xBound, yBound); // If there are no types specified, create one randomly
+        return randomShape(model, xBound, yBound); // If there are no types specified, create one randomly
     }
 
-    return create(typeVector.at(commonutil::randomRange(0, static_cast<std::int32_t>(typeVector.size() - 1))), xBound, yBound);
+    return create(model, typeVector.at(commonutil::randomRange(0, static_cast<std::int32_t>(typeVector.size() - 1))), xBound, yBound);
 }
 
 }
