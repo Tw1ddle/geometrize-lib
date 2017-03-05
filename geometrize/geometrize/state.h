@@ -19,7 +19,7 @@ namespace geometrize
 class State
 {
 public:
-    State(); // TODO why is this required for futures?
+    State(); // Seems to be necessary of because MSVC futures - "_Associated_state ctor assumes _Ty is default constructible"
 
     /**
      * @brief Creates a new state.
