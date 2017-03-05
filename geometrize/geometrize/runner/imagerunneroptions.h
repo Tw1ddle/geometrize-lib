@@ -14,7 +14,7 @@ namespace geometrize
 struct ImageRunnerOptions
 {
     geometrize::shapes::ShapeTypes shapeTypes = geometrize::shapes::ShapeTypes::ELLIPSE;
-    std::uint8_t alpha = 255U;
+    std::uint8_t alpha = 128U;
     std::uint32_t shapeCount = 100U;
     std::uint32_t maxShapeMutations = 20U;
     std::uint32_t passes = 1U;
