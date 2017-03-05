@@ -8,7 +8,7 @@
 namespace geometrize
 {
 class Bitmap;
-struct ImageRunnerOptions;
+class ImageRunnerOptions;
 }
 
 namespace geometrize

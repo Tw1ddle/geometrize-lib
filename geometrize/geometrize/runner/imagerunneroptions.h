@@ -8,11 +8,12 @@ namespace geometrize
 {
 
 /**
- * @brief The ImageRunnerOptions struct encapsulates the parameters that may be passed to the image runner.
+ * @brief The ImageRunnerOptions class encapsulates the parameters that may be passed to the image runner.
  * @author Sam Twidale (http://samcodes.co.uk/)
  */
-struct ImageRunnerOptions
+class ImageRunnerOptions
 {
+public:
     geometrize::shapes::ShapeTypes shapeTypes = geometrize::shapes::ShapeTypes::ELLIPSE;
     std::uint8_t alpha = 128U;
     std::uint32_t shapeCount = 100U;
