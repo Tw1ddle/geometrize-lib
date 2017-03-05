@@ -11,8 +11,8 @@ namespace geometrize
 
 Circle::Circle(const std::int32_t xBound, const std::int32_t yBound) : m_xBound(xBound), m_yBound(yBound)
 {
-    m_x = commonutil::randomRange(0, m_xBound);
-    m_y = commonutil::randomRange(0, m_yBound);
+    m_x = commonutil::randomRange(0, m_xBound - 1);
+    m_y = commonutil::randomRange(0, m_yBound - 1);
     m_r = commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1);
 }
 
@@ -40,8 +40,8 @@ std::vector<geometrize::Scanline> Circle::rasterize() const
 
         if(!xScan.empty()) {
             const std::int32_t fy{m_y + y};
-            const std::int32_t x1{commonutil::clamp(m_x + xScan.front(), 0, m_xBound)};
-            const std::int32_t x2{commonutil::clamp(m_x + xScan.back(), 0, m_xBound)};
+            const std::int32_t x1{commonutil::clamp(m_x + xScan.front(), 0, m_xBound - 1)};
+            const std::int32_t x2{commonutil::clamp(m_x + xScan.back(), 0, m_xBound - 1)};
             lines.push_back(geometrize::Scanline(fy, x1, x2, 0xFFFF));
         }
     }
@@ -55,13 +55,13 @@ void Circle::mutate()
     switch(r) {
         case 0:
         {
-            m_y = commonutil::clamp(m_x + commonutil::randomRange(-16, 16), 0, m_xBound);
-            m_y = commonutil::clamp(m_y + commonutil::randomRange(-16, 16), 0, m_yBound);
+            m_y = commonutil::clamp(m_x + commonutil::randomRange(-16, 16), 0, m_xBound - 1);
+            m_y = commonutil::clamp(m_y + commonutil::randomRange(-16, 16), 0, m_yBound - 1);
             break;
         }
         case 1:
         {
-            m_r = commonutil::clamp(m_r + commonutil::randomRange(-16, 16), 1, m_xBound);
+            m_r = commonutil::clamp(m_r + commonutil::randomRange(-16, 16), 1, m_xBound - 1);
             break;
         }
     }

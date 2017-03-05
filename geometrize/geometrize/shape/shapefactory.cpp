@@ -8,6 +8,7 @@
 #include "shape.h"
 #include "circle.h"
 #include "ellipse.h"
+#include "line.h"
 #include "spline.h"
 #include "rectangle.h"
 #include "rotatedellipse.h"
@@ -36,8 +37,10 @@ std::shared_ptr<geometrize::Shape> create(geometrize::shapes::ShapeTypes t, cons
             return std::make_shared<geometrize::Triangle>(xBound, yBound);
         case geometrize::shapes::ShapeTypes::RECTANGLE:
             return std::make_shared<geometrize::Rectangle>(xBound, yBound);
-        case geometrize::shapes::ShapeTypes::SHAPE_COUNT:
-         assert(0 && "Bad shape value");
+        case geometrize::shapes::ShapeTypes::LINE:
+            return std::make_shared<geometrize::Line>(xBound, yBound);
+        default:
+            assert(0 && "Bad shape value");
     };
 
     assert(0 && "Unhandled shape type encountered");
@@ -57,6 +60,11 @@ std::shared_ptr<geometrize::Shape> randomShapeOf(const shapes::ShapeTypes types,
             typeVector.push_back(type);
         }
     }
+
+    if(typeVector.size() == 0) {
+        return randomShape(xBound, yBound); // If there are no types specified, create one randomly
+    }
+
     return create(typeVector.at(commonutil::randomRange(0, static_cast<std::int32_t>(typeVector.size() - 1))), xBound, yBound);
 }
 

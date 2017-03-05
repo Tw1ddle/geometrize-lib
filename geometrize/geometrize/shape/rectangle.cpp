@@ -12,10 +12,10 @@ namespace geometrize
 
 Rectangle::Rectangle(const std::int32_t xBound, const std::int32_t yBound) : m_xBound(xBound), m_yBound(yBound)
 {
-    m_x1 = commonutil::randomRange(0, m_xBound);
-    m_y1 = commonutil::randomRange(0, m_yBound);
-    m_x2 = commonutil::clamp(m_x1 + commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1), 0, m_xBound);
-    m_y2 = commonutil::clamp(m_y1 + commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1), 0, m_yBound);
+    m_x1 = commonutil::randomRange(0, m_xBound - 1);
+    m_y1 = commonutil::randomRange(0, m_yBound - 1);
+    m_x2 = commonutil::clamp(m_x1 + commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1), 0, m_xBound - 1);
+    m_y2 = commonutil::clamp(m_y1 + commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1), 0, m_yBound - 1);
 }
 
 std::shared_ptr<geometrize::Shape> Rectangle::clone() const
@@ -47,14 +47,14 @@ void Rectangle::mutate()
     switch(r) {
         case 0:
         {
-            m_x1 = commonutil::clamp(m_x1 + commonutil::randomRange(-16, 16), 0, m_xBound);
-            m_y1 = commonutil::clamp(m_y1 + commonutil::randomRange(-16, 16), 0, m_yBound);
+            m_x1 = commonutil::clamp(m_x1 + commonutil::randomRange(-16, 16), 0, m_xBound - 1);
+            m_y1 = commonutil::clamp(m_y1 + commonutil::randomRange(-16, 16), 0, m_yBound - 1);
             break;
         }
         case 1:
         {
-            m_x2 = commonutil::clamp(m_x2 + commonutil::randomRange(-16, 16), 0, m_xBound);
-            m_y2 = commonutil::clamp(m_y2 + commonutil::randomRange(-16, 16), 0, m_yBound);
+            m_x2 = commonutil::clamp(m_x2 + commonutil::randomRange(-16, 16), 0, m_xBound - 1);
+            m_y2 = commonutil::clamp(m_y2 + commonutil::randomRange(-16, 16), 0, m_yBound - 1);
             break;
         }
     }

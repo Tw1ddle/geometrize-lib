@@ -19,7 +19,7 @@ std::string exportShapeArray(const std::vector<geometrize::ShapeResult>& data)
     for(int i = 0; i < data.size(); i++) {
         const geometrize::ShapeResult& s{data[i]};
 
-        stream << s.shape->getType() << "\n";
+        stream << static_cast<std::underlying_type<geometrize::shapes::ShapeTypes>::type>(s.shape->getType()) << "\n";
 
         const std::vector<std::int32_t> shapeData{s.shape->getRawShapeData()};
         for(int d = 0; d < shapeData.size(); d++) {

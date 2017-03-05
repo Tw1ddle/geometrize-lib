@@ -14,7 +14,7 @@ Spline::Spline(const std::int32_t xBound, const std::int32_t yBound) : m_xBound(
     const std::pair<std::int32_t, std::int32_t> startingPoint{std::make_pair(commonutil::randomRange(0, m_xBound), commonutil::randomRange(0, m_yBound - 1))};
     for(std::int32_t i = 0; i < 4; i++) {
         const std::pair<std::int32_t, std::int32_t> point{
-            commonutil::clamp(startingPoint.first + commonutil::randomRange(-32, 32), 0, m_xBound),
+            commonutil::clamp(startingPoint.first + commonutil::randomRange(-32, 32), 0, m_xBound - 1),
             commonutil::clamp(startingPoint.second + commonutil::randomRange(-32, 32), 0, m_yBound - 1)
         };
         m_controlPoints.push_back(point);
@@ -78,8 +78,8 @@ void Spline::mutate()
     const std::int32_t i{commonutil::randomRange(static_cast<std::size_t>(0), m_controlPoints.size() - 1)};
 
     std::pair<std::int32_t, std::int32_t> point{m_controlPoints[i]};
-    point.first = commonutil::clamp(point.first + commonutil::randomRange(-64, 64), 0, m_xBound);
-    point.second = commonutil::clamp(point.second + commonutil::randomRange(-64, 64), 0, m_yBound);
+    point.first = commonutil::clamp(point.first + commonutil::randomRange(-64, 64), 0, m_xBound - 1);
+    point.second = commonutil::clamp(point.second + commonutil::randomRange(-64, 64), 0, m_yBound - 1);
 
     m_controlPoints[i] = point;
 }

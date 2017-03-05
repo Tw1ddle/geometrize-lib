@@ -11,8 +11,8 @@ namespace geometrize
 
 Ellipse::Ellipse(const std::int32_t xBound, const std::int32_t yBound) : m_xBound(xBound), m_yBound(yBound)
 {
-    m_x = commonutil::randomRange(0, m_xBound);
-    m_y = commonutil::randomRange(0, m_yBound);
+    m_x = commonutil::randomRange(0, m_xBound - 1);
+    m_y = commonutil::randomRange(0, m_yBound - 1);
     m_rx = commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1);
     m_ry = commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1);
 }
@@ -71,18 +71,18 @@ void Ellipse::mutate()
     switch(r) {
         case 0:
         {
-            m_y = commonutil::clamp(m_x + commonutil::randomRange(-16, 16), 0, m_xBound);
-            m_y = commonutil::clamp(m_y + commonutil::randomRange(-16, 16), 0, m_yBound);
+            m_x = commonutil::clamp(m_x + commonutil::randomRange(-16, 16), 0, m_xBound - 1);
+            m_y = commonutil::clamp(m_y + commonutil::randomRange(-16, 16), 0, m_yBound - 1);
             break;
         }
         case 1:
         {
-            m_rx = commonutil::clamp(m_rx + commonutil::randomRange(-16, 16), 1, m_xBound);
+            m_rx = commonutil::clamp(m_rx + commonutil::randomRange(-16, 16), 1, m_xBound - 1);
             break;
         }
         case 2:
         {
-            m_ry = commonutil::clamp(m_ry + commonutil::randomRange(-16, 16), 1, m_xBound);
+            m_ry = commonutil::clamp(m_ry + commonutil::randomRange(-16, 16), 1, m_xBound - 1);
             break;
         }
     }

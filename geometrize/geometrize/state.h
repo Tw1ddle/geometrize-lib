@@ -31,8 +31,8 @@ public:
     State(shapes::ShapeTypes shapeTypes, std::uint32_t alpha, std::uint32_t width, std::uint32_t height);
 
     ~State() = default;
-    geometrize::State(const geometrize::State& other);
-    geometrize::State& operator=(const geometrize::State& other);
+    State(const State& other);
+    State& operator=(const State& other);
 
     /**
      * @brief Calculates a measure of the improvement drawing the primitive to the current bitmap will have.

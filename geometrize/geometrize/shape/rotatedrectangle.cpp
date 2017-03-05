@@ -11,8 +11,8 @@ namespace geometrize
 
 RotatedRectangle::RotatedRectangle(const std::int32_t xBound, const std::int32_t yBound) : m_xBound(xBound), m_yBound(yBound)
 {
-    m_x1 = commonutil::randomRange(0, m_xBound);
-    m_y1 = commonutil::randomRange(0, m_yBound);
+    m_x1 = commonutil::randomRange(0, m_xBound - 1);
+    m_y1 = commonutil::randomRange(0, m_yBound - 1);
     m_x2 = commonutil::clamp(m_x1 + commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1), 0, m_xBound);
     m_y2 = commonutil::clamp(m_y1 + commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1), 0, m_yBound);
     m_angle = commonutil::randomRange(0, 360);

@@ -11,8 +11,8 @@ namespace geometrize
 
 Triangle::Triangle(const std::int32_t xBound, const std::int32_t yBound) : m_xBound(xBound), m_yBound(yBound)
 {
-    m_x1 = commonutil::randomRange(0, xBound);
-    m_y1 = commonutil::randomRange(0, yBound);
+    m_x1 = commonutil::randomRange(0, xBound - 1);
+    m_y1 = commonutil::randomRange(0, yBound - 1);
     m_x2 = m_x1 + commonutil::randomRange(-16, 16);
     m_y2 = m_y1 + commonutil::randomRange(-16, 16);
     m_x3 = m_x1 + commonutil::randomRange(-16, 16);
