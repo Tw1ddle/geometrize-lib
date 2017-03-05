@@ -18,7 +18,7 @@ std::string exportSVG(const std::vector<geometrize::ShapeResult>& data)
     std::stringstream stream;
 
     for(const geometrize::ShapeResult& s : data) {
-        // TODO
+        stream << s.shape->getSvgShapeData(); // TODO
     }
 
     return stream.str();

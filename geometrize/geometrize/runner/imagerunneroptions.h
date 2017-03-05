@@ -14,11 +14,10 @@ namespace geometrize
 class ImageRunnerOptions
 {
 public:
-    geometrize::shapes::ShapeTypes shapeTypes = geometrize::shapes::ShapeTypes::ELLIPSE;
-    std::uint8_t alpha = 128U;
-    std::uint32_t shapeCount = 100U;
-    std::uint32_t maxShapeMutations = 20U;
-    std::uint32_t passes = 1U;
+    geometrize::shapes::ShapeTypes shapeTypes = geometrize::shapes::ShapeTypes::ELLIPSE; ///< The shape types that the image runner shall use.
+    std::uint8_t alpha = 128U; ///< The alpha/opacity of the shapes (0-255).
+    std::uint32_t shapeCount = 100U; ///< The number of candidate shapes that will be tried per model step.
+    std::uint32_t maxShapeMutations = 20U; ///< The number of times each candidate shape will be modified to attempt to find a better fit.
 };
 
 }

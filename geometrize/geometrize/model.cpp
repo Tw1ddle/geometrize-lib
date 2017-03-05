@@ -66,8 +66,7 @@ public:
             const geometrize::shapes::ShapeTypes shapeTypes,
             const std::uint8_t alpha,
             const std::uint32_t shapeCount,
-            const std::uint32_t maxShapeMutations,
-            const std::uint32_t passes)
+            const std::uint32_t maxShapeMutations)
     {
         std::vector<std::future<geometrize::State>> futures;
 
@@ -75,7 +74,7 @@ public:
         for(std::uint32_t i = 0; i < maxThreads; i++) {
             std::future<geometrize::State> handle{std::async(std::launch::async, [&]() {
                 geometrize::Bitmap buffer{m_current};
-                return core::bestHillClimbState(shapeTypes, alpha, shapeCount, maxShapeMutations, passes, m_target, m_current, buffer);
+                return core::bestHillClimbState(shapeTypes, alpha, shapeCount, maxShapeMutations, m_target, m_current, buffer);
             })};
             futures.push_back(std::move(handle));
         }
@@ -91,10 +90,9 @@ public:
             const geometrize::shapes::ShapeTypes shapeTypes,
             const std::uint8_t alpha,
             const std::uint32_t shapeCount,
-            const std::uint32_t maxShapeMutations,
-            const std::uint32_t passes)
+            const std::uint32_t maxShapeMutations)
     {
-        std::vector<geometrize::State> states{getHillClimbState(shapeTypes, alpha, shapeCount, maxShapeMutations, passes)};
+        std::vector<geometrize::State> states{getHillClimbState(shapeTypes, alpha, shapeCount, maxShapeMutations)};
         std::vector<geometrize::State>::iterator it = std::min_element(states.begin(), states.end(), [](const geometrize::State& a, const geometrize::State& b) {
             return a.m_score < b.m_score;
         });
@@ -181,10 +179,9 @@ std::vector<geometrize::ShapeResult> Model::step(
         const geometrize::shapes::ShapeTypes shapeTypes,
         const std::uint8_t alpha,
         std::uint32_t shapeCount,
-        std::uint32_t maxShapeMutations,
-        std::uint32_t passes)
+        std::uint32_t maxShapeMutations)
 {
-    return d->step(shapeTypes, alpha, shapeCount, maxShapeMutations, passes);
+    return d->step(shapeTypes, alpha, shapeCount, maxShapeMutations);
 }
 
 geometrize::ShapeResult Model::drawShape(std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)

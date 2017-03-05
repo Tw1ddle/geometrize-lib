@@ -23,7 +23,7 @@ public:
 
     std::vector<geometrize::ShapeResult> step(const geometrize::ImageRunnerOptions& options)
     {
-        return m_model.step(options.shapeTypes, options.alpha, options.shapeCount, options.maxShapeMutations, options.passes);
+        return m_model.step(options.shapeTypes, options.alpha, options.shapeCount, options.maxShapeMutations);
     }
 
     geometrize::Bitmap& getCurrent()

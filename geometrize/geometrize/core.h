@@ -119,7 +119,6 @@ geometrize::State hillClimb(
  * @param alpha The opacity of the shape.
  * @param n The number of random states to generate.
  * @param age The number of hillclimbing steps.
- * @param m The number of iterations for the overall algorithm.
  * @param target The target bitmap.
  * @param current The current bitmap.
  * @param buffer The buffer bitmap.
@@ -130,7 +129,6 @@ geometrize::State bestHillClimbState(
         std::uint32_t alpha,
         std::uint32_t n,
         std::uint32_t age,
-        std::uint32_t m,
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
         geometrize::Bitmap& buffer);

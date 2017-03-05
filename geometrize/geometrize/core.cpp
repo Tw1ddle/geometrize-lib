@@ -229,15 +229,15 @@ geometrize::State bestHillClimbState(
         const std::uint32_t alpha,
         const std::uint32_t n,
         const std::uint32_t age,
-        const std::uint32_t m,
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
         geometrize::Bitmap& buffer)
 {
     float bestEnergy{0.0f};
 
+    // TODO
     geometrize::State bestState{bestRandomState(shapeTypes, alpha, n, target, current, buffer)};
-    for(std::uint32_t i = 0; i < m; i++) {
+    for(std::uint32_t i = 0; i < 1; i++) {
         geometrize::State state = bestRandomState(shapeTypes, alpha, n, target, current, buffer);
         const float before{state.calculateEnergy(target, current, buffer)};
         state = hillClimb(state, age, target, current, buffer);
