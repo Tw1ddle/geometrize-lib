@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include "../shape/shape.h"
 #include "../shaperesult.h"
 
 namespace geometrize

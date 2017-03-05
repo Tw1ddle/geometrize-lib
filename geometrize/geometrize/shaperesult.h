@@ -1,7 +1,13 @@
 #pragma once
 
+#include <memory>
+
 #include "bitmap/rgba.h"
-#include "shape/shape.h"
+
+namespace geometrize
+{
+class Shape;
+}
 
 namespace geometrize
 {

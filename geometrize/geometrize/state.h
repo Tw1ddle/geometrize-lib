@@ -2,13 +2,14 @@
 
 #include <cstdint>
 #include <memory>
-#include <vector>
 
-#include "bitmap/bitmap.h"
-#include "shape/shape.h"
-#include "shape/shapefactory.h"
 #include "shape/shapetypes.h"
-#include "scanline.h"
+
+namespace geometrize
+{
+class Bitmap;
+class Shape;
+}
 
 namespace geometrize
 {
