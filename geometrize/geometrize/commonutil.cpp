@@ -13,7 +13,9 @@ namespace commonutil
 std::int32_t randomRange(const std::int32_t min, const std::int32_t max)
 {
     assert(min <= max);
-    return min + (rand() % (max - min + 1));
+    thread_local static std::mt19937 mt(std::random_device{}());
+    thread_local static std::uniform_int_distribution<std::int32_t> pick;
+    return pick(mt, std::uniform_int_distribution<std::int32_t>::param_type{min, max});
 }
 
 std::vector<std::pair<std::int32_t, std::int32_t>> bresenham(std::int32_t x1, std::int32_t y1, const std::int32_t x2, const std::int32_t y2)

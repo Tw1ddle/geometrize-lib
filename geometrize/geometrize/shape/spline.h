@@ -14,7 +14,7 @@ namespace geometrize
 {
 
 /**
- * @brief The Spline class represents an open spline.
+ * @brief The Spline class represents a spline.
  * @author Sam Twidale (http://samcodes.co.uk/)
  */
 class Spline : public Shape
