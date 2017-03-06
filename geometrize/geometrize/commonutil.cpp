@@ -10,11 +10,17 @@ namespace geometrize
 namespace commonutil
 {
 
+thread_local static std::mt19937 mt(std::random_device{}());
+thread_local static std::uniform_int_distribution<std::int32_t> pick;
+
+void seedRandomGenerator(const std::uint32_t seed)
+{
+    mt.seed(seed);
+}
+
 std::int32_t randomRange(const std::int32_t min, const std::int32_t max)
 {
     assert(min <= max);
-    thread_local static std::mt19937 mt(std::random_device{}());
-    thread_local static std::uniform_int_distribution<std::int32_t> pick;
     return pick(mt, std::uniform_int_distribution<std::int32_t>::param_type{min, max});
 }
 

@@ -12,6 +12,12 @@ namespace commonutil
 {
 
 /**
+ * @brief seedRandomGenerator Seeds the (thread-local) random number generator.
+ * @param seed The seed.
+ */
+void seedRandomGenerator(std::uint32_t seed);
+
+/**
  * @brief randomRange Returns a random integer in the range, inclusive.
  * @param min The lower bound.
  * @param max The upper bound.

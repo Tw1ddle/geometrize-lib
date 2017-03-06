@@ -1,6 +1,7 @@
 #include "model.h"
 
 #include <algorithm>
+#include <atomic>
 #include <assert.h>
 #include <cstdint>
 #include <future>
@@ -12,6 +13,7 @@
 #include "shape/shape.h"
 #include "shaperesult.h"
 #include "shape/shapetypes.h"
+#include "commonutil.h"
 
 namespace geometrize
 {
@@ -24,7 +26,8 @@ public:
         m_target{target},
         m_current{target.getWidth(), target.getHeight(), backgroundColor},
         m_lastScore{geometrize::core::differenceFull(m_target, m_current)},
-        m_maxThreads{std::max(1U, std::thread::hardware_concurrency())}
+        m_maxThreads{std::max(1U, std::thread::hardware_concurrency())},
+        m_randomSeed{0U}
     {}
 
     ModelImpl(geometrize::Model* pQ, const geometrize::Bitmap& target, const geometrize::Bitmap& initial) :
@@ -32,7 +35,8 @@ public:
         m_target{target},
         m_current{initial},
         m_lastScore{geometrize::core::differenceFull(m_target, m_current)},
-        m_maxThreads{std::max(1U, std::thread::hardware_concurrency())}
+        m_maxThreads{std::max(1U, 8U)},
+        m_randomSeed{9001U}
     {
         assert(m_target.getWidth() == m_current.getWidth());
         assert(m_target.getHeight() == m_current.getHeight());
@@ -67,10 +71,15 @@ public:
         std::vector<std::future<geometrize::State>> futures;
 
         for(std::uint32_t i = 0; i < m_maxThreads; i++) {
-            std::future<geometrize::State> handle{std::async(std::launch::async, [&]() {
+            std::future<geometrize::State> handle{std::async(std::launch::async, [&](const std::uint32_t seed) {
+                // Ensures that the results of the random generation are the same between jobs with identical settings
+                // The RNG is thread-local and std::async may use a thread pool (which is why this is necessary)
+                // Note this implementation requires m_maxThreads to be the same to get the same results between jobs.
+                geometrize::commonutil::seedRandomGenerator(seed);
+
                 geometrize::Bitmap buffer{m_current};
                 return core::bestHillClimbState(*q, shapeTypes, alpha, shapeCount, maxShapeMutations, m_target, m_current, buffer);
-            })};
+            }, m_randomSeed++)};
             futures.push_back(std::move(handle));
         }
 
@@ -146,6 +155,7 @@ private:
     geometrize::Bitmap m_current; ///< The current bitmap.
     float m_lastScore; ///< Score derived from calculating the difference between bitmaps.
     std::uint32_t m_maxThreads; ///< The maximum number of threads the model will use when stepping.
+    std::atomic_int m_randomSeed; ///< Seed used for random number generation. Note: incremented by each std::async call used for model stepping.
 };
 
 Model::Model(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) : d{std::make_unique<Model::ModelImpl>(this, target, backgroundColor)}
