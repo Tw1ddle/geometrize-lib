@@ -10,17 +10,20 @@
 namespace geometrize
 {
 
-Ellipse::Ellipse(const geometrize::Model& model, const std::int32_t xBound, const std::int32_t yBound) : m_model{model}, m_xBound(xBound), m_yBound(yBound)
+Ellipse::Ellipse(const geometrize::Model& model) : m_model{model}
 {
-    m_x = commonutil::randomRange(0, m_xBound - 1);
-    m_y = commonutil::randomRange(0, m_yBound - 1);
+    const std::int32_t xBound{m_model.getWidth()};
+    const std::int32_t yBound{m_model.getHeight()};
+
+    m_x = commonutil::randomRange(0, xBound - 1);
+    m_y = commonutil::randomRange(0, yBound - 1);
     m_rx = commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1);
     m_ry = commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1);
 }
 
 std::shared_ptr<geometrize::Shape> Ellipse::clone() const
 {
-    std::shared_ptr<geometrize::Ellipse> ellipse{std::make_shared<geometrize::Ellipse>(m_model, m_xBound, m_yBound)};
+    std::shared_ptr<geometrize::Ellipse> ellipse{std::make_shared<geometrize::Ellipse>(m_model)};
     ellipse->m_x = m_x;
     ellipse->m_y = m_y;
     ellipse->m_rx = m_rx;
@@ -34,8 +37,8 @@ std::vector<geometrize::Scanline> Ellipse::rasterize() const
 
     const float aspect{static_cast<float>(m_rx) / static_cast<float>(m_ry)};
 
-    const std::int32_t w{m_xBound};
-    const std::int32_t h{m_yBound};
+    const std::int32_t w{m_model.getWidth()};
+    const std::int32_t h{m_model.getHeight()};
 
     for (std::int32_t dy = 0; dy < m_ry; dy++) {
         const std::int32_t y1{m_y - dy};
@@ -68,22 +71,25 @@ std::vector<geometrize::Scanline> Ellipse::rasterize() const
 
 void Ellipse::mutate()
 {
+    const std::int32_t xBound{m_model.getWidth()};
+    const std::int32_t yBound{m_model.getHeight()};
+
     const std::int32_t r{commonutil::randomRange(0, 2)};
     switch(r) {
         case 0:
         {
-            m_x = commonutil::clamp(m_x + commonutil::randomRange(-16, 16), 0, m_xBound - 1);
-            m_y = commonutil::clamp(m_y + commonutil::randomRange(-16, 16), 0, m_yBound - 1);
+            m_x = commonutil::clamp(m_x + commonutil::randomRange(-16, 16), 0, xBound - 1);
+            m_y = commonutil::clamp(m_y + commonutil::randomRange(-16, 16), 0, yBound - 1);
             break;
         }
         case 1:
         {
-            m_rx = commonutil::clamp(m_rx + commonutil::randomRange(-16, 16), 1, m_xBound - 1);
+            m_rx = commonutil::clamp(m_rx + commonutil::randomRange(-16, 16), 1, xBound - 1);
             break;
         }
         case 2:
         {
-            m_ry = commonutil::clamp(m_ry + commonutil::randomRange(-16, 16), 1, m_xBound - 1);
+            m_ry = commonutil::clamp(m_ry + commonutil::randomRange(-16, 16), 1, xBound - 1);
             break;
         }
     }

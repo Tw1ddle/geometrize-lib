@@ -17,8 +17,8 @@ namespace geometrize
 
 State::State() : m_score{-1.0f}, m_alpha{0}, m_shape{nullptr} {}
 
-State::State(const geometrize::Model& model, const shapes::ShapeTypes shapeTypes, const std::uint32_t alpha, const std::uint32_t width, const std::uint32_t height) :
-    m_score{-1.0f}, m_alpha{alpha}, m_shape{geometrize::randomShapeOf(model, shapeTypes, width, height)}
+State::State(const geometrize::Model& model, const shapes::ShapeTypes shapeTypes, const std::uint32_t alpha) :
+    m_score{-1.0f}, m_alpha{alpha}, m_shape{geometrize::randomShapeOf(model, shapeTypes)}
 {}
 
 State& State::operator=(const geometrize::State& other)

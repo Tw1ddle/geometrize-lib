@@ -10,8 +10,11 @@
 namespace geometrize
 {
 
-Triangle::Triangle(const geometrize::Model& model, const std::int32_t xBound, const std::int32_t yBound) : m_model{model}, m_xBound(xBound), m_yBound(yBound)
+Triangle::Triangle(const geometrize::Model& model) : m_model{model}
 {
+    const std::int32_t xBound{m_model.getWidth()};
+    const std::int32_t yBound{m_model.getHeight()};
+
     m_x1 = commonutil::randomRange(0, xBound - 1);
     m_y1 = commonutil::randomRange(0, yBound - 1);
     m_x2 = m_x1 + commonutil::randomRange(-16, 16);
@@ -22,7 +25,7 @@ Triangle::Triangle(const geometrize::Model& model, const std::int32_t xBound, co
 
 std::shared_ptr<geometrize::Shape> Triangle::clone() const
 {
-    std::shared_ptr<geometrize::Triangle> triangle{std::make_shared<geometrize::Triangle>(m_model, m_xBound, m_yBound)};
+    std::shared_ptr<geometrize::Triangle> triangle{std::make_shared<geometrize::Triangle>(m_model)};
     triangle->m_x1 = m_x1;
     triangle->m_y1 = m_y1;
     triangle->m_x2 = m_x2;
@@ -46,18 +49,18 @@ void Triangle::mutate()
     const std::int32_t r{commonutil::randomRange(0, 2)};
 
     switch(r) {
-    case 0:
-    {
-        break;
-    }
-    case 1:
-    {
-        break;
-    }
-    case 2:
-    {
-        break;
-    }
+        case 0:
+        {
+            break;
+        }
+        case 1:
+        {
+            break;
+        }
+        case 2:
+        {
+            break;
+        }
     }
 }
 

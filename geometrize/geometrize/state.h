@@ -28,10 +28,8 @@ public:
      * @param model The model that created this state.
      * @param shapeTypes The types of geometric primitive to select.
      * @param alpha The color alpha of the geometric shape.
-     * @param width The width of the bitmap.
-     * @param height The height of the bitmap.
      */
-    State(const geometrize::Model& model, shapes::ShapeTypes shapeTypes, std::uint32_t alpha, std::uint32_t width, std::uint32_t height);
+    State(const geometrize::Model& model, shapes::ShapeTypes shapeTypes, std::uint32_t alpha);
 
     ~State() = default;
     State(const State& other);

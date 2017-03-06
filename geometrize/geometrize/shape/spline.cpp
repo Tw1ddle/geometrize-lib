@@ -10,13 +10,16 @@
 namespace geometrize
 {
 
-Spline::Spline(const geometrize::Model& model, const std::int32_t xBound, const std::int32_t yBound) :m_model{model}, m_xBound(xBound), m_yBound(yBound)
+Spline::Spline(const geometrize::Model& model) : m_model{model}
 {
-    const std::pair<std::int32_t, std::int32_t> startingPoint{std::make_pair(commonutil::randomRange(0, m_xBound), commonutil::randomRange(0, m_yBound - 1))};
+    const std::int32_t xBound{m_model.getWidth()};
+    const std::int32_t yBound{m_model.getHeight()};
+
+    const std::pair<std::int32_t, std::int32_t> startingPoint{std::make_pair(commonutil::randomRange(0, xBound), commonutil::randomRange(0, yBound - 1))};
     for(std::int32_t i = 0; i < 4; i++) {
         const std::pair<std::int32_t, std::int32_t> point{
-            commonutil::clamp(startingPoint.first + commonutil::randomRange(-32, 32), 0, m_xBound - 1),
-            commonutil::clamp(startingPoint.second + commonutil::randomRange(-32, 32), 0, m_yBound - 1)
+            commonutil::clamp(startingPoint.first + commonutil::randomRange(-32, 32), 0, xBound - 1),
+            commonutil::clamp(startingPoint.second + commonutil::randomRange(-32, 32), 0, yBound - 1)
         };
         m_controlPoints.push_back(point);
     }
@@ -24,13 +27,16 @@ Spline::Spline(const geometrize::Model& model, const std::int32_t xBound, const 
 
 std::shared_ptr<geometrize::Shape> Spline::clone() const
 {
-    std::shared_ptr<geometrize::Spline> spline{std::make_shared<geometrize::Spline>(m_model, m_xBound, m_yBound)};
+    std::shared_ptr<geometrize::Spline> spline{std::make_shared<geometrize::Spline>(m_model)};
     spline->m_controlPoints = m_controlPoints;
     return spline;
 }
 
 std::vector<geometrize::Scanline> Spline::rasterize() const
 {
+    const std::int32_t xBound{m_model.getWidth()};
+    const std::int32_t yBound{m_model.getHeight()};
+
     std::vector<geometrize::Scanline> lines;
 
     for(std::int32_t i = 0; i < m_controlPoints.size(); i++) {
@@ -44,16 +50,18 @@ std::vector<geometrize::Scanline> Spline::rasterize() const
         }
     }
 
-    return Scanline::trim(lines, m_xBound, m_yBound);
+    return Scanline::trim(lines, xBound, yBound);
 }
 
 void Spline::mutate()
 {
+    const std::int32_t xBound{m_model.getWidth()};
+    const std::int32_t yBound{m_model.getHeight()};
     const std::int32_t i{commonutil::randomRange(static_cast<std::size_t>(0), m_controlPoints.size() - 1)};
 
     std::pair<std::int32_t, std::int32_t> point{m_controlPoints[i]};
-    point.first = commonutil::clamp(point.first + commonutil::randomRange(-64, 64), 0, m_xBound - 1);
-    point.second = commonutil::clamp(point.second + commonutil::randomRange(-64, 64), 0, m_yBound - 1);
+    point.first = commonutil::clamp(point.first + commonutil::randomRange(-64, 64), 0, xBound - 1);
+    point.second = commonutil::clamp(point.second + commonutil::randomRange(-64, 64), 0, yBound - 1);
 
     m_controlPoints[i] = point;
 }

@@ -10,18 +10,21 @@
 namespace geometrize
 {
 
-RotatedRectangle::RotatedRectangle(const geometrize::Model& model, const std::int32_t xBound, const std::int32_t yBound) : m_model{model}, m_xBound(xBound), m_yBound(yBound)
+RotatedRectangle::RotatedRectangle(const geometrize::Model& model) : m_model{model}
 {
-    m_x1 = commonutil::randomRange(0, m_xBound - 1);
-    m_y1 = commonutil::randomRange(0, m_yBound - 1);
-    m_x2 = commonutil::clamp(m_x1 + commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1), 0, m_xBound);
-    m_y2 = commonutil::clamp(m_y1 + commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1), 0, m_yBound);
+    const std::int32_t xBound{m_model.getWidth()};
+    const std::int32_t yBound{m_model.getHeight()};
+
+    m_x1 = commonutil::randomRange(0, xBound - 1);
+    m_y1 = commonutil::randomRange(0, yBound - 1);
+    m_x2 = commonutil::clamp(m_x1 + commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1), 0, xBound);
+    m_y2 = commonutil::clamp(m_y1 + commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1), 0, yBound);
     m_angle = commonutil::randomRange(0, 360);
 }
 
 std::shared_ptr<geometrize::Shape> RotatedRectangle::clone() const
 {
-    std::shared_ptr<geometrize::RotatedRectangle> rect{std::make_shared<geometrize::RotatedRectangle>(m_model, m_xBound, m_yBound)};
+    std::shared_ptr<geometrize::RotatedRectangle> rect{std::make_shared<geometrize::RotatedRectangle>(m_model)};
     rect->m_x1 = m_x1;
     rect->m_y1 = m_y1;
     rect->m_x2 = m_x2;
@@ -41,19 +44,21 @@ std::vector<geometrize::Scanline> RotatedRectangle::rasterize() const
 
 void RotatedRectangle::mutate()
 {
-    const std::int32_t r{commonutil::randomRange(0, 2)};
+    const std::int32_t xBound{m_model.getWidth()};
+    const std::int32_t yBound{m_model.getHeight()};
 
+    const std::int32_t r{commonutil::randomRange(0, 2)};
     switch(r) {
         case 0:
         {
-            m_x1 = commonutil::clamp(m_x1 + commonutil::randomRange(-16, 16), 0, m_xBound);
-            m_y1 = commonutil::clamp(m_y1 + commonutil::randomRange(-16, 16), 0, m_yBound);
+            m_x1 = commonutil::clamp(m_x1 + commonutil::randomRange(-16, 16), 0, xBound);
+            m_y1 = commonutil::clamp(m_y1 + commonutil::randomRange(-16, 16), 0, yBound);
             break;
         }
         case 1:
         {
-            m_x2 = commonutil::clamp(m_x2 + commonutil::randomRange(-16, 16), 0, m_xBound);
-            m_y2 = commonutil::clamp(m_y2 + commonutil::randomRange(-16, 16), 0, m_yBound);
+            m_x2 = commonutil::clamp(m_x2 + commonutil::randomRange(-16, 16), 0, xBound);
+            m_y2 = commonutil::clamp(m_y2 + commonutil::randomRange(-16, 16), 0, yBound);
             break;
         }
         case 2:

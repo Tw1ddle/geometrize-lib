@@ -23,14 +23,16 @@ public:
         q{pQ},
         m_target{target},
         m_current{target.getWidth(), target.getHeight(), backgroundColor},
-        m_lastScore{geometrize::core::differenceFull(m_target, m_current)}
+        m_lastScore{geometrize::core::differenceFull(m_target, m_current)},
+        m_maxThreads{std::max(1U, std::thread::hardware_concurrency())}
     {}
 
     ModelImpl(geometrize::Model* pQ, const geometrize::Bitmap& target, const geometrize::Bitmap& initial) :
         q{pQ},
         m_target{target},
         m_current{initial},
-        m_lastScore{geometrize::core::differenceFull(m_target, m_current)}
+        m_lastScore{geometrize::core::differenceFull(m_target, m_current)},
+        m_maxThreads{std::max(1U, std::thread::hardware_concurrency())}
     {
         assert(m_target.getWidth() == m_current.getWidth());
         assert(m_target.getHeight() == m_current.getHeight());
@@ -46,12 +48,12 @@ public:
         m_lastScore = geometrize::core::differenceFull(m_target, m_current);
     }
 
-    std::uint32_t getWidth() const
+    std::int32_t getWidth() const
     {
         return m_target.getWidth();
     }
 
-    std::uint32_t getHeight() const
+    std::int32_t getHeight() const
     {
         return m_target.getHeight();
     }
@@ -64,8 +66,7 @@ public:
     {
         std::vector<std::future<geometrize::State>> futures;
 
-        const std::uint32_t maxThreads{std::max(1U, std::thread::hardware_concurrency())};
-        for(std::uint32_t i = 0; i < maxThreads; i++) {
+        for(std::uint32_t i = 0; i < m_maxThreads; i++) {
             std::future<geometrize::State> handle{std::async(std::launch::async, [&]() {
                 geometrize::Bitmap buffer{m_current};
                 return core::bestHillClimbState(*q, shapeTypes, alpha, shapeCount, maxShapeMutations, m_target, m_current, buffer);
@@ -134,11 +135,17 @@ public:
         return m_current;
     }
 
+    void setMaxThreads(const std::uint32_t threadCount)
+    {
+        m_maxThreads = threadCount;
+    }
+
 private:
     geometrize::Model* q;
     geometrize::Bitmap m_target; ///< The target bitmap, the bitmap we aim to approximate.
     geometrize::Bitmap m_current; ///< The current bitmap.
     float m_lastScore; ///< Score derived from calculating the difference between bitmaps.
+    std::uint32_t m_maxThreads; ///< The maximum number of threads the model will use when stepping.
 };
 
 Model::Model(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) : d{std::make_unique<Model::ModelImpl>(this, target, backgroundColor)}
@@ -155,12 +162,12 @@ void Model::reset(const geometrize::rgba backgroundColor)
     d->reset(backgroundColor);
 }
 
-std::uint32_t Model::getWidth() const
+std::int32_t Model::getWidth() const
 {
     return d->getWidth();
 }
 
-std::uint32_t Model::getHeight() const
+std::int32_t Model::getHeight() const
 {
     return d->getHeight();
 }
@@ -187,6 +194,11 @@ geometrize::Bitmap& Model::getTarget()
 geometrize::Bitmap& Model::getCurrent()
 {
     return d->getCurrent();
+}
+
+void Model::setMaxThreads(const std::uint32_t threadCount)
+{
+    d->setMaxThreads(threadCount);
 }
 
 }

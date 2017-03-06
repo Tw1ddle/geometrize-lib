@@ -193,9 +193,9 @@ geometrize::State bestRandomState(
         geometrize::Bitmap& buffer)
 {
     float bestEnergy{0.0f};
-    geometrize::State bestState(model, shapeTypes, alpha, current.getWidth(), current.getHeight());
+    geometrize::State bestState(model, shapeTypes, alpha);
     for(std::uint32_t i = 0; i <= n; i++) {
-        geometrize::State state(model, shapeTypes, alpha, current.getWidth(), current.getHeight());
+        geometrize::State state(model, shapeTypes, alpha);
         state.m_score = -1;
         const float energy{state.calculateEnergy(target, current, buffer)};
         if(i == 0 || energy < bestEnergy) {

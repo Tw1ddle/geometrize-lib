@@ -51,13 +51,13 @@ public:
      * @brief getWidth Gets the width of the target bitmap.
      * @return The width of the target bitmap.
      */
-    std::uint32_t getWidth() const;
+    std::int32_t getWidth() const;
 
     /**
      * @brief getHeight Gets the height of the target bitmap.
      * @return The height of the target bitmap.
      */
-    std::uint32_t getHeight() const;
+    std::int32_t getHeight() const;
 
     /**
      * @brief step Steps the primitive optimization/fitting algorithm.
@@ -100,6 +100,12 @@ public:
      * @return The target bitmap.
      */
     geometrize::Bitmap& getTarget();
+
+    /**
+     * @brief setMaxThreads Sets the maximum number of threads the model will use when stepping.
+     * @param threadCount The maximum number of threads to use.
+     */
+    void setMaxThreads(std::uint32_t threadCount);
 
 private:
     class ModelImpl;
