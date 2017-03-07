@@ -35,8 +35,8 @@ public:
         m_target{target},
         m_current{initial},
         m_lastScore{geometrize::core::differenceFull(m_target, m_current)},
-        m_maxThreads{std::max(1U, 8U)},
-        m_randomSeed{9001U}
+        m_maxThreads{std::max(1U, std::thread::hardware_concurrency())},
+        m_randomSeed{0U}
     {
         assert(m_target.getWidth() == m_current.getWidth());
         assert(m_target.getHeight() == m_current.getHeight());
@@ -74,7 +74,7 @@ public:
             std::future<geometrize::State> handle{std::async(std::launch::async, [&](const std::uint32_t seed) {
                 // Ensures that the results of the random generation are the same between jobs with identical settings
                 // The RNG is thread-local and std::async may use a thread pool (which is why this is necessary)
-                // Note this implementation requires m_maxThreads to be the same to get the same results between jobs.
+                // Note this implementation requires m_maxThreads to be the same between jobs for each job to produce the same results.
                 geometrize::commonutil::seedRandomGenerator(seed);
 
                 geometrize::Bitmap buffer{m_current};
