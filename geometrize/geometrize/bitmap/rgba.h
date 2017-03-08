@@ -7,6 +7,7 @@ namespace geometrize
 
 /**
  * @brief The rgba struct is a helper for manipulating color data.
+ * @author Sam Twidale (http://samcodes.co.uk/)
  */
 struct rgba
 {
