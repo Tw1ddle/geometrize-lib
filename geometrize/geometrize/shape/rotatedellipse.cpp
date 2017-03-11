@@ -83,7 +83,7 @@ std::vector<std::int32_t> RotatedEllipse::getRawShapeData() const
     return { m_x, m_y, m_rx, m_ry, m_angle };
 }
 
-std::string RotatedEllipse::getSvgShapeData() const
+std::string RotatedEllipse::getSvgShapeData(const std::string& attribs) const
 {
     return "TODO";
 }

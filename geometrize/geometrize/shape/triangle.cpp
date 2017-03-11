@@ -74,7 +74,7 @@ std::vector<std::int32_t> Triangle::getRawShapeData() const
     return { m_x1, m_y1, m_x2, m_y2, m_x3, m_y3 };
 }
 
-std::string Triangle::getSvgShapeData() const
+std::string Triangle::getSvgShapeData(const std::string& attribs) const
 {
     return "TODO";
 }

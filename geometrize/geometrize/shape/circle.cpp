@@ -86,7 +86,7 @@ std::vector<std::int32_t> Circle::getRawShapeData() const
     return { m_x, m_y, m_r };
 }
 
-std::string Circle::getSvgShapeData() const
+std::string Circle::getSvgShapeData(const std::string& attribs) const
 {
     return "TODO";
 }

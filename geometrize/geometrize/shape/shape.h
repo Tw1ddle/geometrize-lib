@@ -54,9 +54,10 @@ public:
 
     /**
      * @brief getSvgShapeData Gets a string that represents a SVG element that describes the shape geometry.
+     * @param attribs The attributes (such as a style attribute) to include in the SVG shape data.
      * @return The SVG shape data that represents this shape.
      */
-    virtual std::string getSvgShapeData() const = 0;
+    virtual std::string getSvgShapeData(const std::string& attribs) const = 0;
 };
 
 }

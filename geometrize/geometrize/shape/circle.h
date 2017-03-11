@@ -31,7 +31,7 @@ public:
     virtual void mutate() override;
     virtual geometrize::shapes::ShapeTypes getType() const override;
     virtual std::vector<std::int32_t> getRawShapeData() const override;
-    virtual std::string getSvgShapeData() const override;
+    virtual std::string getSvgShapeData(const std::string& attribs) const override;
 
 private:
     const geometrize::Model& m_model; ///< The model that produces the shape.

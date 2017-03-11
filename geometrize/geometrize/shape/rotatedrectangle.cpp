@@ -85,7 +85,7 @@ std::vector<std::int32_t> RotatedRectangle::getRawShapeData() const
     };
 }
 
-std::string RotatedRectangle::getSvgShapeData() const
+std::string RotatedRectangle::getSvgShapeData(const std::string& attribs) const
 {
     return "TODO";
 }

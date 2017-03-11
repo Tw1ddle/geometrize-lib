@@ -81,7 +81,7 @@ std::vector<std::int32_t> Line::getRawShapeData() const
     return { m_x1, m_y1, m_x2, m_y2 };
 }
 
-std::string Line::getSvgShapeData() const
+std::string Line::getSvgShapeData(const std::string& attribs) const
 {
     return "TODO";
 }

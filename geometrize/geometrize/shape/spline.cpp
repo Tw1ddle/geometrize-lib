@@ -82,7 +82,7 @@ std::vector<std::int32_t> Spline::getRawShapeData() const
     return data;
 }
 
-std::string Spline::getSvgShapeData() const
+std::string Spline::getSvgShapeData(const std::string& attribs) const
 {
     return "TODO";
 }
