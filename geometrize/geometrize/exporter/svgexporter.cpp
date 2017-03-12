@@ -30,6 +30,7 @@ std::string getSVGAttribs(const geometrize::rgba color)
     return stream.str();
 }
 
+// TODO add SVG exporter options (that will be used by getSvgShapeData function)
 std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const std::uint32_t width, const std::uint32_t height, const geometrize::rgba backgroundColor)
 {
     std::stringstream stream;
@@ -37,6 +38,7 @@ std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const st
     stream << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" " << "width=\"" << width << "\" " << "height=\"" << height << "\">" << "\n";
     stream << "<g transform=\"translate(0.5 0.5)\">" << "\n";
 
+    // Add a background rect first
     stream << "<rect "
            << "width=\"" << width << "\" "
            << "height=\"" << height << "\" "

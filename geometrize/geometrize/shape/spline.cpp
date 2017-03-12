@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <sstream>
 
 #include "shape.h"
 #include "../model.h"
@@ -84,7 +85,10 @@ std::vector<std::int32_t> Spline::getRawShapeData() const
 
 std::string Spline::getSvgShapeData(const std::string& attribs) const
 {
-    return "TODO";
+    std::stringstream s;
+
+
+    return s.str();
 }
 
 }

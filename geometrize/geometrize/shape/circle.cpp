@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <sstream>
 
 #include "shape.h"
 #include "../model.h"
@@ -88,7 +89,15 @@ std::vector<std::int32_t> Circle::getRawShapeData() const
 
 std::string Circle::getSvgShapeData(const std::string& attribs) const
 {
-    return "TODO";
+    std::stringstream s;
+    s << "<circle "
+      << "cx=\"" << m_x << "\" "
+      << "cy=\"" << m_y << "\" "
+      << "r=\"" << m_r << "\" "
+      << attribs << " "
+      << "/>";
+
+    return s.str();
 }
 
 }

@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <sstream>
 
 #include "shape.h"
 #include "../model.h"
@@ -83,7 +84,17 @@ std::vector<std::int32_t> Line::getRawShapeData() const
 
 std::string Line::getSvgShapeData(const std::string& attribs) const
 {
-    return "TODO";
+    std::stringstream s;
+    s << "<line "
+      << "x1=\"" << m_x1 << "\" "
+      << "y1=\"" << m_y1 << "\" "
+      << "x2=\"" << m_x2 << "\" "
+      << "y2=\"" << m_y2 << "\" "
+      << attribs << " "
+      << "/>";
+    // TODO stroke and alpha??
+
+    return s.str();
 }
 
 }

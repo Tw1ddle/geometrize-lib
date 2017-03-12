@@ -4,10 +4,11 @@
 #include <string>
 #include <vector>
 
+#include "../bitmap/rgba.h"
+
 namespace geometrize
 {
 struct ShapeResult;
-struct rgba;
 }
 
 namespace geometrize
@@ -17,7 +18,16 @@ namespace exporter
 {
 
 /**
- * @brief exportSvg Exports shape data to an SVG image.
+ * @brief The SVGExportOptions class represents the options that can be set for the SVG export.
+ */
+class SVGExportOptions
+{
+public:
+    // TODO
+};
+
+/**
+ * @brief exportSVG Exports shape data to an SVG image.
  * @param data The shape data to export.
  * @param width The width of the SVG image.
  * @param height The height of the SVG image.

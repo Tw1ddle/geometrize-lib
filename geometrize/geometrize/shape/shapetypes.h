@@ -23,7 +23,8 @@ enum ShapeTypes : std::uint32_t
     CIRCLE = 32U,
     LINE = 64U,
     SPLINE = 128U,
-    SHAPE_COUNT = 8U
+    POLYLINE = 256U,
+    SHAPE_COUNT = 9U
 };
 
 static const std::array<ShapeTypes, static_cast<std::size_t>(ShapeTypes::SHAPE_COUNT)> allShapes =
@@ -35,7 +36,8 @@ static const std::array<ShapeTypes, static_cast<std::size_t>(ShapeTypes::SHAPE_C
     ShapeTypes::ROTATED_ELLIPSE,
     ShapeTypes::CIRCLE,
     ShapeTypes::LINE,
-    ShapeTypes::SPLINE
+    ShapeTypes::SPLINE,
+    ShapeTypes::POLYLINE
 };
 
 }

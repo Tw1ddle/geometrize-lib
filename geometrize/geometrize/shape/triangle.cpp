@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <sstream>
 
 #include "shape.h"
 #include "../model.h"
@@ -46,19 +47,27 @@ std::vector<geometrize::Scanline> Triangle::rasterize() const
 
 void Triangle::mutate()
 {
-    const std::int32_t r{commonutil::randomRange(0, 2)};
+    const std::int32_t xBound{m_model.getWidth()};
+    const std::int32_t yBound{m_model.getHeight()};
 
+    const std::int32_t r{commonutil::randomRange(0, 2)};
     switch(r) {
         case 0:
         {
+            m_x1 = commonutil::clamp(m_x1 + commonutil::randomRange(-16, 16), 0, xBound);
+            m_y1 = commonutil::clamp(m_y1 + commonutil::randomRange(-16, 16), 0, yBound);
             break;
         }
         case 1:
         {
+            m_x2 = commonutil::clamp(m_x2 + commonutil::randomRange(-16, 16), 0, xBound);
+            m_y2 = commonutil::clamp(m_y2 + commonutil::randomRange(-16, 16), 0, yBound);
             break;
         }
         case 2:
         {
+            m_x3 = commonutil::clamp(m_x3 + commonutil::randomRange(-16, 16), 0, xBound);
+            m_y3 = commonutil::clamp(m_y3 + commonutil::randomRange(-16, 16), 0, yBound);
             break;
         }
     }
@@ -76,7 +85,16 @@ std::vector<std::int32_t> Triangle::getRawShapeData() const
 
 std::string Triangle::getSvgShapeData(const std::string& attribs) const
 {
-    return "TODO";
+    std::stringstream s;
+    s << "<polygon "
+      << "points=\""
+      << m_x1 << "," << m_y1 << " "
+      << m_x2 << "," << m_y2 << " "
+      << m_x3 << "," << m_y3
+      << attribs << " "
+      << "/>";
+
+    return s.str();
 }
 
 }

@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <sstream>
 
 #include "shape.h"
 #include "../model.h"
@@ -37,7 +38,16 @@ std::vector<geometrize::Scanline> RotatedEllipse::rasterize() const
 {
     std::vector<geometrize::Scanline> lines;
 
+    const std::int32_t x1{m_x - m_rx};
+    const std::int32_t x2{m_x + m_rx};
+    const std::int32_t y1{m_y - m_ry};
+    const std::int32_t y2{m_y + m_ry};
 
+    for(std::int32_t y = y1; y < y2; y++) {
+        for(std::int32_t x = x1; x < x2; x++) {
+        }
+        //lines.push_back(geometrize::Scanline(y, (std::min)(m_x1, m_x2), (std::max)(m_x1, m_x2), 0xFFFF));
+    }
 
     return lines;
 }
@@ -51,7 +61,7 @@ void RotatedEllipse::mutate()
     switch(r) {
         case 0:
         {
-            m_y = commonutil::clamp(m_x + commonutil::randomRange(-16, 16), 0, xBound - 1);
+            m_x = commonutil::clamp(m_x + commonutil::randomRange(-16, 16), 0, xBound - 1);
             m_y = commonutil::clamp(m_y + commonutil::randomRange(-16, 16), 0, yBound - 1);
             break;
         }
@@ -85,7 +95,17 @@ std::vector<std::int32_t> RotatedEllipse::getRawShapeData() const
 
 std::string RotatedEllipse::getSvgShapeData(const std::string& attribs) const
 {
-    return "TODO";
+    std::stringstream s;
+    s << "<ellipse "
+      << "cx=\"" << m_x << "\" "
+      << "cy=\"" << m_y << "\" "
+      << "rx=\"" << m_rx << "\" "
+      << "ry=\"" << m_ry << "\" "
+      << "transform=\"rotate(" << m_angle << ")" << "\" "
+      << attribs << " "
+      << "/>";
+
+    return s.str();
 }
 
 }

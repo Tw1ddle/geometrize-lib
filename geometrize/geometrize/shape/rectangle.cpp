@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cstdint>
 #include <memory>
+#include <sstream>
 
 #include "shape.h"
 #include "../model.h"
@@ -83,7 +84,16 @@ std::vector<std::int32_t> Rectangle::getRawShapeData() const
 
 std::string Rectangle::getSvgShapeData(const std::string& attribs) const
 {
-    return "TODO";
+    std::stringstream s;
+    s << "<rect "
+      << "x=\"" << m_x1 << "\" "
+      << "y=\"" << m_y1 << "\" "
+      << "width=\"" << (std::max)(m_x1, m_x2) - (std::min)(m_x1, m_x2) << "\" "
+      << "height=\"" << (std::max)(m_y1, m_y2) - (std::min)(m_y1, m_y2) << "\" "
+      << attribs << " "
+      << "/>";
+
+    return s.str();
 }
 
 }
