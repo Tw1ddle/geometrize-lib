@@ -43,7 +43,7 @@ std::shared_ptr<geometrize::Shape> create(const geometrize::Model& model, geomet
         case geometrize::shapes::ShapeTypes::LINE:
             return std::make_shared<geometrize::Line>(model);
         default:
-            assert(0 && "Bad shape value");
+            assert(0 && "Bad shape type specified");
     };
 
     assert(0 && "Unhandled shape type encountered");

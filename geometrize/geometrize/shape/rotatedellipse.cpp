@@ -93,7 +93,7 @@ std::vector<std::int32_t> RotatedEllipse::getRawShapeData() const
     return { m_x, m_y, m_rx, m_ry, m_angle };
 }
 
-std::string RotatedEllipse::getSvgShapeData(const std::string& attribs) const
+std::string RotatedEllipse::getSvgShapeData() const
 {
     std::stringstream s;
     s << "<ellipse "
@@ -102,7 +102,7 @@ std::string RotatedEllipse::getSvgShapeData(const std::string& attribs) const
       << "rx=\"" << m_rx << "\" "
       << "ry=\"" << m_ry << "\" "
       << "transform=\"rotate(" << m_angle << ")" << "\" "
-      << attribs << " "
+      << SVG_STYLE_HOOK << " "
       << "/>";
 
     return s.str();

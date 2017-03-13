@@ -82,7 +82,7 @@ std::vector<std::int32_t> Rectangle::getRawShapeData() const
     };
 }
 
-std::string Rectangle::getSvgShapeData(const std::string& attribs) const
+std::string Rectangle::getSvgShapeData() const
 {
     std::stringstream s;
     s << "<rect "
@@ -90,7 +90,7 @@ std::string Rectangle::getSvgShapeData(const std::string& attribs) const
       << "y=\"" << m_y1 << "\" "
       << "width=\"" << (std::max)(m_x1, m_x2) - (std::min)(m_x1, m_x2) << "\" "
       << "height=\"" << (std::max)(m_y1, m_y2) - (std::min)(m_y1, m_y2) << "\" "
-      << attribs << " "
+      << SVG_STYLE_HOOK << " "
       << "/>";
 
     return s.str();

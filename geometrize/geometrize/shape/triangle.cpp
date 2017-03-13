@@ -83,7 +83,7 @@ std::vector<std::int32_t> Triangle::getRawShapeData() const
     return { m_x1, m_y1, m_x2, m_y2, m_x3, m_y3 };
 }
 
-std::string Triangle::getSvgShapeData(const std::string& attribs) const
+std::string Triangle::getSvgShapeData() const
 {
     std::stringstream s;
     s << "<polygon "
@@ -91,7 +91,7 @@ std::string Triangle::getSvgShapeData(const std::string& attribs) const
       << m_x1 << "," << m_y1 << " "
       << m_x2 << "," << m_y2 << " "
       << m_x3 << "," << m_y3
-      << attribs << " "
+      << SVG_STYLE_HOOK << " "
       << "/>";
 
     return s.str();

@@ -54,10 +54,15 @@ public:
 
     /**
      * @brief getSvgShapeData Gets a string that represents a SVG element that describes the shape geometry.
-     * @param attribs The attributes (such as a style attribute) to include in the SVG shape data.
      * @return The SVG shape data that represents this shape.
      */
-    virtual std::string getSvgShapeData(const std::string& attribs) const = 0;
+    virtual std::string getSvgShapeData() const = 0;
+
+    /**
+     * @brief SVG_STYLE_HOOK A hook that an SVG exporter should use to augment shape styling produced by the getSvgShapeData method.
+     * Note that shape subclasses should include this in shape data - so an SVG exporter implementation must remove/replace this hook string to produce correct SVG files.
+     */
+    static const std::string SVG_STYLE_HOOK;
 };
 
 }

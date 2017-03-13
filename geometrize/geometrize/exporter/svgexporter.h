@@ -18,11 +18,10 @@ namespace exporter
 {
 
 /**
- * @brief The SVGExportOptions class represents the options that can be set for the SVG export.
+ * @brief The SVGExportOptions struct represents the options that can be set for the SVG export.
  */
-class SVGExportOptions
+struct SVGExportOptions
 {
-public:
     // TODO
 };
 
@@ -32,9 +31,10 @@ public:
  * @param width The width of the SVG image.
  * @param height The height of the SVG image.
  * @param backgroundColor The background color of the SVG image.
+ * @param options additional options used by the exporter.
  * @return A string representing the SVG image.
  */
-std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const std::uint32_t width, const std::uint32_t height, const geometrize::rgba backgroundColor);
+std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const std::uint32_t width, const std::uint32_t height, geometrize::rgba backgroundColor, SVGExportOptions options = SVGExportOptions{});
 
 }
 

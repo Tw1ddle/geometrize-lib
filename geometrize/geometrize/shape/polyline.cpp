@@ -82,12 +82,10 @@ std::vector<std::int32_t> Polyline::getRawShapeData() const
     return data;
 }
 
-std::string Polyline::getSvgShapeData(const std::string& attribs) const
+std::string Polyline::getSvgShapeData() const
 {
     std::stringstream s;
-    s << "<polyline style=\"fill:none;stroke:black;stroke-width:1\" "
-      << "points=\"";
-
+    s << "<polyline points=\"";
     for(std::int32_t i = 0; i < m_points.size(); i++) {
         s << m_points[i].first << "," << m_points[i].second;
         if(i != m_points.size() - 1) {
@@ -96,8 +94,8 @@ std::string Polyline::getSvgShapeData(const std::string& attribs) const
     }
     s << "\" ";
 
-    //s << attribs << " " // TODO make this code do attribs stuff, pass info as parameter instead
-     s << "/>";
+    s << SVG_STYLE_HOOK << " ";
+    s << "/>";
 
     return s.str();
 }

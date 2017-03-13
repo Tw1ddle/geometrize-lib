@@ -106,7 +106,7 @@ std::vector<std::int32_t> Ellipse::getRawShapeData() const
     return { m_x, m_y, m_rx, m_ry };
 }
 
-std::string Ellipse::getSvgShapeData(const std::string& attribs) const
+std::string Ellipse::getSvgShapeData() const
 {
     std::stringstream s;
     s << "<ellipse "
@@ -114,7 +114,7 @@ std::string Ellipse::getSvgShapeData(const std::string& attribs) const
       << "cy=\"" << m_y << "\" "
       << "rx=\"" << m_rx << "\" "
       << "ry=\"" << m_ry << "\" "
-      << attribs << " "
+      << SVG_STYLE_HOOK << " "
       << "/>";
 
     return s.str();

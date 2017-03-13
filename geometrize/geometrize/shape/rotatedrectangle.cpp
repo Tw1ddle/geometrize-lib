@@ -86,7 +86,7 @@ std::vector<std::int32_t> RotatedRectangle::getRawShapeData() const
     };
 }
 
-std::string RotatedRectangle::getSvgShapeData(const std::string& attribs) const
+std::string RotatedRectangle::getSvgShapeData() const
 {
     std::stringstream s;
     s << "<rect "
@@ -95,7 +95,7 @@ std::string RotatedRectangle::getSvgShapeData(const std::string& attribs) const
       << "width=\"" << (std::max)(m_x1, m_x2) - (std::min)(m_x1, m_x2) << "\" "
       << "height=\"" << (std::max)(m_y1, m_y2) - (std::min)(m_y1, m_y2) << "\" "
       << "transform=\"rotate(" << m_angle << ")" << "\" "
-      << attribs << " "
+      << SVG_STYLE_HOOK << " "
       << "/>";
 
     return s.str();
