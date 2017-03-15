@@ -5,8 +5,6 @@
 #include <cstdint>
 #include <vector>
 
-#include "simdpp/simd.h"
-
 #include "bitmap/bitmap.h"
 #include "bitmap/rgba.h"
 #include "scanline.h"
