@@ -56,7 +56,7 @@ std::string getSVGStrokeOpacityAttrib(const geometrize::rgba color)
     return stream.str();
 }
 
-std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const std::uint32_t width, const std::uint32_t height, const geometrize::rgba backgroundColor, const SVGExportOptions options)
+std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const std::uint32_t width, const std::uint32_t height, const geometrize::rgba backgroundColor, const SVGExportOptions /*options*/)
 {
     std::stringstream stream;
 
