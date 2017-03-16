@@ -2,6 +2,9 @@
 
 #include <array>
 #include <cstdint>
+#include <string>
+#include <vector>
+#include <utility>
 
 namespace geometrize
 {
@@ -27,18 +30,15 @@ enum ShapeTypes : std::uint32_t
     SHAPE_COUNT = 9U
 };
 
-static const std::array<ShapeTypes, static_cast<std::size_t>(ShapeTypes::SHAPE_COUNT)> allShapes =
-{
-    ShapeTypes::RECTANGLE,
-    ShapeTypes::ROTATED_RECTANGLE,
-    ShapeTypes::TRIANGLE,
-    ShapeTypes::ELLIPSE,
-    ShapeTypes::ROTATED_ELLIPSE,
-    ShapeTypes::CIRCLE,
-    ShapeTypes::LINE,
-    ShapeTypes::SPLINE,
-    ShapeTypes::POLYLINE
-};
+/**
+ * @brief allShapes is a convenient array of all of the members of ShapeTypes.
+ */
+extern const std::array<ShapeTypes, static_cast<std::size_t>(ShapeTypes::SHAPE_COUNT)> allShapes;
+
+/**
+ * @brief shapeTypeNames provides a convenient mapping to names of types of shape (all lower case, underscores instead of spaces e.g. rotated_ellipse).
+ */
+extern const std::vector<std::pair<ShapeTypes, std::string>> shapeTypeNames;
 
 }
 
