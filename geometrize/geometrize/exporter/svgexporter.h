@@ -22,7 +22,7 @@ namespace exporter
  */
 struct SVGExportOptions
 {
-    // TODO
+    // NOTE currently unused
 };
 
 /**
