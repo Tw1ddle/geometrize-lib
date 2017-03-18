@@ -1,7 +1,7 @@
 #include "bitmapdataexporter.h"
 
 #include <cstdint>
-#include <fstream>
+#include <sstream>
 
 #include "../bitmap/bitmap.h"
 
@@ -11,16 +11,16 @@ namespace geometrize
 namespace exporter
 {
 
-inline void writeToStream(std::ofstream& stream, const std::uint8_t& t)
+inline void writeToStream(std::ostringstream& stream, const std::uint8_t& t)
 {
     stream.write(reinterpret_cast<const char*>(&t), sizeof(std::uint8_t));
 }
 
-bool exportBitmapData(const geometrize::Bitmap& bitmapData, const std::string& filePath)
+std::string exportBitmapData(const geometrize::Bitmap& bitmapData, const std::string& filePath)
 {
-    std::ofstream stream(filePath.c_str(), std::ios::binary);
+    std::ostringstream stream(filePath.c_str(), std::ios::binary);
     if(!stream) {
-        return false;
+        return "";
     }
 
     for(std::uint32_t y = 0U; y < bitmapData.getHeight(); y++) {
@@ -33,9 +33,7 @@ bool exportBitmapData(const geometrize::Bitmap& bitmapData, const std::string& f
         }
     }
 
-    stream.close();
-
-    return true;
+    return stream.str();
 }
 
 }

@@ -1,7 +1,7 @@
 #include "bitmapexporter.h"
 
 #include <cstdint>
-#include <fstream>
+#include <sstream>
 
 #include "../bitmap/bitmap.h"
 
@@ -27,7 +27,7 @@ inline bool bigEndian()
    return (1 != reinterpret_cast<char*>(&v)[0]);
 }
 
-inline void writeToStream(std::ofstream& stream, const std::uint32_t& t)
+inline void writeToStream(std::ostringstream& stream, const std::uint32_t& t)
 {
     if(bigEndian()) {
         const std::uint32_t flipped{flip32(t)};
@@ -37,7 +37,7 @@ inline void writeToStream(std::ofstream& stream, const std::uint32_t& t)
     }
 }
 
-inline void writeToStream(std::ofstream& stream, const std::uint16_t& t)
+inline void writeToStream(std::ostringstream& stream, const std::uint16_t& t)
 {
     if(bigEndian()) {
         const std::uint16_t flipped{flip16(t)};
@@ -47,14 +47,14 @@ inline void writeToStream(std::ofstream& stream, const std::uint16_t& t)
     }
 }
 
-inline void writeToStream(std::ofstream& stream, const std::uint8_t& t)
+inline void writeToStream(std::ostringstream& stream, const std::uint8_t& t)
 {
     stream.write(reinterpret_cast<const char*>(&t), sizeof(std::uint8_t));
 }
 
-bool exportBitmap(const geometrize::Bitmap& bitmapData, const std::string& filePath)
+std::string exportBitmap(const geometrize::Bitmap& bitmapData, const std::string& filePath)
 {
-    std::ofstream stream(filePath.c_str(), std::ios::binary);
+    std::ostringstream stream(filePath.c_str(), std::ios::binary);
     if(!stream) {
         return false;
     }
@@ -118,9 +118,7 @@ bool exportBitmap(const geometrize::Bitmap& bitmapData, const std::string& fileP
         }
     }
 
-    stream.close();
-
-    return true;
+    return stream.str();
 }
 
 }

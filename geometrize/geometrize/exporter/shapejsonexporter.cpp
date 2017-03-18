@@ -16,7 +16,7 @@ namespace exporter
 
 std::string exportShapeJson(const std::vector<geometrize::ShapeResult>& data)
 {
-    std::stringstream stream;
+    std::ostringstream stream;
     stream << "{\n";
 
     for(std::size_t i = 0; i < data.size(); i++) {

@@ -15,7 +15,7 @@ namespace exporter
 
 std::string exportShapeArray(const std::vector<geometrize::ShapeResult>& data)
 {
-    std::stringstream stream;
+    std::ostringstream stream;
 
     for(int i = 0; i < data.size(); i++) {
         const geometrize::ShapeResult& s{data[i]};

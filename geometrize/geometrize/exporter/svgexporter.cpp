@@ -20,7 +20,7 @@ namespace exporter
 
 std::string getSVGRgbColorAttrib(const geometrize::rgba color)
 {
-    std::stringstream stream;
+    std::ostringstream stream;
     stream << "rgb("
            << static_cast<std::int32_t>(color.r) << ","
            << static_cast<std::int32_t>(color.g) << ","
