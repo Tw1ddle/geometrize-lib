@@ -12,7 +12,7 @@ geometrize::rgba computeScanlinesColor(const geometrize::rgba targetColor, const
     geometrize::Bitmap current(10, 10, currentColor);
     std::vector<geometrize::Scanline> lines;
     for(int y = 0; y < 10; y++) {
-        lines.push_back(geometrize::Scanline(y, 0, 10, 0));
+        lines.push_back(geometrize::Scanline(y, 0, 9, 0));
     }
     return geometrize::core::computeColor(target, current, lines, alpha);
 }
