@@ -28,7 +28,7 @@ geometrize::rgba computeColor(
     std::int64_t totalGreen{0};
     std::int64_t totalBlue{0};
     std::int64_t count{0};
-    const std::int32_t a{static_cast<std::int32_t>(257.0f * 255.0f / alpha)};
+    const std::int32_t a{static_cast<std::int32_t>(257.0f * 255.0f / static_cast<float>(alpha))};
 
     // For each scanline
     for(const geometrize::Scanline& line : lines) {
@@ -246,46 +246,8 @@ geometrize::State bestHillClimbState(
         const geometrize::Bitmap& current,
         geometrize::Bitmap& buffer)
 {
-    float bestEnergy{0.0f};
-
-    // TODO
-    geometrize::State bestState{bestRandomState(model, shapeTypes, alpha, n, target, current, buffer)};
-    for(std::uint32_t i = 0; i < 1; i++) {
-        geometrize::State state = bestRandomState(model, shapeTypes, alpha, n, target, current, buffer);
-        const float before{state.calculateEnergy(target, current, buffer)};
-        state = hillClimb(state, age, target, current, buffer);
-        const float energy{state.calculateEnergy(target, current, buffer)};
-        if(i == 0 || energy < bestEnergy) {
-            bestEnergy = energy;
-            bestState = state;
-        }
-    }
-    return bestState;
-}
-
-geometrize::rgba getAverageImageColor(const geometrize::Bitmap& image)
-{
-    const std::vector<std::uint8_t>& data{image.getDataRef()};
-    const std::size_t size{data.size()};
-    const std::size_t numPixels{data.size() / 4};
-
-    std::uint32_t totalRed{0};
-    std::uint32_t totalGreen{0};
-    std::uint32_t totalBlue{0};
-    for(std::size_t i = 0; i < size; i += 4) {
-        totalRed += data[i];
-        totalGreen += data[i + 1];
-        totalBlue += data[i + 2];
-    }
-
-    const geometrize::rgba result{
-        static_cast<std::uint8_t>(totalRed / numPixels),
-        static_cast<std::uint8_t>(totalGreen / numPixels),
-        static_cast<std::uint8_t>(totalBlue / numPixels),
-        static_cast<std::uint8_t>(UINT8_MAX)
-    };
-
-    return result;
+    const geometrize::State state{bestRandomState(model, shapeTypes, alpha, n, target, current, buffer)};
+    return hillClimb(state, age, target, current, buffer);
 }
 
 float energy(
@@ -296,16 +258,10 @@ float energy(
         geometrize::Bitmap& buffer,
         const float score)
 {
-    // Calculates the best color for the area covered by the scanlines
-    const geometrize::rgba color{computeColor(target, current, lines, alpha)};
-    // Copies the area covered by the scanlines to the buffer bitmap
-    copyLines(buffer, current, lines);
-    // Blends the scanlines into the buffer bitmap using the best color calculated earlier
-    drawLines(buffer, color, lines);
-    // Gets the error measure between the parts of the current and the modified buffer texture covered by the scanlines
-    const float energy{differencePartial(target, current, buffer, score, lines)};
-
-    return energy;
+    const geometrize::rgba color{computeColor(target, current, lines, alpha)}; // Calculate best color for areas covered by the scanlines
+    copyLines(buffer, current, lines); // Copy area covered by scanlines to buffer bitmap
+    drawLines(buffer, color, lines); // Blend scanlines into the buffer using the color calculated earlier
+    return differencePartial(target, current, buffer, score, lines); // Get error measure between areas of current and modified buffers covered by scanlines
 }
 
 }

@@ -7,6 +7,7 @@
 #include "../core.h"
 #include "../model.h"
 #include "../shape/shapetypes.h"
+#include "../commonutil.h"
 #include "imagerunneroptions.h"
 
 namespace geometrize
@@ -15,7 +16,7 @@ namespace geometrize
 class ImageRunner::ImageRunnerImpl
 {
 public:
-    ImageRunnerImpl(const geometrize::Bitmap& targetBitmap) : m_model{targetBitmap, geometrize::core::getAverageImageColor(targetBitmap)} {}
+    ImageRunnerImpl(const geometrize::Bitmap& targetBitmap) : m_model{targetBitmap, geometrize::commonutil::getAverageImageColor(targetBitmap)} {}
     ImageRunnerImpl(const geometrize::Bitmap& targetBitmap, const geometrize::Bitmap& initialBitmap) : m_model{targetBitmap, initialBitmap} {}
     ~ImageRunnerImpl() = default;
     ImageRunnerImpl& operator=(const ImageRunnerImpl&) = delete;

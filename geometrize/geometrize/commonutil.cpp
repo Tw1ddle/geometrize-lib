@@ -4,6 +4,9 @@
 #include <cstdint>
 #include <random>
 
+#include "bitmap/bitmap.h"
+#include "bitmap/rgba.h"
+
 namespace geometrize
 {
 
@@ -66,6 +69,29 @@ std::vector<std::pair<std::int32_t, std::int32_t>> bresenham(std::int32_t x1, st
     }
 
     return points;
+}
+
+geometrize::rgba getAverageImageColor(const geometrize::Bitmap& image)
+{
+    const std::vector<std::uint8_t>& data{image.getDataRef()};
+    const std::size_t size{data.size()};
+    const std::size_t numPixels{data.size() / 4};
+
+    std::uint32_t totalRed{0};
+    std::uint32_t totalGreen{0};
+    std::uint32_t totalBlue{0};
+    for(std::size_t i = 0; i < size; i += 4) {
+        totalRed += data[i];
+        totalGreen += data[i + 1];
+        totalBlue += data[i + 2];
+    }
+
+    return geometrize::rgba{
+        static_cast<std::uint8_t>(totalRed / numPixels),
+        static_cast<std::uint8_t>(totalGreen / numPixels),
+        static_cast<std::uint8_t>(totalBlue / numPixels),
+        static_cast<std::uint8_t>(UINT8_MAX)
+    };
 }
 
 }

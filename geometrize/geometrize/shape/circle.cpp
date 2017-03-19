@@ -11,7 +11,7 @@
 namespace geometrize
 {
 
-Circle::Circle(const geometrize::Model& model) :m_model{model}
+Circle::Circle(const geometrize::Model& model) : m_model{model}
 {
     const std::int32_t xBound{m_model.getWidth()};
     const std::int32_t yBound{m_model.getHeight()};

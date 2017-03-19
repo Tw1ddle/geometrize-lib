@@ -58,13 +58,3 @@ TEST_CASE("Test copying of scanlines", "[core]")
         }
     }
 }
-
-TEST_CASE("Test calculation of average color", "[core]")
-{
-    SECTION("Simple image")
-    {
-        const geometrize::rgba color{10, 50, 90, 255};
-        const geometrize::Bitmap image{50, 50, color};
-        REQUIRE(color == geometrize::core::getAverageImageColor(image));
-    }
-}

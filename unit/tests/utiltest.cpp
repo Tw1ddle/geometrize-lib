@@ -2,6 +2,9 @@
 
 #include "geometrize/commonutil.h"
 
+#include "geometrize/bitmap/bitmap.h"
+#include "geometrize/bitmap/rgba.h"
+
 TEST_CASE("Test clamp", "[util]")
 {
     SECTION("Clamp needs to actually clamp to the range")
@@ -27,5 +30,15 @@ TEST_CASE("Test random range", "[util]")
                 FAIL("Out of range value generated");
             }
         }
+    }
+}
+
+TEST_CASE("Test calculation of average color", "[core]")
+{
+    SECTION("Simple image")
+    {
+        const geometrize::rgba color{10, 50, 90, 255};
+        const geometrize::Bitmap image{50, 50, color};
+        REQUIRE(color == geometrize::commonutil::getAverageImageColor(image));
     }
 }

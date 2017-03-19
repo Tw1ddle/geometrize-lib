@@ -5,6 +5,13 @@
 #include <utility>
 #include <vector>
 
+#include "bitmap/rgba.h"
+
+namespace geometrize
+{
+class Bitmap;
+}
+
 namespace geometrize
 {
 
@@ -46,6 +53,13 @@ template<typename T> T clamp(const T& value, const T& lower, const T& upper)
  * @return The points on the resulting line.
  */
 std::vector<std::pair<std::int32_t, std::int32_t>> bresenham(std::int32_t x1, std::int32_t y1, const std::int32_t x2, const std::int32_t y2);
+
+/**
+ * @brief getAverageImageColor Computes the average RGB color of the pixels in the image.
+ * @param image The image whose average color will be calculated.
+ * @return The average RGB color of the image, RGBA8888 format. Alpha is set to opaque (255).
+ */
+geometrize::rgba getAverageImageColor(const geometrize::Bitmap& image);
 
 }
 

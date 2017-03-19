@@ -136,13 +136,6 @@ geometrize::State bestHillClimbState(
         geometrize::Bitmap& buffer);
 
 /**
- * @brief getAverageImageColor Computes the average RGB color of the pixels in the image.
- * @param image The image whose average color will be calculated.
- * @return The average RGB color of the image, RGBA8888 format. Alpha is set to opaque (255).
- */
-geometrize::rgba getAverageImageColor(const geometrize::Bitmap& image);
-
-/**
  * @brief energy Calculates a measure of the improvement adding the scanlines of a shape provides - lower energy is better.
  * @param lines The scanlines of the shape.
  * @param alpha The alpha of the scanlines.

@@ -1,8 +1,11 @@
 #include "triangle.h"
 
 #include <cstdint>
+#include <map>
 #include <memory>
+#include <set>
 #include <sstream>
+#include <utility>
 
 #include "shape.h"
 #include "../model.h"
@@ -40,9 +43,29 @@ std::vector<geometrize::Scanline> Triangle::rasterize() const
 {
     std::vector<geometrize::Scanline> lines;
 
-    // TODO
+    const std::vector<std::pair<std::int32_t, std::int32_t>> p1p2{commonutil::bresenham(m_x1, m_y1, m_x2, m_y2)};
+    const std::vector<std::pair<std::int32_t, std::int32_t>> p2p3{commonutil::bresenham(m_x2, m_y2, m_x3, m_y3)};
+    const std::vector<std::pair<std::int32_t, std::int32_t>> p3p1{commonutil::bresenham(m_x3, m_y3, m_x1, m_y1)};
 
-    return lines;
+    std::vector<std::pair<std::int32_t, std::int32_t>> edges;
+    edges.insert(edges.end(), p1p2.begin(), p1p2.end());
+    edges.insert(edges.end(), p2p3.begin(), p2p3.end());
+    edges.insert(edges.end(), p3p1.begin(), p3p1.end());
+
+    std::map<std::int32_t, std::set<std::int32_t>> yToXs;
+    for(std::pair<std::int32_t, std::int32_t> point : edges) {
+        yToXs[point.second].insert(point.first);
+    }
+
+    for(const auto& it : yToXs) {
+        geometrize::Scanline scanline(it.first,
+                                    *(std::min_element(it.second.begin(), it.second.end())),
+                                    *(std::max_element(it.second.begin(), it.second.end())),
+                                    0xFFFF);
+        lines.push_back(scanline);
+    }
+
+    return Scanline::trim(lines, m_model.getWidth(), m_model.getHeight());
 }
 
 void Triangle::mutate()

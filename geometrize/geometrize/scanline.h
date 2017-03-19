@@ -41,14 +41,7 @@ public:
     const std::uint32_t alpha; ///< The alpha/opacity of the scanline.
 };
 
-inline bool operator==(const geometrize::Scanline& lhs, const geometrize::Scanline& rhs)
-{
-    return lhs.y == rhs.y && lhs.x1 == rhs.x1 && lhs.x2 == rhs.x2 && lhs.alpha == rhs.alpha;
-}
-
-inline bool operator!=(const geometrize::Scanline& lhs, const geometrize::Scanline& rhs)
-{
-    return lhs.y != rhs.y || lhs.x1 != rhs.x1 || lhs.x2 != rhs.x2 || lhs.alpha != rhs.alpha;
-}
+bool operator==(const geometrize::Scanline& lhs, const geometrize::Scanline& rhs);
+bool operator!=(const geometrize::Scanline& lhs, const geometrize::Scanline& rhs);
 
 }
