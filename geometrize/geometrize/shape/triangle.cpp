@@ -21,10 +21,10 @@ Triangle::Triangle(const geometrize::Model& model) : m_model{model}
 
     m_x1 = commonutil::randomRange(0, xBound - 1);
     m_y1 = commonutil::randomRange(0, yBound - 1);
-    m_x2 = m_x1 + commonutil::randomRange(-16, 16);
-    m_y2 = m_y1 + commonutil::randomRange(-16, 16);
-    m_x3 = m_x1 + commonutil::randomRange(-16, 16);
-    m_y3 = m_y1 + commonutil::randomRange(-16, 16);
+    m_x2 = m_x1 + commonutil::randomRange(-32, 32);
+    m_y2 = m_y1 + commonutil::randomRange(-32, 32);
+    m_x3 = m_x1 + commonutil::randomRange(-32, 32);
+    m_y3 = m_y1 + commonutil::randomRange(-32, 32);
 }
 
 std::shared_ptr<geometrize::Shape> Triangle::clone() const
@@ -58,10 +58,11 @@ std::vector<geometrize::Scanline> Triangle::rasterize() const
     }
 
     for(const auto& it : yToXs) {
-        geometrize::Scanline scanline(it.first,
-                                    *(std::min_element(it.second.begin(), it.second.end())),
-                                    *(std::max_element(it.second.begin(), it.second.end())),
-                                    0xFFFF);
+        const geometrize::Scanline scanline(it.first,
+        *(std::min_element(it.second.begin(), it.second.end())),
+        *(std::max_element(it.second.begin(), it.second.end())),
+        0xFFFF);
+
         lines.push_back(scanline);
     }
 
@@ -77,20 +78,20 @@ void Triangle::mutate()
     switch(r) {
         case 0:
         {
-            m_x1 = commonutil::clamp(m_x1 + commonutil::randomRange(-16, 16), 0, xBound);
-            m_y1 = commonutil::clamp(m_y1 + commonutil::randomRange(-16, 16), 0, yBound);
+            m_x1 = commonutil::clamp(m_x1 + commonutil::randomRange(-32, 32), 0, xBound);
+            m_y1 = commonutil::clamp(m_y1 + commonutil::randomRange(-32, 32), 0, yBound);
             break;
         }
         case 1:
         {
-            m_x2 = commonutil::clamp(m_x2 + commonutil::randomRange(-16, 16), 0, xBound);
-            m_y2 = commonutil::clamp(m_y2 + commonutil::randomRange(-16, 16), 0, yBound);
+            m_x2 = commonutil::clamp(m_x2 + commonutil::randomRange(-32, 32), 0, xBound);
+            m_y2 = commonutil::clamp(m_y2 + commonutil::randomRange(-32, 32), 0, yBound);
             break;
         }
         case 2:
         {
-            m_x3 = commonutil::clamp(m_x3 + commonutil::randomRange(-16, 16), 0, xBound);
-            m_y3 = commonutil::clamp(m_y3 + commonutil::randomRange(-16, 16), 0, yBound);
+            m_x3 = commonutil::clamp(m_x3 + commonutil::randomRange(-32, 32), 0, xBound);
+            m_y3 = commonutil::clamp(m_y3 + commonutil::randomRange(-32, 32), 0, yBound);
             break;
         }
     }
