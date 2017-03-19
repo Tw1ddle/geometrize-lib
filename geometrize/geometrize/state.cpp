@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <vector>
 
+#include "commonutil.h"
 #include "bitmap/bitmap.h"
 #include "core.h"
 #include "model.h"
