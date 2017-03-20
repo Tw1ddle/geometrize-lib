@@ -1,4 +1,4 @@
-#include "spline.h"
+#include "quadraticbezier.h"
 
 #include <cstdint>
 #include <memory>
@@ -11,7 +11,7 @@
 namespace geometrize
 {
 
-Spline::Spline(const geometrize::Model& model) : m_model{model}
+QuadraticBezier::QuadraticBezier(const geometrize::Model& model) : m_model{model}
 {
     const std::int32_t xBound{m_model.getWidth()};
     const std::int32_t yBound{m_model.getHeight()};
@@ -26,14 +26,14 @@ Spline::Spline(const geometrize::Model& model) : m_model{model}
     }
 }
 
-std::shared_ptr<geometrize::Shape> Spline::clone() const
+std::shared_ptr<geometrize::Shape> QuadraticBezier::clone() const
 {
-    std::shared_ptr<geometrize::Spline> spline{std::make_shared<geometrize::Spline>(m_model)};
-    spline->m_controlPoints = m_controlPoints;
-    return spline;
+    std::shared_ptr<geometrize::QuadraticBezier> bezier{std::make_shared<geometrize::QuadraticBezier>(m_model)};
+    bezier->m_controlPoints = m_controlPoints;
+    return bezier;
 }
 
-std::vector<geometrize::Scanline> Spline::rasterize() const
+std::vector<geometrize::Scanline> QuadraticBezier::rasterize() const
 {
     const std::int32_t xBound{m_model.getWidth()};
     const std::int32_t yBound{m_model.getHeight()};
@@ -54,7 +54,7 @@ std::vector<geometrize::Scanline> Spline::rasterize() const
     return Scanline::trim(lines, xBound, yBound);
 }
 
-void Spline::mutate()
+void QuadraticBezier::mutate()
 {
     const std::int32_t xBound{m_model.getWidth()};
     const std::int32_t yBound{m_model.getHeight()};
@@ -67,12 +67,12 @@ void Spline::mutate()
     m_controlPoints[i] = point;
 }
 
-geometrize::shapes::ShapeTypes Spline::getType() const
+geometrize::shapes::ShapeTypes QuadraticBezier::getType() const
 {
-    return geometrize::shapes::ShapeTypes::SPLINE;
+    return geometrize::shapes::ShapeTypes::QUADRATIC_BEZIER;
 }
 
-std::vector<std::int32_t> Spline::getRawShapeData() const
+std::vector<std::int32_t> QuadraticBezier::getRawShapeData() const
 {
     std::vector<std::int32_t> data;
     for(std::int32_t i = 0; i < m_controlPoints.size(); i++) {
@@ -83,11 +83,23 @@ std::vector<std::int32_t> Spline::getRawShapeData() const
     return data;
 }
 
-std::string Spline::getSvgShapeData() const
+std::string QuadraticBezier::getSvgShapeData() const
 {
     std::stringstream s;
 
-    // TODO
+    s << "<path d=\"";
+    //for(std::int32_t i = 0; i < m_controlPoints.size(); i++) {
+     //   s << m_points[i].first << "," << m_controlPoints[i].second;
+      //  if(i != m_points.size() - 1) {
+       //     s << " ";
+       // }
+    //}
+    s << "\" ";
+
+    s << SVG_STYLE_HOOK << " ";
+    s << "/>";
+
+    return s.str();
 
     return s.str();
 }

@@ -21,7 +21,7 @@ class Line : public Shape
 {
 public:
     /**
-     * @brief Spline Creates a new line.
+     * @brief Line Creates a new line.
      * @param model The model that created this shape.
      */
     Line(const geometrize::Model& model);

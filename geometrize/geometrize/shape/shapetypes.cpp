@@ -15,7 +15,7 @@ const std::array<ShapeTypes, static_cast<std::size_t>(ShapeTypes::SHAPE_COUNT)> 
     ShapeTypes::ROTATED_ELLIPSE,
     ShapeTypes::CIRCLE,
     ShapeTypes::LINE,
-    ShapeTypes::SPLINE,
+    ShapeTypes::QUADRATIC_BEZIER,
     ShapeTypes::POLYLINE
 };
 
@@ -28,7 +28,7 @@ const std::vector<std::pair<ShapeTypes, std::string>> shapeTypeNames =
     { ShapeTypes::ROTATED_ELLIPSE, "rotated_ellipse" },
     { ShapeTypes::CIRCLE, "circle" },
     { ShapeTypes::LINE, "line" },
-    { ShapeTypes::SPLINE, "spline" },
+    { ShapeTypes::QUADRATIC_BEZIER, "quadratic_bezier" },
     { ShapeTypes::POLYLINE, "polyline" }
 };
 

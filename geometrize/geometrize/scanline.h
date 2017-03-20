@@ -20,7 +20,7 @@ public:
      * @param x2 The rightmost x-coordinate.
      * @param alpha The alpha transparency of the scanline.
      */
-    Scanline(std::uint32_t y, std::uint32_t x1, std::uint32_t x2, std::uint32_t alpha);
+    Scanline(std::int32_t y, std::int32_t x1, std::int32_t x2, std::uint32_t alpha);
 
     ~Scanline() = default;
     Scanline& operator=(const Scanline&) = default;
@@ -35,9 +35,9 @@ public:
      */
     static std::vector<geometrize::Scanline> trim(std::vector<geometrize::Scanline>& scanlines, std::uint32_t w, std::uint32_t h);
 
-    const std::uint32_t y; ///< The y-coordinate of the scanline.
-    std::uint32_t x1; ///< The leftmost x-coordinate of the scanline.
-    std::uint32_t x2; ///< The rightmost x-coordinate of the scanline.
+    const std::int32_t y; ///< The y-coordinate of the scanline.
+    std::int32_t x1; ///< The leftmost x-coordinate of the scanline.
+    std::int32_t x2; ///< The rightmost x-coordinate of the scanline.
     const std::uint32_t alpha; ///< The alpha/opacity of the scanline.
 };
 

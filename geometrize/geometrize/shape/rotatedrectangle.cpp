@@ -1,10 +1,12 @@
 #include "rotatedrectangle.h"
 
 #include <cstdint>
+#include <math.h>
 #include <memory>
 #include <sstream>
 
 #include "shape.h"
+#include "shapeutil.h"
 #include "../model.h"
 #include "../commonutil.h"
 
@@ -36,11 +38,29 @@ std::shared_ptr<geometrize::Shape> RotatedRectangle::clone() const
 
 std::vector<geometrize::Scanline> RotatedRectangle::rasterize() const
 {
-    std::vector<geometrize::Scanline> lines;
+    const std::int32_t x1{(std::min)(m_x1, m_x2)};
+    const std::int32_t x2{(std::max)(m_x1, m_x2)};
+    const std::int32_t y1{(std::min)(m_y1, m_y2)};
+    const std::int32_t y2{(std::max)(m_y1, m_y2)};
 
+    const std::int32_t cx{static_cast<std::int32_t>((x2 + x1) / 2.0f)};
+    const std::int32_t cy{static_cast<std::int32_t>((y2 + y1) / 2.0f)};
 
+    const std::int32_t ox1{x1 - cx};
+    const std::int32_t ox2{x2 - cx};
+    const std::int32_t oy1{y1 - cy};
+    const std::int32_t oy2{y2 - cy};
 
-    return lines;
+    const float rads{m_angle * 3.141f / 180.0f};
+    const float c{cos(rads)};
+    const float s{sin(rads)};
+
+    const std::pair<std::int32_t, std::int32_t> ul{ox1 * c - oy1 * s + cx, ox1 * s + oy1 * c + cy};
+    const std::pair<std::int32_t, std::int32_t> bl{ox1 * c - oy2 * s + cx, ox1 * s + oy2 * c + cy};
+    const std::pair<std::int32_t, std::int32_t> ur{ox2 * c - oy1 * s + cx, ox2 * s + oy1 * c + cy};
+    const std::pair<std::int32_t, std::int32_t> br{ox2 * c - oy2 * s + cx, ox2 * s + oy2 * c + cy};
+
+    return Scanline::trim(geometrize::scanlinesForPolygon({ ul, ur, br, bl }), m_model.getWidth(), m_model.getHeight());
 }
 
 void RotatedRectangle::mutate()
@@ -64,7 +84,7 @@ void RotatedRectangle::mutate()
         }
         case 2:
         {
-            m_angle = commonutil::clamp(m_angle + commonutil::randomRange(-16, 16), 0, 360);
+            m_angle = commonutil::clamp(m_angle + commonutil::randomRange(-4, 4), 0, 360);
             break;
         }
     }
@@ -88,6 +108,8 @@ std::vector<std::int32_t> RotatedRectangle::getRawShapeData() const
 
 std::string RotatedRectangle::getSvgShapeData() const
 {
+    // TODO fix - need to rotate etc around center of shape
+
     std::stringstream s;
     s << "<rect "
       << "x=\"" << m_x1 << "\" "

@@ -35,12 +35,14 @@ std::shared_ptr<geometrize::Shape> Rectangle::clone() const
 
 std::vector<geometrize::Scanline> Rectangle::rasterize() const
 {
+    const std::int32_t x1{(std::min)(m_x1, m_x2)};
+    const std::int32_t x2{(std::max)(m_x1, m_x2)};
     const std::int32_t y1{(std::min)(m_y1, m_y2)};
     const std::int32_t y2{(std::max)(m_y1, m_y2)};
 
     std::vector<geometrize::Scanline> lines;
     for(std::int32_t y = y1; y < y2; y++) {
-        lines.push_back(geometrize::Scanline(y, (std::min)(m_x1, m_x2), (std::max)(m_x1, m_x2), 0xFFFF));
+        lines.push_back(geometrize::Scanline(y, x1, x2, 0xFFFF));
     }
     return lines;
 }

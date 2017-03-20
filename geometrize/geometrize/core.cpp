@@ -32,8 +32,8 @@ geometrize::rgba computeColor(
 
     // For each scanline
     for(const geometrize::Scanline& line : lines) {
-        const std::uint32_t y{line.y};
-        for(std::uint32_t x = line.x1; x <= line.x2; x++) {
+        const std::int32_t y{line.y};
+        for(std::int32_t x = line.x1; x <= line.x2; x++) {
             // Get the overlapping target and current colors
             const geometrize::rgba t{target.getPixel(x, y)};
             const geometrize::rgba c{current.getPixel(x, y)};
@@ -91,12 +91,12 @@ void drawLines(geometrize::Bitmap& image, const geometrize::rgba color, const st
 
     // For each scanline
     for(const geometrize::Scanline& line : lines) {
-        const std::uint32_t y{line.y};
+        const std::int32_t y{line.y};
         const std::uint32_t ma{line.alpha};
         const std::uint32_t m{UINT16_MAX};
         const std::uint32_t aa = (m - sa * ma / m) * 0x101;
 
-        for(std::uint32_t x = line.x1; x <= line.x2; x++) {
+        for(std::int32_t x = line.x1; x <= line.x2; x++) {
             // Get the current overlapping color
             const geometrize::rgba d{image.getPixel(x, y)};
 
@@ -113,8 +113,8 @@ void drawLines(geometrize::Bitmap& image, const geometrize::rgba color, const st
 void copyLines(geometrize::Bitmap& destination, const geometrize::Bitmap& source, const std::vector<geometrize::Scanline>& lines)
 {
     for(const geometrize::Scanline& line : lines) {
-        const std::uint32_t y{line.y};
-        for(std::uint32_t x = line.x1; x < line.x2; x++) {
+        const std::int32_t y{line.y};
+        for(std::int32_t x = line.x1; x < line.x2; x++) {
             destination.setPixel(x, y, source.getPixel(x, y));
         }
     }
@@ -157,8 +157,8 @@ float differencePartial(
     std::uint64_t total{static_cast<std::uint32_t>(std::pow(score * 255.0f, 2) * rgbaCount)};
 
     for(const geometrize::Scanline& line : lines) {
-        const std::uint32_t y{line.y};
-        for(std::uint32_t x = line.x1; x <= line.x2; x++) {
+        const std::int32_t y{line.y};
+        for(std::int32_t x = line.x1; x <= line.x2; x++) {
             const geometrize::rgba t{target.getPixel(x, y)};
             const geometrize::rgba b{before.getPixel(x, y)};
             const geometrize::rgba a{after.getPixel(x, y)};

@@ -25,7 +25,7 @@ enum ShapeTypes : std::uint32_t
     ROTATED_ELLIPSE = 16U,
     CIRCLE = 32U,
     LINE = 64U,
-    SPLINE = 128U,
+    QUADRATIC_BEZIER = 128U,
     POLYLINE = 256U,
     SHAPE_COUNT = 9U
 };

@@ -10,7 +10,7 @@
 #include "ellipse.h"
 #include "line.h"
 #include "polyline.h"
-#include "spline.h"
+#include "quadraticbezier.h"
 #include "rectangle.h"
 #include "rotatedellipse.h"
 #include "rotatedrectangle.h"
@@ -26,8 +26,8 @@ std::shared_ptr<geometrize::Shape> create(const geometrize::Model& model, geomet
     switch(t) {
         case geometrize::shapes::ShapeTypes::POLYLINE:
             return std::make_shared<geometrize::Polyline>(model);
-        case geometrize::shapes::ShapeTypes::SPLINE:
-            return std::make_shared<geometrize::Spline>(model);
+        case geometrize::shapes::ShapeTypes::QUADRATIC_BEZIER:
+            return std::make_shared<geometrize::QuadraticBezier>(model);
         case geometrize::shapes::ShapeTypes::CIRCLE:
             return std::make_shared<geometrize::Circle>(model);
         case geometrize::shapes::ShapeTypes::ELLIPSE:
