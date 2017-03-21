@@ -36,7 +36,12 @@ public:
 private:
     const geometrize::Model& m_model; ///< The model that produces the shape.
 
-    std::vector<std::pair<std::int32_t, std::int32_t>> m_controlPoints; ///< The control points of the quadratic bezier.
+    std::int32_t m_cx; ///< Control point x-coordinate.
+    std::int32_t m_cy; ///< Control point y-coordinate.
+    std::int32_t m_x1; ///< First x-coordinate.
+    std::int32_t m_y1; ///< First y-coordinate.
+    std::int32_t m_x2; ///< Second x-coordinate.
+    std::int32_t m_y2; ///< Second y-coordinate.
 };
 
 }

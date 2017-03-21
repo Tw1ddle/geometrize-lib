@@ -62,9 +62,10 @@ std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const st
 
     stream << "<?xml version=\"1.0\" standalone=\"no\"?>" << "\n";
     stream << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.2\" baseProfile=\"tiny\" " << "width=\"" << width << "\" " << "height=\"" << height << "\">" << "\n";
-    stream << "<g transform=\"translate(0.5 0.5)\">" << "\n";
 
     stream << "<rect "
+           << "id=\"background\" "
+           << "x=\"0\" y=\"0\" "
            << "width=\"" << width << "\" "
            << "height=\"" << height << "\" "
            << getSVGFillAttrib(backgroundColor) << " "
@@ -72,12 +73,18 @@ std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const st
            << "/>"
            << "\n";
 
-    for(const geometrize::ShapeResult& s : data) {
+    for(std::int32_t i = 0; i < data.size(); i++) {
+        const geometrize::ShapeResult& s{data[i]};
         std::string shapeData{s.shape->getSvgShapeData()};
         const geometrize::shapes::ShapeTypes shapeType{s.shape->getType()};
 
         std::string styles{""};
-        if(shapeType == geometrize::shapes::ShapeTypes::LINE || shapeType == geometrize::shapes::ShapeTypes::POLYLINE) {
+
+        styles.append("id=\"" + std::to_string(i) + "\" ");
+
+        if(shapeType == geometrize::shapes::ShapeTypes::LINE
+                || shapeType == geometrize::shapes::ShapeTypes::POLYLINE
+                || shapeType == geometrize::shapes::ShapeTypes::QUADRATIC_BEZIER) {
             styles.append(getSVGStrokeAttrib(s.color));
             styles.append(" stroke-width=\"1\" fill=\"none\" ");
             styles.append(getSVGStrokeOpacityAttrib(s.color));
@@ -92,7 +99,6 @@ std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const st
         stream << shapeData << "\n";
     }
 
-    stream << "</g>" << "\n";
     stream << "</svg>" << "\n";
 
     return stream.str();

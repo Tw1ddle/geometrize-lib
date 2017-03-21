@@ -108,17 +108,21 @@ std::vector<std::int32_t> RotatedRectangle::getRawShapeData() const
 
 std::string RotatedRectangle::getSvgShapeData() const
 {
-    // TODO fix - need to rotate etc around center of shape
+    const std::int32_t width{(std::max)(m_x1, m_x2) - (std::min)(m_x1, m_x2)};
+    const std::int32_t height{(std::max)(m_y1, m_y2) - (std::min)(m_y1, m_y2)};
 
     std::stringstream s;
-    s << "<rect "
-      << "x=\"" << m_x1 << "\" "
-      << "y=\"" << m_y1 << "\" "
-      << "width=\"" << (std::max)(m_x1, m_x2) - (std::min)(m_x1, m_x2) << "\" "
-      << "height=\"" << (std::max)(m_y1, m_y2) - (std::min)(m_y1, m_y2) << "\" "
-      << "transform=\"rotate(" << m_angle << ")" << "\" "
+    s << "<g transform=\"translate(" << m_x1 << "," << m_y1 << ") rotate(" << m_angle << ")" << " scale(" << width << "," << height << ")\"" << ">"
+
+      << "<rect "
+      << "x=\"" << -0.5 << "\" "
+      << "y=\"" << -0.5 << "\" "
+      << "width=\"" << 1 << "\" "
+      << "height=\"" << 1 << "\" "
       << SVG_STYLE_HOOK << " "
-      << "/>";
+      << "/>"
+
+      << "</g>";
 
     return s.str();
 }
