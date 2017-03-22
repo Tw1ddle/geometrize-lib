@@ -1,10 +1,12 @@
 #include "rotatedellipse.h"
 
 #include <cstdint>
+#include <math.h>
 #include <memory>
 #include <sstream>
 
 #include "shape.h"
+#include "shapeutil.h"
 #include "../model.h"
 #include "../commonutil.h"
 
@@ -36,20 +38,26 @@ std::shared_ptr<geometrize::Shape> RotatedEllipse::clone() const
 
 std::vector<geometrize::Scanline> RotatedEllipse::rasterize() const
 {
-    std::vector<geometrize::Scanline> lines;
+    const std::int32_t w{m_model.getWidth()};
+    const std::int32_t h{m_model.getHeight()};
 
-    const std::int32_t x1{m_x - m_rx};
-    const std::int32_t x2{m_x + m_rx};
-    const std::int32_t y1{m_y - m_ry};
-    const std::int32_t y2{m_y + m_ry};
+    const std::uint32_t pointCount{20};
+    std::vector<std::pair<std::int32_t, std::int32_t>> points;
+    const float rads{m_angle * 3.141f / 180.0f};
+    const float c{cos(rads)};
+    const float s{sin(rads)};
 
-    for(std::int32_t y = y1; y < y2; y++) {
-        for(std::int32_t x = x1; x < x2; x++) {
-        }
-        //lines.push_back(geometrize::Scanline(y, (std::min)(m_x1, m_x2), (std::max)(m_x1, m_x2), 0xFFFF));
+    for(std::uint32_t i = 0; i < pointCount; i++) {
+        const float angle{((360.0f / pointCount) * i) * (3.141f / 180.0f)};
+        std::pair<std::int32_t, std::int32_t> point{std::make_pair(m_rx * 2 * cos(angle), m_ry * 2 * sin(angle))};
+
+        point.first = static_cast<std::int32_t>(point.first * c - point.second * s + m_x);
+        point.second = static_cast<std::int32_t>(point.first * s + point.second * c + m_y);
+
+        points.push_back(point);
     }
 
-    return lines;
+    return Scanline::trim(geometrize::scanlinesForPolygon(points), w, h);
 }
 
 void RotatedEllipse::mutate()
