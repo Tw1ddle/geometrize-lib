@@ -90,9 +90,9 @@ void RotatedRectangle::mutate()
     }
 }
 
-geometrize::shapes::ShapeTypes RotatedRectangle::getType() const
+geometrize::ShapeTypes RotatedRectangle::getType() const
 {
-    return geometrize::shapes::ShapeTypes::ROTATED_RECTANGLE;
+    return geometrize::ShapeTypes::ROTATED_RECTANGLE;
 }
 
 std::vector<std::int32_t> RotatedRectangle::getRawShapeData() const

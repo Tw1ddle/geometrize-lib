@@ -63,7 +63,7 @@ public:
     }
 
     std::vector<geometrize::State> getHillClimbState(
-            const geometrize::shapes::ShapeTypes shapeTypes,
+            const geometrize::ShapeTypes shapeTypes,
             const std::uint8_t alpha,
             const std::uint32_t shapeCount,
             const std::uint32_t maxShapeMutations)
@@ -91,7 +91,7 @@ public:
     }
 
     std::vector<geometrize::ShapeResult> step(
-            const geometrize::shapes::ShapeTypes shapeTypes,
+            const geometrize::ShapeTypes shapeTypes,
             const std::uint8_t alpha,
             const std::uint32_t shapeCount,
             const std::uint32_t maxShapeMutations)
@@ -183,7 +183,7 @@ std::int32_t Model::getHeight() const
 }
 
 std::vector<geometrize::ShapeResult> Model::step(
-        const geometrize::shapes::ShapeTypes shapeTypes,
+        const geometrize::ShapeTypes shapeTypes,
         const std::uint8_t alpha,
         std::uint32_t shapeCount,
         std::uint32_t maxShapeMutations)

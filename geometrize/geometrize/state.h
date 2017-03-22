@@ -29,7 +29,7 @@ public:
      * @param shapeTypes The types of geometric primitive to select.
      * @param alpha The color alpha of the geometric shape.
      */
-    State(const geometrize::Model& model, shapes::ShapeTypes shapeTypes, std::uint32_t alpha);
+    State(const geometrize::Model& model, ShapeTypes shapeTypes, std::uint32_t alpha);
 
     ~State() = default;
     State(const State& other);

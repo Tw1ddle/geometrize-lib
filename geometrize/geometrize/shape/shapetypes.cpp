@@ -3,9 +3,6 @@
 namespace geometrize
 {
 
-namespace shapes
-{
-
 const std::array<ShapeTypes, static_cast<std::size_t>(ShapeTypes::SHAPE_COUNT)> allShapes =
 {
     ShapeTypes::RECTANGLE,
@@ -31,7 +28,5 @@ const std::vector<std::pair<ShapeTypes, std::string>> shapeTypeNames =
     { ShapeTypes::QUADRATIC_BEZIER, "quadratic_bezier" },
     { ShapeTypes::POLYLINE, "polyline" }
 };
-
-}
 
 }

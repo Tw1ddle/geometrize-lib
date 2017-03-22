@@ -76,15 +76,15 @@ std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const st
     for(std::int32_t i = 0; i < data.size(); i++) {
         const geometrize::ShapeResult& s{data[i]};
         std::string shapeData{s.shape->getSvgShapeData()};
-        const geometrize::shapes::ShapeTypes shapeType{s.shape->getType()};
+        const geometrize::ShapeTypes shapeType{s.shape->getType()};
 
         std::string styles{""};
 
         styles.append("id=\"" + std::to_string(i) + "\" ");
 
-        if(shapeType == geometrize::shapes::ShapeTypes::LINE
-                || shapeType == geometrize::shapes::ShapeTypes::POLYLINE
-                || shapeType == geometrize::shapes::ShapeTypes::QUADRATIC_BEZIER) {
+        if(shapeType == geometrize::ShapeTypes::LINE
+                || shapeType == geometrize::ShapeTypes::POLYLINE
+                || shapeType == geometrize::ShapeTypes::QUADRATIC_BEZIER) {
             styles.append(getSVGStrokeAttrib(s.color));
             styles.append(" stroke-width=\"1\" fill=\"none\" ");
             styles.append(getSVGStrokeOpacityAttrib(s.color));

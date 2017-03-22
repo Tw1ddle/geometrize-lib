@@ -71,9 +71,9 @@ void Triangle::mutate()
     }
 }
 
-geometrize::shapes::ShapeTypes Triangle::getType() const
+geometrize::ShapeTypes Triangle::getType() const
 {
-    return shapes::ShapeTypes::TRIANGLE;
+    return ShapeTypes::TRIANGLE;
 }
 
 std::vector<std::int32_t> Triangle::getRawShapeData() const

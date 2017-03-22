@@ -91,9 +91,9 @@ void RotatedEllipse::mutate()
     }
 }
 
-geometrize::shapes::ShapeTypes RotatedEllipse::getType() const
+geometrize::ShapeTypes RotatedEllipse::getType() const
 {
-    return geometrize::shapes::ShapeTypes::ROTATED_ELLIPSE;
+    return geometrize::ShapeTypes::ROTATED_ELLIPSE;
 }
 
 std::vector<std::int32_t> RotatedEllipse::getRawShapeData() const

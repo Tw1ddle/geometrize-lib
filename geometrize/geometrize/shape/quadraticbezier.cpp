@@ -8,6 +8,7 @@
 #include "shape.h"
 #include "../model.h"
 #include "../commonutil.h"
+#include "shapeutil.h"
 
 namespace geometrize
 {
@@ -57,9 +58,9 @@ std::vector<geometrize::Scanline> QuadraticBezier::rasterize() const
         const std::pair<std::int32_t, std::int32_t> p0{points[i]};
         const std::pair<std::int32_t, std::int32_t> p1{points[i + 1]};
 
-        const std::vector<std::pair<std::int32_t, std::int32_t>> points{geometrize::commonutil::bresenham(p0.first, p0.second, p1.first, p1.second)};
+        const std::vector<std::pair<std::int32_t, std::int32_t>> points{geometrize::bresenham(p0.first, p0.second, p1.first, p1.second)};
         for(const std::pair<std::int32_t, std::int32_t>& point : points) {
-            scanlines.push_back(geometrize::Scanline(point.second, point.first, point.first, 0xFFFF));
+            scanlines.push_back(geometrize::Scanline(point.second, point.first, point.first));
         }
     }
 
@@ -94,9 +95,9 @@ void QuadraticBezier::mutate()
     }
 }
 
-geometrize::shapes::ShapeTypes QuadraticBezier::getType() const
+geometrize::ShapeTypes QuadraticBezier::getType() const
 {
-    return geometrize::shapes::ShapeTypes::QUADRATIC_BEZIER;
+    return geometrize::ShapeTypes::QUADRATIC_BEZIER;
 }
 
 std::vector<std::int32_t> QuadraticBezier::getRawShapeData() const

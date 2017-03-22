@@ -60,10 +60,10 @@ std::vector<geometrize::Scanline> Ellipse::rasterize() const
         }
 
         if (y1 >= 0 && y1 < h) {
-            lines.push_back(Scanline(y1, x1, x2, 0xFFFF));
+            lines.push_back(Scanline(y1, x1, x2));
         }
         if (y2 >= 0 && y2 < h && dy > 0) {
-            lines.push_back(Scanline(y2, x1, x2, 0xFFFF));
+            lines.push_back(Scanline(y2, x1, x2));
         }
     }
 
@@ -96,9 +96,9 @@ void Ellipse::mutate()
     }
 }
 
-geometrize::shapes::ShapeTypes Ellipse::getType() const
+geometrize::ShapeTypes Ellipse::getType() const
 {
-    return geometrize::shapes::ShapeTypes::ELLIPSE;
+    return geometrize::ShapeTypes::ELLIPSE;
 }
 
 std::vector<std::int32_t> Ellipse::getRawShapeData() const

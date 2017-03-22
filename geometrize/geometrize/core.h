@@ -91,7 +91,7 @@ float differencePartial(
  */
 geometrize::State bestRandomState(
         const geometrize::Model& model,
-        const geometrize::shapes::ShapeTypes shapeTypes,
+        const geometrize::ShapeTypes shapeTypes,
         std::uint32_t alpha,
         std::uint32_t n,
         const geometrize::Bitmap& target,
@@ -127,7 +127,7 @@ geometrize::State hillClimb(
  */
 geometrize::State bestHillClimbState(
         const geometrize::Model& model,
-        geometrize::shapes::ShapeTypes shapeTypes,
+        geometrize::ShapeTypes shapeTypes,
         std::uint32_t alpha,
         std::uint32_t n,
         std::uint32_t age,

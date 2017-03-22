@@ -20,7 +20,7 @@ namespace geometrize
  * @param t The type of shape to create.
  * @return The new shape.
  */
-std::shared_ptr<geometrize::Shape> create(const geometrize::Model& model, geometrize::shapes::ShapeTypes t);
+std::shared_ptr<geometrize::Shape> create(const geometrize::Model& model, geometrize::ShapeTypes t);
 
 /**
  * @brief randomShape Creates a random shape.
@@ -39,6 +39,6 @@ std::shared_ptr<geometrize::Shape> randomShape(const geometrize::Model& model);
  * @param yBound The y-bound of the whole canvas.
  * @return The new shape.
  */
-std::shared_ptr<geometrize::Shape> randomShapeOf(const geometrize::Model& model, geometrize::shapes::ShapeTypes t);
+std::shared_ptr<geometrize::Shape> randomShapeOf(const geometrize::Model& model, geometrize::ShapeTypes t);
 
 }

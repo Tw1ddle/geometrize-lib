@@ -18,9 +18,8 @@ public:
      * @param y The y-coordinate.
      * @param x1 The leftmost x-coordinate.
      * @param x2 The rightmost x-coordinate.
-     * @param alpha The alpha transparency of the scanline.
      */
-    Scanline(std::int32_t y, std::int32_t x1, std::int32_t x2, std::uint32_t alpha);
+    Scanline(std::int32_t y, std::int32_t x1, std::int32_t x2);
 
     ~Scanline() = default;
     Scanline& operator=(const Scanline&) = default;
@@ -38,7 +37,6 @@ public:
     const std::int32_t y; ///< The y-coordinate of the scanline.
     std::int32_t x1; ///< The leftmost x-coordinate of the scanline.
     std::int32_t x2; ///< The rightmost x-coordinate of the scanline.
-    const std::uint32_t alpha; ///< The alpha/opacity of the scanline.
 };
 
 bool operator==(const geometrize::Scanline& lhs, const geometrize::Scanline& rhs);

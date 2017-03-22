@@ -42,7 +42,7 @@ std::vector<geometrize::Scanline> Rectangle::rasterize() const
 
     std::vector<geometrize::Scanline> lines;
     for(std::int32_t y = y1; y < y2; y++) {
-        lines.push_back(geometrize::Scanline(y, x1, x2, 0xFFFF));
+        lines.push_back(geometrize::Scanline(y, x1, x2));
     }
     return lines;
 }
@@ -69,9 +69,9 @@ void Rectangle::mutate()
     }
 }
 
-geometrize::shapes::ShapeTypes Rectangle::getType() const
+geometrize::ShapeTypes Rectangle::getType() const
 {
-    return geometrize::shapes::ShapeTypes::RECTANGLE;
+    return geometrize::ShapeTypes::RECTANGLE;
 }
 
 std::vector<std::int32_t> Rectangle::getRawShapeData() const

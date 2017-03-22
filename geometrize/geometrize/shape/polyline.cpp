@@ -7,6 +7,7 @@
 #include "shape.h"
 #include "../model.h"
 #include "../commonutil.h"
+#include "shapeutil.h"
 
 namespace geometrize
 {
@@ -44,9 +45,9 @@ std::vector<geometrize::Scanline> Polyline::rasterize() const
         const std::pair<std::int32_t, std::int32_t> p0{m_points[i]};
         const std::pair<std::int32_t, std::int32_t> p1{i < (m_points.size() - 1) ? m_points[i + 1] : m_points[i]};
 
-        const auto points{commonutil::bresenham(p0.first, p0.second, p1.first, p1.second)};
+        const auto points{geometrize::bresenham(p0.first, p0.second, p1.first, p1.second)};
         for(const auto& point : points) {
-            lines.push_back(geometrize::Scanline(point.second, point.first, point.first, 0xFFFF));
+            lines.push_back(geometrize::Scanline(point.second, point.first, point.first));
         }
     }
 
@@ -66,9 +67,9 @@ void Polyline::mutate()
     m_points[i] = point;
 }
 
-geometrize::shapes::ShapeTypes Polyline::getType() const
+geometrize::ShapeTypes Polyline::getType() const
 {
-    return geometrize::shapes::ShapeTypes::POLYLINE;
+    return geometrize::ShapeTypes::POLYLINE;
 }
 
 std::vector<std::int32_t> Polyline::getRawShapeData() const

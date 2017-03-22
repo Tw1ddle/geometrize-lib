@@ -8,7 +8,7 @@
 namespace geometrize
 {
 
-Scanline::Scanline(const std::int32_t y, const std::int32_t x1, const std::int32_t x2, const std::uint32_t alpha) : y{y}, x1{x1}, x2{x2}, alpha{alpha} {}
+Scanline::Scanline(const std::int32_t y, const std::int32_t x1, const std::int32_t x2) : y{y}, x1{x1}, x2{x2} {}
 
 std::vector<geometrize::Scanline> Scanline::trim(std::vector<geometrize::Scanline>& scanlines, const std::uint32_t w, const std::uint32_t h)
 {
@@ -31,12 +31,12 @@ std::vector<geometrize::Scanline> Scanline::trim(std::vector<geometrize::Scanlin
 
 bool operator==(const geometrize::Scanline& lhs, const geometrize::Scanline& rhs)
 {
-    return lhs.y == rhs.y && lhs.x1 == rhs.x1 && lhs.x2 == rhs.x2 && lhs.alpha == rhs.alpha;
+    return lhs.y == rhs.y && lhs.x1 == rhs.x1 && lhs.x2 == rhs.x2;
 }
 
 bool operator!=(const geometrize::Scanline& lhs, const geometrize::Scanline& rhs)
 {
-    return lhs.y != rhs.y || lhs.x1 != rhs.x1 || lhs.x2 != rhs.x2 || lhs.alpha != rhs.alpha;
+    return lhs.y != rhs.y || lhs.x1 != rhs.x1 || lhs.x2 != rhs.x2;
 }
 
 }

@@ -44,7 +44,7 @@ public:
      * @brief getType Gets the ShapeType of the shape.
      * @return The ShapeType of the shape.
      */
-    virtual geometrize::shapes::ShapeTypes getType() const = 0;
+    virtual geometrize::ShapeTypes getType() const = 0;
 
     /**
      * @brief getRawShapeData Gets a vector of data that represents the shape geometry, the format varies depending on the ShapeType.

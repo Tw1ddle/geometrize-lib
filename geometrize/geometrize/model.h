@@ -68,7 +68,7 @@ public:
      * @return A vector containing data about the shapes added to the model in this step.
      */
     std::vector<geometrize::ShapeResult> step(
-            geometrize::shapes::ShapeTypes shapeTypes,
+            geometrize::ShapeTypes shapeTypes,
             std::uint8_t alpha,
             std::uint32_t shapeCount,
             std::uint32_t maxShapeMutations);

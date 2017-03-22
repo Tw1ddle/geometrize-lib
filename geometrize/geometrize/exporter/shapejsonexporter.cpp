@@ -24,8 +24,8 @@ std::string exportShapeJson(const std::vector<geometrize::ShapeResult>& data)
 
         stream << "    \"shape_" << i << "\":" << " {\n";
 
-        const geometrize::shapes::ShapeTypes type{s.shape->getType()};
-        stream << "        \"type\":" << static_cast<std::underlying_type<geometrize::shapes::ShapeTypes>::type>(type) << ",\n";
+        const geometrize::ShapeTypes type{s.shape->getType()};
+        stream << "        \"type\":" << static_cast<std::underlying_type<geometrize::ShapeTypes>::type>(type) << ",\n";
 
         const std::vector<std::int32_t> shapeData{s.shape->getRawShapeData()};
         stream << "        \"data\":" << "[";

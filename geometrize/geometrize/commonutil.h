@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include <cstdint>
-#include <utility>
 #include <vector>
 
 #include "bitmap/rgba.h"
@@ -43,16 +42,6 @@ template<typename T> T clamp(const T& value, const T& lower, const T& upper)
 {
     return (std::max)(lower, (std::min)(value, upper));
 }
-
-/**
- * @brief bresenham Bresenham's line algorithm. Returns the points on the line.
- * @param x1 The start x-coordinate.
- * @param y1 The start y-coordinate.
- * @param x2 The end x-coordinate.
- * @param y The end y-coordinate.
- * @return The points on the resulting line.
- */
-std::vector<std::pair<std::int32_t, std::int32_t>> bresenham(std::int32_t x1, std::int32_t y1, const std::int32_t x2, const std::int32_t y2);
 
 /**
  * @brief getAverageImageColor Computes the average RGB color of the pixels in the image.

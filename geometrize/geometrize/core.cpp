@@ -92,7 +92,7 @@ void drawLines(geometrize::Bitmap& image, const geometrize::rgba color, const st
     // For each scanline
     for(const geometrize::Scanline& line : lines) {
         const std::int32_t y{line.y};
-        const std::uint32_t ma{line.alpha};
+        const std::uint32_t ma{UINT16_MAX};
         const std::uint32_t m{UINT16_MAX};
         const std::uint32_t aa = (m - sa * ma / m) * 0x101;
 
@@ -183,7 +183,7 @@ float differencePartial(
 
 geometrize::State bestRandomState(
         const geometrize::Model& model,
-        const geometrize::shapes::ShapeTypes shapeTypes,
+        const geometrize::ShapeTypes shapeTypes,
         const std::uint32_t alpha,
         const std::uint32_t n,
         const geometrize::Bitmap& target,
@@ -238,7 +238,7 @@ geometrize::State hillClimb(
 
 geometrize::State bestHillClimbState(
         const geometrize::Model& model,
-        const geometrize::shapes::ShapeTypes shapeTypes,
+        const geometrize::ShapeTypes shapeTypes,
         const std::uint32_t alpha,
         const std::uint32_t n,
         const std::uint32_t age,

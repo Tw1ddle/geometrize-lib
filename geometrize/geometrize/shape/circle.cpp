@@ -49,7 +49,7 @@ std::vector<geometrize::Scanline> Circle::rasterize() const
             const std::int32_t fy{m_y + y};
             const std::int32_t x1{commonutil::clamp(m_x + xScan.front(), 0, xBound - 1)};
             const std::int32_t x2{commonutil::clamp(m_x + xScan.back(), 0, xBound - 1)};
-            lines.push_back(geometrize::Scanline(fy, x1, x2, 0xFFFF));
+            lines.push_back(geometrize::Scanline(fy, x1, x2));
         }
     }
 
@@ -77,9 +77,9 @@ void Circle::mutate()
     }
 }
 
-geometrize::shapes::ShapeTypes Circle::getType() const
+geometrize::ShapeTypes Circle::getType() const
 {
-    return geometrize::shapes::ShapeTypes::CIRCLE;
+    return geometrize::ShapeTypes::CIRCLE;
 }
 
 std::vector<std::int32_t> Circle::getRawShapeData() const

@@ -5,8 +5,9 @@
 #include <sstream>
 
 #include "shape.h"
-#include "../model.h"
 #include "../commonutil.h"
+#include "../model.h"
+#include "shapeutil.h"
 
 namespace geometrize
 {
@@ -41,9 +42,9 @@ std::vector<geometrize::Scanline> Line::rasterize() const
 
     std::vector<geometrize::Scanline> lines;
 
-    const auto points{commonutil::bresenham(m_x1, m_y1, m_x2, m_y2)};
+    const auto points{geometrize::bresenham(m_x1, m_y1, m_x2, m_y2)};
     for(const auto& point : points) {
-       lines.push_back(geometrize::Scanline(point.second, point.first, point.first, 0xFFFF));
+       lines.push_back(geometrize::Scanline(point.second, point.first, point.first));
     }
 
     return Scanline::trim(lines, xBound, yBound);
@@ -72,9 +73,9 @@ void Line::mutate()
     }
 }
 
-geometrize::shapes::ShapeTypes Line::getType() const
+geometrize::ShapeTypes Line::getType() const
 {
-    return geometrize::shapes::ShapeTypes::LINE;
+    return geometrize::ShapeTypes::LINE;
 }
 
 std::vector<std::int32_t> Line::getRawShapeData() const

@@ -9,9 +9,6 @@
 namespace geometrize
 {
 
-namespace shapes
-{
-
 /**
  * @brief The ShapeTypes enum specifies the types of shapes that can be used. These can be combined to produce images composed of multiple primitive types.
  * @author Sam Twidale (http://samcodes.co.uk/)
@@ -39,7 +36,5 @@ extern const std::array<ShapeTypes, static_cast<std::size_t>(ShapeTypes::SHAPE_C
  * @brief shapeTypeNames provides a convenient mapping to names of types of shape (all lower case, underscores instead of spaces e.g. rotated_ellipse).
  */
 extern const std::vector<std::pair<ShapeTypes, std::string>> shapeTypeNames;
-
-}
 
 }
