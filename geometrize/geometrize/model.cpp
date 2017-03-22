@@ -130,7 +130,7 @@ public:
 
         m_lastScore = geometrize::core::differencePartial(m_target, before, m_current, m_lastScore, lines);
 
-        geometrize::ShapeResult result{m_lastScore, color, shape};
+        const geometrize::ShapeResult result{m_lastScore, color, shape};
         return result;
     }
 
@@ -185,8 +185,8 @@ std::int32_t Model::getHeight() const
 std::vector<geometrize::ShapeResult> Model::step(
         const geometrize::ShapeTypes shapeTypes,
         const std::uint8_t alpha,
-        std::uint32_t shapeCount,
-        std::uint32_t maxShapeMutations)
+        const std::uint32_t shapeCount,
+        const std::uint32_t maxShapeMutations)
 {
     return d->step(shapeTypes, alpha, shapeCount, maxShapeMutations);
 }
