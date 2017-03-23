@@ -9,7 +9,7 @@ namespace geometrize
 {
 
 /**
- * Helper class for working with bitmap data.
+ * @brief Helper class for working with bitmap data.
  * @author Sam Twidale (http://samcodes.co.uk/)
  */
 class Bitmap

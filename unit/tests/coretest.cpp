@@ -53,7 +53,7 @@ TEST_CASE("Test copying of scanlines", "[core]")
 
     for(const geometrize::Scanline& line : scanlines) {
         const std::int32_t y{line.y};
-        for(std::uint32_t x = line.x1; x < line.x2; x++) {
+        for(std::int32_t x = line.x1; x < line.x2; x++) {
             REQUIRE(destination.getPixel(x, y) == color);
         }
     }

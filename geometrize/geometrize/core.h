@@ -81,6 +81,7 @@ float differencePartial(
 
 /**
  * @brief bestRandomState Gets the best state using a random algorithm.
+ * @param model The model to query for constraints etc.
  * @param shapeTypes The types of shape to use.
  * @param alpha The opacity of the shape.
  * @param n The number of states to try.
@@ -116,6 +117,7 @@ geometrize::State hillClimb(
 
 /**
  * @brief bestHillClimbState Gets the best state using a hill climbing algorithm.
+ * @param model The model to query for constraints etc.
  * @param shapeTypes The types of shape to use.
  * @param alpha The opacity of the shape.
  * @param n The number of random states to generate.

@@ -14,7 +14,7 @@ namespace geometrize
  * @param x1 The start x-coordinate.
  * @param y1 The start y-coordinate.
  * @param x2 The end x-coordinate.
- * @param y The end y-coordinate.
+ * @param y2 The end y-coordinate.
  * @return The points on the resulting line.
  */
 std::vector<std::pair<std::int32_t, std::int32_t>> bresenham(std::int32_t x1, std::int32_t y1, const std::int32_t x2, const std::int32_t y2);
