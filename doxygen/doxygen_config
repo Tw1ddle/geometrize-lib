@@ -4,7 +4,7 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = Geometrize Library
+PROJECT_NAME           = Geometrize
 PROJECT_NUMBER         = 1.0
 PROJECT_BRIEF          = "Portable C++ library for recreating images as sets of geometric primitives."
 PROJECT_LOGO           = "logo_small.png"
@@ -112,7 +112,7 @@ WARN_LOGFILE           = "doxygen_warnings.txt"
 #---------------------------------------------------------------------------
 # Configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = "../include/geometrize"
+INPUT                  = "../geometrize/geometrize"
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.c \
                          *.cc \
