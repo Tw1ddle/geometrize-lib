@@ -141,7 +141,7 @@ float differenceFull(const geometrize::Bitmap& first, const geometrize::Bitmap& 
             total += (dr * dr + dg * dg + db * db + da * da);
         }
     }
-    return std::sqrt(total / (width * height * 4.0f)) / 255.0f;
+    return std::sqrt(static_cast<float>(total) / (static_cast<float>(width) * static_cast<float>(height) * 4.0f)) / 255.0f;
 }
 
 float differencePartial(
@@ -178,7 +178,7 @@ float differencePartial(
             total += (dtar * dtar + dtag * dtag + dtab * dtab + dtaa * dtaa);
         }
     }
-    return std::sqrt(static_cast<float>(total / rgbaCount)) / 255.0f;
+    return std::sqrt(static_cast<float>(total) / static_cast<float>(rgbaCount)) / 255.0f;
 }
 
 geometrize::State bestRandomState(
