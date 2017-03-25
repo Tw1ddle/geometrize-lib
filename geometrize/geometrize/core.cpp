@@ -114,7 +114,6 @@ float differencePartial(
             const geometrize::rgba b{before.getPixel(x, y)};
             const geometrize::rgba a{after.getPixel(x, y)};
 
-            // TODO rewrite with SSE and/or multithreading
             const std::int32_t dtbr{t.r - b.r};
             const std::int32_t dtbg{t.g - b.g};
             const std::int32_t dtbb{t.b - b.b};
