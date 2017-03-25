@@ -24,6 +24,7 @@ public:
 
     std::vector<geometrize::ShapeResult> step(const geometrize::ImageRunnerOptions& options)
     {
+        m_model.setSeed(options.seed);
         return m_model.step(options.shapeTypes, options.alpha, options.shapeCount, options.maxShapeMutations);
     }
 

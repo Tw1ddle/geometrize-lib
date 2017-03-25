@@ -107,6 +107,12 @@ public:
      */
     void setMaxThreads(std::uint32_t threadCount);
 
+    /**
+     * @brief setSeed Sets the seed that the random number generators of this model use. Note that the model also uses an internal seed offset which is incremented when the model is stepped.
+     * @param seed The random number generator seed.
+     */
+    void setSeed(std::uint32_t seed);
+
 private:
     class ModelImpl;
     std::unique_ptr<Model::ModelImpl> d;

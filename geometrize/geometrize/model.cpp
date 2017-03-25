@@ -28,7 +28,8 @@ public:
         m_current{target.getWidth(), target.getHeight(), backgroundColor},
         m_lastScore{geometrize::core::differenceFull(m_target, m_current)},
         m_maxThreads{std::max(1U, std::thread::hardware_concurrency())},
-        m_randomSeed{0U}
+        m_baseRandomSeed{0U},
+        m_randomSeedOffset{0U}
     {}
 
     ModelImpl(geometrize::Model* pQ, const geometrize::Bitmap& target, const geometrize::Bitmap& initial) :
@@ -37,7 +38,8 @@ public:
         m_current{initial},
         m_lastScore{geometrize::core::differenceFull(m_target, m_current)},
         m_maxThreads{std::max(1U, std::thread::hardware_concurrency())},
-        m_randomSeed{0U}
+        m_baseRandomSeed{0U},
+        m_randomSeedOffset{0U}
     {
         assert(m_target.getWidth() == m_current.getWidth());
         assert(m_target.getHeight() == m_current.getHeight());
@@ -80,7 +82,7 @@ public:
 
                 geometrize::Bitmap buffer{m_current};
                 return core::bestHillClimbState(*q, shapeTypes, alpha, shapeCount, maxShapeMutations, m_target, m_current, buffer, lastScore);
-            }, m_randomSeed++, m_lastScore)};
+            }, m_baseRandomSeed + m_randomSeedOffset++, m_lastScore)};
             futures.push_back(std::move(handle));
         }
 
@@ -150,13 +152,19 @@ public:
         m_maxThreads = threadCount;
     }
 
+    void setSeed(const std::uint32_t seed)
+    {
+        m_baseRandomSeed = seed;
+    }
+
 private:
     geometrize::Model* q;
     geometrize::Bitmap m_target; ///< The target bitmap, the bitmap we aim to approximate.
     geometrize::Bitmap m_current; ///< The current bitmap.
     float m_lastScore; ///< Score derived from calculating the difference between bitmaps.
     std::uint32_t m_maxThreads; ///< The maximum number of threads the model will use when stepping.
-    std::atomic_int m_randomSeed; ///< Seed used for random number generation. Note: incremented by each std::async call used for model stepping.
+    std::atomic_uint32_t m_baseRandomSeed; ///< The base value used for seeding the random number generator (the one the user has control over).
+    std::atomic_uint32_t m_randomSeedOffset; ///< Seed used for random number generation. Note: incremented by each std::async call used for model stepping.
 };
 
 Model::Model(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) : d{std::make_unique<Model::ModelImpl>(this, target, backgroundColor)}
@@ -210,6 +218,11 @@ geometrize::Bitmap& Model::getCurrent()
 void Model::setMaxThreads(const std::uint32_t threadCount)
 {
     d->setMaxThreads(threadCount);
+}
+
+void Model::setSeed(const std::uint32_t seed)
+{
+    d->setSeed(seed);
 }
 
 }

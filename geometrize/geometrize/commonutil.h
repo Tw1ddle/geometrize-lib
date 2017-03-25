@@ -18,7 +18,7 @@ namespace commonutil
 {
 
 /**
- * @brief seedRandomGenerator Seeds the (thread-local) random number generator.
+ * @brief seedRandomGenerator Seeds the (thread-local) random number generators.
  * @param seed The random seed.
  */
 void seedRandomGenerator(std::uint32_t seed);
