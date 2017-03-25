@@ -10,6 +10,7 @@
 
 #include "bitmap/bitmap.h"
 #include "core.h"
+#include "rasterizer/rasterizer.h"
 #include "shape/shape.h"
 #include "shaperesult.h"
 #include "shape/shapetypes.h"
@@ -71,15 +72,15 @@ public:
         std::vector<std::future<geometrize::State>> futures;
 
         for(std::uint32_t i = 0; i < m_maxThreads; i++) {
-            std::future<geometrize::State> handle{std::async(std::launch::async, [&](const std::uint32_t seed) {
+            std::future<geometrize::State> handle{std::async(std::launch::async, [&](const std::uint32_t seed, const float lastScore) {
                 // Ensures that the results of the random generation are the same between jobs with identical settings
                 // The RNG is thread-local and std::async may use a thread pool (which is why this is necessary)
                 // Note this implementation requires m_maxThreads to be the same between jobs for each job to produce the same results.
                 geometrize::commonutil::seedRandomGenerator(seed);
 
                 geometrize::Bitmap buffer{m_current};
-                return core::bestHillClimbState(*q, shapeTypes, alpha, shapeCount, maxShapeMutations, m_target, m_current, buffer);
-            }, m_randomSeed++)};
+                return core::bestHillClimbState(*q, shapeTypes, alpha, shapeCount, maxShapeMutations, m_target, m_current, buffer, lastScore);
+            }, m_randomSeed++, m_lastScore)};
             futures.push_back(std::move(handle));
         }
 
@@ -108,13 +109,13 @@ public:
     }
 
     geometrize::ShapeResult drawShape(
-            std::shared_ptr<geometrize::Shape> shape,
+            const std::shared_ptr<geometrize::Shape> shape,
             const std::uint8_t alpha)
     {
         const std::vector<geometrize::Scanline> lines{shape->rasterize()};
         const geometrize::rgba color{geometrize::core::computeColor(m_target, m_current, lines, alpha)};
         const geometrize::Bitmap before{m_current};
-        geometrize::core::drawLines(m_current, color, lines);
+        geometrize::drawLines(m_current, color, lines);
 
         m_lastScore = geometrize::core::differencePartial(m_target, before, m_current, m_lastScore, lines);
 
@@ -122,11 +123,11 @@ public:
         return result;
     }
 
-    geometrize::ShapeResult drawShape(std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)
+    geometrize::ShapeResult drawShape(const std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)
     {
         const std::vector<geometrize::Scanline> lines{shape->rasterize()};
         const geometrize::Bitmap before{m_current};
-        geometrize::core::drawLines(m_current, color, lines);
+        geometrize::drawLines(m_current, color, lines);
 
         m_lastScore = geometrize::core::differencePartial(m_target, before, m_current, m_lastScore, lines);
 
@@ -191,7 +192,7 @@ std::vector<geometrize::ShapeResult> Model::step(
     return d->step(shapeTypes, alpha, shapeCount, maxShapeMutations);
 }
 
-geometrize::ShapeResult Model::drawShape(std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)
+geometrize::ShapeResult Model::drawShape(const std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)
 {
     return d->drawShape(shape, alpha);
 }

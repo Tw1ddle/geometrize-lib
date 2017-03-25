@@ -16,6 +16,7 @@ namespace geometrize
 {
 
 /**
+ * @brief The State class represents a shape and related properties with a measure of how it brings the working image closer to the target image.
  * @author Sam Twidale (http://samcodes.co.uk/)
  */
 class State
@@ -29,7 +30,7 @@ public:
      * @param shapeTypes The types of geometric primitive to select.
      * @param alpha The color alpha of the geometric shape.
      */
-    State(const geometrize::Model& model, ShapeTypes shapeTypes, std::uint32_t alpha);
+    State(const geometrize::Model& model, ShapeTypes shapeTypes, std::uint8_t alpha);
 
     ~State() = default;
     State(const State& other);
@@ -40,16 +41,16 @@ public:
      * The lower the energy, the better. The score is cached, set it to < 0 to recalculate it.
      * @return The energy measure.
      */
-    float calculateEnergy(const geometrize::Bitmap& target, const geometrize::Bitmap& current, geometrize::Bitmap& buffer);
+    float calculateEnergy(const geometrize::Bitmap& target, const geometrize::Bitmap& current, geometrize::Bitmap& buffer, float lastScore);
 
     /**
      * @brief mutate Modifies the current state in a random fashion.
-     * @return The old state - in case we want to go back to the old state.
+     * @return The old state, useful for undoing the mutation or keeping track of previous states.
      */
     geometrize::State mutate();
 
     float m_score; ///< The score of the state, a measure of the improvement applying the state to the current bitmap will have.
-    std::uint32_t m_alpha; ///< The alpha of the shape.
+    std::uint8_t m_alpha; ///< The alpha of the shape.
     std::shared_ptr<geometrize::Shape> m_shape; ///< The geometric primitive owned by the state.
 };
 

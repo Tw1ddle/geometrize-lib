@@ -52,12 +52,9 @@ inline void writeToStream(std::ostringstream& stream, const std::uint8_t& t)
     stream.write(reinterpret_cast<const char*>(&t), sizeof(std::uint8_t));
 }
 
-std::string exportBitmap(const geometrize::Bitmap& bitmapData, const std::string& filePath)
+std::string exportBitmap(const geometrize::Bitmap& bitmapData)
 {
-    std::ostringstream stream(filePath.c_str(), std::ios::binary);
-    if(!stream) {
-        return false;
-    }
+    std::ostringstream stream(std::ios::binary);
 
     const std::uint32_t BITMAP_FILE_HEADER_SIZE{14U};
     const std::uint32_t BITMAP_INFORMATION_HEADER_SIZE{40U};

@@ -11,14 +11,14 @@
 #include "shape/shape.h"
 #include "shape/shapefactory.h"
 #include "shape/shapetypes.h"
-#include "scanline.h"
+#include "rasterizer/scanline.h"
 
 namespace geometrize
 {
 
 State::State() : m_score{-1.0f}, m_alpha{0}, m_shape{nullptr} {}
 
-State::State(const geometrize::Model& model, const ShapeTypes shapeTypes, const std::uint32_t alpha) :
+State::State(const geometrize::Model& model, const ShapeTypes shapeTypes, const std::uint8_t alpha) :
     m_score{-1.0f}, m_alpha{alpha}, m_shape{geometrize::randomShapeOf(model, shapeTypes)}
 {}
 
@@ -36,11 +36,10 @@ State::State(const geometrize::State& other) : m_shape{other.m_shape->clone()}, 
 {
 }
 
-float State::calculateEnergy(const geometrize::Bitmap& target, const geometrize::Bitmap& current, geometrize::Bitmap& buffer)
+float State::calculateEnergy(const geometrize::Bitmap& target, const geometrize::Bitmap& current, geometrize::Bitmap& buffer, const float lastScore)
 {
-    if(m_score < 0) {
-        m_score = geometrize::core::energy(m_shape->rasterize(), m_alpha, target, current, buffer, m_score);
-    }
+    assert(m_score < 0);
+    m_score = geometrize::core::energy(m_shape->rasterize(), m_alpha, target, current, buffer, lastScore); // TODO m_score parameter looks wrong, should be model score?
     return m_score;
 }
 

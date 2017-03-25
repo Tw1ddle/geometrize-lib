@@ -3,8 +3,8 @@
 #include <array>
 #include <cstdint>
 #include <string>
-#include <vector>
 #include <utility>
+#include <vector>
 
 namespace geometrize
 {

@@ -7,10 +7,11 @@
 
 #include "bitmap/bitmap.h"
 #include "bitmap/rgba.h"
-#include "scanline.h"
+#include "commonutil.h"
+#include "rasterizer/rasterizer.h"
+#include "rasterizer/scanline.h"
 #include "shape/shapetypes.h"
 #include "state.h"
-#include "commonutil.h"
 
 namespace geometrize
 {
@@ -38,17 +39,17 @@ geometrize::rgba computeColor(
             const geometrize::rgba t{target.getPixel(x, y)};
             const geometrize::rgba c{current.getPixel(x, y)};
 
-            const int tr = t.r;
-            const int tg = t.g;
-            const int tb = t.b;
-            const int cr = c.r;
-            const int cg = c.g;
-            const int cb = c.b;
+            const std::int32_t tr{t.r};
+            const std::int32_t tg{t.g};
+            const std::int32_t tb{t.b};
+            const std::int32_t cr{c.r};
+            const std::int32_t cg{c.g};
+            const std::int32_t cb{c.b};
 
             // Mix the red, green and blue components, blending by the given alpha value
-            totalRed += (std::int64_t)((tr - cr) * a + cr * 257);
-            totalGreen += (std::int64_t)((tg - cg) * a + cg * 257);
-            totalBlue += (std::int64_t)((tb - cb) * a + cb * 257);
+            totalRed += static_cast<std::int64_t>((tr - cr) * a + cr * 257);
+            totalGreen += static_cast<std::int64_t>((tg - cg) * a + cg * 257);
+            totalBlue += static_cast<std::int64_t>((tb - cb) * a + cb * 257);
             count++;
         }
     }
@@ -58,66 +59,16 @@ geometrize::rgba computeColor(
         return geometrize::rgba{0, 0, 0, 0};
     }
 
-    const std::int32_t rr = INT32_C((totalRed / count) >> 8);
-    const std::int32_t gg = INT32_C((totalGreen / count) >> 8);
-    const std::int32_t bb = INT32_C((totalBlue / count) >> 8);
+    const std::int32_t rr{static_cast<std::int32_t>(totalRed / count) >> 8};
+    const std::int32_t gg{static_cast<std::int32_t>(totalGreen / count) >> 8};
+    const std::int32_t bb{static_cast<std::int32_t>(totalBlue / count) >> 8};
 
     // Scale totals down to 0-255 range and return average blended color
-    const std::int32_t r = commonutil::clamp(rr, INT32_C(0), INT32_C(255));
-    const std::int32_t g = commonutil::clamp(gg, INT32_C(0), INT32_C(255));
-    const std::int32_t b = commonutil::clamp(bb, INT32_C(0), INT32_C(255));
+    const std::uint8_t r{static_cast<std::uint8_t>(commonutil::clamp(rr, INT32_C(0), INT32_C(255)))};
+    const std::uint8_t g{static_cast<std::uint8_t>(commonutil::clamp(gg, INT32_C(0), INT32_C(255)))};
+    const std::uint8_t b{static_cast<std::uint8_t>(commonutil::clamp(bb, INT32_C(0), INT32_C(255)))};
 
-    return geometrize::rgba{static_cast<std::uint8_t>(r), static_cast<std::uint8_t>(g), static_cast<std::uint8_t>(b), alpha};
-}
-
-void drawLines(geometrize::Bitmap& image, const geometrize::rgba color, const std::vector<geometrize::Scanline>& lines)
-{
-    // Convert the non-premultiplied color to alpha-premultiplied 16-bits per channel RGBA
-    // In other words, scale the rgb color components by the alpha component
-    std::uint32_t sr = color.r;
-    sr |= sr << 8;
-    sr *= color.a;
-    sr /= 0xFF;
-    std::uint32_t sg = color.g;
-    sg |= sg << 8;
-    sg *= color.a;
-    sg /= 0xFF;
-    std::uint32_t sb = color.b;
-    sb |= sb << 8;
-    sb *= color.a;
-    sb /= 0xFF;
-    std::uint32_t sa = color.a;
-    sa |= sa << 8;
-
-    // For each scanline
-    for(const geometrize::Scanline& line : lines) {
-        const std::int32_t y{line.y};
-        const std::uint32_t ma{UINT16_MAX};
-        const std::uint32_t m{UINT16_MAX};
-        const std::uint32_t aa = (m - sa * ma / m) * 0x101;
-
-        for(std::int32_t x = line.x1; x <= line.x2; x++) {
-            // Get the current overlapping color
-            const geometrize::rgba d{image.getPixel(x, y)};
-
-            const std::uint8_t r = ((d.r * aa + sr * ma) / m) >> 8;
-            const std::uint8_t g = ((d.g * aa + sg * ma) / m) >> 8;
-            const std::uint8_t b = ((d.b * aa + sb * ma) / m) >> 8;
-            const std::uint8_t a = ((d.a * aa + sa * ma) / m) >> 8; // TODO fix, aa looks slightly too big?
-
-            image.setPixel(x, y, geometrize::rgba{static_cast<std::uint8_t>(r), static_cast<std::uint8_t>(g), static_cast<std::uint8_t>(b), static_cast<std::uint8_t>(a)});
-        }
-    }
-}
-
-void copyLines(geometrize::Bitmap& destination, const geometrize::Bitmap& source, const std::vector<geometrize::Scanline>& lines)
-{
-    for(const geometrize::Scanline& line : lines) {
-        const std::int32_t y{line.y};
-        for(std::int32_t x = line.x1; x < line.x2; x++) {
-            destination.setPixel(x, y, source.getPixel(x, y));
-        }
-    }
+    return geometrize::rgba{r, g, b, alpha};
 }
 
 float differenceFull(const geometrize::Bitmap& first, const geometrize::Bitmap& second)
@@ -188,14 +139,16 @@ geometrize::State bestRandomState(
         const std::uint32_t n,
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
-        geometrize::Bitmap& buffer)
+        geometrize::Bitmap& buffer,
+        const float lastScore)
 {
-    float bestEnergy{0.0f};
     geometrize::State bestState(model, shapeTypes, alpha);
+    float bestEnergy{bestState.calculateEnergy(target, current, buffer, lastScore)};
+
     for(std::uint32_t i = 0; i <= n; i++) {
         geometrize::State state(model, shapeTypes, alpha);
-        state.m_score = -1;
-        const float energy{state.calculateEnergy(target, current, buffer)};
+
+        const float energy{state.calculateEnergy(target, current, buffer, lastScore)};
         if(i == 0 || energy < bestEnergy) {
             bestEnergy = energy;
             bestState = state;
@@ -210,18 +163,17 @@ geometrize::State hillClimb(
         const std::uint32_t maxAge,
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
-        geometrize::Bitmap& buffer)
+        geometrize::Bitmap& buffer,
+        const float lastScore)
 {
     geometrize::State s(state);
-    s.m_score = -1;
     geometrize::State bestState(state);
-    bestState.m_score = -1;
-    float bestEnergy{s.calculateEnergy(target, current, buffer)};
+    float bestEnergy{bestState.calculateEnergy(target, current, buffer, lastScore)};
 
-    unsigned int age{0};
+    std::uint32_t age{0};
     while(age < maxAge) {
         const geometrize::State undo{s.mutate()};
-        const float energy{s.calculateEnergy(target, current, buffer)};
+        const float energy{s.calculateEnergy(target, current, buffer, lastScore)};
         if(energy >= bestEnergy) {
             s = undo;
         } else {
@@ -244,10 +196,11 @@ geometrize::State bestHillClimbState(
         const std::uint32_t age,
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
-        geometrize::Bitmap& buffer)
+        geometrize::Bitmap& buffer,
+        const float lastScore)
 {
-    const geometrize::State state{bestRandomState(model, shapeTypes, alpha, n, target, current, buffer)};
-    return hillClimb(state, age, target, current, buffer);
+    const geometrize::State state{bestRandomState(model, shapeTypes, alpha, n, target, current, buffer, lastScore)};
+    return hillClimb(state, age, target, current, buffer, lastScore);
 }
 
 float energy(
@@ -259,8 +212,8 @@ float energy(
         const float score)
 {
     const geometrize::rgba color{computeColor(target, current, lines, alpha)}; // Calculate best color for areas covered by the scanlines
-    copyLines(buffer, current, lines); // Copy area covered by scanlines to buffer bitmap
-    drawLines(buffer, color, lines); // Blend scanlines into the buffer using the color calculated earlier
+    geometrize::copyLines(buffer, current, lines); // Copy area covered by scanlines to buffer bitmap
+    geometrize::drawLines(buffer, color, lines); // Blend scanlines into the buffer using the color calculated earlier
     return differencePartial(target, current, buffer, score, lines); // Get error measure between areas of current and modified buffers covered by scanlines
 }
 

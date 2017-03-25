@@ -16,12 +16,9 @@ inline void writeToStream(std::ostringstream& stream, const std::uint8_t& t)
     stream.write(reinterpret_cast<const char*>(&t), sizeof(std::uint8_t));
 }
 
-std::string exportBitmapData(const geometrize::Bitmap& bitmapData, const std::string& filePath)
+std::string exportBitmapData(const geometrize::Bitmap& bitmapData)
 {
-    std::ostringstream stream(filePath.c_str(), std::ios::binary);
-    if(!stream) {
-        return "";
-    }
+    std::ostringstream stream(std::ios::binary);
 
     for(std::uint32_t y = 0U; y < bitmapData.getHeight(); y++) {
         for(std::uint32_t x = 0U; x < bitmapData.getWidth(); x++) {

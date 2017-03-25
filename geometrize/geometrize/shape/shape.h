@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "../scanline.h"
+#include "../rasterizer/scanline.h"
 #include "shapetypes.h"
 
 namespace geometrize
@@ -35,8 +35,8 @@ public:
     virtual std::vector<geometrize::Scanline> rasterize() const = 0;
 
     /**
-     * @brief mutate Modifies the shape a little, typically with a random component.
-     * Used to improve the shape's fit in a bitmap (trial-and-error style).
+     * @brief mutate Modifies the shape a little, typically using a random component.
+     * Used to improve the shape's fit in a bitmap.
      */
     virtual void mutate() = 0;
 

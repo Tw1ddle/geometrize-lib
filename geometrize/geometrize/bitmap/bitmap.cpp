@@ -1,5 +1,7 @@
 #include "bitmap.h"
 
+#include <assert.h>
+
 #include "rgba.h"
 
 namespace geometrize
@@ -12,6 +14,7 @@ Bitmap::Bitmap(const std::uint32_t width, const std::uint32_t height, const geom
 
 Bitmap::Bitmap(const std::uint32_t width, const std::uint32_t height, const std::vector<std::uint8_t>& data) : m_width{width}, m_height{height}, m_data{data}
 {
+    assert((width * height * 4U) == data.size());
 }
 
 std::uint32_t Bitmap::getWidth() const

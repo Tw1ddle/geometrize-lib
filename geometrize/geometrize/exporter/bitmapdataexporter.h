@@ -16,10 +16,9 @@ namespace exporter
 /**
  * @brief exportBitmapData Exports the raw image data to a binary dump - just the data as RGBA8888, no zero-padding or anything.
  * @param bitmapData The image data to save as binary data.
- * @param filePath The full path to the binary dump file target (include the filename and optionally any extension).
  * @return A string containing the raw bitmap data.
  */
-std::string exportBitmapData(const geometrize::Bitmap& bitmapData, const std::string& filePath);
+std::string exportBitmapData(const geometrize::Bitmap& bitmapData);
 
 }
 

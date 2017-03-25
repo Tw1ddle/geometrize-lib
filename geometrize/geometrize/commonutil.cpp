@@ -31,15 +31,15 @@ geometrize::rgba getAverageImageColor(const geometrize::Bitmap& image)
 {
     const std::vector<std::uint8_t>& data{image.getDataRef()};
     const std::size_t size{data.size()};
-    const std::size_t numPixels{data.size() / 4};
+    const std::size_t numPixels{data.size() / 4U};
 
     std::uint32_t totalRed{0};
     std::uint32_t totalGreen{0};
     std::uint32_t totalBlue{0};
-    for(std::size_t i = 0; i < size; i += 4) {
+    for(std::size_t i = 0; i < size; i += 4U) {
         totalRed += data[i];
-        totalGreen += data[i + 1];
-        totalBlue += data[i + 2];
+        totalGreen += data[i + 1U];
+        totalBlue += data[i + 2U];
     }
 
     return geometrize::rgba{

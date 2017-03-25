@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "bitmap/rgba.h"
-#include "scanline.h"
+#include "rasterizer/scanline.h"
 #include "shape/shapetypes.h"
 #include "state.h"
 
@@ -37,22 +37,6 @@ geometrize::rgba computeColor(
         const geometrize::Bitmap& current,
         const std::vector<geometrize::Scanline>& lines,
         std::uint8_t alpha);
-
-/**
- * @brief drawLines Draws scanlines onto an image.
- * @param image The image to be drawn to.
- * @param color The color of the scanlines.
- * @param lines The scanlines to draw.
- */
-void drawLines(geometrize::Bitmap& image, geometrize::rgba color, const std::vector<geometrize::Scanline>& lines);
-
-/**
- * @brief copyLines Copies source pixels to a destination defined by a set of scanlines.
- * @param destination The destination bitmap to copy the lines to.
- * @param source The source bitmap to copy the lines from.
- * @param lines The scanlines that comprise the source to destination copying mask.
- */
-void copyLines(geometrize::Bitmap& destination, const geometrize::Bitmap& source, const std::vector<geometrize::Scanline>& lines);
 
 /**
  * @brief differenceFull Calculates the root-mean-square error between two bitmaps.
@@ -97,7 +81,8 @@ geometrize::State bestRandomState(
         std::uint32_t n,
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
-        geometrize::Bitmap& buffer);
+        geometrize::Bitmap& buffer,
+        float lastScore);
 
 /**
  * @brief hillClimb Hill climbing optimization algorithm, attempts to minimize energy (the error/difference).
@@ -113,7 +98,8 @@ geometrize::State hillClimb(
         std::uint32_t maxAge,
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
-        geometrize::Bitmap& buffer);
+        geometrize::Bitmap& buffer,
+        float lastScore);
 
 /**
  * @brief bestHillClimbState Gets the best state using a hill climbing algorithm.
@@ -135,7 +121,8 @@ geometrize::State bestHillClimbState(
         std::uint32_t age,
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
-        geometrize::Bitmap& buffer);
+        geometrize::Bitmap& buffer,
+        float lastScore);
 
 /**
  * @brief energy Calculates a measure of the improvement adding the scanlines of a shape provides - lower energy is better.

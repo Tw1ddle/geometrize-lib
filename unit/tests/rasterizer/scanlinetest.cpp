@@ -1,6 +1,6 @@
 #include "../catch.hpp"
 
-#include "geometrize/scanline.h"
+#include "geometrize/rasterizer/scanline.h"
 
 #include <vector>
 

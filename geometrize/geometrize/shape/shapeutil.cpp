@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-#include "../scanline.h"
+#include "../rasterizer/scanline.h"
 
 namespace geometrize
 {

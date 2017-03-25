@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <vector>
 
-#include "commonutil.h"
+#include "../commonutil.h"
 
 namespace geometrize
 {

@@ -8,7 +8,7 @@ namespace geometrize
 {
 
 /**
- * @brief The ImageRunnerOptions class encapsulates the parameters that may be passed to the image runner.
+ * @brief The ImageRunnerOptions class encapsulates preferences/options that the image runner uses.
  * @author Sam Twidale (http://samcodes.co.uk/)
  */
 class ImageRunnerOptions
