@@ -2,9 +2,13 @@
 
 #include <vector>
 
-#include "../bitmap/bitmap.h"
 #include "../bitmap/rgba.h"
-#include "scanline.h"
+
+namespace geometrize
+{
+class Bitmap;
+class Scanline;
+}
 
 namespace geometrize
 {
