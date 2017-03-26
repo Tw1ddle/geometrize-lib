@@ -167,7 +167,7 @@ geometrize::State hillClimb(
 {
     geometrize::State s(state);
     geometrize::State bestState(state);
-    float bestEnergy{bestState.calculateEnergy(target, current, buffer, lastScore)};
+    float bestEnergy{bestState.m_score};
 
     std::uint32_t age{0};
     while(age < maxAge) {
@@ -178,7 +178,6 @@ geometrize::State hillClimb(
         } else {
             bestEnergy = energy;
             bestState = s;
-            bestState.m_score = -1;
             age = -1;
         }
         age++;

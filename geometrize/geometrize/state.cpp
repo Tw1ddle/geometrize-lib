@@ -38,15 +38,14 @@ State::State(const geometrize::State& other) : m_shape{other.m_shape->clone()}, 
 
 float State::calculateEnergy(const geometrize::Bitmap& target, const geometrize::Bitmap& current, geometrize::Bitmap& buffer, const float lastScore)
 {
-    assert(m_score < 0);
-    m_score = geometrize::core::energy(m_shape->rasterize(), m_alpha, target, current, buffer, lastScore); // TODO m_score parameter looks wrong, should be model score?
+    assert(m_score < 0 && "Score was not reset");
+    m_score = geometrize::core::energy(m_shape->rasterize(), m_alpha, target, current, buffer, lastScore);
     return m_score;
 }
 
 geometrize::State State::mutate()
 {
     geometrize::State oldState(*this);
-    oldState.m_score = -1;
     m_shape->mutate();
     m_score = -1;
     return oldState;
