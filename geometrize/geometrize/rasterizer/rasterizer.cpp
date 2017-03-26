@@ -29,20 +29,19 @@ void drawLines(geometrize::Bitmap& image, const geometrize::rgba color, const st
     std::uint32_t sa{color.a};
     sa |= sa << 8;
 
-    const std::uint32_t ma{UINT16_MAX};
     const std::uint32_t m{UINT16_MAX};
+    const std::uint32_t aa{(m - sa) * 257U};
 
     for(const geometrize::Scanline& line : lines) {
         const std::int32_t y{line.y};
-        const std::uint32_t aa = (m - sa * ma / m) * 0x101;
 
         for(std::int32_t x = line.x1; x <= line.x2; x++) {
             const geometrize::rgba d{image.getPixel(x, y)};
 
-            const std::uint8_t r{static_cast<std::uint8_t>(((d.r * aa + sr * ma) / m) >> 8)};
-            const std::uint8_t g{static_cast<std::uint8_t>(((d.g * aa + sg * ma) / m) >> 8)};
-            const std::uint8_t b{static_cast<std::uint8_t>(((d.b * aa + sb * ma) / m) >> 8)};
-            const std::uint8_t a{static_cast<std::uint8_t>(((d.a * aa + sa * ma) / m) >> 8)};
+            const std::uint8_t r{static_cast<std::uint8_t>(((d.r * aa + sr * m) / m) >> 8)};
+            const std::uint8_t g{static_cast<std::uint8_t>(((d.g * aa + sg * m) / m) >> 8)};
+            const std::uint8_t b{static_cast<std::uint8_t>(((d.b * aa + sb * m) / m) >> 8)};
+            const std::uint8_t a{static_cast<std::uint8_t>(((d.a * aa + sa * m) / m) >> 8)};
 
             image.setPixel(x, y, geometrize::rgba{r, g, b, a});
         }
