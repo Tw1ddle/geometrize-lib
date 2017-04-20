@@ -116,9 +116,7 @@ std::string RotatedRectangle::getSvgShapeData() const
             s << " ";
         }
     }
-    s << "\" ";
-    s << SVG_STYLE_HOOK << " ";
-    s << "/>";
+    s << "\" " << SVG_STYLE_HOOK << "/>";
     return s.str();
 }
 
