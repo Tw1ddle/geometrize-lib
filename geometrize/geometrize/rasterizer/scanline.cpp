@@ -15,7 +15,7 @@ std::vector<geometrize::Scanline> Scanline::trim(std::vector<geometrize::Scanlin
     std::vector<geometrize::Scanline> trimmedScanlines;
 
     for(geometrize::Scanline& line : scanlines) {
-        if(line.y < 0 || line.y >= static_cast<std::int32_t>(h) || line.x1 >= static_cast<std::int32_t>(w)) {
+        if(line.y < 0 || line.y >= static_cast<std::int32_t>(h) || line.x1 >= static_cast<std::int32_t>(w) || line.x2 < 0) {
             continue;
         }
         line.x1 = geometrize::commonutil::clamp(line.x1, 0, static_cast<std::int32_t>(w) - 1);

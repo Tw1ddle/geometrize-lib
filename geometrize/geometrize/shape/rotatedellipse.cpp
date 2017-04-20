@@ -43,18 +43,15 @@ std::vector<geometrize::Scanline> RotatedEllipse::rasterize() const
 
     const std::uint32_t pointCount{20};
     std::vector<std::pair<std::int32_t, std::int32_t>> points;
-    const float rads{m_angle * 3.141f / 180.0f};
+    const float rads{m_angle * (3.141f / 180.0f)};
     const float c{cos(rads)};
     const float s{sin(rads)};
 
     for(std::uint32_t i = 0; i < pointCount; i++) {
         const float angle{((360.0f / pointCount) * i) * (3.141f / 180.0f)};
-        std::pair<std::int32_t, std::int32_t> point{std::make_pair(m_rx * 2 * cos(angle), m_ry * 2 * sin(angle))};
-
-        point.first = static_cast<std::int32_t>(point.first * c - point.second * s + m_x);
-        point.second = static_cast<std::int32_t>(point.first * s + point.second * c + m_y);
-
-        points.push_back(point);
+        const float crx{m_rx * cos(angle)};
+        const float cry{m_ry * sin(angle)};
+        points.push_back(std::make_pair(crx * c - cry * s + m_x, crx * s + cry * c + m_y));
     }
 
     return Scanline::trim(geometrize::scanlinesForPolygon(points), w, h);
@@ -80,7 +77,7 @@ void RotatedEllipse::mutate()
         }
         case 2:
         {
-            m_ry = commonutil::clamp(m_ry + commonutil::randomRange(-16, 16), 1, xBound - 1);
+            m_ry = commonutil::clamp(m_ry + commonutil::randomRange(-16, 16), 1, yBound - 1);
             break;
         }
         case 3:
@@ -104,15 +101,9 @@ std::vector<std::int32_t> RotatedEllipse::getRawShapeData() const
 std::string RotatedEllipse::getSvgShapeData() const
 {
     std::stringstream s;
-    s << "<ellipse "
-      << "cx=\"" << m_x << "\" "
-      << "cy=\"" << m_y << "\" "
-      << "rx=\"" << m_rx << "\" "
-      << "ry=\"" << m_ry << "\" "
-      << "transform=\"rotate(" << m_angle << ")" << "\" "
-      << SVG_STYLE_HOOK << " "
-      << "/>";
-
+    s << "<g transform=\"translate(" << m_x << " " << m_y << ") rotate(" << m_angle << ") scale(" << m_rx << " " << m_ry << ")\">"
+      << "<ellipse cx=\"" << 0 << "\" cy=\"" << 0 << "\" rx=\"" << 1 << "\" ry=\"" << 1 << "\" " << SVG_STYLE_HOOK << " />"
+      << "</g>";
     return s.str();
 }
 

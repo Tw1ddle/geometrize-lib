@@ -108,11 +108,7 @@ std::vector<std::int32_t> QuadraticBezier::getRawShapeData() const
 std::string QuadraticBezier::getSvgShapeData() const
 {
     std::stringstream s;
-
-    s << "<path d=\"M" << m_x1 << " " << m_y1 << " Q " << m_cx << " " << m_cy << " " << m_x2 << " " << m_y2 << "\" ";
-    s << SVG_STYLE_HOOK;
-    s << " />";
-
+    s << "<path d=\"M" << m_x1 << " " << m_y1 << " Q " << m_cx << " " << m_cy << " " << m_x2 << " " << m_y2 << "\" " << SVG_STYLE_HOOK << " />";
     return s.str();
 }
 

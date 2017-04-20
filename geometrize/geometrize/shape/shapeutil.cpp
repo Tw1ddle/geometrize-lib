@@ -56,7 +56,6 @@ std::vector<std::pair<std::int32_t, std::int32_t>> bresenham(std::int32_t x1, st
     return points;
 }
 
-
 std::vector<geometrize::Scanline> scanlinesForPolygon(const std::vector<std::pair<std::int32_t, std::int32_t>>& points)
 {
     std::vector<geometrize::Scanline> lines;

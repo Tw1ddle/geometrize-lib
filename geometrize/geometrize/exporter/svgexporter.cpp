@@ -99,7 +99,7 @@ std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const st
         stream << shapeData << "\n";
     }
 
-    stream << "</svg>" << "\n";
+    stream << "</svg>";
 
     return stream.str();
 }

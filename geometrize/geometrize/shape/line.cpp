@@ -86,14 +86,7 @@ std::vector<std::int32_t> Line::getRawShapeData() const
 std::string Line::getSvgShapeData() const
 {
     std::stringstream s;
-    s << "<line "
-      << "x1=\"" << m_x1 << "\" "
-      << "y1=\"" << m_y1 << "\" "
-      << "x2=\"" << m_x2 << "\" "
-      << "y2=\"" << m_y2 << "\" "
-      << SVG_STYLE_HOOK << " "
-      << "/>";
-
+    s << "<line x1=\"" << m_x1 << "\" y1=\"" << m_y1 << "\" x2=\"" << m_x2 << "\" y2=\"" << m_y2 << "\" " << SVG_STYLE_HOOK << " />";
     return s.str();
 }
 

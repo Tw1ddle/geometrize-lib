@@ -90,13 +90,7 @@ std::vector<std::int32_t> Circle::getRawShapeData() const
 std::string Circle::getSvgShapeData() const
 {
     std::stringstream s;
-    s << "<circle "
-      << "cx=\"" << m_x << "\" "
-      << "cy=\"" << m_y << "\" "
-      << "r=\"" << m_r << "\" "
-      << SVG_STYLE_HOOK << " "
-      << "/>";
-
+    s << "<circle cx=\"" << m_x << "\" cy=\"" << m_y << "\" r=\"" << m_r << "\" " << SVG_STYLE_HOOK << " />";
     return s.str();
 }
 

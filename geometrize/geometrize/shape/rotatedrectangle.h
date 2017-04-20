@@ -36,6 +36,8 @@ public:
 private:
     const geometrize::Model& m_model; ///< The model that produces the shape.
 
+    std::vector<std::pair<std::int32_t, std::int32_t>> getCornerPoints() const;
+
     std::int32_t m_x1; ///< Left coordinate.
     std::int32_t m_y1; ///< Top coordinate.
     std::int32_t m_x2; ///< Right coordinate.
