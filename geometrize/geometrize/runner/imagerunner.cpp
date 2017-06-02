@@ -38,6 +38,11 @@ public:
         return m_model.getTarget();
     }
 
+    geometrize::Model& getModel()
+    {
+        return m_model;
+    }
+
 private:
     geometrize::Model m_model; ///< The model for the primitive optimization/fitting algorithm.
 };
@@ -66,6 +71,11 @@ geometrize::Bitmap& ImageRunner::getCurrent()
 geometrize::Bitmap& ImageRunner::getTarget()
 {
     return d->getTarget();
+}
+
+geometrize::Model& ImageRunner::getModel()
+{
+    return d->getModel();
 }
 
 }

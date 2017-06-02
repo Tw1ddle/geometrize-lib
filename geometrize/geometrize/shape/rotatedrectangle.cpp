@@ -15,14 +15,7 @@ namespace geometrize
 
 RotatedRectangle::RotatedRectangle(const geometrize::Model& model) : m_model{model}
 {
-    const std::int32_t xBound{m_model.getWidth()};
-    const std::int32_t yBound{m_model.getHeight()};
-
-    m_x1 = commonutil::randomRange(0, xBound - 1);
-    m_y1 = commonutil::randomRange(0, yBound - 1);
-    m_x2 = commonutil::clamp(m_x1 + commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1), 0, xBound);
-    m_y2 = commonutil::clamp(m_y1 + commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1), 0, yBound);
-    m_angle = commonutil::randomRange(0, 360);
+    m_model.setupShape(*this);
 }
 
 std::shared_ptr<geometrize::Shape> RotatedRectangle::clone() const
@@ -43,29 +36,7 @@ std::vector<geometrize::Scanline> RotatedRectangle::rasterize() const
 
 void RotatedRectangle::mutate()
 {
-    const std::int32_t xBound{m_model.getWidth()};
-    const std::int32_t yBound{m_model.getHeight()};
-
-    const std::int32_t r{commonutil::randomRange(0, 2)};
-    switch(r) {
-        case 0:
-        {
-            m_x1 = commonutil::clamp(m_x1 + commonutil::randomRange(-16, 16), 0, xBound);
-            m_y1 = commonutil::clamp(m_y1 + commonutil::randomRange(-16, 16), 0, yBound);
-            break;
-        }
-        case 1:
-        {
-            m_x2 = commonutil::clamp(m_x2 + commonutil::randomRange(-16, 16), 0, xBound);
-            m_y2 = commonutil::clamp(m_y2 + commonutil::randomRange(-16, 16), 0, yBound);
-            break;
-        }
-        case 2:
-        {
-            m_angle = commonutil::clamp(m_angle + commonutil::randomRange(-4, 4), 0, 360);
-            break;
-        }
-    }
+    m_model.mutateShape(*this);
 }
 
 std::vector<std::pair<std::int32_t, std::int32_t>> RotatedRectangle::getCornerPoints() const

@@ -14,15 +14,7 @@ namespace geometrize
 
 Line::Line(const geometrize::Model& model) : m_model{model}
 {
-    const std::int32_t xBound{m_model.getWidth()};
-    const std::int32_t yBound{m_model.getHeight()};
-
-    const std::pair<std::int32_t, std::int32_t> startingPoint{std::make_pair(commonutil::randomRange(0, xBound), commonutil::randomRange(0, yBound - 1))};
-
-    m_x1 = commonutil::clamp(startingPoint.first + commonutil::randomRange(-32, 32), 0, xBound - 1);
-    m_y1 = commonutil::clamp(startingPoint.second + commonutil::randomRange(-32, 32), 0, yBound - 1);
-    m_x2 = commonutil::clamp(startingPoint.first + commonutil::randomRange(-32, 32), 0, xBound - 1);
-    m_y2 = commonutil::clamp(startingPoint.second + commonutil::randomRange(-32, 32), 0, yBound - 1);
+    m_model.setupShape(*this);
 }
 
 std::shared_ptr<geometrize::Shape> Line::clone() const
@@ -52,25 +44,7 @@ std::vector<geometrize::Scanline> Line::rasterize() const
 
 void Line::mutate()
 {
-    const std::int32_t xBound{m_model.getWidth()};
-    const std::int32_t yBound{m_model.getHeight()};
-
-    const std::int32_t r{commonutil::randomRange(0, 1)};
-
-    switch(r) {
-        case 0:
-        {
-            m_x1 = commonutil::clamp(m_x1 + commonutil::randomRange(-16, 16), 0, xBound - 1);
-            m_y1 = commonutil::clamp(m_y1 + commonutil::randomRange(-16, 16), 0, yBound - 1);
-            break;
-        }
-        case 1:
-        {
-            m_x2 = commonutil::clamp(m_x2 + commonutil::randomRange(-16, 16), 0, xBound - 1);
-            m_y2 = commonutil::clamp(m_y2 + commonutil::randomRange(-16, 16), 0, yBound - 1);
-            break;
-        }
-    }
+    m_model.mutateShape(*this);
 }
 
 geometrize::ShapeTypes Line::getType() const

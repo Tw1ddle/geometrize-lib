@@ -9,12 +9,13 @@
 #include <vector>
 
 #include "bitmap/bitmap.h"
+#include "commonutil.h"
 #include "core.h"
 #include "rasterizer/rasterizer.h"
 #include "shape/shape.h"
 #include "shaperesult.h"
+#include "shape/shapemutator.h"
 #include "shape/shapetypes.h"
-#include "commonutil.h"
 
 namespace geometrize
 {
@@ -104,9 +105,7 @@ public:
             return a.m_score < b.m_score;
         });
 
-        std::vector<geometrize::ShapeResult> results;
-        results.push_back(drawShape((*it).m_shape, alpha));
-
+        const std::vector<geometrize::ShapeResult> results{drawShape((*it).m_shape, alpha)};
         return results;
     }
 
@@ -121,7 +120,7 @@ public:
 
         m_lastScore = geometrize::core::differencePartial(m_target, before, m_current, m_lastScore, lines);
 
-        geometrize::ShapeResult result{m_lastScore, color, shape};
+        const geometrize::ShapeResult result{m_lastScore, color, shape};
         return result;
     }
 
@@ -157,6 +156,11 @@ public:
         m_baseRandomSeed = seed;
     }
 
+    const geometrize::ShapeMutator& getShapeMutator() const
+    {
+        return m_shapeMutator;
+    }
+
 private:
     geometrize::Model* q;
     geometrize::Bitmap m_target; ///< The target bitmap, the bitmap we aim to approximate.
@@ -165,6 +169,7 @@ private:
     std::uint32_t m_maxThreads; ///< The maximum number of threads the model will use when stepping.
     std::atomic_uint32_t m_baseRandomSeed; ///< The base value used for seeding the random number generator (the one the user has control over).
     std::atomic_uint32_t m_randomSeedOffset; ///< Seed used for random number generation. Note: incremented by each std::async call used for model stepping.
+    geometrize::ShapeMutator m_shapeMutator; ///< The object responsible for setting up and mutating shapes created by this model.
 };
 
 Model::Model(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) : d{std::make_unique<Model::ModelImpl>(this, target, backgroundColor)}
@@ -223,6 +228,11 @@ void Model::setMaxThreads(const std::uint32_t threadCount)
 void Model::setSeed(const std::uint32_t seed)
 {
     d->setSeed(seed);
+}
+
+const geometrize::ShapeMutator& Model::getShapeMutator() const
+{
+    return d->getShapeMutator();
 }
 
 }

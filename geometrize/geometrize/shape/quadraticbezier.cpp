@@ -15,15 +15,7 @@ namespace geometrize
 
 QuadraticBezier::QuadraticBezier(const geometrize::Model& model) : m_model{model}
 {
-    const std::int32_t xBound{m_model.getWidth()};
-    const std::int32_t yBound{m_model.getHeight()};
-
-    m_x1 = commonutil::randomRange(0, commonutil::randomRange(0, xBound - 1));
-    m_y1 = commonutil::randomRange(0, commonutil::randomRange(0, yBound - 1));
-    m_cx = commonutil::randomRange(0, commonutil::randomRange(0, xBound - 1));
-    m_cy = commonutil::randomRange(0, commonutil::randomRange(0, yBound - 1));
-    m_x2 = commonutil::randomRange(0, commonutil::randomRange(0, xBound - 1));
-    m_y2 = commonutil::randomRange(0, commonutil::randomRange(0, yBound - 1));
+    m_model.setupShape(*this);
 }
 
 std::shared_ptr<geometrize::Shape> QuadraticBezier::clone() const
@@ -69,30 +61,7 @@ std::vector<geometrize::Scanline> QuadraticBezier::rasterize() const
 
 void QuadraticBezier::mutate()
 {
-    const std::int32_t xBound{m_model.getWidth()};
-    const std::int32_t yBound{m_model.getHeight()};
-
-    const std::int32_t r{commonutil::randomRange(0, 2)};
-    switch(r) {
-        case 0:
-        {
-            m_cx = commonutil::clamp(m_cx + commonutil::randomRange(-8, 8), 0, xBound - 1);
-            m_cy = commonutil::clamp(m_cy + commonutil::randomRange(-8, 8), 0, yBound - 1);
-            break;
-        }
-        case 1:
-        {
-            m_x1 = commonutil::clamp(m_x1 + commonutil::randomRange(-8, 8), 1, xBound - 1);
-            m_y1 = commonutil::clamp(m_y1 + commonutil::randomRange(-8, 8), 1, yBound - 1);
-            break;
-        }
-        case 2:
-        {
-            m_x2 = commonutil::clamp(m_x2 + commonutil::randomRange(-8, 8), 1, xBound - 1);
-            m_y2 = commonutil::clamp(m_y2 + commonutil::randomRange(-8, 8), 1, yBound - 1);
-            break;
-        }
-    }
+    m_model.mutateShape(*this);
 }
 
 geometrize::ShapeTypes QuadraticBezier::getType() const

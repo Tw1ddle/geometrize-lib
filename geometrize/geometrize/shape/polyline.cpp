@@ -14,17 +14,7 @@ namespace geometrize
 
 Polyline::Polyline(const geometrize::Model& model) : m_model{model}
 {
-    const std::int32_t xBound{m_model.getWidth()};
-    const std::int32_t yBound{m_model.getHeight()};
-
-    const std::pair<std::int32_t, std::int32_t> startingPoint{std::make_pair(commonutil::randomRange(0, xBound), commonutil::randomRange(0, yBound - 1))};
-    for(std::int32_t i = 0; i < 4; i++) {
-        const std::pair<std::int32_t, std::int32_t> point{
-            commonutil::clamp(startingPoint.first + commonutil::randomRange(-32, 32), 0, xBound - 1),
-            commonutil::clamp(startingPoint.second + commonutil::randomRange(-32, 32), 0, yBound - 1)
-        };
-        m_points.push_back(point);
-    }
+    m_model.setupShape(*this);
 }
 
 std::shared_ptr<geometrize::Shape> Polyline::clone() const
@@ -56,15 +46,7 @@ std::vector<geometrize::Scanline> Polyline::rasterize() const
 
 void Polyline::mutate()
 {
-    const std::int32_t xBound{m_model.getWidth()};
-    const std::int32_t yBound{m_model.getHeight()};
-    const std::int32_t i{commonutil::randomRange(static_cast<std::size_t>(0), m_points.size() - 1)};
-
-    std::pair<std::int32_t, std::int32_t> point{m_points[i]};
-    point.first = commonutil::clamp(point.first + commonutil::randomRange(-64, 64), 0, xBound - 1);
-    point.second = commonutil::clamp(point.second + commonutil::randomRange(-64, 64), 0, yBound - 1);
-
-    m_points[i] = point;
+    m_model.mutateShape(*this);
 }
 
 geometrize::ShapeTypes Polyline::getType() const

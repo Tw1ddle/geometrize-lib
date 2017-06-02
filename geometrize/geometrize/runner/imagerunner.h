@@ -9,6 +9,7 @@ namespace geometrize
 {
 class Bitmap;
 class ImageRunnerOptions;
+class Model;
 }
 
 namespace geometrize
@@ -56,6 +57,12 @@ public:
      * @return The target bitmap.
      */
     geometrize::Bitmap& getTarget();
+
+    /**
+     * @brief getModel Gets the underlying model.
+     * @return The model.
+     */
+    geometrize::Model& getModel();
 
 private:
     class ImageRunnerImpl;

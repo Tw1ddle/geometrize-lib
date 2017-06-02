@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "shaperesult.h"
+#include "shape/shapemutator.h"
 #include "shape/shapetypes.h"
 
 namespace geometrize
@@ -112,6 +113,52 @@ public:
      * @param seed The random number generator seed.
      */
     void setSeed(std::uint32_t seed);
+
+    /**
+     * @brief getShapeMutator Gets the object the model uses for setting up/mutating shapes.
+     * @return The shape mutator.
+     */
+    const geometrize::ShapeMutator& getShapeMutator() const;
+
+    /**
+     * @brief setupShape Performs the initial setup on a shape.
+     * @param shape The shape to set up.
+     */
+    template<typename T>
+    void setupShape(T& shape) const
+    {
+        getShapeMutator().setup(shape);
+    }
+
+    /**
+     * @brief mutateShape Mutates the given shape.
+     * @param shape The shape to mutate.
+     */
+    template<typename T>
+    void mutateShape(T& shape) const
+    {
+        getShapeMutator().mutate(shape);
+    }
+
+    /**
+     * @brief setShapeSetupFunction Sets the setup function for the type of shape passed as a parameter in the passed function.
+     * @param func The shape setup function to use for the type of shape this function accepts.
+     */
+    template<typename T>
+    void setShapeSetupFunction(const T& func)
+    {
+        getShapeMutator().setMutatorFunction(func);
+    }
+
+    /**
+     * @brief setShapeMutatorFunction Sets the mutation function for the type of shape passed as a parameter in the passed function.
+     * @param func The shape mutation function to use for the type of shape this function accepts.
+     */
+    template<typename T>
+    void setShapeMutatorFunction(const T& func)
+    {
+        getShapeMutator().setMutatorFunction(func);
+    }
 
 private:
     class ModelImpl;

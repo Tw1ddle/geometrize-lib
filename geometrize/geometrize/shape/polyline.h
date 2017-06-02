@@ -33,7 +33,6 @@ public:
     virtual std::vector<std::int32_t> getRawShapeData() const override;
     virtual std::string getSvgShapeData() const override;
 
-private:
     const geometrize::Model& m_model; ///< The model that produces the shape.
 
     std::vector<std::pair<std::int32_t, std::int32_t>> m_points; ///< The points on the polyline.

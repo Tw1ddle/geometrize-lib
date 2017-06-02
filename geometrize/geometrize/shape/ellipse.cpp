@@ -13,13 +13,7 @@ namespace geometrize
 
 Ellipse::Ellipse(const geometrize::Model& model) : m_model{model}
 {
-    const std::int32_t xBound{m_model.getWidth()};
-    const std::int32_t yBound{m_model.getHeight()};
-
-    m_x = commonutil::randomRange(0, xBound - 1);
-    m_y = commonutil::randomRange(0, yBound - 1);
-    m_rx = commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1);
-    m_ry = commonutil::randomRange(0, commonutil::randomRange(0, 32) + 1);
+    m_model.setupShape(*this);
 }
 
 std::shared_ptr<geometrize::Shape> Ellipse::clone() const
@@ -72,28 +66,7 @@ std::vector<geometrize::Scanline> Ellipse::rasterize() const
 
 void Ellipse::mutate()
 {
-    const std::int32_t xBound{m_model.getWidth()};
-    const std::int32_t yBound{m_model.getHeight()};
-
-    const std::int32_t r{commonutil::randomRange(0, 2)};
-    switch(r) {
-        case 0:
-        {
-            m_x = commonutil::clamp(m_x + commonutil::randomRange(-16, 16), 0, xBound - 1);
-            m_y = commonutil::clamp(m_y + commonutil::randomRange(-16, 16), 0, yBound - 1);
-            break;
-        }
-        case 1:
-        {
-            m_rx = commonutil::clamp(m_rx + commonutil::randomRange(-16, 16), 1, xBound - 1);
-            break;
-        }
-        case 2:
-        {
-            m_ry = commonutil::clamp(m_ry + commonutil::randomRange(-16, 16), 1, xBound - 1);
-            break;
-        }
-    }
+    m_model.mutateShape(*this);
 }
 
 geometrize::ShapeTypes Ellipse::getType() const
