@@ -161,6 +161,11 @@ public:
         return m_shapeMutator;
     }
 
+    geometrize::ShapeMutator& getShapeMutator()
+    {
+        return m_shapeMutator;
+    }
+
 private:
     geometrize::Model* q;
     geometrize::Bitmap m_target; ///< The target bitmap, the bitmap we aim to approximate.
@@ -231,6 +236,11 @@ void Model::setSeed(const std::uint32_t seed)
 }
 
 const geometrize::ShapeMutator& Model::getShapeMutator() const
+{
+    return d->getShapeMutator();
+}
+
+geometrize::ShapeMutator& Model::getShapeMutator()
 {
     return d->getShapeMutator();
 }

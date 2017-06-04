@@ -121,6 +121,12 @@ public:
     const geometrize::ShapeMutator& getShapeMutator() const;
 
     /**
+     * @brief getShapeMutator Gets the object the model uses for setting up/mutating shapes.
+     * @return The shape mutator.
+     */
+    geometrize::ShapeMutator& getShapeMutator();
+
+    /**
      * @brief setupShape Performs the initial setup on a shape.
      * @param shape The shape to set up.
      */
