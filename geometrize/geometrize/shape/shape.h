@@ -9,15 +9,20 @@
 
 namespace geometrize
 {
+class Model;
+}
+
+namespace geometrize
+{
 
 /**
- * Interface for shape rasterization and manipulation.
+ * Base class for shape rasterization and manipulation.
  * @author Sam Twidale (http://samcodes.co.uk/)
  */
 class Shape
 {
 public:
-    Shape() = default;
+    Shape(const geometrize::Model& model);
      ~Shape() = default;
     Shape& operator=(const geometrize::Shape& other) = default;
     Shape(const geometrize::Shape& other) = default;
@@ -63,6 +68,14 @@ public:
      * Note that shape subclasses should include this in shape data - so an SVG exporter implementation must remove/replace this hook string to produce correct SVG files.
      */
     static const std::string SVG_STYLE_HOOK;
+
+    /**
+     * @brief getModel Gets the model that created this shape.
+     * @return The model.
+     */
+    const Model& getModel();
+
+    const geometrize::Model& m_model; ///< The model that creates, sets up and mutates shapes
 };
 
 }

@@ -12,7 +12,7 @@
 namespace geometrize
 {
 
-Line::Line(const geometrize::Model& model) : m_model{model}
+Line::Line(const geometrize::Model& model) : Shape{model}
 {
     m_model.setupShape(*this);
 }

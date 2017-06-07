@@ -24,7 +24,8 @@ namespace commonutil
 void seedRandomGenerator(std::uint32_t seed);
 
 /**
- * @brief randomRange Returns a random integer in the range, inclusive.
+ * @brief randomRange Returns a random integer in the range, inclusive. Uses thread-local random number generators under the hood.
+ * To ensure deterministic shape generation that can be repeated for different seeds, this should be used for shape mutation, but nothing else.
  * @param min The lower bound.
  * @param max The upper bound.
  * @return The random integer in the range.

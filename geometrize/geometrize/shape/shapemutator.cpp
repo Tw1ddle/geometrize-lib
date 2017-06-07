@@ -23,7 +23,7 @@ void setupCircle(geometrize::Circle& shape)
 
     shape.m_x = geometrize::commonutil::randomRange(0, xBound - 1);
     shape.m_y = geometrize::commonutil::randomRange(0, yBound - 1);
-    shape.m_r = geometrize::commonutil::randomRange(0, geometrize::commonutil::randomRange(0, 32) + 1);
+    shape.m_r = geometrize::commonutil::randomRange(1, 32);
 }
 
 void setupEllipse(geometrize::Ellipse& shape)
@@ -33,8 +33,8 @@ void setupEllipse(geometrize::Ellipse& shape)
 
     shape.m_x = geometrize::commonutil::randomRange(0, xBound - 1);
     shape.m_y = geometrize::commonutil::randomRange(0, yBound - 1);
-    shape.m_rx = geometrize::commonutil::randomRange(0, geometrize::commonutil::randomRange(0, 32) + 1);
-    shape.m_ry = geometrize::commonutil::randomRange(0, geometrize::commonutil::randomRange(0, 32) + 1);
+    shape.m_rx = geometrize::commonutil::randomRange(1, 32);
+    shape.m_ry = geometrize::commonutil::randomRange(1, 32);
 }
 
 void setupLine(geometrize::Line& shape)
@@ -70,12 +70,12 @@ void setupQuadraticBezier(geometrize::QuadraticBezier& shape)
     const std::int32_t xBound{shape.m_model.getWidth()};
     const std::int32_t yBound{shape.m_model.getHeight()};
 
-    shape.m_x1 = geometrize::commonutil::randomRange(0, geometrize::commonutil::randomRange(0, xBound - 1));
-    shape.m_y1 = geometrize::commonutil::randomRange(0, geometrize::commonutil::randomRange(0, yBound - 1));
-    shape.m_cx = geometrize::commonutil::randomRange(0, geometrize::commonutil::randomRange(0, xBound - 1));
-    shape.m_cy = geometrize::commonutil::randomRange(0, geometrize::commonutil::randomRange(0, yBound - 1));
-    shape.m_x2 = geometrize::commonutil::randomRange(0, geometrize::commonutil::randomRange(0, xBound - 1));
-    shape.m_y2 = geometrize::commonutil::randomRange(0, geometrize::commonutil::randomRange(0, yBound - 1));
+    shape.m_x1 = geometrize::commonutil::randomRange(0, xBound - 1);
+    shape.m_y1 = geometrize::commonutil::randomRange(0, yBound - 1);
+    shape.m_cx = geometrize::commonutil::randomRange(0, xBound - 1);
+    shape.m_cy = geometrize::commonutil::randomRange(0, yBound - 1);
+    shape.m_x2 = geometrize::commonutil::randomRange(0, xBound - 1);
+    shape.m_y2 = geometrize::commonutil::randomRange(0, yBound - 1);
 }
 
 void setupRectangle(geometrize::Rectangle& shape)
@@ -85,8 +85,8 @@ void setupRectangle(geometrize::Rectangle& shape)
 
     shape.m_x1 = geometrize::commonutil::randomRange(0, xBound - 1);
     shape.m_y1 = geometrize::commonutil::randomRange(0, yBound - 1);
-    shape.m_x2 = geometrize::commonutil::clamp(shape.m_x1 + geometrize::commonutil::randomRange(0, geometrize::commonutil::randomRange(0, 32) + 1), 0, xBound - 1);
-    shape.m_y2 = geometrize::commonutil::clamp(shape.m_y1 + geometrize::commonutil::randomRange(0, geometrize::commonutil::randomRange(0, 32) + 1), 0, yBound - 1);
+    shape.m_x2 = geometrize::commonutil::clamp(shape.m_x1 + geometrize::commonutil::randomRange(1, 32), 0, xBound - 1);
+    shape.m_y2 = geometrize::commonutil::clamp(shape.m_y1 + geometrize::commonutil::randomRange(1, 32), 0, yBound - 1);
 }
 
 void setupRotatedEllipse(geometrize::RotatedEllipse& shape)
@@ -96,8 +96,8 @@ void setupRotatedEllipse(geometrize::RotatedEllipse& shape)
 
     shape.m_x = geometrize::commonutil::randomRange(0, xBound - 1);
     shape.m_y = geometrize::commonutil::randomRange(0, yBound - 1);
-    shape.m_rx = geometrize::commonutil::randomRange(0, geometrize::commonutil::randomRange(0, 32) + 1);
-    shape.m_ry = geometrize::commonutil::randomRange(0, geometrize::commonutil::randomRange(0, 32) + 1);
+    shape.m_rx = geometrize::commonutil::randomRange(1, 32);
+    shape.m_ry = geometrize::commonutil::randomRange(1, 32);
     shape.m_angle = geometrize::commonutil::randomRange(0, 360);
 }
 
@@ -108,8 +108,8 @@ void setupRotatedRectangle(geometrize::RotatedRectangle& shape)
 
     shape.m_x1 = geometrize::commonutil::randomRange(0, xBound - 1);
     shape.m_y1 = geometrize::commonutil::randomRange(0, yBound - 1);
-    shape.m_x2 = geometrize::commonutil::clamp(shape.m_x1 + geometrize::commonutil::randomRange(0, geometrize::commonutil::randomRange(0, 32) + 1), 0, xBound);
-    shape.m_y2 = geometrize::commonutil::clamp(shape.m_y1 + geometrize::commonutil::randomRange(0, geometrize::commonutil::randomRange(0, 32) + 1), 0, yBound);
+    shape.m_x2 = geometrize::commonutil::clamp(shape.m_x1 + geometrize::commonutil::randomRange(1, 32), 0, xBound);
+    shape.m_y2 = geometrize::commonutil::clamp(shape.m_y1 + geometrize::commonutil::randomRange(1, 32), 0, yBound);
     shape.m_angle = geometrize::commonutil::randomRange(0, 360);
 }
 
@@ -167,7 +167,7 @@ void mutateEllipse(geometrize::Ellipse& shape)
         }
         case 2:
         {
-            shape.m_ry = geometrize::commonutil::clamp(shape.m_ry + geometrize::commonutil::randomRange(-16, 16), 1, xBound - 1);
+            shape.m_ry = geometrize::commonutil::clamp(shape.m_ry + geometrize::commonutil::randomRange(-16, 16), 1, yBound - 1);
             break;
         }
     }

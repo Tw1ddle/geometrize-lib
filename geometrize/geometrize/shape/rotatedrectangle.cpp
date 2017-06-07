@@ -13,7 +13,7 @@
 namespace geometrize
 {
 
-RotatedRectangle::RotatedRectangle(const geometrize::Model& model) : m_model{model}
+RotatedRectangle::RotatedRectangle(const geometrize::Model& model) : Shape{model}
 {
     m_model.setupShape(*this);
 }

@@ -11,7 +11,7 @@
 namespace geometrize
 {
 
-Circle::Circle(const geometrize::Model& model) : m_model{model}
+Circle::Circle(const geometrize::Model& model) : Shape{model}
 {
     m_model.setupShape(*this);
 }

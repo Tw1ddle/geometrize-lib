@@ -101,6 +101,11 @@ public:
             const std::uint32_t maxShapeMutations)
     {
         std::vector<geometrize::State> states{getHillClimbState(shapeTypes, alpha, shapeCount, maxShapeMutations)};
+        if(states.empty()) {
+            assert(0 && "Failed to get a hill climb state");
+            return {};
+        }
+
         std::vector<geometrize::State>::iterator it = std::min_element(states.begin(), states.end(), [](const geometrize::State& a, const geometrize::State& b) {
             return a.m_score < b.m_score;
         });

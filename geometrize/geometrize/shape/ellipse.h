@@ -33,8 +33,6 @@ public:
     virtual std::vector<std::int32_t> getRawShapeData() const override;
     virtual std::string getSvgShapeData() const override;
 
-    const geometrize::Model& m_model; ///< The model that produces the shape.
-
     std::int32_t m_x; ///< x-coordinate.
     std::int32_t m_y; ///< y-coordinate.
     std::int32_t m_rx; ///< x-radius.

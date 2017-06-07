@@ -13,7 +13,7 @@
 namespace geometrize
 {
 
-RotatedEllipse::RotatedEllipse(const geometrize::Model& model) : m_model{model}
+RotatedEllipse::RotatedEllipse(const geometrize::Model& model) : Shape{model}
 {
     m_model.setupShape(*this);
 }
