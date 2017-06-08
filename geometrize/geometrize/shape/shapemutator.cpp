@@ -347,6 +347,11 @@ void mutateTriangle(geometrize::Triangle& shape)
 
 ShapeMutator::ShapeMutator()
 {
+    setDefaults();
+}
+
+void ShapeMutator::setDefaults()
+{
     m_setupCircle = setupCircle;
     m_setupEllipse = setupEllipse;
     m_setupLine = setupLine;

@@ -52,6 +52,11 @@ public:
     ShapeMutator& operator=(const ShapeMutator&) = delete;
     ShapeMutator(const ShapeMutator&) = delete;
 
+    /**
+     * @brief setDefaults Sets all of the setup and mutation function handles to the default implementations.
+     */
+    void setDefaults();
+
     void setup(geometrize::Circle& shape) const;
     void mutate(geometrize::Circle& shape) const;
     void setSetupFunction(const std::function<void(geometrize::Circle&)>& f);
