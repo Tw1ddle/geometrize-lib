@@ -28,7 +28,6 @@ public:
         m_target{target},
         m_current{target.getWidth(), target.getHeight(), backgroundColor},
         m_lastScore{geometrize::core::differenceFull(m_target, m_current)},
-        m_maxThreads{std::max(1U, std::thread::hardware_concurrency())},
         m_baseRandomSeed{0U},
         m_randomSeedOffset{0U}
     {}
@@ -38,7 +37,6 @@ public:
         m_target{target},
         m_current{initial},
         m_lastScore{geometrize::core::differenceFull(m_target, m_current)},
-        m_maxThreads{std::max(1U, std::thread::hardware_concurrency())},
         m_baseRandomSeed{0U},
         m_randomSeedOffset{0U}
     {
@@ -70,15 +68,25 @@ public:
             const geometrize::ShapeTypes shapeTypes,
             const std::uint8_t alpha,
             const std::uint32_t shapeCount,
-            const std::uint32_t maxShapeMutations)
+            const std::uint32_t maxShapeMutations,
+            std::uint32_t maxThreads)
     {
+        // Ensure that a sane value is given for the maximum number of threads
+        if(maxThreads == 0) {
+            maxThreads = std::thread::hardware_concurrency();
+            if(maxThreads == 0) {
+                assert(0 && "Failed to get the number of concurrent threads supported by the implementation");
+                maxThreads = 4;
+            }
+        }
+
         std::vector<std::future<geometrize::State>> futures;
 
-        for(std::uint32_t i = 0; i < m_maxThreads; i++) {
+        for(std::uint32_t i = 0; i < maxThreads; i++) {
             std::future<geometrize::State> handle{std::async(std::launch::async, [&](const std::uint32_t seed, const float lastScore) {
                 // Ensures that the results of the random generation are the same between jobs with identical settings
                 // The RNG is thread-local and std::async may use a thread pool (which is why this is necessary)
-                // Note this implementation requires m_maxThreads to be the same between jobs for each job to produce the same results.
+                // Note this implementation requires maxThreads to be the same between jobs for each job to produce the same results.
                 geometrize::commonutil::seedRandomGenerator(seed);
 
                 geometrize::Bitmap buffer{m_current};
@@ -98,9 +106,10 @@ public:
             const geometrize::ShapeTypes shapeTypes,
             const std::uint8_t alpha,
             const std::uint32_t shapeCount,
-            const std::uint32_t maxShapeMutations)
+            const std::uint32_t maxShapeMutations,
+            const std::uint32_t maxThreads)
     {
-        std::vector<geometrize::State> states{getHillClimbState(shapeTypes, alpha, shapeCount, maxShapeMutations)};
+        std::vector<geometrize::State> states{getHillClimbState(shapeTypes, alpha, shapeCount, maxShapeMutations, maxThreads)};
         if(states.empty()) {
             assert(0 && "Failed to get a hill climb state");
             return {};
@@ -151,11 +160,6 @@ public:
         return m_current;
     }
 
-    void setMaxThreads(const std::uint32_t threadCount)
-    {
-        m_maxThreads = threadCount;
-    }
-
     void setSeed(const std::uint32_t seed)
     {
         m_baseRandomSeed = seed;
@@ -176,7 +180,6 @@ private:
     geometrize::Bitmap m_target; ///< The target bitmap, the bitmap we aim to approximate.
     geometrize::Bitmap m_current; ///< The current bitmap.
     float m_lastScore; ///< Score derived from calculating the difference between bitmaps.
-    std::uint32_t m_maxThreads; ///< The maximum number of threads the model will use when stepping.
     std::atomic_uint32_t m_baseRandomSeed; ///< The base value used for seeding the random number generator (the one the user has control over).
     std::atomic_uint32_t m_randomSeedOffset; ///< Seed used for random number generation. Note: incremented by each std::async call used for model stepping.
     geometrize::ShapeMutator m_shapeMutator; ///< The object responsible for setting up and mutating shapes created by this model.
@@ -210,9 +213,10 @@ std::vector<geometrize::ShapeResult> Model::step(
         const geometrize::ShapeTypes shapeTypes,
         const std::uint8_t alpha,
         const std::uint32_t shapeCount,
-        const std::uint32_t maxShapeMutations)
+        const std::uint32_t maxShapeMutations,
+        const std::uint32_t maxThreads)
 {
-    return d->step(shapeTypes, alpha, shapeCount, maxShapeMutations);
+    return d->step(shapeTypes, alpha, shapeCount, maxShapeMutations, maxThreads);
 }
 
 geometrize::ShapeResult Model::drawShape(const std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)
@@ -228,11 +232,6 @@ geometrize::Bitmap& Model::getTarget()
 geometrize::Bitmap& Model::getCurrent()
 {
     return d->getCurrent();
-}
-
-void Model::setMaxThreads(const std::uint32_t threadCount)
-{
-    d->setMaxThreads(threadCount);
 }
 
 void Model::setSeed(const std::uint32_t seed)

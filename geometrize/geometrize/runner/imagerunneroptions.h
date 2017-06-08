@@ -19,6 +19,7 @@ public:
     std::uint32_t shapeCount = 50U; ///< The number of candidate shapes that will be tried per model step.
     std::uint32_t maxShapeMutations = 100U; ///< The maximum number of times each candidate shape will be modified to attempt to find a better fit.
     std::uint32_t seed = 0U; ///< The seed for the random number generators used by the image runner.
+    std::uint32_t maxThreads = 0; ///< The maximum number of separate threads for the implementation to use. 0 lets the implementation choose a reasonable number.
 };
 
 }

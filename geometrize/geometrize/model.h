@@ -66,13 +66,15 @@ public:
      * @param alpha The alpha of the shape.
      * @param shapeCount The number of random shapes to generate (only 1 is chosen in the end).
      * @param maxShapeMutations The maximum number of times to mutate each random shape.
+     * @param maxThreads The maximum number of threads to use during this step.
      * @return A vector containing data about the shapes added to the model in this step.
      */
     std::vector<geometrize::ShapeResult> step(
             geometrize::ShapeTypes shapeTypes,
             std::uint8_t alpha,
             std::uint32_t shapeCount,
-            std::uint32_t maxShapeMutations);
+            std::uint32_t maxShapeMutations,
+            std::uint32_t maxThreads);
 
     /**
      * @brief drawShape Draws a shape on the model. The appropriate color to use is determined by the model.
@@ -101,12 +103,6 @@ public:
      * @return The target bitmap.
      */
     geometrize::Bitmap& getTarget();
-
-    /**
-     * @brief setMaxThreads Sets the maximum number of threads the model will use when stepping.
-     * @param threadCount The maximum number of threads to use.
-     */
-    void setMaxThreads(std::uint32_t threadCount);
 
     /**
      * @brief setSeed Sets the seed that the random number generators of this model use. Note that the model also uses an internal seed offset which is incremented when the model is stepped.
