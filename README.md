@@ -1,10 +1,21 @@
-[![Geometrize Logo](https://github.com/Tw1ddle/geometrize-lib/blob/master/screenshots/geometrize_logo.png?raw=true "Geometrize library - tool for geometrizing images into geometric primitives logo")]()
+[![Geometrize Logo](https://github.com/Tw1ddle/geometrize-lib/blob/master/screenshots/geometrize_logo.png?raw=true "Geometrize library - tool for geometrizing images into geometric primitives logo")](https://github.com/Tw1ddle/geometrize-lib)
 
-Geometrize is a C++ library for geometrizing images into geometric primitives.
+[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](https://github.com/Tw1ddle/geometrize-lib/blob/master/LICENSE)
 
-Geometrize is written in C++ by Sam Twidale, and is the core library used in the app of the same name.
+Geometrize is a C++ library for geometrizing images into geometric primitives. It is a work in progress - for now, I recommend the [Haxe version](https://github.com/Tw1ddle/geometrize-haxe) instead.
+
+## Features
+
+ * Geometrize images into shapes.
+ * Export as SVG, JSON, bitmap and others.
+
+## How It Works
+
+A user provides a target image, and the algorithm finds good shapes to approximate that image. To find a good shape, the algorithm generates a large number of random candidate shapes, repeatedly improving the fit of each using a hillclimbing optimization approach, eventually choosing the best fitting shape. Shapes are added one by one.
 
 ## Usage
+
+Coming soon.
 
 ## Resources
 
@@ -14,8 +25,10 @@ Geometrize is written in C++ by Sam Twidale, and is the core library used in the
 * See the HaxeFlixel Geometrize [demo](http://samcodes.co.uk/project/geometrize-haxe-flixel/) and the [demo code](https://github.com/Tw1ddle/geometrize-haxe-demo/).
 * See the Primitive Go [repository](https://github.com/fogleman/primitive).
 
-## Examples
+## Examples and Screenshots
+
+Coming soon.
 
 ## Notes
-* Geometrize is inspired by primitive, a Go library and Twitter bot created by Michael Fogleman.
-* Try the open source Haxe port of primitive - Primitive Haxe, and see the interactive demo.
+ * Got an idea or suggestion? Open an issue on GitHub, or send Sam a message on [Twitter](https://twitter.com/Sam_Twidale).
+ * Geometrize was originally based on [primitive](https://github.com/fogleman/primitive), a Go library created by [Michael Fogleman](https://github.com/fogleman).
