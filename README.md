@@ -15,7 +15,9 @@ A user provides a target image, and the algorithm finds good shapes to approxima
 
 ## Usage
 
-Coming soon.
+More detail coming soon.
+
+Read the documentation [here](http://tw1ddle.github.io/geometrize-lib/).
 
 ## Resources
 
