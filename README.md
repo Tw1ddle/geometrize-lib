@@ -1,4 +1,4 @@
-[![Geometrize Logo](https://github.com/Tw1ddle/geometrize-lib/blob/master/screenshots/geometrize_logo.png?raw=true "Geometrize library - tool for geometrizing images into geometric primitives logo")](https://github.com/Tw1ddle/geometrize-lib)
+[![Geometrize Logo](https://github.com/Tw1ddle/geometrize-lib/blob/master/screenshots/geometrize_logo.gif?raw=true "Geometrize library logo animation")](https://github.com/Tw1ddle/geometrize-lib)
 
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](https://github.com/Tw1ddle/geometrize-lib/blob/master/LICENSE)
 
@@ -21,13 +21,15 @@ Coming soon.
 
 * See the Geometrize [resources](https://github.com/Tw1ddle/geometrize-resources) and [template](https://github.com/Tw1ddle/geometrize-templates) repositories.
 * See the Geometrize [haxelib code](https://github.com/Tw1ddle/geometrize-haxe) and library [documentation](http://tw1ddle.github.io/geometrize-haxe/).
-* See the Geometrize [web demo](http://www.samcodes.co.uk/project/geometrize-haxe-web/) and web [demo code](https://github.com/Tw1ddle/geometrize-haxe-web/).
+* See the Geometrize Haxe [web demo](http://www.samcodes.co.uk/project/geometrize-haxe-web/) and web [demo code](https://github.com/Tw1ddle/geometrize-haxe-web/).
 * See the HaxeFlixel Geometrize [demo](http://samcodes.co.uk/project/geometrize-haxe-flixel/) and the [demo code](https://github.com/Tw1ddle/geometrize-haxe-demo/).
 * See the Primitive Go [repository](https://github.com/fogleman/primitive).
 
 ## Examples and Screenshots
 
-Coming soon.
+More coming soon.
+
+[![Geometrize Logo](https://github.com/Tw1ddle/geometrize-lib/blob/master/screenshots/stanczyk.jpg?raw=true "Stanczyk - 250 rects and ellipses")](http://i.imgur.com/y2OJTYf.jpg)
 
 ## Notes
  * Got an idea or suggestion? Open an issue on GitHub, or send Sam a message on [Twitter](https://twitter.com/Sam_Twidale).
