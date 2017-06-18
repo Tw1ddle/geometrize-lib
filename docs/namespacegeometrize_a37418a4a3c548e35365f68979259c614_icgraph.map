@@ -1,0 +1,5 @@
+<map id="geometrize::scanlinesForPolygon" name="geometrize::scanlinesForPolygon">
+<area shape="rect" id="node2" href="$classgeometrize_1_1_rotated_ellipse.html#a0f5dafd953e9297f71654b3c3f230168" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="231,5,409,47"/>
+<area shape="rect" id="node3" href="$classgeometrize_1_1_rotated_rectangle.html#a63bdb815ef42a69bfd54c53e76a86e49" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="221,71,419,112"/>
+<area shape="rect" id="node4" href="$classgeometrize_1_1_triangle.html#a804042bf81063bfcc4fcc654a6667de4" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="251,136,389,177"/>
+</map>

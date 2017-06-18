@@ -1,0 +1,7 @@
+<map id="geometrize::Model::ModelImpl::reset" name="geometrize::Model::ModelImpl::reset">
+<area shape="rect" id="node2" href="$classgeometrize_1_1_bitmap.html#a3e01118a4446a84bf8956108edfd1f08" title="fill Fills the bitmap with the given color. " alt="" coords="225,12,359,53"/>
+<area shape="rect" id="node3" href="$namespacegeometrize_1_1core.html#a9e0561199028ecc0b1e3ac56bf73d62d" title="differenceFull Calculates the root&#45;mean&#45;square error between two bitmaps. " alt="" coords="191,78,393,105"/>
+<area shape="rect" id="node4" href="$classgeometrize_1_1_bitmap.html#a870373372ffd3c860063d7bf76607d55" title="getWidth Gets the width of the bitmap. " alt="" coords="441,5,576,47"/>
+<area shape="rect" id="node5" href="$classgeometrize_1_1_bitmap.html#a1fb235e2f98d3b1bffc417a8761a3e4c" title="getHeight Gets the height of the bitmap. " alt="" coords="441,71,576,112"/>
+<area shape="rect" id="node6" href="$classgeometrize_1_1_bitmap.html#ac79681e7353058d37a677b2c3e488d0c" title="getPixel Gets a pixel color value. " alt="" coords="441,136,576,177"/>
+</map>

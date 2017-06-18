@@ -1,0 +1,30 @@
+<map id="geometrize::Model::getWidth" name="geometrize::Model::getWidth">
+<area shape="rect" id="node2" href="$classgeometrize_1_1_circle.html#a04e9365f95958d07ef26409d311854f9" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="226,5,353,47"/>
+<area shape="rect" id="node3" href="$classgeometrize_1_1_ellipse.html#ad164692f7bab8dd4c1617b01f2177008" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="223,71,356,112"/>
+<area shape="rect" id="node4" href="$classgeometrize_1_1_line.html#a843b2f3ccf7064820f4f3511bae8afe6" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="201,137,377,163"/>
+<area shape="rect" id="node5" href="$classgeometrize_1_1_polyline.html#aa1bae5cc04b901735d9399540c3a3ffb" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="219,188,359,229"/>
+<area shape="rect" id="node6" href="$classgeometrize_1_1_quadratic_bezier.html#aff09c87704b05a9527572a3caee6bd34" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="196,253,383,295"/>
+<area shape="rect" id="node7" href="$classgeometrize_1_1_rotated_ellipse.html#a0f5dafd953e9297f71654b3c3f230168" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="200,319,379,360"/>
+<area shape="rect" id="node8" href="$classgeometrize_1_1_rotated_rectangle.html#a63bdb815ef42a69bfd54c53e76a86e49" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="191,384,388,425"/>
+<area shape="rect" id="node9" href="$namespacegeometrize.html#a7c935546f5f9cf83d0a11ff369ab5039" title="geometrize::setupCircle" alt="" coords="210,450,369,477"/>
+<area shape="rect" id="node12" href="$namespacegeometrize.html#a575db7b60ed96ee90c74ee0e9601bb7f" title="geometrize::setupEllipse" alt="" coords="207,501,372,527"/>
+<area shape="rect" id="node13" href="$namespacegeometrize.html#a9cb9872a905c554bdb16c993750f1c1e" title="geometrize::setupLine" alt="" coords="214,551,365,578"/>
+<area shape="rect" id="node14" href="$namespacegeometrize.html#ae13de1938761a20af7faf88ae168f9e3" title="geometrize::setupPolyline" alt="" coords="203,602,375,629"/>
+<area shape="rect" id="node15" href="$namespacegeometrize.html#ae68dfb6c6e2b4933365a7295943418a9" title="geometrize::setupQuadratic\lBezier" alt="" coords="198,653,381,695"/>
+<area shape="rect" id="node16" href="$namespacegeometrize.html#aeafdc590e65c1e293006cd577281e0c7" title="geometrize::setupRectangle" alt="" coords="197,719,381,746"/>
+<area shape="rect" id="node17" href="$namespacegeometrize.html#a4641ba9f14a1c6f5c4a1052814623418" title="geometrize::setupRotated\lEllipse" alt="" coords="204,771,375,812"/>
+<area shape="rect" id="node18" href="$namespacegeometrize.html#a1c1e582e8b027149050e1f0e81bbd86b" title="geometrize::setupRotated\lRectangle" alt="" coords="204,836,375,877"/>
+<area shape="rect" id="node19" href="$namespacegeometrize.html#a81512177c2fe18cbf7eceefcad323bbf" title="geometrize::setupTriangle" alt="" coords="204,902,375,929"/>
+<area shape="rect" id="node20" href="$namespacegeometrize.html#a49206443a8a6256cf660144a845bf193" title="geometrize::mutateCircle" alt="" coords="206,953,373,979"/>
+<area shape="rect" id="node21" href="$namespacegeometrize.html#a0d5ebe4481c2ef67f35128c1438d8e9b" title="geometrize::mutateEllipse" alt="" coords="203,1003,376,1030"/>
+<area shape="rect" id="node22" href="$namespacegeometrize.html#acfe3bafd15eec5f9ec7600e9f59e00b9" title="geometrize::mutateLine" alt="" coords="210,1054,369,1081"/>
+<area shape="rect" id="node23" href="$namespacegeometrize.html#a5940a98bc922f211e9e35b63fc37eb52" title="geometrize::mutatePolyline" alt="" coords="199,1105,379,1131"/>
+<area shape="rect" id="node24" href="$namespacegeometrize.html#aa5c78907e0f1217cafb6465c04963366" title="geometrize::mutateQuadratic\lBezier" alt="" coords="194,1156,385,1197"/>
+<area shape="rect" id="node25" href="$namespacegeometrize.html#a476ab33e8fe3ed45dce0d358e1f03c71" title="geometrize::mutateRectangle" alt="" coords="193,1222,385,1249"/>
+<area shape="rect" id="node26" href="$namespacegeometrize.html#a9eed542bd2164ddf9e4e1acbfc0ef7f2" title="geometrize::mutateRotated\lEllipse" alt="" coords="200,1273,379,1315"/>
+<area shape="rect" id="node27" href="$namespacegeometrize.html#a4bafc899c15fe3574184c8f5d4690d8a" title="geometrize::mutateRotated\lRectangle" alt="" coords="200,1339,379,1380"/>
+<area shape="rect" id="node28" href="$namespacegeometrize.html#ae63f854530621fba5cba81d23f92d2d8" title="geometrize::mutateTriangle" alt="" coords="200,1405,379,1431"/>
+<area shape="rect" id="node29" href="$classgeometrize_1_1_triangle.html#a804042bf81063bfcc4fcc654a6667de4" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="220,1456,359,1497"/>
+<area shape="rect" id="node10" href="$classgeometrize_1_1_shape_mutator.html#ae99ca161b9d6c9c44c9a2e0938bf59de" title="setDefaults Sets all of the setup and mutation function handles to the default implementations. " alt="" coords="436,920,611,961"/>
+<area shape="rect" id="node11" href="$classgeometrize_1_1_shape_mutator.html#aacd149d4581d4fccbb9ce395dab52651" title="geometrize::ShapeMutator\l::ShapeMutator" alt="" coords="659,920,833,961"/>
+</map>

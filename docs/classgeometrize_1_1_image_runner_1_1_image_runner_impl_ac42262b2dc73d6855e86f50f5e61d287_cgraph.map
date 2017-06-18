@@ -1,0 +1,4 @@
+<map id="geometrize::ImageRunner::ImageRunnerImpl::step" name="geometrize::ImageRunner::ImageRunnerImpl::step">
+<area shape="rect" id="node2" href="$classgeometrize_1_1_model.html#a789fb3a182e871ca51a1cde8a990289a" title="setSeed Sets the seed that the random number generators of this model use. Note that the model also u..." alt="" coords="237,5,374,47"/>
+<area shape="rect" id="node3" href="$classgeometrize_1_1_model.html#aa96ff265dba385c6093c9c175b5c5802" title="step Steps the primitive optimization/fitting algorithm. " alt="" coords="224,71,387,98"/>
+</map>

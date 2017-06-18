@@ -1,0 +1,9 @@
+<map id="geometrize::bresenham" name="geometrize::bresenham">
+<area shape="rect" id="node2" href="$classgeometrize_1_1_line.html#a843b2f3ccf7064820f4f3511bae8afe6" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="217,5,393,32"/>
+<area shape="rect" id="node3" href="$classgeometrize_1_1_polyline.html#aa1bae5cc04b901735d9399540c3a3ffb" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="235,57,375,98"/>
+<area shape="rect" id="node4" href="$classgeometrize_1_1_quadratic_bezier.html#aff09c87704b05a9527572a3caee6bd34" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="212,122,399,163"/>
+<area shape="rect" id="node5" href="$namespacegeometrize.html#a37418a4a3c548e35365f68979259c614" title="scanlinesForPolygon Gets the scanlines for a series of points that make up an arbitrary polygon..." alt="" coords="221,187,389,229"/>
+<area shape="rect" id="node6" href="$classgeometrize_1_1_rotated_ellipse.html#a0f5dafd953e9297f71654b3c3f230168" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="456,122,635,163"/>
+<area shape="rect" id="node7" href="$classgeometrize_1_1_rotated_rectangle.html#a63bdb815ef42a69bfd54c53e76a86e49" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="447,187,644,229"/>
+<area shape="rect" id="node8" href="$classgeometrize_1_1_triangle.html#a804042bf81063bfcc4fcc654a6667de4" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="476,253,615,294"/>
+</map>

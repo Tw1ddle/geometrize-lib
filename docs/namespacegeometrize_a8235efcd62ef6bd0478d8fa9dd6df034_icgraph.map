@@ -1,0 +1,10 @@
+<map id="geometrize::drawLines" name="geometrize::drawLines">
+<area shape="rect" id="node2" href="$namespacegeometrize_1_1core.html#a4bbe866fe6ad978a443b4792f1353af1" title="energy Calculates a measure of the improvement adding the scanlines of a shape provides &#45; lower energ..." alt="" coords="205,63,372,90"/>
+<area shape="rect" id="node9" href="$classgeometrize_1_1_model_1_1_model_impl.html#a53408e2e0e6a4582a162b88183a106aa" title="geometrize::Model::\lModelImpl::drawShape" alt="" coords="420,144,573,185"/>
+<area shape="rect" id="node3" href="$namespacegeometrize_1_1core.html#a545e1243d4f337857ad65f39d0477cca" title="bestRandomState Gets the best state using a random algorithm. " alt="" coords="621,27,821,68"/>
+<area shape="rect" id="node7" href="$namespacegeometrize_1_1core.html#ac2f92c9b8315a53321df14fa3cf2d9a9" title="hillClimb Hill climbing optimization algorithm, attempts to minimize energy (the error/difference). " alt="" coords="633,93,809,119"/>
+<area shape="rect" id="node8" href="$classgeometrize_1_1_state.html#a63ba05a7fc6449055e09f537828a47fe" title="Calculates a measure of the improvement drawing the primitive to the current bitmap will have..." alt="" coords="430,27,563,68"/>
+<area shape="rect" id="node4" href="$namespacegeometrize_1_1core.html#a54c591239a4618069f126dcc818db9f3" title="bestHillClimbState Gets the best state using a hill climbing algorithm. " alt="" coords="869,85,1040,127"/>
+<area shape="rect" id="node5" href="$classgeometrize_1_1_model_1_1_model_impl.html#ae1666701e21be2c2a7d4b57ebbc31fb4" title="geometrize::Model::\lModelImpl::getHillClimbState" alt="" coords="1088,85,1277,127"/>
+<area shape="rect" id="node6" href="$classgeometrize_1_1_model_1_1_model_impl.html#a1c443627e2c315681a081ad5114e0424" title="geometrize::Model::\lModelImpl::step" alt="" coords="1325,115,1463,156"/>
+</map>

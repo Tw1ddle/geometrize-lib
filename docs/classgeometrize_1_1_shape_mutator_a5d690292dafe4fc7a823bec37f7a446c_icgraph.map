@@ -1,0 +1,4 @@
+<map id="geometrize::ShapeMutator::setMutatorFunction" name="geometrize::ShapeMutator::setMutatorFunction">
+<area shape="rect" id="node2" href="$classgeometrize_1_1_model.html#aba153629380a5a7967b13b20629b9f65" title="setShapeSetupFunction Sets the setup function for the type of shape passed as a parameter in the pass..." alt="" coords="233,5,394,47"/>
+<area shape="rect" id="node3" href="$classgeometrize_1_1_model.html#a9f5e7e58e9ce353b35d5b5a3e776ac21" title="setShapeMutatorFunction Sets the mutation function for the type of shape passed as a parameter in the..." alt="" coords="228,71,399,112"/>
+</map>

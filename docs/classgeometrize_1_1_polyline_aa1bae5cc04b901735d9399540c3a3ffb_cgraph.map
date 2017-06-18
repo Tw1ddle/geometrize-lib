@@ -1,0 +1,9 @@
+<map id="geometrize::Polyline::rasterize" name="geometrize::Polyline::rasterize">
+<area shape="rect" id="node2" href="$classgeometrize_1_1_model.html#a7be1651096caeedf3d771f66190e8b04" title="getWidth Gets the width of the target bitmap. " alt="" coords="204,5,341,47"/>
+<area shape="rect" id="node3" href="$classgeometrize_1_1_model.html#a97aff7d5cd9ee716c529d1a01a3f77e2" title="getHeight Gets the height of the target bitmap. " alt="" coords="204,71,341,112"/>
+<area shape="rect" id="node4" href="$namespacegeometrize.html#ae1643bcd430e5694abb5ef247c7014f1" title="bresenham Bresenham&#39;s line algorithm. Returns the points on the line. " alt="" coords="193,137,352,163"/>
+<area shape="rect" id="node5" href="$classgeometrize_1_1_scanline.html#a8c50fda3b926e29a8469398e1eda1b74" title="trim Crops the scanning width of an array of scanlines so they do not scan outside of the given area..." alt="" coords="201,188,345,229"/>
+<area shape="rect" id="node6" href="$namespacegeometrize_1_1commonutil.html#a31e1f80ca7a55bd9b85dd8c7e8d4196a" title="clamp Clamps a value within a range. " alt="" coords="400,188,561,229"/>
+<area shape="rect" id="node7" href="$namespacegeometrize_1_1commonutil.html#a4bd394bcd9de4e09ef50947064dd9313" title="getAverageImageColor Computes the average RGB color of the pixels in the bitmap. " alt="" coords="609,188,771,229"/>
+<area shape="rect" id="node8" href="$classgeometrize_1_1_bitmap.html#a609d9019da733929eb9d2f707254c19a" title="getDataRef Gets a reference to the raw bitmap data. " alt="" coords="819,188,953,229"/>
+</map>

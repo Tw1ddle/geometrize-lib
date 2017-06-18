@@ -1,0 +1,5 @@
+<map id="geometrize::QuadraticBezier::QuadraticBezier" name="geometrize::QuadraticBezier::QuadraticBezier">
+<area shape="rect" id="node2" href="$classgeometrize_1_1_model.html#a333fbed006ecf9d0b00e85f1efa309e4" title="setupShape Performs the initial setup on a shape. " alt="" coords="240,39,377,80"/>
+<area shape="rect" id="node3" href="$classgeometrize_1_1_model.html#acb7bfdb826c6367c86be3681aaebf455" title="getShapeMutator Gets the object the model uses for setting up/mutating shapes. " alt="" coords="444,5,581,47"/>
+<area shape="rect" id="node4" href="$classgeometrize_1_1_shape_mutator.html#a8f9f60965f605bfd7c2e97e463a5d55b" title="geometrize::ShapeMutator\l::setup" alt="" coords="425,71,600,112"/>
+</map>

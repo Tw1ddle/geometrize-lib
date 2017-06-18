@@ -1,0 +1,4 @@
+<map id="geometrize::ImageRunner::ImageRunnerImpl::ImageRunnerImpl" name="geometrize::ImageRunner::ImageRunnerImpl::ImageRunnerImpl">
+<area shape="rect" id="node2" href="$namespacegeometrize_1_1commonutil.html#a4bd394bcd9de4e09ef50947064dd9313" title="getAverageImageColor Computes the average RGB color of the pixels in the bitmap. " alt="" coords="292,5,453,47"/>
+<area shape="rect" id="node3" href="$classgeometrize_1_1_bitmap.html#a609d9019da733929eb9d2f707254c19a" title="getDataRef Gets a reference to the raw bitmap data. " alt="" coords="501,5,636,47"/>
+</map>

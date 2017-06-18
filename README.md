@@ -2,7 +2,7 @@
 
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](https://github.com/Tw1ddle/geometrize-lib/blob/master/LICENSE)
 
-Geometrize is a C++ library for geometrizing images into geometric primitives. It is a work in progress - for now, I recommend the [Haxe version](https://github.com/Tw1ddle/geometrize-haxe) instead.
+Geometrize is a C++ library for geometrizing images into geometric primitives. It is a work in progress - for now, I recommend using the [Haxe version](https://github.com/Tw1ddle/geometrize-haxe) instead.
 
 ## Features
 

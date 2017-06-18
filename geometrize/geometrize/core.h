@@ -72,6 +72,7 @@ float differencePartial(
  * @param target The target bitmap.
  * @param current The current bitmap.
  * @param buffer The buffer bitmap.
+ * @param lastScore The last score.
  * @return The best random state i.e. the one with the lowest energy.
  */
 geometrize::State bestRandomState(
@@ -91,6 +92,7 @@ geometrize::State bestRandomState(
  * @param target The target bitmap.
  * @param current The current bitmap.
  * @param buffer The buffer bitmap.
+ * @param lastScore The last score.
  * @return The best state found from hillclimbing.
  */
 geometrize::State hillClimb(
@@ -111,6 +113,7 @@ geometrize::State hillClimb(
  * @param target The target bitmap.
  * @param current The current bitmap.
  * @param buffer The buffer bitmap.
+ * @param lastScore The last score.
  * @return The best state acquired from hill climbing i.e. the one with the lowest energy.
  */
 geometrize::State bestHillClimbState(

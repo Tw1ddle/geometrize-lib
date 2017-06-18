@@ -1,0 +1,16 @@
+<map id="geometrize::core::hillClimb" name="geometrize::core::hillClimb">
+<area shape="rect" id="node2" href="$classgeometrize_1_1_state.html#a69cee4399c3599e6a6b3e9f039d3193b" title="mutate Modifies the current state in a random fashion. " alt="" coords="229,5,363,47"/>
+<area shape="rect" id="node3" href="$namespacegeometrize_1_1core.html#a4bbe866fe6ad978a443b4792f1353af1" title="energy Calculates a measure of the improvement adding the scanlines of a shape provides &#45; lower energ..." alt="" coords="411,107,577,134"/>
+<area shape="rect" id="node15" href="$classgeometrize_1_1_state.html#a63ba05a7fc6449055e09f537828a47fe" title="Calculates a measure of the improvement drawing the primitive to the current bitmap will have..." alt="" coords="229,71,363,112"/>
+<area shape="rect" id="node4" href="$namespacegeometrize_1_1core.html#a9b3c5f53664cf0a84fc1e789a24fd220" title="computeColor Calculates the color of the scanlines. " alt="" coords="628,129,805,171"/>
+<area shape="rect" id="node9" href="$namespacegeometrize.html#acb0746647a6799ff26ec1405ee927f78" title="copyLines Copies source pixels to a destination defined by a set of scanlines. " alt="" coords="640,27,793,54"/>
+<area shape="rect" id="node11" href="$namespacegeometrize.html#a8235efcd62ef6bd0478d8fa9dd6df034" title="drawLines Draws scanlines onto an image. " alt="" coords="641,78,793,105"/>
+<area shape="rect" id="node12" href="$namespacegeometrize_1_1core.html#a421d9870e9e49b517b60bce228659878" title="differencePartial Calculates the root&#45;mean&#45;square error between the parts of the two bitmaps within t..." alt="" coords="625,197,808,239"/>
+<area shape="rect" id="node5" href="$classgeometrize_1_1_bitmap.html#ac79681e7353058d37a677b2c3e488d0c" title="getPixel Gets a pixel color value. " alt="" coords="869,71,1004,112"/>
+<area shape="rect" id="node6" href="$namespacegeometrize_1_1commonutil.html#a31e1f80ca7a55bd9b85dd8c7e8d4196a" title="clamp Clamps a value within a range. " alt="" coords="856,136,1017,177"/>
+<area shape="rect" id="node7" href="$namespacegeometrize_1_1commonutil.html#a4bd394bcd9de4e09ef50947064dd9313" title="getAverageImageColor Computes the average RGB color of the pixels in the bitmap. " alt="" coords="1065,136,1227,177"/>
+<area shape="rect" id="node8" href="$classgeometrize_1_1_bitmap.html#a609d9019da733929eb9d2f707254c19a" title="getDataRef Gets a reference to the raw bitmap data. " alt="" coords="1275,136,1409,177"/>
+<area shape="rect" id="node10" href="$classgeometrize_1_1_bitmap.html#aa5b22e648397f07c4d7fa44b464d9f64" title="setPixel Sets a pixel color value. " alt="" coords="869,5,1004,47"/>
+<area shape="rect" id="node13" href="$classgeometrize_1_1_bitmap.html#a870373372ffd3c860063d7bf76607d55" title="getWidth Gets the width of the bitmap. " alt="" coords="869,267,1004,308"/>
+<area shape="rect" id="node14" href="$classgeometrize_1_1_bitmap.html#a1fb235e2f98d3b1bffc417a8761a3e4c" title="getHeight Gets the height of the bitmap. " alt="" coords="869,201,1004,243"/>
+</map>

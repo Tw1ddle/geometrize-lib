@@ -1,0 +1,13 @@
+<map id="geometrize::core::energy" name="geometrize::core::energy">
+<area shape="rect" id="node2" href="$namespacegeometrize_1_1core.html#a9b3c5f53664cf0a84fc1e789a24fd220" title="computeColor Calculates the color of the scanlines. " alt="" coords="223,129,400,171"/>
+<area shape="rect" id="node7" href="$namespacegeometrize.html#acb0746647a6799ff26ec1405ee927f78" title="copyLines Copies source pixels to a destination defined by a set of scanlines. " alt="" coords="235,27,388,54"/>
+<area shape="rect" id="node9" href="$namespacegeometrize.html#a8235efcd62ef6bd0478d8fa9dd6df034" title="drawLines Draws scanlines onto an image. " alt="" coords="235,78,387,105"/>
+<area shape="rect" id="node10" href="$namespacegeometrize_1_1core.html#a421d9870e9e49b517b60bce228659878" title="differencePartial Calculates the root&#45;mean&#45;square error between the parts of the two bitmaps within t..." alt="" coords="220,197,403,239"/>
+<area shape="rect" id="node3" href="$classgeometrize_1_1_bitmap.html#ac79681e7353058d37a677b2c3e488d0c" title="getPixel Gets a pixel color value. " alt="" coords="464,71,599,112"/>
+<area shape="rect" id="node4" href="$namespacegeometrize_1_1commonutil.html#a31e1f80ca7a55bd9b85dd8c7e8d4196a" title="clamp Clamps a value within a range. " alt="" coords="451,136,612,177"/>
+<area shape="rect" id="node5" href="$namespacegeometrize_1_1commonutil.html#a4bd394bcd9de4e09ef50947064dd9313" title="getAverageImageColor Computes the average RGB color of the pixels in the bitmap. " alt="" coords="660,136,821,177"/>
+<area shape="rect" id="node6" href="$classgeometrize_1_1_bitmap.html#a609d9019da733929eb9d2f707254c19a" title="getDataRef Gets a reference to the raw bitmap data. " alt="" coords="869,136,1004,177"/>
+<area shape="rect" id="node8" href="$classgeometrize_1_1_bitmap.html#aa5b22e648397f07c4d7fa44b464d9f64" title="setPixel Sets a pixel color value. " alt="" coords="464,5,599,47"/>
+<area shape="rect" id="node11" href="$classgeometrize_1_1_bitmap.html#a870373372ffd3c860063d7bf76607d55" title="getWidth Gets the width of the bitmap. " alt="" coords="464,267,599,308"/>
+<area shape="rect" id="node12" href="$classgeometrize_1_1_bitmap.html#a1fb235e2f98d3b1bffc417a8761a3e4c" title="getHeight Gets the height of the bitmap. " alt="" coords="464,201,599,243"/>
+</map>

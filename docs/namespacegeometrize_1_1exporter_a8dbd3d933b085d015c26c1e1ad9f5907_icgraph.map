@@ -1,0 +1,5 @@
+<map id="geometrize::exporter::writeToStream" name="geometrize::exporter::writeToStream">
+<area shape="rect" id="node2" href="$namespacegeometrize_1_1exporter.html#aac7807efa1495d55fbe57fdeb98baddd" title="exportBitmapData Exports the raw image data to a binary dump &#45; just the data as RGBA8888, no zero&#45;padding or anything. " alt="" coords="195,5,336,47"/>
+<area shape="rect" id="node3" href="$namespacegeometrize_1_1exporter.html#ac8b854e0bdccc51ff50aa84470218489" title="geometrize::exporter\l::writeToStream" alt="" coords="195,71,336,112"/>
+<area shape="rect" id="node4" href="$namespacegeometrize_1_1exporter.html#a029d9aba1b7cfcb5be7a272010be2ba4" title="exportBitmap Exports the image data to a RGB888 bitmap image file (BMP). " alt="" coords="195,136,336,177"/>
+</map>

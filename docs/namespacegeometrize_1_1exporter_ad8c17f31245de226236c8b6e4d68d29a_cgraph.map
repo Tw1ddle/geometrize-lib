@@ -1,0 +1,7 @@
+<map id="geometrize::exporter::exportSVG" name="geometrize::exporter::exportSVG">
+<area shape="rect" id="node2" href="$namespacegeometrize_1_1exporter.html#aa920ad7b64b94924d72fec1083a884a4" title="geometrize::exporter\l::getSVGFillAttrib" alt="" coords="219,5,361,47"/>
+<area shape="rect" id="node4" href="$namespacegeometrize_1_1exporter.html#a51e3d29d66e9e1fafa1645ee97f193d1" title="geometrize::exporter\l::getSVGFillOpacityAttrib" alt="" coords="205,71,375,112"/>
+<area shape="rect" id="node5" href="$namespacegeometrize_1_1exporter.html#a49a33cf32b470d5d56b5cfbb90854bda" title="geometrize::exporter\l::getSVGStrokeAttrib" alt="" coords="217,136,363,177"/>
+<area shape="rect" id="node6" href="$namespacegeometrize_1_1exporter.html#a3e1f3702f0f60bf530bd77c16aa825d5" title="geometrize::exporter\l::getSVGStrokeOpacityAttrib" alt="" coords="195,201,385,243"/>
+<area shape="rect" id="node3" href="$namespacegeometrize_1_1exporter.html#a8f2072a6bb53e5e2394b0ea5f4b1b134" title="geometrize::exporter\l::getSVGRgbColorAttrib" alt="" coords="433,71,593,112"/>
+</map>

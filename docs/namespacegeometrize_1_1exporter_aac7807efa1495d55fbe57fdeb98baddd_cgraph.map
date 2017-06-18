@@ -1,0 +1,6 @@
+<map id="geometrize::exporter::exportBitmapData" name="geometrize::exporter::exportBitmapData">
+<area shape="rect" id="node2" href="$classgeometrize_1_1_bitmap.html#a1fb235e2f98d3b1bffc417a8761a3e4c" title="getHeight Gets the height of the bitmap. " alt="" coords="198,5,333,47"/>
+<area shape="rect" id="node3" href="$classgeometrize_1_1_bitmap.html#a870373372ffd3c860063d7bf76607d55" title="getWidth Gets the width of the bitmap. " alt="" coords="198,71,333,112"/>
+<area shape="rect" id="node4" href="$classgeometrize_1_1_bitmap.html#ac79681e7353058d37a677b2c3e488d0c" title="getPixel Gets a pixel color value. " alt="" coords="198,136,333,177"/>
+<area shape="rect" id="node5" href="$namespacegeometrize_1_1exporter.html#a8dbd3d933b085d015c26c1e1ad9f5907" title="geometrize::exporter\l::writeToStream" alt="" coords="195,201,336,243"/>
+</map>
