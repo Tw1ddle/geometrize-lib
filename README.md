@@ -33,7 +33,7 @@ Read the documentation [here](http://tw1ddle.github.io/geometrize-lib/).
 
 More coming soon.
 
-[![Geometrize Logo](https://github.com/Tw1ddle/geometrize-lib/blob/master/screenshots/stanczyk.jpg?raw=true "Stanczyk - 250 rects and ellipses")](http://i.imgur.com/y2OJTYf.jpg)
+[![Geometrized Stanczyk](https://github.com/Tw1ddle/geometrize-lib/blob/master/screenshots/stanczyk.jpg?raw=true "Stanczyk - 250 rects and ellipses")](http://i.imgur.com/y2OJTYf.jpg)
 
 ## Notes
  * Got an idea or suggestion? Open an issue on GitHub, or send Sam a message on [Twitter](https://twitter.com/Sam_Twidale).
