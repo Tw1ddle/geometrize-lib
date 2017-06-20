@@ -1,5 +1,0 @@
-<map id="geometrize::Scanline::trim" name="geometrize::Scanline::trim">
-<area shape="rect" id="node2" href="$namespacegeometrize_1_1commonutil.html#a31e1f80ca7a55bd9b85dd8c7e8d4196a" title="clamp Clamps a value within a range. " alt="" coords="197,5,359,47"/>
-<area shape="rect" id="node3" href="$namespacegeometrize_1_1commonutil.html#a4bd394bcd9de4e09ef50947064dd9313" title="getAverageImageColor Computes the average RGB color of the pixels in the bitmap. " alt="" coords="407,5,568,47"/>
-<area shape="rect" id="node4" href="$classgeometrize_1_1_bitmap.html#a609d9019da733929eb9d2f707254c19a" title="getDataRef Gets a reference to the raw bitmap data. " alt="" coords="616,5,751,47"/>
-</map>

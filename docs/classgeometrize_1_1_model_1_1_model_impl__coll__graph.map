@@ -1,5 +1,0 @@
-<map id="geometrize::Model::ModelImpl" name="geometrize::Model::ModelImpl">
-<area shape="rect" id="node2" href="$classgeometrize_1_1_shape_mutator.html" title="The ShapeMutator class is responsible for setting up and mutating shapes. It lets clients bind their ..." alt="" coords="5,5,180,32"/>
-<area shape="rect" id="node3" href="$classgeometrize_1_1_model.html" title="The Model class is the model for the core optimization/fitting algorithm. " alt="" coords="204,5,333,32"/>
-<area shape="rect" id="node4" href="$classgeometrize_1_1_bitmap.html" title="The Bitmap class is a helper class for working with bitmap data. " alt="" coords="357,5,492,32"/>
-</map>

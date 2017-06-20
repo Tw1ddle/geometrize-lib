@@ -1,4 +1,0 @@
-<map id="geometrize::Model::setShapeMutatorFunction" name="geometrize::Model::setShapeMutatorFunction">
-<area shape="rect" id="node2" href="$classgeometrize_1_1_model.html#acb7bfdb826c6367c86be3681aaebf455" title="getShapeMutator Gets the object the model uses for setting up/mutating shapes. " alt="" coords="243,5,380,47"/>
-<area shape="rect" id="node3" href="$classgeometrize_1_1_shape_mutator.html#a5d690292dafe4fc7a823bec37f7a446c" title="geometrize::ShapeMutator\l::setMutatorFunction" alt="" coords="224,71,399,112"/>
-</map>

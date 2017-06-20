@@ -1,9 +1,0 @@
-<map id="geometrize::Scanline::trim" name="geometrize::Scanline::trim">
-<area shape="rect" id="node2" href="$classgeometrize_1_1_circle.html#a04e9365f95958d07ef26409d311854f9" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="233,5,359,47"/>
-<area shape="rect" id="node3" href="$classgeometrize_1_1_line.html#a843b2f3ccf7064820f4f3511bae8afe6" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="208,71,384,98"/>
-<area shape="rect" id="node4" href="$classgeometrize_1_1_polyline.html#aa1bae5cc04b901735d9399540c3a3ffb" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="226,123,366,164"/>
-<area shape="rect" id="node5" href="$classgeometrize_1_1_quadratic_bezier.html#aff09c87704b05a9527572a3caee6bd34" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="203,188,389,229"/>
-<area shape="rect" id="node6" href="$classgeometrize_1_1_rotated_ellipse.html#a0f5dafd953e9297f71654b3c3f230168" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="207,253,385,295"/>
-<area shape="rect" id="node7" href="$classgeometrize_1_1_rotated_rectangle.html#a63bdb815ef42a69bfd54c53e76a86e49" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="197,319,395,360"/>
-<area shape="rect" id="node8" href="$classgeometrize_1_1_triangle.html#a804042bf81063bfcc4fcc654a6667de4" title="rasterize Creates a raster scanline representation of the shape. " alt="" coords="227,384,365,425"/>
-</map>

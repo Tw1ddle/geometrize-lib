@@ -1,6 +1,0 @@
-<map id="geometrize::core::computeColor" name="geometrize::core::computeColor">
-<area shape="rect" id="node2" href="$classgeometrize_1_1_bitmap.html#ac79681e7353058d37a677b2c3e488d0c" title="getPixel Gets a pixel color value. " alt="" coords="244,5,379,47"/>
-<area shape="rect" id="node3" href="$namespacegeometrize_1_1commonutil.html#a31e1f80ca7a55bd9b85dd8c7e8d4196a" title="clamp Clamps a value within a range. " alt="" coords="231,71,392,112"/>
-<area shape="rect" id="node4" href="$namespacegeometrize_1_1commonutil.html#a4bd394bcd9de4e09ef50947064dd9313" title="getAverageImageColor Computes the average RGB color of the pixels in the bitmap. " alt="" coords="440,71,601,112"/>
-<area shape="rect" id="node5" href="$classgeometrize_1_1_bitmap.html#a609d9019da733929eb9d2f707254c19a" title="getDataRef Gets a reference to the raw bitmap data. " alt="" coords="649,71,784,112"/>
-</map>
