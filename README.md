@@ -1,6 +1,8 @@
 [![Geometrize Logo](https://github.com/Tw1ddle/geometrize-lib/blob/master/screenshots/geometrize_logo.gif?raw=true "Geometrize library logo animation")](https://github.com/Tw1ddle/geometrize-lib)
 
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](https://github.com/Tw1ddle/geometrize-lib/blob/master/LICENSE)
+[![Travis Unit Test Build Status](https://img.shields.io/travis/Tw1ddle/geometrize-lib-unit-tests.svg?style=flat-square)](https://travis-ci.org/Tw1ddle/geometrize-lib-unit-tests)
+[![AppVeyor Unit Test Build Status](https://ci.appveyor.com/api/projects/status/mdnoe81f8r5j601w?svg=true)](https://travis-ci.org/Tw1ddle/geometrize-lib-unit-tests)
 
 Geometrize is a C++ library for geometrizing images into geometric primitives. It is a work in progress - for now, I recommend using the [Haxe version](https://github.com/Tw1ddle/geometrize-haxe) instead.
 
