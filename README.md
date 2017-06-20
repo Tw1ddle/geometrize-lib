@@ -20,7 +20,7 @@ The algorithm finds shapes to approximate a target image. It first generates a l
 
 More detail coming soon.
 
-Read the documentation [here](http://tw1ddle.github.io/geometrize-lib/).
+Read the documentation [here](http://tw1ddle.github.io/geometrize-lib-docs/).
 
 ## Resources
 

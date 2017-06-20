@@ -1,8 +1,0 @@
-<map id="geometrize::Model::ModelImpl::drawShape" name="geometrize::Model::ModelImpl::drawShape">
-<area shape="rect" id="node2" href="$namespacegeometrize.html#a8235efcd62ef6bd0478d8fa9dd6df034" title="drawLines Draws scanlines onto an image. " alt="" coords="222,78,374,105"/>
-<area shape="rect" id="node5" href="$namespacegeometrize_1_1core.html#a421d9870e9e49b517b60bce228659878" title="differencePartial Calculates the root&#45;mean&#45;square error between the parts of the two bitmaps within t..." alt="" coords="207,133,389,175"/>
-<area shape="rect" id="node3" href="$classgeometrize_1_1_bitmap.html#ac79681e7353058d37a677b2c3e488d0c" title="getPixel Gets a pixel color value. " alt="" coords="437,71,572,112"/>
-<area shape="rect" id="node4" href="$classgeometrize_1_1_bitmap.html#aa5b22e648397f07c4d7fa44b464d9f64" title="setPixel Sets a pixel color value. " alt="" coords="437,5,572,47"/>
-<area shape="rect" id="node6" href="$classgeometrize_1_1_bitmap.html#a870373372ffd3c860063d7bf76607d55" title="getWidth Gets the width of the bitmap. " alt="" coords="437,136,572,177"/>
-<area shape="rect" id="node7" href="$classgeometrize_1_1_bitmap.html#a1fb235e2f98d3b1bffc417a8761a3e4c" title="getHeight Gets the height of the bitmap. " alt="" coords="437,201,572,243"/>
-</map>
