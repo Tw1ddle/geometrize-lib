@@ -3,6 +3,7 @@
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](https://github.com/Tw1ddle/geometrize-lib/blob/master/LICENSE)
 [![Travis Unit Test Build Status](https://img.shields.io/travis/Tw1ddle/geometrize-lib-unit-tests.svg?style=flat-square)](https://travis-ci.org/Tw1ddle/geometrize-lib-unit-tests)
 [![AppVeyor Unit Test Build Status](https://ci.appveyor.com/api/projects/status/mdnoe81f8r5j601w?svg=true)](https://travis-ci.org/Tw1ddle/geometrize-lib-unit-tests)
+[![Travis Documentation Build Status](https://img.shields.io/travis/Tw1ddle/geometrize-lib-docs.svg?style=flat-square)](https://img.shields.io/travis/Tw1ddle/geometrize-lib-docs.svg?style=flat-square)
 
 Geometrize is a C++ library for geometrizing images into geometric primitives. It is a work in progress - for now, I recommend using the [Haxe version](https://github.com/Tw1ddle/geometrize-haxe) instead.
 
@@ -13,7 +14,7 @@ Geometrize is a C++ library for geometrizing images into geometric primitives. I
 
 ## How It Works
 
-A user provides a target image, and the algorithm finds good shapes to approximate that image. To find a good shape, the algorithm generates a large number of random candidate shapes, repeatedly improving the fit of each using a hillclimbing optimization approach, eventually choosing the best fitting shape. Shapes are added one by one.
+The algorithm finds shapes to approximate a target image. It first generates a large number of random candidate shapes, and then repeatedly improves the fit of the best shapes using a hillclimbing optimization approach, eventually picking the best fitting shape. Shapes are added one by one.
 
 ## Usage
 
