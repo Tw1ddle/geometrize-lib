@@ -28,7 +28,7 @@
 USER=$1
 REPO=$2
 BRANCH=$3
-TOKEN=$4
+TRAVIS_ACCESS_TOKEN=$4
 MESSAGE=$5
 
 # Login to Travis and get the token
