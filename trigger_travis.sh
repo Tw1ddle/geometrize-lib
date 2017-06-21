@@ -46,11 +46,11 @@ elif [ -n "$TRAVIS_REPO_SLUG" ] ; then
 fi
 
 # For debugging purposes
-echo "USER=$USER"
-echo "REPO=$REPO"
-echo "BRANCH=$BRANCH"
-echo "TOKEN: ${array[${#array[@]}-1]}"
-echo "MESSAGE=$MESSAGE"
+#echo "USER=$USER"
+#echo "REPO=$REPO"
+#echo "BRANCH=$BRANCH"
+#echo "TOKEN: ${array[${#array[@]}-1]}"
+#echo "MESSAGE=$MESSAGE"
 
 # Define the curl POST request content body
 BODY="{
