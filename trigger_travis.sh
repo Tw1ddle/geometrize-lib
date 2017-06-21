@@ -40,9 +40,9 @@ TOKEN=${array[${#array[@]}-1]}
 
 # Check arguments and add message if necessary
 if [ $# -eq 5 ] ; then
-    MESSAGE=",\"message\": \"$5\""
+  MESSAGE=",\"message\": \"$5\""
 elif [ -n "$TRAVIS_REPO_SLUG" ] ; then
-    MESSAGE=",\"message\": \"Triggered by upstream build of $TRAVIS_REPO_SLUG with commit "`git rev-parse --short HEAD`"\""
+  MESSAGE=",\"message\": \"Triggered by upstream build of $TRAVIS_REPO_SLUG with commit "`git rev-parse --short HEAD`"\""
 fi
 
 # For debugging purposes
@@ -66,13 +66,12 @@ curl -s -X POST \
   -H "Travis-API-Version: 3" \
   -H "Authorization: token ${TOKEN}" \
   -d "$BODY" \
-  https://api.travis-ci.org/repo/${USER}%2F${REPO}/requests
-  | tee /tmp/travis-request-output.$$.txt
+  https://api.travis-ci.org/repo/${USER}%2F${REPO}/requests | tee /tmp/travis-request-output.$$.txt
 
 if grep -q '"@type": "error"' /tmp/travis-request-output.$$.txt; then
-   cat /tmp/travis-request-output.$$.txt
-   exit 1
+  cat /tmp/travis-request-output.$$.txt
+  exit 1
 elif grep -q 'access denied' /tmp/travis-request-output.$$.txt; then
-   cat /tmp/travis-request-output.$$.txt
-   exit 1
+  cat /tmp/travis-request-output.$$.txt
+  exit 1
 fi

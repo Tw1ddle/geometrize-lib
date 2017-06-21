@@ -1,5 +1,11 @@
 os: linux
 
+# Add encrypted trigger keys
+env:
+  global:
+    - secure:maYiGFKR5q5o33y1fodSTDcRgePqUP+67HgZN808jvGTDszQuGqwPElC8M9nsJOfXmTZ8NSotd81QpJcyPYPeTeVC9oob+y/lhXzNNlpKjUvx7az/2J5DPlg05cHORcIj/Ce6eDdu9eZIvBobzIH/22v4s8NscY6AeIg9up5GtjtVwphRhsgekMf8c837UEpdINj8gcSHLMPHoLnU1sGu70rdEifzgCs6rtlik9c5NShSrXFI0RIBvO4l+wHR6CWHJIlAy15YaolwJOUzSznRtGzmiUXWDVZmLmhn1mkdT1zeAGSyuMQka9ilo3zX5umj8RI/1J+dKF6jMENiB1JP5X1qg0bxYfC3uOeZg5uF7/JmGOtzf1PvJXywtZ6sb6AUPwd9IWZ8CZmyL79IgFaC1Bi7P3TTnkmj3Lpzlbkcc8YAixglGTRffChf2a77I9hF6YS4hN45hP/xI5fdCmwLPpJVlPOYHq0Dvxto56j9h/fxXXR8GVpUcEAKD4nEO8DqufnnVBCFiQ/KM0vdJNdaLPjUSWO8DeAw2NVoGA/5jFQZ2UaBfA5NEGCEeGS2kfvBOziBX4mKgyGyORX6ZtVLyge/zYbXiEl2LM8idKVi24K4F1VftlHEN43Wf6amL5kEI4QAzUWEk4iP10ZtcRFx/F8r+vvrFx78Z3RBFkUuhQ=
+    - secure:dmZyBIfYBkCVLGykqyZUpEUFB0O1aby+ZN7898YFyHWFnUTnmWnp41bjbOm326fA5KjCCwfRf9nfvxSYB4k8UCv1yEaNtrgTJzcGhCtHZzbqOM2JKQUKOyNAfwv/guMALpLFotYzj71qkuuUQZGz5/RStF4hWLy/bJkgZIHHn1xiZxVMvj6CKA404MkcVzD/adTTRqrFon+Kxp6P+AAK4Clfu/IGnz5omo8AGZ7sMk3BwQbwe4IbbbjMTxu5BjDx6GMlVbqdxR/b8IIsD6z2qdae8KkMe9m6EPXX8fdQJzqSCF0W+v9DJV6iDOuZMHQqR/ktU+cqzOvG7wKBDCbBznWodCz0sDxnlEUAQtKAQvNQ+cM71s3PwSNI2ABCBnUayacxB3X87T1DaIBbGcj1gmlhWr8QQ7FtadPsFikNuf31gyeg985TV6PAjB2O9fGZD2lA/Fz88gyr5P5sW2OLdkHMiY/zH8LucMwXLLsi4pW1HdkBBGmAAhOCT4w+kgbvoORPMZX35L8R/eeOBK2TCIcEupayRduzjqFyzuuI7xYaZlrgsDTQuAT84B8P2/TVZgkPHC/yhydGuHXZ9NBJVBgrKBPfDv8k39+Bk671iC3zKg2WJw0tomLcsYf1CHDs7lb5kV3k+8BAJ7VeHKQEiH7vzwOayMYxaB1MF3xYdSY=
+
 # Install Travis so we can get the token from Travis
 before_script:
   - gem install travis
@@ -9,6 +15,6 @@ script:
   -
 
 after_script:
-  - chmod +x ./trigger_travis.sh
-  - ./trigger_travis.sh Tw1ddle geometrize-lib-docs master $TRAVIS_ACCESS_TOKEN
-  - ./trigger_travis.sh Tw1ddle geometrize-lib-unit-tests master $TRAVIS_ACCESS_TOKEN
+  - chmod +x trigger_travis.sh
+  - ./trigger_travis.sh Tw1ddle geometrize-lib-docs master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_DOCS_TRIGGER
+  - ./trigger_travis.sh Tw1ddle geometrize-lib-unit-tests master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_UNIT_TESTS_TRIGGER
