@@ -1,0 +1,14 @@
+os: linux
+
+# Install Travis so we can get the token from Travis
+before_script:
+  - gem install travis
+
+# Do nothing
+script:
+  -
+
+after_script:
+  - chmod +x ./trigger_travis.sh
+  - ./trigger_travis.sh Tw1ddle geometrize-lib-docs master $TRAVIS_ACCESS_TOKEN
+  - ./trigger_travis.sh Tw1ddle geometrize-lib-unit-tests master $TRAVIS_ACCESS_TOKEN
