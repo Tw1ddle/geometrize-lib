@@ -181,8 +181,8 @@ private:
     geometrize::Bitmap m_current; ///< The current bitmap.
     float m_lastScore; ///< Score derived from calculating the difference between bitmaps.
     const static std::uint32_t defaultMaxThreads{4};
-    std::atomic_uint32_t m_baseRandomSeed; ///< The base value used for seeding the random number generator (the one the user has control over).
-    std::atomic_uint32_t m_randomSeedOffset; ///< Seed used for random number generation. Note: incremented by each std::async call used for model stepping.
+    std::atomic<std::uint32_t> m_baseRandomSeed; ///< The base value used for seeding the random number generator (the one the user has control over).
+    std::atomic<std::uint32_t> m_randomSeedOffset; ///< Seed used for random number generation. Note: incremented by each std::async call used for model stepping.
     geometrize::ShapeMutator m_shapeMutator; ///< The object responsible for setting up and mutating shapes created by this model.
 };
 
