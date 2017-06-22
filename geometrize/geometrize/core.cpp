@@ -36,8 +36,8 @@ geometrize::rgba computeColor(
         const std::int32_t y{line.y};
         for(std::int32_t x = line.x1; x <= line.x2; x++) {
             // Get the overlapping target and current colors
-            const geometrize::rgba t{target.getPixel(x, y)};
-            const geometrize::rgba c{current.getPixel(x, y)};
+            const geometrize::rgba t(target.getPixel(x, y));
+            const geometrize::rgba c(current.getPixel(x, y));
 
             const std::int32_t tr{t.r};
             const std::int32_t tg{t.g};
@@ -82,8 +82,8 @@ float differenceFull(const geometrize::Bitmap& first, const geometrize::Bitmap& 
 
     for(std::uint32_t y = 0; y < height; y++) {
         for(std::uint32_t x = 0; x < width; x++) {
-            const geometrize::rgba f{first.getPixel(x, y)};
-            const geometrize::rgba s{second.getPixel(x, y)};
+            const geometrize::rgba f(first.getPixel(x, y));
+            const geometrize::rgba s(second.getPixel(x, y));
 
             const std::int32_t dr = {f.r - s.r};
             const std::int32_t dg = {f.g - s.g};
@@ -111,9 +111,9 @@ float differencePartial(
     for(const geometrize::Scanline& line : lines) {
         const std::int32_t y{line.y};
         for(std::int32_t x = line.x1; x <= line.x2; x++) {
-            const geometrize::rgba t{target.getPixel(x, y)};
-            const geometrize::rgba b{before.getPixel(x, y)};
-            const geometrize::rgba a{after.getPixel(x, y)};
+            const geometrize::rgba t(target.getPixel(x, y));
+            const geometrize::rgba b(before.getPixel(x, y));
+            const geometrize::rgba a(after.getPixel(x, y));
 
             const std::int32_t dtbr{t.r - b.r};
             const std::int32_t dtbg{t.g - b.g};
@@ -210,7 +210,7 @@ float energy(
         geometrize::Bitmap& buffer,
         const float score)
 {
-    const geometrize::rgba color{computeColor(target, current, lines, alpha)}; // Calculate best color for areas covered by the scanlines
+    const geometrize::rgba color(computeColor(target, current, lines, alpha)); // Calculate best color for areas covered by the scanlines
     geometrize::copyLines(buffer, current, lines); // Copy area covered by scanlines to buffer bitmap
     geometrize::drawLines(buffer, color, lines); // Blend scanlines into the buffer using the color calculated earlier
     return differencePartial(target, current, buffer, score, lines); // Get error measure between areas of current and modified buffers covered by scanlines
