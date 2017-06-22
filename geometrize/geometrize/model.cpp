@@ -128,7 +128,7 @@ public:
             const std::uint8_t alpha)
     {
         const std::vector<geometrize::Scanline> lines{shape->rasterize()};
-        const geometrize::rgba color{geometrize::core::computeColor(m_target, m_current, lines, alpha)};
+        const geometrize::rgba color(geometrize::core::computeColor(m_target, m_current, lines, alpha));
         const geometrize::Bitmap before{m_current};
         geometrize::drawLines(m_current, color, lines);
 
