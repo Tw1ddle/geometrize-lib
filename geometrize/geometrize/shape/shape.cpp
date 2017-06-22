@@ -7,7 +7,7 @@
 namespace geometrize
 {
 
-Shape::Shape(const geometrize::Model& model) : m_model{model}
+Shape::Shape(const geometrize::Model& model) : m_model(model)
 {
 }
 
