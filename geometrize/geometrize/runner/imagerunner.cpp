@@ -48,11 +48,11 @@ private:
 };
 
 ImageRunner::ImageRunner(const geometrize::Bitmap& targetBitmap) :
-    d{std::make_unique<ImageRunner::ImageRunnerImpl>(targetBitmap)}
+    d{std::unique_ptr<ImageRunner::ImageRunnerImpl>(new ImageRunner::ImageRunnerImpl(targetBitmap))}
 {}
 
 ImageRunner::ImageRunner(const geometrize::Bitmap& targetBitmap,  const geometrize::Bitmap& initialBitmap) :
-    d{std::make_unique<ImageRunner::ImageRunnerImpl>(targetBitmap, initialBitmap)}
+    d{std::unique_ptr<ImageRunner::ImageRunnerImpl>(new ImageRunner::ImageRunnerImpl(targetBitmap, initialBitmap))}
 {}
 
 ImageRunner::~ImageRunner()
