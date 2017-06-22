@@ -3,6 +3,8 @@
 #include <cstdint>
 #include <memory>
 #include <sstream>
+#include <utility>
+#include <vector>
 
 #include "shape.h"
 #include "../commonutil.h"
@@ -34,7 +36,7 @@ std::vector<geometrize::Scanline> Line::rasterize() const
 
     std::vector<geometrize::Scanline> lines;
 
-    const auto points{geometrize::bresenham(m_x1, m_y1, m_x2, m_y2)};
+    const std::vector<std::pair<std::int32_t, std::int32_t>> points{geometrize::bresenham(m_x1, m_y1, m_x2, m_y2)};
     for(const auto& point : points) {
        lines.push_back(geometrize::Scanline(point.second, point.first, point.first));
     }
