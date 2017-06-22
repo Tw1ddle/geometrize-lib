@@ -22,7 +22,7 @@ std::string exportBitmapData(const geometrize::Bitmap& bitmapData)
 
     for(std::uint32_t y = 0U; y < bitmapData.getHeight(); y++) {
         for(std::uint32_t x = 0U; x < bitmapData.getWidth(); x++) {
-            const geometrize::rgba pixel{bitmapData.getPixel(x, y)};
+            const geometrize::rgba pixel(bitmapData.getPixel(x, y));
             writeToStream(stream, pixel.r);
             writeToStream(stream, pixel.g);
             writeToStream(stream, pixel.b);

@@ -25,14 +25,14 @@ State::State(const geometrize::Model& model, const ShapeTypes shapeTypes, const 
 State& State::operator=(const geometrize::State& other)
 {
     if(this != &other) {
-        m_shape = other.m_shape->clone();
         m_score = other.m_score;
         m_alpha = other.m_alpha;
+        m_shape = other.m_shape->clone();
     }
     return *this;
 }
 
-State::State(const geometrize::State& other) : m_shape{other.m_shape->clone()}, m_score{other.m_score}, m_alpha{other.m_alpha}
+State::State(const geometrize::State& other) : m_score{other.m_score}, m_alpha{other.m_alpha}, m_shape{other.m_shape->clone()}
 {
 }
 
