@@ -36,7 +36,7 @@ void drawLines(geometrize::Bitmap& image, const geometrize::rgba color, const st
         const std::int32_t y{line.y};
 
         for(std::int32_t x = line.x1; x <= line.x2; x++) {
-            const geometrize::rgba d{image.getPixel(x, y)};
+            const geometrize::rgba d(image.getPixel(x, y));
 
             const std::uint8_t r{static_cast<std::uint8_t>(((d.r * aa + sr * m) / m) >> 8)};
             const std::uint8_t g{static_cast<std::uint8_t>(((d.g * aa + sg * m) / m) >> 8)};

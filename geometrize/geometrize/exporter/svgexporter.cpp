@@ -73,8 +73,8 @@ std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const st
            << "/>"
            << "\n";
 
-    for(std::int32_t i = 0; i < data.size(); i++) {
-        const geometrize::ShapeResult& s{data[i]};
+    for(std::size_t i = 0; i < data.size(); i++) {
+        const geometrize::ShapeResult& s(data[i]);
         std::string shapeData{s.shape->getSvgShapeData()};
         const geometrize::ShapeTypes shapeType{s.shape->getType()};
 

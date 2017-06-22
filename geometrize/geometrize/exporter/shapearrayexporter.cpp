@@ -25,7 +25,7 @@ std::string exportShapeArray(const std::vector<geometrize::ShapeResult>& data)
         const std::vector<std::int32_t> shapeData{s.shape->getRawShapeData()};
         for(std::size_t d = 0; d < shapeData.size(); d++) {
             stream << shapeData[d];
-            if(i != (shapeData.size() - 1)) {
+            if(i != (shapeData.size() - 1U)) {
                 stream << ",";
             }
         }
@@ -36,7 +36,7 @@ std::string exportShapeArray(const std::vector<geometrize::ShapeResult>& data)
                << static_cast<std::uint32_t>(s.color.b) << ","
                << static_cast<std::uint32_t>(s.color.a);
 
-        if(i != (data.size() - 1)) {
+        if(i != (data.size() - 1U)) {
             stream << "\n";
         }
     }
