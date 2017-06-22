@@ -3,6 +3,8 @@
 #include <cstdint>
 #include <memory>
 #include <sstream>
+#include <utility>
+#include <vector>
 
 #include "shape.h"
 #include "../model.h"
@@ -35,7 +37,7 @@ std::vector<geometrize::Scanline> Polyline::rasterize() const
         const std::pair<std::int32_t, std::int32_t> p0{m_points[i]};
         const std::pair<std::int32_t, std::int32_t> p1{i < (m_points.size() - 1) ? m_points[i + 1] : m_points[i]};
 
-        const auto points{geometrize::bresenham(p0.first, p0.second, p1.first, p1.second)};
+        const std::vector<std::pair<std::int32_t, std::int32_t>> points{geometrize::bresenham(p0.first, p0.second, p1.first, p1.second)};
         for(const auto& point : points) {
             lines.push_back(geometrize::Scanline(point.second, point.first, point.first));
         }
@@ -57,7 +59,7 @@ geometrize::ShapeTypes Polyline::getType() const
 std::vector<std::int32_t> Polyline::getRawShapeData() const
 {
     std::vector<std::int32_t> data;
-    for(std::int32_t i = 0; i < m_points.size(); i++) {
+    for(std::size_t i = 0; i < m_points.size(); i++) {
         data.push_back(m_points[i].first);
         data.push_back(m_points[i].second);
     }
@@ -69,7 +71,7 @@ std::string Polyline::getSvgShapeData() const
 {
     std::stringstream s;
     s << "<polyline points=\"";
-    for(std::int32_t i = 0; i < m_points.size(); i++) {
+    for(std::size_t i = 0; i < m_points.size(); i++) {
         s << m_points[i].first << "," << m_points[i].second;
         if(i != m_points.size() - 1) {
             s << " ";
