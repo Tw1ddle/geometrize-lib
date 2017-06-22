@@ -37,17 +37,18 @@ std::vector<geometrize::Scanline> RotatedEllipse::rasterize() const
     const std::uint32_t pointCount{20};
     std::vector<std::pair<std::int32_t, std::int32_t>> points;
     const float rads{m_angle * (3.141f / 180.0f)};
-    const float c{cos(rads)};
-    const float s{sin(rads)};
+    const float c{std::cos(rads)};
+    const float s{std::sin(rads)};
 
     for(std::uint32_t i = 0; i < pointCount; i++) {
         const float angle{((360.0f / pointCount) * i) * (3.141f / 180.0f)};
-        const float crx{m_rx * cos(angle)};
-        const float cry{m_ry * sin(angle)};
+        const float crx{m_rx * std::cos(angle)};
+        const float cry{m_ry * std::sin(angle)};
         points.push_back(std::make_pair(crx * c - cry * s + m_x, crx * s + cry * c + m_y));
     }
 
-    return Scanline::trim(geometrize::scanlinesForPolygon(points), w, h);
+    std::vector<geometrize::Scanline> scanlines{geometrize::scanlinesForPolygon(points)};
+    return geometrize::Scanline::trim(scanlines, w, h);
 }
 
 void RotatedEllipse::mutate()

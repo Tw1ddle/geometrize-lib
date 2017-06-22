@@ -32,7 +32,8 @@ std::shared_ptr<geometrize::Shape> Triangle::clone() const
 
 std::vector<geometrize::Scanline> Triangle::rasterize() const
 {
-    return Scanline::trim(geometrize::scanlinesForPolygon({{m_x1, m_y1}, {m_x2, m_y2}, {m_x3, m_y3}}), m_model.getWidth(), m_model.getHeight());
+    std::vector<geometrize::Scanline> scanlines{geometrize::scanlinesForPolygon({{m_x1, m_y1}, {m_x2, m_y2}, {m_x3, m_y3}})};
+    return Scanline::trim(scanlines, m_model.getWidth(), m_model.getHeight());
 }
 
 void Triangle::mutate()

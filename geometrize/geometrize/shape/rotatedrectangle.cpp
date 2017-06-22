@@ -31,7 +31,8 @@ std::shared_ptr<geometrize::Shape> RotatedRectangle::clone() const
 
 std::vector<geometrize::Scanline> RotatedRectangle::rasterize() const
 {
-    return Scanline::trim(geometrize::scanlinesForPolygon(getCornerPoints()), m_model.getWidth(), m_model.getHeight());
+    std::vector<geometrize::Scanline> scanlines{geometrize::scanlinesForPolygon(getCornerPoints())};
+    return geometrize::Scanline::trim(scanlines, m_model.getWidth(), m_model.getHeight());
 }
 
 void RotatedRectangle::mutate()
@@ -55,8 +56,8 @@ std::vector<std::pair<std::int32_t, std::int32_t>> RotatedRectangle::getCornerPo
     const std::int32_t oy2{y2 - cy};
 
     const float rads{m_angle * 3.141f / 180.0f};
-    const float c{cos(rads)};
-    const float s{sin(rads)};
+    const float c{std::cos(rads)};
+    const float s{std::sin(rads)};
 
     const std::pair<std::int32_t, std::int32_t> ul{ox1 * c - oy1 * s + cx, ox1 * s + oy1 * c + cy};
     const std::pair<std::int32_t, std::int32_t> bl{ox1 * c - oy2 * s + cx, ox1 * s + oy2 * c + cy};
