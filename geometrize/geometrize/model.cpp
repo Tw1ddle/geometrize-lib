@@ -186,10 +186,10 @@ private:
     geometrize::ShapeMutator m_shapeMutator; ///< The object responsible for setting up and mutating shapes created by this model.
 };
 
-Model::Model(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) : d{std::make_unique<Model::ModelImpl>(this, target, backgroundColor)}
+Model::Model(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) : d{std::unique_ptr<Model::ModelImpl>(new Model::ModelImpl(this, target, backgroundColor))}
 {}
 
-Model::Model(const geometrize::Bitmap& target, const geometrize::Bitmap& initial) : d{std::make_unique<Model::ModelImpl>(this, target, initial)}
+Model::Model(const geometrize::Bitmap& target, const geometrize::Bitmap& initial) : d{std::unique_ptr<Model::ModelImpl>(new Model::ModelImpl(this, target, initial))}
 {}
 
 Model::~Model()
