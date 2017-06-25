@@ -1,6 +1,6 @@
 #include "bitmap.h"
 
-#include <assert.h>
+#include <cassert>
 
 #include "rgba.h"
 

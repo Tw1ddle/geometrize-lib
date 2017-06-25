@@ -1,7 +1,7 @@
 #include "rotatedellipse.h"
 
+#include <cmath>
 #include <cstdint>
-#include <math.h>
 #include <memory>
 #include <sstream>
 

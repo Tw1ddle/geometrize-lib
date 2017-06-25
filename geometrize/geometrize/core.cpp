@@ -1,6 +1,6 @@
 #include "core.h"
 
-#include <assert.h>
+#include <cassert>
 #include <cmath>
 #include <cstdint>
 #include <vector>

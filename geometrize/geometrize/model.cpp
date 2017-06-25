@@ -2,7 +2,7 @@
 
 #include <algorithm>
 #include <atomic>
-#include <assert.h>
+#include <cassert>
 #include <cstdint>
 #include <future>
 #include <memory>

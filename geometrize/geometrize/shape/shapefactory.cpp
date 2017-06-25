@@ -1,7 +1,7 @@
 #include "shapefactory.h"
 
-#include <assert.h>
 #include <bitset>
+#include <cassert>
 #include <cstdint>
 #include <memory>
 

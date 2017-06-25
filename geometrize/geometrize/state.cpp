@@ -1,6 +1,6 @@
 #include "state.h"
 
-#include <assert.h>
+#include <cassert>
 #include <cstdint>
 #include <vector>
 
