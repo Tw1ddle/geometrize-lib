@@ -41,8 +41,9 @@ std::vector<geometrize::Scanline> QuadraticBezier::rasterize() const
     const std::uint32_t pointCount{20};
     for(std::uint32_t i = 0; i <= pointCount; i++) {
         const float t{static_cast<float>(i) / static_cast<float>(pointCount)};
-        const std::int32_t x{static_cast<std::int32_t>((1 - t) * (1 - t) * m_x1 + 2 * (1 - t) * t * m_cx + t * t + m_x2)};
-        const std::int32_t y{static_cast<std::int32_t>((1 - t) * (1 - t) * m_y1 + 2 * (1 - t) * t * m_cy + t * t + m_y2)};
+        const float tp{1 - t};
+        const std::int32_t x{static_cast<std::int32_t>(tp * (tp * m_x1 + (t * m_cx)) + t * ((tp * m_cx) + (t * m_x2)))};
+        const std::int32_t y{static_cast<std::int32_t>(tp * (tp * m_y1 + (t * m_cy)) + t * ((tp * m_cy) + (t * m_y2)))};
         points.push_back(std::make_pair(x, y));
     }
 
