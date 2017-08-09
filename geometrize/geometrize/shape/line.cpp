@@ -9,7 +9,7 @@
 #include "shape.h"
 #include "../commonutil.h"
 #include "../model.h"
-#include "shapeutil.h"
+#include "../rasterizer/rasterizer.h"
 
 namespace geometrize
 {

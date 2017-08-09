@@ -85,10 +85,10 @@ float differenceFull(const geometrize::Bitmap& first, const geometrize::Bitmap& 
             const geometrize::rgba f(first.getPixel(x, y));
             const geometrize::rgba s(second.getPixel(x, y));
 
-            const std::int32_t dr = {f.r - s.r};
-            const std::int32_t dg = {f.g - s.g};
-            const std::int32_t db = {f.b - s.b};
-            const std::int32_t da = {f.a - s.a};
+            const std::int32_t dr = {static_cast<std::int32_t>(f.r) - static_cast<std::int32_t>(s.r)};
+            const std::int32_t dg = {static_cast<std::int32_t>(f.g) - static_cast<std::int32_t>(s.g)};
+            const std::int32_t db = {static_cast<std::int32_t>(f.b) - static_cast<std::int32_t>(s.b)};
+            const std::int32_t da = {static_cast<std::int32_t>(f.a) - static_cast<std::int32_t>(s.a)};
             total += (dr * dr + dg * dg + db * db + da * da);
         }
     }
@@ -102,12 +102,8 @@ float differencePartial(
         const float score,
         const std::vector<Scanline>& lines)
 {
-    const std::size_t width{target.getWidth()};
-    const std::size_t height{target.getHeight()};
-    const std::size_t rgbaCount{width * height * 4};
-
-    // TODO this can underflow in some cases when the image is small
-    std::uint64_t total{static_cast<std::uint64_t>(std::pow(score * 255.0f, 2) * rgbaCount)};
+    const std::size_t rgbaCount{target.getWidth() * target.getHeight() * 4U};
+    std::uint64_t total{static_cast<std::uint64_t>((score * 255.0f) * (score * 255.0f) * rgbaCount)};
     for(const geometrize::Scanline& line : lines) {
         const std::int32_t y{line.y};
         for(std::int32_t x = line.x1; x <= line.x2; x++) {
@@ -115,21 +111,28 @@ float differencePartial(
             const geometrize::rgba b(before.getPixel(x, y));
             const geometrize::rgba a(after.getPixel(x, y));
 
-            const std::int32_t dtbr{t.r - b.r};
-            const std::int32_t dtbg{t.g - b.g};
-            const std::int32_t dtbb{t.b - b.b};
-            const std::int32_t dtba{t.a - b.a};
+            const std::int32_t dtbr{static_cast<std::int32_t>(t.r) - static_cast<std::int32_t>(b.r)};
+            const std::int32_t dtbg{static_cast<std::int32_t>(t.g) - static_cast<std::int32_t>(b.g)};
+            const std::int32_t dtbb{static_cast<std::int32_t>(t.b) - static_cast<std::int32_t>(b.b)};
+            const std::int32_t dtba{static_cast<std::int32_t>(t.a) - static_cast<std::int32_t>(b.a)};
 
-            const std::int32_t dtar{t.r - a.r};
-            const std::int32_t dtag{t.g - a.g};
-            const std::int32_t dtab{t.b - a.b};
-            const std::int32_t dtaa{t.a - a.a};
+            const std::int32_t dtar{static_cast<std::int32_t>(t.r) - static_cast<std::int32_t>(a.r)};
+            const std::int32_t dtag{static_cast<std::int32_t>(t.g) - static_cast<std::int32_t>(a.g)};
+            const std::int32_t dtab{static_cast<std::int32_t>(t.b) - static_cast<std::int32_t>(a.b)};
+            const std::int32_t dtaa{static_cast<std::int32_t>(t.a) - static_cast<std::int32_t>(a.a)};
 
-            total -= (dtbr * dtbr + dtbg * dtbg + dtbb * dtbb + dtba * dtba);
-            total += (dtar * dtar + dtag * dtag + dtab * dtab + dtaa * dtaa);
+            total -= static_cast<std::uint64_t>(dtbr * dtbr + dtbg * dtbg + dtbb * dtbb + dtba * dtba);
+            total += static_cast<std::uint64_t>(dtar * dtar + dtag * dtag + dtab * dtab + dtaa * dtaa);
         }
     }
-    return std::sqrt(static_cast<float>(total) / static_cast<float>(rgbaCount)) / 255.0f;
+
+    const float result{std::sqrt(static_cast<float>(total) / static_cast<float>(rgbaCount)) / 255.0f};
+
+    // NOTE needs work. This is a workaround because when score/energy is tiny total can unintentionally underflow
+    if(result > 1.0f) {
+        return score;
+    }
+    return result;
 }
 
 geometrize::State bestRandomState(
