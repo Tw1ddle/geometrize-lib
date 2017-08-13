@@ -82,7 +82,7 @@ std::string RotatedRectangle::getSvgShapeData() const
     const std::vector<std::pair<std::int32_t, std::int32_t>> points{getCornerPoints()};
     std::stringstream s;
     s << "<polygon points=\"";
-    for(std::int32_t i = 0; i < points.size(); i++) {
+    for(std::size_t i = 0; i < points.size(); i++) {
         s << points[i].first << "," << points[i].second;
         if(i != points.size() - 1) {
             s << " ";

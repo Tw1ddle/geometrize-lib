@@ -33,7 +33,7 @@ std::vector<geometrize::Scanline> Polyline::rasterize() const
 
     std::vector<geometrize::Scanline> lines;
 
-    for(std::int32_t i = 0; i < m_points.size(); i++) {
+    for(std::size_t i = 0; i < m_points.size(); i++) {
         const std::pair<std::int32_t, std::int32_t> p0{m_points[i]};
         const std::pair<std::int32_t, std::int32_t> p1{i < (m_points.size() - 1) ? m_points[i + 1] : m_points[i]};
 
