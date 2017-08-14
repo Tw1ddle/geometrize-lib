@@ -26,7 +26,7 @@ public:
      */
     Line(const geometrize::Model& model);
 
-    virtual std::shared_ptr<geometrize::Shape> clone() const;
+    virtual std::shared_ptr<geometrize::Shape> clone() const override;
     virtual std::vector<geometrize::Scanline> rasterize() const override;
     virtual void mutate() override;
     virtual geometrize::ShapeTypes getType() const override;

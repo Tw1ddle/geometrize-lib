@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cstdint>
+#include <cstdlib>
 #include <map>
 #include <set>
 #include <utility>
@@ -65,11 +66,11 @@ void copyLines(geometrize::Bitmap& destination, const geometrize::Bitmap& source
 std::vector<std::pair<std::int32_t, std::int32_t>> bresenham(std::int32_t x1, std::int32_t y1, const std::int32_t x2, const std::int32_t y2)
 {
     std::int32_t dx{x2 - x1};
-    const std::int8_t ix{(dx > 0) - (dx < 0)};
+    const std::int8_t ix{static_cast<std::int8_t>((dx > 0) - (dx < 0))};
     dx = std::abs(dx) << 1;
 
     std::int32_t dy{y2 - y1};
-    const std::int8_t iy{(dy > 0) - (dy < 0)};
+    const std::int8_t iy{static_cast<std::int8_t>((dy > 0) - (dy < 0))};
     dy = std::abs(dy) << 1;
 
     std::vector<std::pair<std::int32_t, std::int32_t>> points;
