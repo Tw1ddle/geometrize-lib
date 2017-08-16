@@ -2,6 +2,7 @@
 
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](https://github.com/Tw1ddle/geometrize-lib/blob/master/LICENSE)
 [![Coverity Scan Status](https://scan.coverity.com/projects/12991/badge.svg)](https://scan.coverity.com/projects/geometrize)
+[![codecov Coverage Stats](https://codecov.io/gh/Tw1ddle/geometrize-lib-unit-tests/branch/master/graph/badge.svg)](https://codecov.io/gh/Tw1ddle/geometrize-lib-unit-tests)
 
 Geometrize is a C++ library for transforming images into geometric primitives. Get a feel for what it does with the [Twitter bot](https://twitter.com/Geometrizer), the [web demo](http://www.samcodes.co.uk/project/geometrize-haxe-web/) or the [Geometrize app](http://www.geometrize.co.uk/).
 
@@ -11,7 +12,7 @@ Geometrize is a C++ library for transforming images into geometric primitives. G
 |--------------------------------------------------------------------|-------------------------------------------|
 | [Example](https://github.com/Tw1ddle/geometrize-lib-example)       | [![Travis Geometrize Example Build Status](https://img.shields.io/travis/Tw1ddle/geometrize-lib-example.svg?style=flat-square)](https://travis-ci.org/Tw1ddle/geometrize-lib-example) [![AppVeyor Geometrize Example Build Status](https://ci.appveyor.com/api/projects/status/tav5nu3isxvdjkbh?svg=true)](https://ci.appveyor.com/project/Tw1ddle/geometrize-lib-example)
 | [Fuzz Tests](https://github.com/Tw1ddle/geometrize-lib-fuzzing)    | [![Travis Fuzzing Build Status](https://img.shields.io/travis/Tw1ddle/geometrize-lib-fuzzing.svg?style=flat-square)](https://travis-ci.org/Tw1ddle/geometrize-lib-fuzzing) [![AppVeyor Fuzzing Build Status](https://ci.appveyor.com/api/projects/status/ebc5hbfu0mtofdom?svg=true)](https://ci.appveyor.com/project/Tw1ddle/geometrize-lib-fuzzing)
-| [Unit Tests](https://github.com/Tw1ddle/geometrize-lib-unit-tests) | [![Travis Unit Test Build Status](https://img.shields.io/travis/Tw1ddle/geometrize-lib-unit-tests.svg?style=flat-square)](https://travis-ci.org/Tw1ddle/geometrize-lib-unit-tests) [![AppVeyor Unit Test Build Status](https://ci.appveyor.com/api/projects/status/github/Tw1ddle/geometrize-lib-unit-tests?branch=master&svg=true)](https://ci.appveyor.com/project/Tw1ddle/geometrize-lib-unit-tests)[![codecov Coverage Stats](https://codecov.io/gh/Tw1ddle/geometrize-lib-unit-tests/branch/master/graph/badge.svg)](https://codecov.io/gh/Tw1ddle/geometrize-lib-unit-tests)
+| [Unit Tests](https://github.com/Tw1ddle/geometrize-lib-unit-tests) | [![Travis Unit Test Build Status](https://img.shields.io/travis/Tw1ddle/geometrize-lib-unit-tests.svg?style=flat-square)](https://travis-ci.org/Tw1ddle/geometrize-lib-unit-tests) [![AppVeyor Unit Test Build Status](https://ci.appveyor.com/api/projects/status/github/Tw1ddle/geometrize-lib-unit-tests?branch=master&svg=true)](https://ci.appveyor.com/project/Tw1ddle/geometrize-lib-unit-tests)
 | [Documentation](https://github.com/Tw1ddle/geometrize-lib-docs)    | [![Travis Documentation Build Status](https://img.shields.io/travis/Tw1ddle/geometrize-lib-docs.svg?style=flat-square)](https://travis-ci.org/Tw1ddle/geometrize-lib-docs)
 
 ## Features
