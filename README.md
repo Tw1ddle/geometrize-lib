@@ -2,7 +2,6 @@
 
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](https://github.com/Tw1ddle/geometrize-lib/blob/master/LICENSE)
 [![Coverity Scan Status](https://scan.coverity.com/projects/12991/badge.svg)](https://scan.coverity.com/projects/geometrize)
-[![codecov Coverage Stats](https://codecov.io/gh/Tw1ddle/geometrize-lib-unit-tests/branch/master/graph/badge.svg)](https://codecov.io/gh/Tw1ddle/geometrize-lib-unit-tests)
 
 Geometrize is a C++ library for transforming images into geometric primitives. Get a feel for what it does with the [Twitter bot](https://twitter.com/Geometrizer), the [web demo](http://www.samcodes.co.uk/project/geometrize-haxe-web/) or the [Geometrize app](http://www.geometrize.co.uk/).
 
