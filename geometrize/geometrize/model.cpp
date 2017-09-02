@@ -71,7 +71,7 @@ public:
             const std::uint32_t maxShapeMutations,
             std::uint32_t maxThreads)
     {
-        // Ensure that a sane value is given for the maximum number of threads
+        // Ensure that the maximum number of threads is a sane value
         if(maxThreads == 0) {
             maxThreads = std::thread::hardware_concurrency();
             if(maxThreads == 0) {
@@ -80,11 +80,10 @@ public:
             }
         }
 
-        std::vector<std::future<geometrize::State>> futures;
-
-        for(std::uint32_t i = 0; i < maxThreads; i++) {
+        std::vector<std::future<geometrize::State>> futures{maxThreads};
+        for(std::uint32_t i = 0; i < futures.size(); i++) {
             std::future<geometrize::State> handle{std::async(std::launch::async, [&](const std::uint32_t seed, const float lastScore) {
-                // Ensures that the results of the random generation are the same between jobs with identical settings
+                // Ensure that the results of the random generation are the same between jobs with identical settings
                 // The RNG is thread-local and std::async may use a thread pool (which is why this is necessary)
                 // Note this implementation requires maxThreads to be the same between jobs for each job to produce the same results.
                 geometrize::commonutil::seedRandomGenerator(seed);
@@ -92,12 +91,12 @@ public:
                 geometrize::Bitmap buffer{m_current};
                 return core::bestHillClimbState(*q, shapeTypes, alpha, shapeCount, maxShapeMutations, m_target, m_current, buffer, lastScore);
             }, m_baseRandomSeed + m_randomSeedOffset++, m_lastScore)};
-            futures.push_back(std::move(handle));
+            futures[i] = std::move(handle);
         }
 
         std::vector<geometrize::State> states;
         for(auto& f : futures) {
-            states.push_back(f.get());
+            states.emplace_back(f.get());
         }
         return states;
     }

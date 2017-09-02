@@ -16,7 +16,7 @@ namespace geometrize
 {
 
 /**
- * @brief The ImageRunner class is a helper class for creating a set of primitives from a single source image.
+ * @brief The ImageRunner class is a helper class for creating a set of primitives from a source image.
  * @author Sam Twidale (http://samcodes.co.uk/)
  */
 class ImageRunner
