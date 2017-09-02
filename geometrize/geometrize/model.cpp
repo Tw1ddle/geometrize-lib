@@ -23,10 +23,10 @@ namespace geometrize
 class Model::ModelImpl
 {
 public:
-    ModelImpl(geometrize::Model* pQ, const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) :
+    ModelImpl(geometrize::Model* pQ, const geometrize::Bitmap& target) :
         q{pQ},
         m_target{target},
-        m_current{target.getWidth(), target.getHeight(), backgroundColor},
+        m_current{target.getWidth(), target.getHeight(), geometrize::commonutil::getAverageImageColor(m_target)},
         m_lastScore{geometrize::core::differenceFull(m_target, m_current)},
         m_baseRandomSeed{0U},
         m_randomSeedOffset{0U}
@@ -138,7 +138,9 @@ public:
         return result;
     }
 
-    geometrize::ShapeResult drawShape(const std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)
+    geometrize::ShapeResult drawShape(
+            const std::shared_ptr<geometrize::Shape> shape,
+            const geometrize::rgba color)
     {
         const std::vector<geometrize::Scanline> lines{shape->rasterize()};
         const geometrize::Bitmap before{m_current};
@@ -186,7 +188,7 @@ private:
     geometrize::ShapeMutator m_shapeMutator; ///< Object responsible for setting up and mutating shapes created by this model.
 };
 
-Model::Model(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) : d{std::unique_ptr<Model::ModelImpl>(new Model::ModelImpl(this, target, backgroundColor))}
+Model::Model(const geometrize::Bitmap& target) : d{std::unique_ptr<Model::ModelImpl>(new Model::ModelImpl(this, target))}
 {}
 
 Model::Model(const geometrize::Bitmap& target, const geometrize::Bitmap& initial) : d{std::unique_ptr<Model::ModelImpl>(new Model::ModelImpl(this, target, initial))}
@@ -223,6 +225,11 @@ std::vector<geometrize::ShapeResult> Model::step(
 geometrize::ShapeResult Model::drawShape(const std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)
 {
     return d->drawShape(shape, alpha);
+}
+
+geometrize::ShapeResult Model::drawShape(std::shared_ptr<geometrize::Shape> shape, geometrize::rgba color)
+{
+    return d->drawShape(shape, color);
 }
 
 geometrize::Bitmap& Model::getTarget()

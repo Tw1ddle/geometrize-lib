@@ -38,7 +38,7 @@ std::vector<geometrize::Scanline> Rectangle::rasterize() const
     for(std::int32_t y = y1; y < y2; y++) {
         lines.push_back(geometrize::Scanline(y, x1, x2));
     }
-    return lines;
+    return geometrize::Scanline::trim(lines, m_model.getWidth(), m_model.getHeight());
 }
 
 void Rectangle::mutate()
