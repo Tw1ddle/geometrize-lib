@@ -37,6 +37,16 @@ public:
         return m_model.getTarget();
     }
 
+    const geometrize::Bitmap& getCurrent() const
+    {
+        return m_model.getCurrent();
+    }
+
+    const geometrize::Bitmap& getTarget() const
+    {
+        return m_model.getTarget();
+    }
+
     geometrize::Model& getModel()
     {
         return m_model;
@@ -68,6 +78,16 @@ geometrize::Bitmap& ImageRunner::getCurrent()
 }
 
 geometrize::Bitmap& ImageRunner::getTarget()
+{
+    return d->getTarget();
+}
+
+const geometrize::Bitmap& ImageRunner::getCurrent() const
+{
+    return d->getCurrent();
+}
+
+const geometrize::Bitmap& ImageRunner::getTarget() const
 {
     return d->getTarget();
 }

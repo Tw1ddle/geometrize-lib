@@ -104,6 +104,18 @@ public:
     geometrize::Bitmap& getTarget();
 
     /**
+     * @brief getCurrent Gets the current bitmap, const-edition.
+     * @return The current bitmap.
+     */
+    const geometrize::Bitmap& getCurrent() const;
+
+    /**
+     * @brief getTarget Gets the target bitmap, const-edition.
+     * @return The target bitmap.
+     */
+    const geometrize::Bitmap& getTarget() const;
+
+    /**
      * @brief setSeed Sets the seed that the random number generators of this model use. Note that the model also uses an internal seed offset which is incremented when the model is stepped.
      * @param seed The random number generator seed.
      */

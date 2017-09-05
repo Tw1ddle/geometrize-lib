@@ -59,6 +59,18 @@ public:
     geometrize::Bitmap& getTarget();
 
     /**
+     * @brief getCurrent Gets the current bitmap with the primitives drawn on it, const-edition.
+     * @return The current bitmap.
+     */
+    const geometrize::Bitmap& getCurrent() const;
+
+    /**
+     * @brief getTarget Gets the target bitmap, const-edition.
+     * @return The target bitmap.
+     */
+    const geometrize::Bitmap& getTarget() const;
+
+    /**
      * @brief getModel Gets the underlying model.
      * @return The model.
      */

@@ -161,6 +161,16 @@ public:
         return m_current;
     }
 
+    const geometrize::Bitmap& getTarget() const
+    {
+        return m_target;
+    }
+
+    const geometrize::Bitmap& getCurrent() const
+    {
+        return m_current;
+    }
+
     void setSeed(const std::uint32_t seed)
     {
         m_baseRandomSeed = seed;
@@ -237,6 +247,16 @@ geometrize::Bitmap& Model::getTarget()
 }
 
 geometrize::Bitmap& Model::getCurrent()
+{
+    return d->getCurrent();
+}
+
+const geometrize::Bitmap& Model::getTarget() const
+{
+    return d->getTarget();
+}
+
+const geometrize::Bitmap& Model::getCurrent() const
 {
     return d->getCurrent();
 }
