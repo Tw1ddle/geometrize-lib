@@ -61,7 +61,9 @@ std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const st
     std::stringstream stream;
 
     stream << "<?xml version=\"1.0\" standalone=\"no\"?>" << "\n";
-    stream << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.2\" baseProfile=\"tiny\" " << "width=\"" << width << "\" " << "height=\"" << height << "\">" << "\n";
+    stream << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.2\" baseProfile=\"tiny\" " <<
+              "width=\"" << width << "\" " << "height=\"" << height << "\" " <<
+              "viewBox=\"" << 0 << " " << 0 << " " << width << " " << height << "\">" << "\n";
 
     for(std::size_t i = 0; i < data.size(); i++) {
         const geometrize::ShapeResult& s(data[i]);
