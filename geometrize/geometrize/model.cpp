@@ -83,9 +83,9 @@ public:
         std::vector<std::future<geometrize::State>> futures{maxThreads};
         for(std::uint32_t i = 0; i < futures.size(); i++) {
             std::future<geometrize::State> handle{std::async(std::launch::async, [&](const std::uint32_t seed, const float lastScore) {
-                // Ensure that the results of the random generation are the same between jobs with identical settings
+                // Ensure that the results of the random generation are the same between tasks with identical settings
                 // The RNG is thread-local and std::async may use a thread pool (which is why this is necessary)
-                // Note this implementation requires maxThreads to be the same between jobs for each job to produce the same results.
+                // Note this implementation requires maxThreads to be the same between tasks for each task to produce the same results.
                 geometrize::commonutil::seedRandomGenerator(seed);
 
                 geometrize::Bitmap buffer{m_current};
