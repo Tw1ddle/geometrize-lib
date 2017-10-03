@@ -23,10 +23,10 @@ namespace geometrize
 class Model::ModelImpl
 {
 public:
-    ModelImpl(geometrize::Model* pQ, const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) :
+    ModelImpl(geometrize::Model* pQ, const geometrize::Bitmap& target) :
         q{pQ},
         m_target{target},
-        m_current{target.getWidth(), target.getHeight(), backgroundColor},
+        m_current{target.getWidth(), target.getHeight(), geometrize::commonutil::getAverageImageColor(m_target)},
         m_lastScore{geometrize::core::differenceFull(m_target, m_current)},
         m_baseRandomSeed{0U},
         m_randomSeedOffset{0U}
@@ -71,7 +71,7 @@ public:
             const std::uint32_t maxShapeMutations,
             std::uint32_t maxThreads)
     {
-        // Ensure that a sane value is given for the maximum number of threads
+        // Ensure that the maximum number of threads is a sane value
         if(maxThreads == 0) {
             maxThreads = std::thread::hardware_concurrency();
             if(maxThreads == 0) {
@@ -80,24 +80,23 @@ public:
             }
         }
 
-        std::vector<std::future<geometrize::State>> futures;
-
-        for(std::uint32_t i = 0; i < maxThreads; i++) {
+        std::vector<std::future<geometrize::State>> futures{maxThreads};
+        for(std::uint32_t i = 0; i < futures.size(); i++) {
             std::future<geometrize::State> handle{std::async(std::launch::async, [&](const std::uint32_t seed, const float lastScore) {
-                // Ensures that the results of the random generation are the same between jobs with identical settings
+                // Ensure that the results of the random generation are the same between tasks with identical settings
                 // The RNG is thread-local and std::async may use a thread pool (which is why this is necessary)
-                // Note this implementation requires maxThreads to be the same between jobs for each job to produce the same results.
+                // Note this implementation requires maxThreads to be the same between tasks for each task to produce the same results.
                 geometrize::commonutil::seedRandomGenerator(seed);
 
                 geometrize::Bitmap buffer{m_current};
                 return core::bestHillClimbState(*q, shapeTypes, alpha, shapeCount, maxShapeMutations, m_target, m_current, buffer, lastScore);
             }, m_baseRandomSeed + m_randomSeedOffset++, m_lastScore)};
-            futures.push_back(std::move(handle));
+            futures[i] = std::move(handle);
         }
 
         std::vector<geometrize::State> states;
         for(auto& f : futures) {
-            states.push_back(f.get());
+            states.emplace_back(f.get());
         }
         return states;
     }
@@ -138,7 +137,9 @@ public:
         return result;
     }
 
-    geometrize::ShapeResult drawShape(const std::shared_ptr<geometrize::Shape> shape, const geometrize::rgba color)
+    geometrize::ShapeResult drawShape(
+            const std::shared_ptr<geometrize::Shape> shape,
+            const geometrize::rgba color)
     {
         const std::vector<geometrize::Scanline> lines{shape->rasterize()};
         const geometrize::Bitmap before{m_current};
@@ -156,6 +157,16 @@ public:
     }
 
     geometrize::Bitmap& getCurrent()
+    {
+        return m_current;
+    }
+
+    const geometrize::Bitmap& getTarget() const
+    {
+        return m_target;
+    }
+
+    const geometrize::Bitmap& getCurrent() const
     {
         return m_current;
     }
@@ -186,7 +197,7 @@ private:
     geometrize::ShapeMutator m_shapeMutator; ///< Object responsible for setting up and mutating shapes created by this model.
 };
 
-Model::Model(const geometrize::Bitmap& target, const geometrize::rgba backgroundColor) : d{std::unique_ptr<Model::ModelImpl>(new Model::ModelImpl(this, target, backgroundColor))}
+Model::Model(const geometrize::Bitmap& target) : d{std::unique_ptr<Model::ModelImpl>(new Model::ModelImpl(this, target))}
 {}
 
 Model::Model(const geometrize::Bitmap& target, const geometrize::Bitmap& initial) : d{std::unique_ptr<Model::ModelImpl>(new Model::ModelImpl(this, target, initial))}
@@ -225,12 +236,27 @@ geometrize::ShapeResult Model::drawShape(const std::shared_ptr<geometrize::Shape
     return d->drawShape(shape, alpha);
 }
 
+geometrize::ShapeResult Model::drawShape(std::shared_ptr<geometrize::Shape> shape, geometrize::rgba color)
+{
+    return d->drawShape(shape, color);
+}
+
 geometrize::Bitmap& Model::getTarget()
 {
     return d->getTarget();
 }
 
 geometrize::Bitmap& Model::getCurrent()
+{
+    return d->getCurrent();
+}
+
+const geometrize::Bitmap& Model::getTarget() const
+{
+    return d->getTarget();
+}
+
+const geometrize::Bitmap& Model::getCurrent() const
 {
     return d->getCurrent();
 }

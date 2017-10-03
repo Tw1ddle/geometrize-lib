@@ -30,11 +30,10 @@ struct SVGExportOptions
  * @param data The shape data to export.
  * @param width The width of the SVG image.
  * @param height The height of the SVG image.
- * @param backgroundColor The background color of the SVG image.
  * @param options additional options used by the exporter.
  * @return A string representing the SVG image.
  */
-std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const std::uint32_t width, const std::uint32_t height, geometrize::rgba backgroundColor, SVGExportOptions options = SVGExportOptions{});
+std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const std::uint32_t width, const std::uint32_t height, SVGExportOptions options = SVGExportOptions{});
 
 }
 

@@ -16,7 +16,7 @@ namespace geometrize
 {
 
 /**
- * @brief The ImageRunner class is a helper class for creating a set of primitives from a single source image.
+ * @brief The ImageRunner class is a helper class for creating a set of primitives from a source image.
  * @author Sam Twidale (http://samcodes.co.uk/)
  */
 class ImageRunner
@@ -57,6 +57,18 @@ public:
      * @return The target bitmap.
      */
     geometrize::Bitmap& getTarget();
+
+    /**
+     * @brief getCurrent Gets the current bitmap with the primitives drawn on it, const-edition.
+     * @return The current bitmap.
+     */
+    const geometrize::Bitmap& getCurrent() const;
+
+    /**
+     * @brief getTarget Gets the target bitmap, const-edition.
+     * @return The target bitmap.
+     */
+    const geometrize::Bitmap& getTarget() const;
 
     /**
      * @brief getModel Gets the underlying model.

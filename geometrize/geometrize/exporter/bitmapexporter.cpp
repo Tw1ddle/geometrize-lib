@@ -52,7 +52,7 @@ inline void writeToStream(std::ostringstream& stream, const std::uint8_t& t)
     stream.write(reinterpret_cast<const char*>(&t), sizeof(std::uint8_t));
 }
 
-std::string exportBitmap(const geometrize::Bitmap& bitmapData)
+std::string exportBMP(const geometrize::Bitmap& bitmapData)
 {
     std::ostringstream stream(std::ios::binary);
 

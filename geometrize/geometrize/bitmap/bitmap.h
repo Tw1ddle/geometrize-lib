@@ -80,8 +80,8 @@ public:
     void fill(geometrize::rgba color);
 
 private:
-    const std::uint32_t m_width; ///< The width of the bitmap.
-    const std::uint32_t m_height; ///< The height of the bitmap.
+    std::uint32_t m_width; ///< The width of the bitmap.
+    std::uint32_t m_height; ///< The height of the bitmap.
     std::vector<std::uint8_t> m_data; ///< The bitmap data.
 };
 

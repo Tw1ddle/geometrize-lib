@@ -14,3 +14,5 @@ after_script:
   - ./trigger_travis.sh Tw1ddle geometrize-lib-docs master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_DOCS_TRIGGER
   - ./trigger_travis.sh Tw1ddle geometrize-lib-unit-tests master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_UNIT_TESTS_TRIGGER
   - ./trigger_travis.sh Tw1ddle geometrize-lib-fuzzing master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_FUZZING_TRIGGER
+  - ./trigger_travis.sh Tw1ddle geometrize-lib-example master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_EXAMPLE_TRIGGER
+  - ./trigger_travis.sh Tw1ddle geometrize master $TRAVIS_ACCESS_TOKEN_GEOMETRIZE_APP_TRIGGER

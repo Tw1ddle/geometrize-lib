@@ -62,7 +62,7 @@ std::vector<geometrize::Scanline> Ellipse::rasterize() const
         }
     }
 
-    return lines;
+    return geometrize::Scanline::trim(lines, m_model.getWidth(), m_model.getHeight());
 }
 
 void Ellipse::mutate()
