@@ -10,25 +10,21 @@
 ## Features
 
  * Geometrize images into shapes.
- * Export the results to SVG, JSON, bitmaps and more.
+ * Export the results as SVG, JSON and more.
 
 ## Usage
 
-Examine the minimal [example](https://github.com/Tw1ddle/geometrize-lib-example) project code and read the documentation [here](http://tw1ddle.github.io/geometrize-lib-docs/). Also examine projects that use it below.
+Refer to the minimal [example](https://github.com/Tw1ddle/geometrize-lib-example) project and read the [documentation](http://tw1ddle.github.io/geometrize-lib-docs/). These projects may also be useful references:
 
-## Build Status
-
-| Component                                                          | Build Status
+| Project                                                            | Build Status
 |--------------------------------------------------------------------|-------------------------------------------|
-| [Geometrize App](https://github.com/Tw1ddle/geometrize)            | [![Travis Geometrize App Build Status](https://img.shields.io/travis/Tw1ddle/geometrize.svg?style=flat-square)](https://travis-ci.org/Tw1ddle/geometrize) [![AppVeyor Geometrize App Build Status](https://ci.appveyor.com/api/projects/status/09l5nquksmev8ta4?svg=true)]
+| [Geometrize App](https://github.com/Tw1ddle/geometrize)            | [![Travis Geometrize App Build Status](https://img.shields.io/travis/Tw1ddle/geometrize.svg?style=flat-square)](https://travis-ci.org/Tw1ddle/geometrize) [![AppVeyor Geometrize App Build Status](https://ci.appveyor.com/api/projects/status/09l5nquksmev8ta4?svg=true)](https://ci.appveyor.com/project/Tw1ddle/geometrize-lib)
 | [Example](https://github.com/Tw1ddle/geometrize-lib-example)       | [![Travis Geometrize Example Build Status](https://img.shields.io/travis/Tw1ddle/geometrize-lib-example.svg?style=flat-square)](https://travis-ci.org/Tw1ddle/geometrize-lib-example) [![AppVeyor Geometrize Example Build Status](https://ci.appveyor.com/api/projects/status/tav5nu3isxvdjkbh?svg=true)](https://ci.appveyor.com/project/Tw1ddle/geometrize-lib-example)
 | [Fuzz Tests](https://github.com/Tw1ddle/geometrize-lib-fuzzing)    | [![Travis Fuzzing Build Status](https://img.shields.io/travis/Tw1ddle/geometrize-lib-fuzzing.svg?style=flat-square)](https://travis-ci.org/Tw1ddle/geometrize-lib-fuzzing) [![AppVeyor Fuzzing Build Status](https://ci.appveyor.com/api/projects/status/ebc5hbfu0mtofdom?svg=true)](https://ci.appveyor.com/project/Tw1ddle/geometrize-lib-fuzzing)
 | [Unit Tests](https://github.com/Tw1ddle/geometrize-lib-unit-tests) | [![Travis Unit Test Build Status](https://img.shields.io/travis/Tw1ddle/geometrize-lib-unit-tests.svg?style=flat-square)](https://travis-ci.org/Tw1ddle/geometrize-lib-unit-tests) [![AppVeyor Unit Test Build Status](https://ci.appveyor.com/api/projects/status/github/Tw1ddle/geometrize-lib-unit-tests?branch=master&svg=true)](https://ci.appveyor.com/project/Tw1ddle/geometrize-lib-unit-tests)
 | [Documentation](https://github.com/Tw1ddle/geometrize-lib-docs)    | [![Travis Documentation Build Status](https://img.shields.io/travis/Tw1ddle/geometrize-lib-docs.svg?style=flat-square)](https://travis-ci.org/Tw1ddle/geometrize-lib-docs)
 
 ## Shape Comparison
-
-Geometrize supports rectangles, rotated rectangles, triangles, circles, ellipses, rotated ellipses, lines, polylines and quadratic beziers.
 
 The matrix below shows typical results for a combination of circles, triangles, rotated rectangles, rotated ellipses and all supported shapes at 50, 200 and 500 total shapes:
 
@@ -42,11 +38,11 @@ The matrix below shows typical results for a combination of circles, triangles, 
 
 ## Screenshots
 
-For examples of geometrized images, see the [gallery](http://gallery.geometrize.co.uk/).
+See the [gallery](http://gallery.geometrize.co.uk/).
 
 ## Resources
 
- * See the Geometrize [resources](http://resources.geometrize.co.uk/) page.
+See the Geometrize [resources](http://resources.geometrize.co.uk/) page.
 
 ## Notes
  * Got an idea or suggestion? Open an issue on GitHub, or send Sam a message on [Twitter](https://twitter.com/Sam_Twidale).
