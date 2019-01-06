@@ -17,7 +17,7 @@ Rectangle::Rectangle(const geometrize::Model& model) : Shape{model}
     m_model->setupShape(*this);
 }
 
-Rectangle::Rectangle(const std::int32_t x1, const std::int32_t y1, const std::int32_t x2, const std::int32_t y2) : Shape()
+Rectangle::Rectangle(const float x1, const float y1, const float x2, const float y2) : Shape()
 {
     m_x1 = x1;
     m_y1 = y1;
@@ -37,10 +37,10 @@ std::shared_ptr<geometrize::Shape> Rectangle::clone() const
 
 std::vector<geometrize::Scanline> Rectangle::rasterize() const
 {
-    const std::int32_t x1{(std::min)(m_x1, m_x2)};
-    const std::int32_t x2{(std::max)(m_x1, m_x2)};
-    const std::int32_t y1{(std::min)(m_y1, m_y2)};
-    const std::int32_t y2{(std::max)(m_y1, m_y2)};
+    const std::int32_t x1{static_cast<std::int32_t>((std::min)(m_x1, m_x2))};
+    const std::int32_t x2{static_cast<std::int32_t>((std::max)(m_x1, m_x2))};
+    const std::int32_t y1{static_cast<std::int32_t>((std::min)(m_y1, m_y2))};
+    const std::int32_t y2{static_cast<std::int32_t>((std::max)(m_y1, m_y2))};
 
     std::vector<geometrize::Scanline> lines;
     for(std::int32_t y = y1; y < y2; y++) {
@@ -54,12 +54,25 @@ void Rectangle::mutate()
     m_model->mutateShape(*this);
 }
 
+void Rectangle::translate(const float x, const float y)
+{
+    m_x1 += x;
+    m_y1 += y;
+    m_x2 += x;
+    m_y2 += y;
+}
+
+void Rectangle::scale(const float scaleFactor)
+{
+    // TODO
+}
+
 geometrize::ShapeTypes Rectangle::getType() const
 {
     return geometrize::ShapeTypes::RECTANGLE;
 }
 
-std::vector<std::int32_t> Rectangle::getRawShapeData() const
+std::vector<float> Rectangle::getRawShapeData() const
 {
     return {
         ((std::min)(m_x1, m_x2)),

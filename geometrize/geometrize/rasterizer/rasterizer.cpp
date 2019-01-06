@@ -107,14 +107,14 @@ std::vector<std::pair<std::int32_t, std::int32_t>> bresenham(std::int32_t x1, st
     return points;
 }
 
-std::vector<geometrize::Scanline> scanlinesForPolygon(const std::vector<std::pair<std::int32_t, std::int32_t>>& points)
+std::vector<geometrize::Scanline> scanlinesForPolygon(const std::vector<std::pair<float, float>>& points)
 {
     std::vector<geometrize::Scanline> lines;
 
     std::vector<std::pair<std::int32_t, std::int32_t>> edges;
     for(std::size_t i = 0; i < points.size(); i++) {
-        const std::pair<std::int32_t, std::int32_t> p1{points[i]};
-        const std::pair<std::int32_t, std::int32_t> p2{(i == (points.size() - 1)) ? points[0U] : points[i + 1U]};
+        const std::pair<std::int32_t, std::int32_t> p1{static_cast<std::int32_t>(points[i].first), static_cast<std::int32_t>(points[i].second)};
+        const std::pair<std::int32_t, std::int32_t> p2{(i == (points.size() - 1)) ? std::make_pair(static_cast<std::int32_t>(points[0U].first), static_cast<std::int32_t>(points[0U].second)) : std::make_pair(static_cast<std::int32_t>(points[i + 1U].first), static_cast<std::int32_t>(points[i + 1U].second))};
         const std::vector<std::pair<std::int32_t, std::int32_t>> p1p2{geometrize::bresenham(p1.first, p1.second, p2.first, p2.second)};
         edges.insert(edges.end(), p1p2.begin(), p1p2.end());
     }
@@ -132,6 +132,40 @@ std::vector<geometrize::Scanline> scanlinesForPolygon(const std::vector<std::pai
     }
 
     return lines;
+}
+
+bool scanlinesOverlap(const std::vector<geometrize::Scanline>& first, const std::vector<geometrize::Scanline>& second)
+{
+    for(const auto& f : first) {
+        for(const auto& s : second) {
+            if(f.y == s.y) {
+                if(f.x1 >= s.x1 && f.x2 <= s.x2) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+bool scanlinesContain(const std::vector<geometrize::Scanline>& first, const std::vector<geometrize::Scanline>& second)
+{
+    for(const auto& s : first) {
+        bool contained = false;
+        for(const auto& f : second) {
+            if(f.y == s.y) {
+                if(f.x1 <= s.x1 && f.x2 >= s.x2) {
+                    contained = true;
+                }
+            }
+        }
+
+        if(!contained) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 }

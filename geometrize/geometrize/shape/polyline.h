@@ -21,7 +21,7 @@ class Polyline : public Shape
 {
 public:
     Polyline() = default;
-    Polyline(const std::vector<std::pair<std::int32_t, std::int32_t>>& points);
+    Polyline(const std::vector<std::pair<float, float>>& points);
     /**
      * @brief Polyline Creates a new polyline.
      * @param model The model that created this shape.
@@ -31,11 +31,13 @@ public:
     virtual std::shared_ptr<geometrize::Shape> clone() const override;
     virtual std::vector<geometrize::Scanline> rasterize() const override;
     virtual void mutate() override;
+    virtual void translate(float x, float y) override;
+    virtual void scale(float scaleFactor) override;
     virtual geometrize::ShapeTypes getType() const override;
-    virtual std::vector<std::int32_t> getRawShapeData() const override;
+    virtual std::vector<float> getRawShapeData() const override;
     virtual std::string getSvgShapeData() const override;
 
-    std::vector<std::pair<std::int32_t, std::int32_t>> m_points; ///< The points on the polyline.
+    std::vector<std::pair<float, float>> m_points; ///< The points on the polyline.
 };
 
 }

@@ -21,7 +21,7 @@ class RotatedRectangle : public Shape
 {
 public:
     RotatedRectangle() = default;
-    RotatedRectangle(std::int32_t x1, std::int32_t y1, std::int32_t x2, std::int32_t y2, std::int32_t angle);
+    RotatedRectangle(float x1, float y1, float x2, float y2, float angle);
     /**
      * @brief RotatedRectangle Creates a new rotated rectangle.
      * @param model The model that created this shape.
@@ -31,17 +31,19 @@ public:
     virtual std::shared_ptr<geometrize::Shape> clone() const override;
     virtual std::vector<geometrize::Scanline> rasterize() const override;
     virtual void mutate() override;
+    virtual void translate(float x, float y) override;
+    virtual void scale(float scaleFactor) override;
     virtual geometrize::ShapeTypes getType() const override;
-    virtual std::vector<std::int32_t> getRawShapeData() const override;
+    virtual std::vector<float> getRawShapeData() const override;
     virtual std::string getSvgShapeData() const override;
 
-    std::vector<std::pair<std::int32_t, std::int32_t>> getCornerPoints() const;
+    std::vector<std::pair<float, float>> getCornerPoints() const;
 
-    std::int32_t m_x1; ///< Left coordinate.
-    std::int32_t m_y1; ///< Top coordinate.
-    std::int32_t m_x2; ///< Right coordinate.
-    std::int32_t m_y2; ///< Bottom coordinate.
-    std::int32_t m_angle; ///< Rotation angle.
+    float m_x1; ///< Left coordinate.
+    float m_y1; ///< Top coordinate.
+    float m_x2; ///< Right coordinate.
+    float m_y2; ///< Bottom coordinate.
+    float m_angle; ///< Rotation angle.
 };
 
 }

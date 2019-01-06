@@ -21,7 +21,7 @@ class Rectangle : public Shape
 {
 public:
     Rectangle() = default;
-    Rectangle(std::int32_t x1, std::int32_t y1, std::int32_t x2, std::int32_t y2);
+    Rectangle(float x1, float y1, float x2, float y2);
     /**
      * @brief Rectangle Creates a new rectangle.
      * @param model The model that created this shape.
@@ -31,14 +31,16 @@ public:
     virtual std::shared_ptr<geometrize::Shape> clone() const override;
     virtual std::vector<geometrize::Scanline> rasterize() const override;
     virtual void mutate() override;
+    virtual void translate(float x, float y) override;
+    virtual void scale(float scaleFactor) override;
     virtual geometrize::ShapeTypes getType() const override;
-    virtual std::vector<std::int32_t> getRawShapeData() const override;
+    virtual std::vector<float> getRawShapeData() const override;
     virtual std::string getSvgShapeData() const override;
 
-    std::int32_t m_x1; ///< Left coordinate.
-    std::int32_t m_y1; ///< Top coordinate.
-    std::int32_t m_x2; ///< Right coordinate.
-    std::int32_t m_y2; ///< Bottom coordinate.
+    float m_x1; ///< Left coordinate.
+    float m_y1; ///< Top coordinate.
+    float m_x2; ///< Right coordinate.
+    float m_y2; ///< Bottom coordinate.
 };
 
 }

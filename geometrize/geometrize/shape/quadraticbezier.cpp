@@ -18,7 +18,7 @@ QuadraticBezier::QuadraticBezier(const geometrize::Model& model) : Shape{model}
     m_model->setupShape(*this);
 }
 
-QuadraticBezier::QuadraticBezier(const std::int32_t cx, const std::int32_t cy, const std::int32_t x1, const std::int32_t y1, const std::int32_t x2, const std::int32_t y2) : Shape()
+QuadraticBezier::QuadraticBezier(const float cx, const float cy, const float x1, const float y1, const float x2, const float y2) : Shape()
 {
     m_cx = cx;
     m_cy = cy;
@@ -61,7 +61,7 @@ std::vector<geometrize::Scanline> QuadraticBezier::rasterize() const
         const std::pair<std::int32_t, std::int32_t> p0{points[i]};
         const std::pair<std::int32_t, std::int32_t> p1{points[i + 1]};
 
-        const std::vector<std::pair<std::int32_t, std::int32_t>> points{geometrize::bresenham(p0.first, p0.second, p1.first, p1.second)};
+        const std::vector<std::pair<std::int32_t, std::int32_t>> points{geometrize::bresenham(static_cast<std::int32_t>(p0.first), static_cast<std::int32_t>(p0.second), static_cast<std::int32_t>(p1.first), static_cast<std::int32_t>(p1.second))};
         for(const std::pair<std::int32_t, std::int32_t>& point : points) {
             scanlines.push_back(geometrize::Scanline(point.second, point.first, point.first));
         }
@@ -75,12 +75,27 @@ void QuadraticBezier::mutate()
     m_model->mutateShape(*this);
 }
 
+void QuadraticBezier::translate(const float x, const float y)
+{
+    m_cx += x;
+    m_cy += y;
+    m_x1 += x;
+    m_y1 += y;
+    m_x2 += x;
+    m_y2 += y;
+}
+
+void QuadraticBezier::scale(const float scaleFactor)
+{
+    // TODO
+}
+
 geometrize::ShapeTypes QuadraticBezier::getType() const
 {
     return geometrize::ShapeTypes::QUADRATIC_BEZIER;
 }
 
-std::vector<std::int32_t> QuadraticBezier::getRawShapeData() const
+std::vector<float> QuadraticBezier::getRawShapeData() const
 {
     return { m_x1, m_y1, m_cx, m_cy, m_x2, m_y2 };
 }

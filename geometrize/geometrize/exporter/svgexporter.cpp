@@ -56,6 +56,43 @@ std::string getSVGStrokeOpacityAttrib(const geometrize::rgba color)
     return stream.str();
 }
 
+std::string exportSingleShapeSVG(const geometrize::rgba& color, const geometrize::Shape& shape, const std::uint32_t width, const std::uint32_t height, SVGExportOptions /*options*/)
+{
+    std::stringstream stream;
+
+    stream << "<?xml version=\"1.0\" standalone=\"no\"?>" << "\n";
+    stream << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.2\" baseProfile=\"tiny\" " <<
+              "width=\"" << width << "\" " << "height=\"" << height << "\" " <<
+              "viewBox=\"" << 0 << " " << 0 << " " << width << " " << height << "\">" << "\n";
+
+    std::string shapeData{shape.getSvgShapeData()};
+    const geometrize::ShapeTypes shapeType{shape.getType()};
+
+    std::string styles{""};
+
+    styles.append("id=\"" + std::to_string(0) + "\" ");
+
+    if(shapeType == geometrize::ShapeTypes::LINE
+            || shapeType == geometrize::ShapeTypes::POLYLINE
+            || shapeType == geometrize::ShapeTypes::QUADRATIC_BEZIER) {
+        styles.append(getSVGStrokeAttrib(color));
+        styles.append(" stroke-width=\"1\" fill=\"none\" ");
+        styles.append(getSVGStrokeOpacityAttrib(color));
+    } else {
+        styles.append(getSVGFillAttrib(color));
+        styles.append(" ");
+        styles.append(getSVGFillOpacityAttrib(color));
+    }
+
+    shapeData = std::regex_replace(shapeData, std::regex(geometrize::Shape::SVG_STYLE_HOOK), styles);
+
+    stream << shapeData << "\n";
+
+    stream << "</svg>";
+
+    return stream.str();
+}
+
 std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const std::uint32_t width, const std::uint32_t height, const SVGExportOptions /*options*/)
 {
     std::stringstream stream;

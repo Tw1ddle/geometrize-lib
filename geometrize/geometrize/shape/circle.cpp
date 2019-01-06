@@ -16,7 +16,7 @@ Circle::Circle(const geometrize::Model& model) : Shape{model}
     m_model->setupShape(*this);
 }
 
-Circle::Circle(const std::int32_t x, const std::int32_t y, const std::int32_t r) : Shape()
+Circle::Circle(const float x, const float y, const float r) : Shape()
 {
     m_x = x;
     m_y = y;
@@ -48,9 +48,9 @@ std::vector<geometrize::Scanline> Circle::rasterize() const
         }
 
         if(!xScan.empty()) {
-            const std::int32_t fy{m_y + y};
-            const std::int32_t x1{commonutil::clamp(m_x + xScan.front(), 0, xBound - 1)};
-            const std::int32_t x2{commonutil::clamp(m_x + xScan.back(), 0, xBound - 1)};
+            const std::int32_t fy{static_cast<std::int32_t>(m_y) + y};
+            const std::int32_t x1{commonutil::clamp(static_cast<std::int32_t>(m_x) + xScan.front(), 0, xBound - 1)};
+            const std::int32_t x2{commonutil::clamp(static_cast<std::int32_t>(m_x) + xScan.back(), 0, xBound - 1)};
             lines.push_back(geometrize::Scanline(fy, x1, x2));
         }
     }
@@ -63,12 +63,23 @@ void Circle::mutate()
     m_model->mutateShape(*this);
 }
 
+void Circle::translate(const float x, const float y)
+{
+    m_x += x;
+    m_y += y;
+}
+
+void Circle::scale(const float scaleFactor)
+{
+    m_r *= scaleFactor;
+}
+
 geometrize::ShapeTypes Circle::getType() const
 {
     return geometrize::ShapeTypes::CIRCLE;
 }
 
-std::vector<std::int32_t> Circle::getRawShapeData() const
+std::vector<float> Circle::getRawShapeData() const
 {
     return { m_x, m_y, m_r };
 }

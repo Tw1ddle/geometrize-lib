@@ -19,7 +19,7 @@ Polyline::Polyline(const geometrize::Model& model) : Shape{model}
     m_model->setupShape(*this);
 }
 
-Polyline::Polyline(const std::vector<std::pair<std::int32_t, std::int32_t>>& points) : Shape()
+Polyline::Polyline(const std::vector<std::pair<float, float>>& points) : Shape()
 {
     m_points = points;
 }
@@ -39,8 +39,8 @@ std::vector<geometrize::Scanline> Polyline::rasterize() const
     std::vector<geometrize::Scanline> lines;
 
     for(std::size_t i = 0; i < m_points.size(); i++) {
-        const std::pair<std::int32_t, std::int32_t> p0{m_points[i]};
-        const std::pair<std::int32_t, std::int32_t> p1{i < (m_points.size() - 1) ? m_points[i + 1] : m_points[i]};
+        const std::pair<std::int32_t, std::int32_t> p0{m_points[i].first, m_points[i].second};
+        const std::pair<std::int32_t, std::int32_t> p1{i < (m_points.size() - 1) ? std::make_pair(static_cast<std::int32_t>(m_points[i + 1].first), static_cast<std::int32_t>(m_points[i + 1].second)) : p0};
 
         const std::vector<std::pair<std::int32_t, std::int32_t>> points{geometrize::bresenham(p0.first, p0.second, p1.first, p1.second)};
         for(const auto& point : points) {
@@ -56,14 +56,27 @@ void Polyline::mutate()
     m_model->mutateShape(*this);
 }
 
+void Polyline::translate(const float x, const float y)
+{
+    for(auto& point : m_points) {
+        point.first += x;
+        point.second += y;
+    }
+}
+
+void Polyline::scale(const float scaleFactor)
+{
+    // TODO
+}
+
 geometrize::ShapeTypes Polyline::getType() const
 {
     return geometrize::ShapeTypes::POLYLINE;
 }
 
-std::vector<std::int32_t> Polyline::getRawShapeData() const
+std::vector<float> Polyline::getRawShapeData() const
 {
-    std::vector<std::int32_t> data;
+    std::vector<float> data;
     for(std::size_t i = 0; i < m_points.size(); i++) {
         data.push_back(m_points[i].first);
         data.push_back(m_points[i].second);

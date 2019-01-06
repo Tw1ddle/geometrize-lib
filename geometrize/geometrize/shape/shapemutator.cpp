@@ -85,8 +85,8 @@ void setupRectangle(geometrize::Rectangle& shape)
 
     shape.m_x1 = geometrize::commonutil::randomRange(0, xBound - 1);
     shape.m_y1 = geometrize::commonutil::randomRange(0, yBound - 1);
-    shape.m_x2 = geometrize::commonutil::clamp(shape.m_x1 + geometrize::commonutil::randomRange(1, 32), 0, xBound - 1);
-    shape.m_y2 = geometrize::commonutil::clamp(shape.m_y1 + geometrize::commonutil::randomRange(1, 32), 0, yBound - 1);
+    shape.m_x2 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_x1) + geometrize::commonutil::randomRange(1, 32), 0, xBound - 1);
+    shape.m_y2 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_y1) + geometrize::commonutil::randomRange(1, 32), 0, yBound - 1);
 }
 
 void setupRotatedEllipse(geometrize::RotatedEllipse& shape)
@@ -108,8 +108,8 @@ void setupRotatedRectangle(geometrize::RotatedRectangle& shape)
 
     shape.m_x1 = geometrize::commonutil::randomRange(0, xBound - 1);
     shape.m_y1 = geometrize::commonutil::randomRange(0, yBound - 1);
-    shape.m_x2 = geometrize::commonutil::clamp(shape.m_x1 + geometrize::commonutil::randomRange(1, 32), 0, xBound);
-    shape.m_y2 = geometrize::commonutil::clamp(shape.m_y1 + geometrize::commonutil::randomRange(1, 32), 0, yBound);
+    shape.m_x2 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_x1) + geometrize::commonutil::randomRange(1, 32), 0, xBound);
+    shape.m_y2 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_y1) + geometrize::commonutil::randomRange(1, 32), 0, yBound);
     shape.m_angle = geometrize::commonutil::randomRange(0, 360);
 }
 
@@ -135,13 +135,13 @@ void mutateCircle(geometrize::Circle& shape)
     switch(r) {
         case 0:
         {
-            shape.m_x = geometrize::commonutil::clamp(shape.m_x + geometrize::commonutil::randomRange(-16, 16), 0, xBound - 1);
-            shape.m_y = geometrize::commonutil::clamp(shape.m_y + geometrize::commonutil::randomRange(-16, 16), 0, yBound - 1);
+            shape.m_x = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_x) + geometrize::commonutil::randomRange(-16, 16), 0, xBound - 1);
+            shape.m_y = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_y) + geometrize::commonutil::randomRange(-16, 16), 0, yBound - 1);
             break;
         }
         case 1:
         {
-            shape.m_r = geometrize::commonutil::clamp(shape.m_r + geometrize::commonutil::randomRange(-16, 16), 1, xBound - 1);
+            shape.m_r = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_r) + geometrize::commonutil::randomRange(-16, 16), 1, xBound - 1);
             break;
         }
     }
@@ -156,18 +156,18 @@ void mutateEllipse(geometrize::Ellipse& shape)
     switch(r) {
         case 0:
         {
-            shape.m_x = geometrize::commonutil::clamp(shape.m_x + geometrize::commonutil::randomRange(-16, 16), 0, xBound - 1);
-            shape.m_y = geometrize::commonutil::clamp(shape.m_y + geometrize::commonutil::randomRange(-16, 16), 0, yBound - 1);
+            shape.m_x = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_x) + geometrize::commonutil::randomRange(-16, 16), 0, xBound - 1);
+            shape.m_y = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_y) + geometrize::commonutil::randomRange(-16, 16), 0, yBound - 1);
             break;
         }
         case 1:
         {
-            shape.m_rx = geometrize::commonutil::clamp(shape.m_rx + geometrize::commonutil::randomRange(-16, 16), 1, xBound - 1);
+            shape.m_rx = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_rx) + geometrize::commonutil::randomRange(-16, 16), 1, xBound - 1);
             break;
         }
         case 2:
         {
-            shape.m_ry = geometrize::commonutil::clamp(shape.m_ry + geometrize::commonutil::randomRange(-16, 16), 1, yBound - 1);
+            shape.m_ry = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_ry) + geometrize::commonutil::randomRange(-16, 16), 1, yBound - 1);
             break;
         }
     }
@@ -183,14 +183,14 @@ void mutateLine(geometrize::Line& shape)
     switch(r) {
         case 0:
         {
-            shape.m_x1 = geometrize::commonutil::clamp(shape.m_x1 + geometrize::commonutil::randomRange(-16, 16), 0, xBound - 1);
-            shape.m_y1 = geometrize::commonutil::clamp(shape.m_y1 + geometrize::commonutil::randomRange(-16, 16), 0, yBound - 1);
+            shape.m_x1 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_x1) + geometrize::commonutil::randomRange(-16, 16), 0, xBound - 1);
+            shape.m_y1 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_y1) + geometrize::commonutil::randomRange(-16, 16), 0, yBound - 1);
             break;
         }
         case 1:
         {
-            shape.m_x2 = geometrize::commonutil::clamp(shape.m_x2 + geometrize::commonutil::randomRange(-16, 16), 0, xBound - 1);
-            shape.m_y2 = geometrize::commonutil::clamp(shape.m_y2 + geometrize::commonutil::randomRange(-16, 16), 0, yBound - 1);
+            shape.m_x2 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_x2) + geometrize::commonutil::randomRange(-16, 16), 0, xBound - 1);
+            shape.m_y2 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_y2) + geometrize::commonutil::randomRange(-16, 16), 0, yBound - 1);
             break;
         }
     }
@@ -218,20 +218,20 @@ void mutateQuadraticBezier(geometrize::QuadraticBezier& shape)
     switch(r) {
         case 0:
         {
-            shape.m_cx = geometrize::commonutil::clamp(shape.m_cx + geometrize::commonutil::randomRange(-8, 8), 0, xBound - 1);
-            shape.m_cy = geometrize::commonutil::clamp(shape.m_cy + geometrize::commonutil::randomRange(-8, 8), 0, yBound - 1);
+            shape.m_cx = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_cx) + geometrize::commonutil::randomRange(-8, 8), 0, xBound - 1);
+            shape.m_cy = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_cy) + geometrize::commonutil::randomRange(-8, 8), 0, yBound - 1);
             break;
         }
         case 1:
         {
-            shape.m_x1 = geometrize::commonutil::clamp(shape.m_x1 + geometrize::commonutil::randomRange(-8, 8), 1, xBound - 1);
-            shape.m_y1 = geometrize::commonutil::clamp(shape.m_y1 + geometrize::commonutil::randomRange(-8, 8), 1, yBound - 1);
+            shape.m_x1 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_x1) + geometrize::commonutil::randomRange(-8, 8), 1, xBound - 1);
+            shape.m_y1 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_y1) + geometrize::commonutil::randomRange(-8, 8), 1, yBound - 1);
             break;
         }
         case 2:
         {
-            shape.m_x2 = geometrize::commonutil::clamp(shape.m_x2 + geometrize::commonutil::randomRange(-8, 8), 1, xBound - 1);
-            shape.m_y2 = geometrize::commonutil::clamp(shape.m_y2 + geometrize::commonutil::randomRange(-8, 8), 1, yBound - 1);
+            shape.m_x2 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_x2) + geometrize::commonutil::randomRange(-8, 8), 1, xBound - 1);
+            shape.m_y2 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_y2) + geometrize::commonutil::randomRange(-8, 8), 1, yBound - 1);
             break;
         }
     }
@@ -246,14 +246,14 @@ void mutateRectangle(geometrize::Rectangle& shape)
     switch(r) {
         case 0:
         {
-            shape.m_x1 = geometrize::commonutil::clamp(shape.m_x1 + geometrize::commonutil::randomRange(-16, 16), 0, xBound - 1);
-            shape.m_y1 = geometrize::commonutil::clamp(shape.m_y1 + geometrize::commonutil::randomRange(-16, 16), 0, yBound - 1);
+            shape.m_x1 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_x1) + geometrize::commonutil::randomRange(-16, 16), 0, xBound - 1);
+            shape.m_y1 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_y1) + geometrize::commonutil::randomRange(-16, 16), 0, yBound - 1);
             break;
         }
         case 1:
         {
-            shape.m_x2 = geometrize::commonutil::clamp(shape.m_x2 + geometrize::commonutil::randomRange(-16, 16), 0, xBound - 1);
-            shape.m_y2 = geometrize::commonutil::clamp(shape.m_y2 + geometrize::commonutil::randomRange(-16, 16), 0, yBound - 1);
+            shape.m_x2 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_x2) + geometrize::commonutil::randomRange(-16, 16), 0, xBound - 1);
+            shape.m_y2 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_y2) + geometrize::commonutil::randomRange(-16, 16), 0, yBound - 1);
             break;
         }
     }
@@ -268,23 +268,23 @@ void mutateRotatedEllipse(geometrize::RotatedEllipse& shape)
     switch(r) {
         case 0:
         {
-            shape.m_x = geometrize::commonutil::clamp(shape.m_x + geometrize::commonutil::randomRange(-16, 16), 0, xBound - 1);
-            shape.m_y = geometrize::commonutil::clamp(shape.m_y + geometrize::commonutil::randomRange(-16, 16), 0, yBound - 1);
+            shape.m_x = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_x) + geometrize::commonutil::randomRange(-16, 16), 0, xBound - 1);
+            shape.m_y = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_y) + geometrize::commonutil::randomRange(-16, 16), 0, yBound - 1);
             break;
         }
         case 1:
         {
-            shape.m_rx = geometrize::commonutil::clamp(shape.m_rx + geometrize::commonutil::randomRange(-16, 16), 1, xBound - 1);
+            shape.m_rx = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_rx) + geometrize::commonutil::randomRange(-16, 16), 1, xBound - 1);
             break;
         }
         case 2:
         {
-            shape.m_ry = geometrize::commonutil::clamp(shape.m_ry + geometrize::commonutil::randomRange(-16, 16), 1, yBound - 1);
+            shape.m_ry = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_ry) + geometrize::commonutil::randomRange(-16, 16), 1, yBound - 1);
             break;
         }
         case 3:
         {
-            shape.m_angle = geometrize::commonutil::clamp(shape.m_angle + geometrize::commonutil::randomRange(-16, 16), 0, 360);
+            shape.m_angle = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_angle) + geometrize::commonutil::randomRange(-16, 16), 0, 360);
             break;
         }
     }
@@ -299,19 +299,19 @@ void mutateRotatedRectangle(geometrize::RotatedRectangle& shape)
     switch(r) {
         case 0:
         {
-            shape.m_x1 = geometrize::commonutil::clamp(shape.m_x1 + geometrize::commonutil::randomRange(-16, 16), 0, xBound);
-            shape.m_y1 = geometrize::commonutil::clamp(shape.m_y1 + geometrize::commonutil::randomRange(-16, 16), 0, yBound);
+            shape.m_x1 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_x1) + geometrize::commonutil::randomRange(-16, 16), 0, xBound);
+            shape.m_y1 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_y1) + geometrize::commonutil::randomRange(-16, 16), 0, yBound);
             break;
         }
         case 1:
         {
-            shape.m_x2 = geometrize::commonutil::clamp(shape.m_x2 + geometrize::commonutil::randomRange(-16, 16), 0, xBound);
-            shape.m_y2 = geometrize::commonutil::clamp(shape.m_y2 + geometrize::commonutil::randomRange(-16, 16), 0, yBound);
+            shape.m_x2 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_x2) + geometrize::commonutil::randomRange(-16, 16), 0, xBound);
+            shape.m_y2 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_y2) + geometrize::commonutil::randomRange(-16, 16), 0, yBound);
             break;
         }
         case 2:
         {
-            shape.m_angle = geometrize::commonutil::clamp(shape.m_angle + geometrize::commonutil::randomRange(-4, 4), 0, 360);
+            shape.m_angle = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_angle) + geometrize::commonutil::randomRange(-4, 4), 0, 360);
             break;
         }
     }
@@ -326,20 +326,20 @@ void mutateTriangle(geometrize::Triangle& shape)
     switch(r) {
         case 0:
         {
-            shape.m_x1 = geometrize::commonutil::clamp(shape.m_x1 + geometrize::commonutil::randomRange(-32, 32), 0, xBound);
-            shape.m_y1 = geometrize::commonutil::clamp(shape.m_y1 + geometrize::commonutil::randomRange(-32, 32), 0, yBound);
+            shape.m_x1 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_x1) + geometrize::commonutil::randomRange(-32, 32), 0, xBound);
+            shape.m_y1 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_y1) + geometrize::commonutil::randomRange(-32, 32), 0, yBound);
             break;
         }
         case 1:
         {
-            shape.m_x2 = geometrize::commonutil::clamp(shape.m_x2 + geometrize::commonutil::randomRange(-32, 32), 0, xBound);
-            shape.m_y2 = geometrize::commonutil::clamp(shape.m_y2 + geometrize::commonutil::randomRange(-32, 32), 0, yBound);
+            shape.m_x2 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_x2) + geometrize::commonutil::randomRange(-32, 32), 0, xBound);
+            shape.m_y2 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_y2) + geometrize::commonutil::randomRange(-32, 32), 0, yBound);
             break;
         }
         case 2:
         {
-            shape.m_x3 = geometrize::commonutil::clamp(shape.m_x3 + geometrize::commonutil::randomRange(-32, 32), 0, xBound);
-            shape.m_y3 = geometrize::commonutil::clamp(shape.m_y3 + geometrize::commonutil::randomRange(-32, 32), 0, yBound);
+            shape.m_x3 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_x3) + geometrize::commonutil::randomRange(-32, 32), 0, xBound);
+            shape.m_y3 = geometrize::commonutil::clamp(static_cast<std::int32_t>(shape.m_y3) + geometrize::commonutil::randomRange(-32, 32), 0, yBound);
             break;
         }
     }

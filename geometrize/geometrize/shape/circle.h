@@ -21,7 +21,7 @@ class Circle : public Shape
 {
 public:
     Circle() = default;
-    Circle(std::int32_t x, std::int32_t y, std::int32_t r);
+    Circle(float x, float y, float r);
     /**
      * @brief Circle Creates a new circle.
      * @param model The model that created this shape.
@@ -31,13 +31,15 @@ public:
     virtual std::shared_ptr<geometrize::Shape> clone() const override;
     virtual std::vector<geometrize::Scanline> rasterize() const override;
     virtual void mutate() override;
+    virtual void translate(float x, float y) override;
+    virtual void scale(float scaleFactor) override;
     virtual geometrize::ShapeTypes getType() const override;
-    virtual std::vector<std::int32_t> getRawShapeData() const override;
+    virtual std::vector<float> getRawShapeData() const override;
     virtual std::string getSvgShapeData() const override;
 
-    std::int32_t m_x; ///< x-coordinate.
-    std::int32_t m_y; ///< y-coordinate.
-    std::int32_t m_r; ///< Radius.
+    float m_x; ///< x-coordinate.
+    float m_y; ///< y-coordinate.
+    float m_r; ///< Radius.
 };
 
 }

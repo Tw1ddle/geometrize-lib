@@ -18,7 +18,7 @@ RotatedEllipse::RotatedEllipse(const geometrize::Model& model) : Shape{model}
     m_model->setupShape(*this);
 }
 
-RotatedEllipse::RotatedEllipse(const std::int32_t x, const std::int32_t y, const std::int32_t rx, const std::int32_t ry, const std::int32_t angle) : Shape()
+RotatedEllipse::RotatedEllipse(const float x, const float y, const float rx, const float ry, const float angle) : Shape()
 {
     m_x = x;
     m_y = y;
@@ -44,7 +44,7 @@ std::vector<geometrize::Scanline> RotatedEllipse::rasterize() const
     const std::int32_t h{m_model->getHeight()};
 
     const std::uint32_t pointCount{20};
-    std::vector<std::pair<std::int32_t, std::int32_t>> points;
+    std::vector<std::pair<float, float>> points;
     const float rads{m_angle * (3.141f / 180.0f)};
     const float c{std::cos(rads)};
     const float s{std::sin(rads)};
@@ -59,9 +59,21 @@ std::vector<geometrize::Scanline> RotatedEllipse::rasterize() const
     std::vector<geometrize::Scanline> scanlines{geometrize::scanlinesForPolygon(points)};
     return geometrize::Scanline::trim(scanlines, w, h);
 }
+
 void RotatedEllipse::mutate()
 {
     m_model->mutateShape(*this);
+}
+
+void RotatedEllipse::translate(const float x, const float y)
+{
+    m_x += x;
+    m_y += y;
+}
+
+void RotatedEllipse::scale(const float scaleFactor)
+{
+    // TODO
 }
 
 geometrize::ShapeTypes RotatedEllipse::getType() const
@@ -69,7 +81,7 @@ geometrize::ShapeTypes RotatedEllipse::getType() const
     return geometrize::ShapeTypes::ROTATED_ELLIPSE;
 }
 
-std::vector<std::int32_t> RotatedEllipse::getRawShapeData() const
+std::vector<float> RotatedEllipse::getRawShapeData() const
 {
     return { m_x, m_y, m_rx, m_ry, m_angle };
 }

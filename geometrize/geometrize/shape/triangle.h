@@ -21,7 +21,7 @@ class Triangle : public Shape
 {
 public:
     Triangle() = default;
-    Triangle(std::int32_t x1, std::int32_t y1, std::int32_t x2, std::int32_t y2, std::int32_t x3, std::int32_t y3);
+    Triangle(float x1, float y1, float x2, float y2, float x3, float y3);
     /**
      * @brief Triangle Creates a new triangle.
      * @param model The model that created this shape.
@@ -31,16 +31,18 @@ public:
     virtual std::shared_ptr<geometrize::Shape> clone() const override;
     virtual std::vector<geometrize::Scanline> rasterize() const override;
     virtual void mutate() override;
+    virtual void translate(float x, float y) override;
+    virtual void scale(float scaleFactor) override;
     virtual geometrize::ShapeTypes getType() const override;
-    virtual std::vector<std::int32_t> getRawShapeData() const override;
+    virtual std::vector<float> getRawShapeData() const override;
     virtual std::string getSvgShapeData() const override;
 
-    std::int32_t m_x1; ///< First x-coordinate.
-    std::int32_t m_y1; ///< First y-coordinate.
-    std::int32_t m_x2; ///< Second x-coordinate.
-    std::int32_t m_y2; ///< Second y-coordinate.
-    std::int32_t m_x3; ///< Third x-coordinate.
-    std::int32_t m_y3; ///< Third y-coordinate.
+    float m_x1; ///< First x-coordinate.
+    float m_y1; ///< First y-coordinate.
+    float m_x2; ///< Second x-coordinate.
+    float m_y2; ///< Second y-coordinate.
+    float m_x3; ///< Third x-coordinate.
+    float m_y3; ///< Third y-coordinate.
 };
 
 }

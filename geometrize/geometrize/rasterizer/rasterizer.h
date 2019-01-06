@@ -46,6 +46,22 @@ std::vector<std::pair<std::int32_t, std::int32_t>> bresenham(std::int32_t x1, st
  * @param points The vertices of the polygon.
  * @return Scanlines for the polygon.
  */
-std::vector<geometrize::Scanline> scanlinesForPolygon(const std::vector<std::pair<std::int32_t, std::int32_t>>& points);
+std::vector<geometrize::Scanline> scanlinesForPolygon(const std::vector<std::pair<float, float>>& points);
+
+/**
+ * @brief scanlinesOverlap Returns true if any of the scanlines from the first vector overlap the second
+ * @param first First collection of scanlines.
+ * @param second Second collection of scanlines.
+ * @return True if there are any overlaps, else false.
+ */
+bool scanlinesOverlap(const std::vector<geometrize::Scanline>& first, const std::vector<geometrize::Scanline>& second);
+
+/**
+ * @brief scanlinesContain Returns true if the first vector of scanlines wholly contain the second vector of scanlines.
+ * @param first First collection of scanlines.
+ * @param second Second collection of scanlines.
+ * @return True if the first set of scanlines wholly contains the second set, else false.
+ */
+bool scanlinesContain(const std::vector<geometrize::Scanline>& first, const std::vector<geometrize::Scanline>& second);
 
 }

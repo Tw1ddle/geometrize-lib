@@ -47,6 +47,19 @@ public:
     virtual void mutate() = 0;
 
     /**
+     * @brief translate Translates the shape by the given x and y values.
+     * @param x Translation on the x-axis.
+     * @param y Translation on the y-axis.
+     */
+    virtual void translate(float x, float y) = 0;
+
+    /**
+     * @brief scale Scales the shape around its center.
+     * @param scaleFactor the scale factor, must be greater than 0.
+     */
+    virtual void scale(float scaleFactor) = 0;
+
+    /**
      * @brief getType Gets the ShapeType of the shape.
      * @return The ShapeType of the shape.
      */
@@ -56,7 +69,7 @@ public:
      * @brief getRawShapeData Gets a vector of data that represents the shape geometry, the format varies depending on the ShapeType.
      * @return The shape data.
      */
-    virtual std::vector<std::int32_t> getRawShapeData() const = 0;
+    virtual std::vector<float> getRawShapeData() const = 0;
 
     /**
      * @brief getSvgShapeData Gets a string that represents a SVG element that describes the shape geometry.
@@ -78,5 +91,21 @@ public:
 
     const geometrize::Model* m_model; ///< The model that creates, sets up and mutates shapes
 };
+
+/**
+ * @brief shapesOverlap Returns true if the given shapes overlap. Note this implementation is brute force and slow.
+ * @param a The first shape.
+ * @param b The second shape.
+ * @return Returns true if the shapes overlap, else false.
+ */
+bool shapesOverlap(const geometrize::Shape& a, const geometrize::Shape& b);
+
+/**
+ * @brief shapeContains Returns true if the first shape contains the second one. Note this implementation is brute force and slow.
+ * @param container The first shape.
+ * @param containee The second shape.
+ * @return Returns true if the first shape is contained within the second one, else false.
+ */
+bool shapeContains(const geometrize::Shape& container, const geometrize::Shape& containee);
 
 }

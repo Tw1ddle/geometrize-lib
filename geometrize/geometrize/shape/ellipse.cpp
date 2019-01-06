@@ -17,7 +17,7 @@ Ellipse::Ellipse(const geometrize::Model& model) : Shape{model}
     m_model->setupShape(*this);
 }
 
-Ellipse::Ellipse(const std::int32_t x, const std::int32_t y, const std::int32_t rx, const std::int32_t ry) : Shape()
+Ellipse::Ellipse(const float x, const float y, const float rx, const float ry) : Shape()
 {
     m_x = x;
     m_y = y;
@@ -45,16 +45,16 @@ std::vector<geometrize::Scanline> Ellipse::rasterize() const
     const std::int32_t h{m_model->getHeight()};
 
     for (std::int32_t dy = 0; dy < m_ry; dy++) {
-        const std::int32_t y1{m_y - dy};
-        const std::int32_t y2{m_y + dy};
+        const std::int32_t y1{static_cast<std::int32_t>(m_y) - dy};
+        const std::int32_t y2{static_cast<std::int32_t>(m_y) + dy};
 
         if ((y1 < 0 || y1 >= h) && (y2 < 0 || y2 >= h)) {
             continue;
         }
 
         const std::int32_t s{static_cast<std::int32_t>(std::sqrt(m_ry * m_ry - dy * dy) * aspect)};
-        std::int32_t x1{m_x - s};
-        std::int32_t x2{m_x + s};
+        std::int32_t x1{static_cast<std::int32_t>(m_x) - s};
+        std::int32_t x2{static_cast<std::int32_t>(m_x) + s};
         if (x1 < 0) {
             x1 = 0;
         }
@@ -78,12 +78,24 @@ void Ellipse::mutate()
     m_model->mutateShape(*this);
 }
 
+void Ellipse::translate(const float x, const float y)
+{
+    m_x += x;
+    m_y += y;
+}
+
+void Ellipse::scale(const float scaleFactor)
+{
+    m_rx *= scaleFactor;
+    m_ry *= scaleFactor;
+}
+
 geometrize::ShapeTypes Ellipse::getType() const
 {
     return geometrize::ShapeTypes::ELLIPSE;
 }
 
-std::vector<std::int32_t> Ellipse::getRawShapeData() const
+std::vector<float> Ellipse::getRawShapeData() const
 {
     return { m_x, m_y, m_rx, m_ry };
 }

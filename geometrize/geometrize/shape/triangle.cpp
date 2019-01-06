@@ -18,7 +18,7 @@ Triangle::Triangle(const geometrize::Model& model) : Shape{model}
     m_model->setupShape(*this);
 }
 
-Triangle::Triangle(const std::int32_t x1, const std::int32_t y1, const std::int32_t x2, const std::int32_t y2, const std::int32_t x3, const std::int32_t y3) : Shape()
+Triangle::Triangle(const float x1, const float y1, const float x2, const float y2, const float x3, const float y3) : Shape()
 {
     m_x1 = x1;
     m_y1 = y1;
@@ -42,7 +42,7 @@ std::shared_ptr<geometrize::Shape> Triangle::clone() const
 
 std::vector<geometrize::Scanline> Triangle::rasterize() const
 {
-    std::vector<geometrize::Scanline> scanlines{geometrize::scanlinesForPolygon({{m_x1, m_y1}, {m_x2, m_y2}, {m_x3, m_y3}})};
+    std::vector<geometrize::Scanline> scanlines{geometrize::scanlinesForPolygon({{static_cast<std::int32_t>(m_x1), static_cast<std::int32_t>(m_y1)}, {static_cast<std::int32_t>(m_x2), static_cast<std::int32_t>(m_y2)}, {static_cast<std::int32_t>(m_x3), static_cast<std::int32_t>(m_y3)}})};
     return Scanline::trim(scanlines, m_model->getWidth(), m_model->getHeight());
 }
 
@@ -51,12 +51,27 @@ void Triangle::mutate()
     m_model->mutateShape(*this);
 }
 
+void Triangle::translate(const float x, const float y)
+{
+    m_x1 += x;
+    m_y1 += y;
+    m_x2 += x;
+    m_y2 += y;
+    m_x3 += x;
+    m_y3 += y;
+}
+
+void Triangle::scale(const float scaleFactor)
+{
+    // TODO
+}
+
 geometrize::ShapeTypes Triangle::getType() const
 {
     return ShapeTypes::TRIANGLE;
 }
 
-std::vector<std::int32_t> Triangle::getRawShapeData() const
+std::vector<float> Triangle::getRawShapeData() const
 {
     return { m_x1, m_y1, m_x2, m_y2, m_x3, m_y3 };
 }

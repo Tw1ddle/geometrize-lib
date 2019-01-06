@@ -5,6 +5,7 @@
 #include <cassert>
 #include <cstdint>
 #include <future>
+#include <iostream>
 #include <memory>
 #include <vector>
 
@@ -96,7 +97,11 @@ public:
 
         std::vector<geometrize::State> states;
         for(auto& f : futures) {
-            states.emplace_back(f.get());
+            try {
+                states.emplace_back(f.get());
+            } catch(std::exception& e) {
+                std::cout << e.what() << std::endl;
+            }
         }
         return states;
     }

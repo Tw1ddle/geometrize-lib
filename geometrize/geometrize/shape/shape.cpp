@@ -3,6 +3,7 @@
 #include <string>
 
 #include "../model.h"
+#include "../rasterizer/rasterizer.h"
 
 namespace geometrize
 {
@@ -21,5 +22,15 @@ const Model* Shape::getModel()
 }
 
 const std::string Shape::SVG_STYLE_HOOK = "::svg_style_hook::";
+
+bool shapesOverlap(const geometrize::Shape& a, const geometrize::Shape& b)
+{
+    return geometrize::scanlinesOverlap(a.rasterize(), b.rasterize());
+}
+
+bool shapeContains(const geometrize::Shape& container, const geometrize::Shape& containee)
+{
+    return geometrize::scanlinesContain(container.rasterize(), containee.rasterize());
+}
 
 }

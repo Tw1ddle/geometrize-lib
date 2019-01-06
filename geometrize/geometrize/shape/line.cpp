@@ -19,7 +19,7 @@ Line::Line(const geometrize::Model& model) : Shape{model}
     m_model->setupShape(*this);
 }
 
-Line::Line(const std::int32_t x1, const std::int32_t y1, const std::int32_t x2, const std::int32_t y2) : Shape()
+Line::Line(const float x1, const float y1, const float x2, const float y2) : Shape()
 {
     m_x1 = x1;
     m_y1 = y1;
@@ -44,7 +44,7 @@ std::vector<geometrize::Scanline> Line::rasterize() const
 
     std::vector<geometrize::Scanline> lines;
 
-    const std::vector<std::pair<std::int32_t, std::int32_t>> points{geometrize::bresenham(m_x1, m_y1, m_x2, m_y2)};
+    const std::vector<std::pair<std::int32_t, std::int32_t>> points{geometrize::bresenham(static_cast<std::int32_t>(m_x1), static_cast<std::int32_t>(m_y1), static_cast<std::int32_t>(m_x2), static_cast<std::int32_t>(m_y2))};
     for(const auto& point : points) {
        lines.push_back(geometrize::Scanline(point.second, point.first, point.first));
     }
@@ -57,12 +57,25 @@ void Line::mutate()
     m_model->mutateShape(*this);
 }
 
+void Line::translate(const float x, const float y)
+{
+    m_x1 += x;
+    m_y1 += y;
+    m_x2 += x;
+    m_y2 += y;
+}
+
+void Line::scale(const float scaleFactor)
+{
+    // TODO
+}
+
 geometrize::ShapeTypes Line::getType() const
 {
     return geometrize::ShapeTypes::LINE;
 }
 
-std::vector<std::int32_t> Line::getRawShapeData() const
+std::vector<float> Line::getRawShapeData() const
 {
     return { m_x1, m_y1, m_x2, m_y2 };
 }

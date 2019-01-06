@@ -21,7 +21,7 @@ class QuadraticBezier : public Shape
 {
 public:
     QuadraticBezier() = default;
-    QuadraticBezier(std::int32_t cx, std::int32_t cy, std::int32_t x1, std::int32_t y1, std::int32_t x2, std::int32_t y2);
+    QuadraticBezier(float cx, float cy, float x1, float y1, float x2, float y2);
     /**
      * @brief QuadraticBezier Creates a new quadratic bezier curve.
      * @param model The model that created this shape.
@@ -31,16 +31,18 @@ public:
     virtual std::shared_ptr<geometrize::Shape> clone() const override;
     virtual std::vector<geometrize::Scanline> rasterize() const override;
     virtual void mutate() override;
+    virtual void translate(float x, float y) override;
+    virtual void scale(float scaleFactor) override;
     virtual geometrize::ShapeTypes getType() const override;
-    virtual std::vector<std::int32_t> getRawShapeData() const override;
+    virtual std::vector<float> getRawShapeData() const override;
     virtual std::string getSvgShapeData() const override;
 
-    std::int32_t m_cx; ///< Control point x-coordinate.
-    std::int32_t m_cy; ///< Control point y-coordinate.
-    std::int32_t m_x1; ///< First x-coordinate.
-    std::int32_t m_y1; ///< First y-coordinate.
-    std::int32_t m_x2; ///< Second x-coordinate.
-    std::int32_t m_y2; ///< Second y-coordinate.
+    float m_cx; ///< Control point x-coordinate.
+    float m_cy; ///< Control point y-coordinate.
+    float m_x1; ///< First x-coordinate.
+    float m_y1; ///< First y-coordinate.
+    float m_x2; ///< Second x-coordinate.
+    float m_y2; ///< Second y-coordinate.
 };
 
 }
