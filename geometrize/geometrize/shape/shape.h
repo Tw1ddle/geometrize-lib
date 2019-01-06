@@ -22,8 +22,9 @@ namespace geometrize
 class Shape
 {
 public:
+    Shape();
     Shape(const geometrize::Model& model);
-     ~Shape() = default;
+    virtual ~Shape() = default;
     Shape& operator=(const geometrize::Shape& other) = default;
     Shape(const geometrize::Shape& other) = default;
 
@@ -73,9 +74,9 @@ public:
      * @brief getModel Gets the model that created this shape.
      * @return The model.
      */
-    const Model& getModel();
+    const Model* getModel();
 
-    const geometrize::Model& m_model; ///< The model that creates, sets up and mutates shapes
+    const geometrize::Model* m_model; ///< The model that creates, sets up and mutates shapes
 };
 
 }

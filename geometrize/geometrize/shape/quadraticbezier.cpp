@@ -15,12 +15,22 @@ namespace geometrize
 
 QuadraticBezier::QuadraticBezier(const geometrize::Model& model) : Shape{model}
 {
-    m_model.setupShape(*this);
+    m_model->setupShape(*this);
+}
+
+QuadraticBezier::QuadraticBezier(const std::int32_t cx, const std::int32_t cy, const std::int32_t x1, const std::int32_t y1, const std::int32_t x2, const std::int32_t y2) : Shape()
+{
+    m_cx = cx;
+    m_cy = cy;
+    m_x1 = x1;
+    m_y1 = y1;
+    m_x2 = x2;
+    m_y2 = y2;
 }
 
 std::shared_ptr<geometrize::Shape> QuadraticBezier::clone() const
 {
-    std::shared_ptr<geometrize::QuadraticBezier> bezier{std::make_shared<geometrize::QuadraticBezier>(m_model)};
+    std::shared_ptr<geometrize::QuadraticBezier> bezier{std::make_shared<geometrize::QuadraticBezier>(*m_model)};
     bezier->m_x1 = m_x1;
     bezier->m_y1 = m_y1;
     bezier->m_cx = m_cx;
@@ -34,8 +44,8 @@ std::vector<geometrize::Scanline> QuadraticBezier::rasterize() const
 {
     std::vector<geometrize::Scanline> scanlines;
 
-    const std::int32_t xBound{m_model.getWidth()};
-    const std::int32_t yBound{m_model.getHeight()};
+    const std::int32_t xBound{m_model->getWidth()};
+    const std::int32_t yBound{m_model->getHeight()};
 
     std::vector<std::pair<std::int32_t, std::int32_t>> points;
     const std::uint32_t pointCount{20};
@@ -62,7 +72,7 @@ std::vector<geometrize::Scanline> QuadraticBezier::rasterize() const
 
 void QuadraticBezier::mutate()
 {
-    m_model.mutateShape(*this);
+    m_model->mutateShape(*this);
 }
 
 geometrize::ShapeTypes QuadraticBezier::getType() const

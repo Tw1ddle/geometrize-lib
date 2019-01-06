@@ -15,12 +15,21 @@ namespace geometrize
 
 RotatedRectangle::RotatedRectangle(const geometrize::Model& model) : Shape{model}
 {
-    m_model.setupShape(*this);
+    m_model->setupShape(*this);
+}
+
+RotatedRectangle::RotatedRectangle(const std::int32_t x1, const std::int32_t y1, const std::int32_t x2, const std::int32_t y2, const std::int32_t angle) : Shape()
+{
+    m_x1 = x1;
+    m_y1 = y1;
+    m_x2 = x2;
+    m_y2 = y2;
+    m_angle = angle;
 }
 
 std::shared_ptr<geometrize::Shape> RotatedRectangle::clone() const
 {
-    std::shared_ptr<geometrize::RotatedRectangle> rect{std::make_shared<geometrize::RotatedRectangle>(m_model)};
+    std::shared_ptr<geometrize::RotatedRectangle> rect{std::make_shared<geometrize::RotatedRectangle>(*m_model)};
     rect->m_x1 = m_x1;
     rect->m_y1 = m_y1;
     rect->m_x2 = m_x2;
@@ -32,12 +41,12 @@ std::shared_ptr<geometrize::Shape> RotatedRectangle::clone() const
 std::vector<geometrize::Scanline> RotatedRectangle::rasterize() const
 {
     std::vector<geometrize::Scanline> scanlines{geometrize::scanlinesForPolygon(getCornerPoints())};
-    return geometrize::Scanline::trim(scanlines, m_model.getWidth(), m_model.getHeight());
+    return geometrize::Scanline::trim(scanlines, m_model->getWidth(), m_model->getHeight());
 }
 
 void RotatedRectangle::mutate()
 {
-    m_model.mutateShape(*this);
+    m_model->mutateShape(*this);
 }
 
 std::vector<std::pair<std::int32_t, std::int32_t>> RotatedRectangle::getCornerPoints() const

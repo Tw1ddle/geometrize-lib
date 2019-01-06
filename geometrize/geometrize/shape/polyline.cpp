@@ -16,20 +16,25 @@ namespace geometrize
 
 Polyline::Polyline(const geometrize::Model& model) : Shape{model}
 {
-    m_model.setupShape(*this);
+    m_model->setupShape(*this);
+}
+
+Polyline::Polyline(const std::vector<std::pair<std::int32_t, std::int32_t>>& points) : Shape()
+{
+    m_points = points;
 }
 
 std::shared_ptr<geometrize::Shape> Polyline::clone() const
 {
-    std::shared_ptr<geometrize::Polyline> polyline{std::make_shared<geometrize::Polyline>(m_model)};
+    std::shared_ptr<geometrize::Polyline> polyline{std::make_shared<geometrize::Polyline>(*m_model)};
     polyline->m_points = m_points;
     return polyline;
 }
 
 std::vector<geometrize::Scanline> Polyline::rasterize() const
 {
-    const std::int32_t xBound{m_model.getWidth()};
-    const std::int32_t yBound{m_model.getHeight()};
+    const std::int32_t xBound{m_model->getWidth()};
+    const std::int32_t yBound{m_model->getHeight()};
 
     std::vector<geometrize::Scanline> lines;
 
@@ -48,7 +53,7 @@ std::vector<geometrize::Scanline> Polyline::rasterize() const
 
 void Polyline::mutate()
 {
-    m_model.mutateShape(*this);
+    m_model->mutateShape(*this);
 }
 
 geometrize::ShapeTypes Polyline::getType() const

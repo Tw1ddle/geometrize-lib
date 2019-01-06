@@ -20,6 +20,8 @@ namespace geometrize
 class RotatedEllipse : public Shape
 {
 public:
+    RotatedEllipse() = default;
+    RotatedEllipse(std::int32_t x, std::int32_t y, std::int32_t rx, std::int32_t ry, std::int32_t angle);
     /**
      * @brief RotatedEllipse Creates a new rotated ellipse.
      * @param model The model that created this shape.

@@ -15,12 +15,21 @@ namespace geometrize
 
 RotatedEllipse::RotatedEllipse(const geometrize::Model& model) : Shape{model}
 {
-    m_model.setupShape(*this);
+    m_model->setupShape(*this);
+}
+
+RotatedEllipse::RotatedEllipse(const std::int32_t x, const std::int32_t y, const std::int32_t rx, const std::int32_t ry, const std::int32_t angle) : Shape()
+{
+    m_x = x;
+    m_y = y;
+    m_rx = rx;
+    m_ry = ry;
+    m_angle = angle;
 }
 
 std::shared_ptr<geometrize::Shape> RotatedEllipse::clone() const
 {
-    std::shared_ptr<geometrize::RotatedEllipse> ellipse{std::make_shared<geometrize::RotatedEllipse>(m_model)};
+    std::shared_ptr<geometrize::RotatedEllipse> ellipse{std::make_shared<geometrize::RotatedEllipse>(*m_model)};
     ellipse->m_x = m_x;
     ellipse->m_y = m_y;
     ellipse->m_rx = m_rx;
@@ -31,8 +40,8 @@ std::shared_ptr<geometrize::Shape> RotatedEllipse::clone() const
 
 std::vector<geometrize::Scanline> RotatedEllipse::rasterize() const
 {
-    const std::int32_t w{m_model.getWidth()};
-    const std::int32_t h{m_model.getHeight()};
+    const std::int32_t w{m_model->getWidth()};
+    const std::int32_t h{m_model->getHeight()};
 
     const std::uint32_t pointCount{20};
     std::vector<std::pair<std::int32_t, std::int32_t>> points;
@@ -50,10 +59,9 @@ std::vector<geometrize::Scanline> RotatedEllipse::rasterize() const
     std::vector<geometrize::Scanline> scanlines{geometrize::scanlinesForPolygon(points)};
     return geometrize::Scanline::trim(scanlines, w, h);
 }
-
 void RotatedEllipse::mutate()
 {
-    m_model.mutateShape(*this);
+    m_model->mutateShape(*this);
 }
 
 geometrize::ShapeTypes RotatedEllipse::getType() const

@@ -20,6 +20,8 @@ namespace geometrize
 class Rectangle : public Shape
 {
 public:
+    Rectangle() = default;
+    Rectangle(std::int32_t x1, std::int32_t y1, std::int32_t x2, std::int32_t y2);
     /**
      * @brief Rectangle Creates a new rectangle.
      * @param model The model that created this shape.

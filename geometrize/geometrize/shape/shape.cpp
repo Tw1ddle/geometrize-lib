@@ -7,11 +7,15 @@
 namespace geometrize
 {
 
-Shape::Shape(const geometrize::Model& model) : m_model(model)
+Shape::Shape() : m_model(nullptr)
 {
 }
 
-const Model& Shape::getModel()
+Shape::Shape(const geometrize::Model& model) : m_model(&model)
+{
+}
+
+const Model* Shape::getModel()
 {
     return m_model;
 }

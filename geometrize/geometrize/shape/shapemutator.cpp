@@ -18,8 +18,8 @@ namespace geometrize
 
 void setupCircle(geometrize::Circle& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
 
     shape.m_x = geometrize::commonutil::randomRange(0, xBound - 1);
     shape.m_y = geometrize::commonutil::randomRange(0, yBound - 1);
@@ -28,8 +28,8 @@ void setupCircle(geometrize::Circle& shape)
 
 void setupEllipse(geometrize::Ellipse& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
 
     shape.m_x = geometrize::commonutil::randomRange(0, xBound - 1);
     shape.m_y = geometrize::commonutil::randomRange(0, yBound - 1);
@@ -39,8 +39,8 @@ void setupEllipse(geometrize::Ellipse& shape)
 
 void setupLine(geometrize::Line& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
 
     const std::pair<std::int32_t, std::int32_t> startingPoint{std::make_pair(geometrize::commonutil::randomRange(0, xBound), geometrize::commonutil::randomRange(0, yBound - 1))};
 
@@ -52,8 +52,8 @@ void setupLine(geometrize::Line& shape)
 
 void setupPolyline(geometrize::Polyline& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
 
     const std::pair<std::int32_t, std::int32_t> startingPoint{std::make_pair(geometrize::commonutil::randomRange(0, xBound), geometrize::commonutil::randomRange(0, yBound - 1))};
     for(std::int32_t i = 0; i < 4; i++) {
@@ -67,8 +67,8 @@ void setupPolyline(geometrize::Polyline& shape)
 
 void setupQuadraticBezier(geometrize::QuadraticBezier& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
 
     shape.m_x1 = geometrize::commonutil::randomRange(0, xBound - 1);
     shape.m_y1 = geometrize::commonutil::randomRange(0, yBound - 1);
@@ -80,8 +80,8 @@ void setupQuadraticBezier(geometrize::QuadraticBezier& shape)
 
 void setupRectangle(geometrize::Rectangle& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
 
     shape.m_x1 = geometrize::commonutil::randomRange(0, xBound - 1);
     shape.m_y1 = geometrize::commonutil::randomRange(0, yBound - 1);
@@ -91,8 +91,8 @@ void setupRectangle(geometrize::Rectangle& shape)
 
 void setupRotatedEllipse(geometrize::RotatedEllipse& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
 
     shape.m_x = geometrize::commonutil::randomRange(0, xBound - 1);
     shape.m_y = geometrize::commonutil::randomRange(0, yBound - 1);
@@ -103,8 +103,8 @@ void setupRotatedEllipse(geometrize::RotatedEllipse& shape)
 
 void setupRotatedRectangle(geometrize::RotatedRectangle& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
 
     shape.m_x1 = geometrize::commonutil::randomRange(0, xBound - 1);
     shape.m_y1 = geometrize::commonutil::randomRange(0, yBound - 1);
@@ -115,8 +115,8 @@ void setupRotatedRectangle(geometrize::RotatedRectangle& shape)
 
 void setupTriangle(geometrize::Triangle& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
 
     shape.m_x1 = geometrize::commonutil::randomRange(0, xBound - 1);
     shape.m_y1 = geometrize::commonutil::randomRange(0, yBound - 1);
@@ -128,8 +128,8 @@ void setupTriangle(geometrize::Triangle& shape)
 
 void mutateCircle(geometrize::Circle& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
 
     const std::int32_t r{geometrize::commonutil::randomRange(0, 1)};
     switch(r) {
@@ -149,8 +149,8 @@ void mutateCircle(geometrize::Circle& shape)
 
 void mutateEllipse(geometrize::Ellipse& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
 
     const std::int32_t r{geometrize::commonutil::randomRange(0, 2)};
     switch(r) {
@@ -175,8 +175,8 @@ void mutateEllipse(geometrize::Ellipse& shape)
 
 void mutateLine(geometrize::Line& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
 
     const std::int32_t r{geometrize::commonutil::randomRange(0, 1)};
 
@@ -198,8 +198,8 @@ void mutateLine(geometrize::Line& shape)
 
 void mutatePolyline(geometrize::Polyline& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
     const std::int32_t i{geometrize::commonutil::randomRange(static_cast<std::size_t>(0), shape.m_points.size() - 1)};
 
     std::pair<std::int32_t, std::int32_t> point{shape.m_points[i]};
@@ -211,8 +211,8 @@ void mutatePolyline(geometrize::Polyline& shape)
 
 void mutateQuadraticBezier(geometrize::QuadraticBezier& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
 
     const std::int32_t r{geometrize::commonutil::randomRange(0, 2)};
     switch(r) {
@@ -239,8 +239,8 @@ void mutateQuadraticBezier(geometrize::QuadraticBezier& shape)
 
 void mutateRectangle(geometrize::Rectangle& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
 
     const std::int32_t r{geometrize::commonutil::randomRange(0, 1)};
     switch(r) {
@@ -261,8 +261,8 @@ void mutateRectangle(geometrize::Rectangle& shape)
 
 void mutateRotatedEllipse(geometrize::RotatedEllipse& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
 
     const std::int32_t r{geometrize::commonutil::randomRange(0, 3)};
     switch(r) {
@@ -292,8 +292,8 @@ void mutateRotatedEllipse(geometrize::RotatedEllipse& shape)
 
 void mutateRotatedRectangle(geometrize::RotatedRectangle& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
 
     const std::int32_t r{geometrize::commonutil::randomRange(0, 2)};
     switch(r) {
@@ -319,8 +319,8 @@ void mutateRotatedRectangle(geometrize::RotatedRectangle& shape)
 
 void mutateTriangle(geometrize::Triangle& shape)
 {
-    const std::int32_t xBound{shape.m_model.getWidth()};
-    const std::int32_t yBound{shape.m_model.getHeight()};
+    const std::int32_t xBound{shape.m_model->getWidth()};
+    const std::int32_t yBound{shape.m_model->getHeight()};
 
     const std::int32_t r{geometrize::commonutil::randomRange(0, 2)};
     switch(r) {

@@ -20,6 +20,8 @@ namespace geometrize
 class Circle : public Shape
 {
 public:
+    Circle() = default;
+    Circle(std::int32_t x, std::int32_t y, std::int32_t r);
     /**
      * @brief Circle Creates a new circle.
      * @param model The model that created this shape.

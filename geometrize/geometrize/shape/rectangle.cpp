@@ -14,12 +14,20 @@ namespace geometrize
 
 Rectangle::Rectangle(const geometrize::Model& model) : Shape{model}
 {
-    m_model.setupShape(*this);
+    m_model->setupShape(*this);
+}
+
+Rectangle::Rectangle(const std::int32_t x1, const std::int32_t y1, const std::int32_t x2, const std::int32_t y2) : Shape()
+{
+    m_x1 = x1;
+    m_y1 = y1;
+    m_x2 = x2;
+    m_y2 = y2;
 }
 
 std::shared_ptr<geometrize::Shape> Rectangle::clone() const
 {
-    std::shared_ptr<geometrize::Rectangle> rect{std::make_shared<geometrize::Rectangle>(m_model)};
+    std::shared_ptr<geometrize::Rectangle> rect{std::make_shared<geometrize::Rectangle>(*m_model)};
     rect->m_x1 = m_x1;
     rect->m_y1 = m_y1;
     rect->m_x2 = m_x2;
@@ -38,12 +46,12 @@ std::vector<geometrize::Scanline> Rectangle::rasterize() const
     for(std::int32_t y = y1; y < y2; y++) {
         lines.push_back(geometrize::Scanline(y, x1, x2));
     }
-    return geometrize::Scanline::trim(lines, m_model.getWidth(), m_model.getHeight());
+    return geometrize::Scanline::trim(lines, m_model->getWidth(), m_model->getHeight());
 }
 
 void Rectangle::mutate()
 {
-    m_model.mutateShape(*this);
+    m_model->mutateShape(*this);
 }
 
 geometrize::ShapeTypes Rectangle::getType() const

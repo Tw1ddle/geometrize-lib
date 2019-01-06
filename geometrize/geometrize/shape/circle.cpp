@@ -13,12 +13,19 @@ namespace geometrize
 
 Circle::Circle(const geometrize::Model& model) : Shape{model}
 {
-    m_model.setupShape(*this);
+    m_model->setupShape(*this);
+}
+
+Circle::Circle(const std::int32_t x, const std::int32_t y, const std::int32_t r) : Shape()
+{
+    m_x = x;
+    m_y = y;
+    m_r = r;
 }
 
 std::shared_ptr<geometrize::Shape> Circle::clone() const
 {
-    std::shared_ptr<geometrize::Circle> circle{std::make_shared<geometrize::Circle>(m_model)};
+    std::shared_ptr<geometrize::Circle> circle{std::make_shared<geometrize::Circle>(*m_model)};
     circle->m_x = m_x;
     circle->m_y = m_y;
     circle->m_r = m_r;
@@ -28,8 +35,8 @@ std::shared_ptr<geometrize::Shape> Circle::clone() const
 std::vector<geometrize::Scanline> Circle::rasterize() const
 {
     std::vector<geometrize::Scanline> lines;
-    const std::int32_t xBound{m_model.getWidth()};
-    const std::int32_t yBound{m_model.getHeight()};
+    const std::int32_t xBound{m_model->getWidth()};
+    const std::int32_t yBound{m_model->getHeight()};
 
     const std::int32_t r{static_cast<std::int32_t>(m_r)};
     for(std::int32_t y = -r; y <= r; y++) {
@@ -53,7 +60,7 @@ std::vector<geometrize::Scanline> Circle::rasterize() const
 
 void Circle::mutate()
 {
-    m_model.mutateShape(*this);
+    m_model->mutateShape(*this);
 }
 
 geometrize::ShapeTypes Circle::getType() const

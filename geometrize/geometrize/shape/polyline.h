@@ -20,6 +20,8 @@ namespace geometrize
 class Polyline : public Shape
 {
 public:
+    Polyline() = default;
+    Polyline(const std::vector<std::pair<std::int32_t, std::int32_t>>& points);
     /**
      * @brief Polyline Creates a new polyline.
      * @param model The model that created this shape.

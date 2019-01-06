@@ -16,12 +16,20 @@ namespace geometrize
 
 Line::Line(const geometrize::Model& model) : Shape{model}
 {
-    m_model.setupShape(*this);
+    m_model->setupShape(*this);
+}
+
+Line::Line(const std::int32_t x1, const std::int32_t y1, const std::int32_t x2, const std::int32_t y2) : Shape()
+{
+    m_x1 = x1;
+    m_y1 = y1;
+    m_x2 = x2;
+    m_y2 = y2;
 }
 
 std::shared_ptr<geometrize::Shape> Line::clone() const
 {
-    std::shared_ptr<geometrize::Line> line{std::make_shared<geometrize::Line>(m_model)};
+    std::shared_ptr<geometrize::Line> line{std::make_shared<geometrize::Line>(*m_model)};
     line->m_x1 = m_x1;
     line->m_y1 = m_y1;
     line->m_x2 = m_x2;
@@ -31,8 +39,8 @@ std::shared_ptr<geometrize::Shape> Line::clone() const
 
 std::vector<geometrize::Scanline> Line::rasterize() const
 {
-    const std::int32_t xBound{m_model.getWidth()};
-    const std::int32_t yBound{m_model.getHeight()};
+    const std::int32_t xBound{m_model->getWidth()};
+    const std::int32_t yBound{m_model->getHeight()};
 
     std::vector<geometrize::Scanline> lines;
 
@@ -46,7 +54,7 @@ std::vector<geometrize::Scanline> Line::rasterize() const
 
 void Line::mutate()
 {
-    m_model.mutateShape(*this);
+    m_model->mutateShape(*this);
 }
 
 geometrize::ShapeTypes Line::getType() const

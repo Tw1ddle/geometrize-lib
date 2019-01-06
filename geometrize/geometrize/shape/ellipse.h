@@ -20,6 +20,8 @@ namespace geometrize
 class Ellipse : public Shape
 {
 public:
+    Ellipse() = default;
+    Ellipse(std::int32_t x, std::int32_t y, std::int32_t rx, std::int32_t ry);
     /**
      * @brief Ellipse Creates a new ellipse.
      * @param model The model that created this shape.

@@ -20,6 +20,8 @@ namespace geometrize
 class Line : public Shape
 {
 public:
+    Line() = default;
+    Line(std::int32_t x1, std::int32_t y1, std::int32_t x2, std::int32_t y2);
     /**
      * @brief Line Creates a new line.
      * @param model The model that created this shape.

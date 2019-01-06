@@ -20,6 +20,8 @@ namespace geometrize
 class RotatedRectangle : public Shape
 {
 public:
+    RotatedRectangle() = default;
+    RotatedRectangle(std::int32_t x1, std::int32_t y1, std::int32_t x2, std::int32_t y2, std::int32_t angle);
     /**
      * @brief RotatedRectangle Creates a new rotated rectangle.
      * @param model The model that created this shape.

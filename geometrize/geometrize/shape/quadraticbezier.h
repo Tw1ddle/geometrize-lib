@@ -20,6 +20,8 @@ namespace geometrize
 class QuadraticBezier : public Shape
 {
 public:
+    QuadraticBezier() = default;
+    QuadraticBezier(std::int32_t cx, std::int32_t cy, std::int32_t x1, std::int32_t y1, std::int32_t x2, std::int32_t y2);
     /**
      * @brief QuadraticBezier Creates a new quadratic bezier curve.
      * @param model The model that created this shape.

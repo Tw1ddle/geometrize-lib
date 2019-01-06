@@ -20,6 +20,8 @@ namespace geometrize
 class Triangle : public Shape
 {
 public:
+    Triangle() = default;
+    Triangle(std::int32_t x1, std::int32_t y1, std::int32_t x2, std::int32_t y2, std::int32_t x3, std::int32_t y3);
     /**
      * @brief Triangle Creates a new triangle.
      * @param model The model that created this shape.

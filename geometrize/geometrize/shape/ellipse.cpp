@@ -14,12 +14,20 @@ namespace geometrize
 
 Ellipse::Ellipse(const geometrize::Model& model) : Shape{model}
 {
-    m_model.setupShape(*this);
+    m_model->setupShape(*this);
+}
+
+Ellipse::Ellipse(const std::int32_t x, const std::int32_t y, const std::int32_t rx, const std::int32_t ry) : Shape()
+{
+    m_x = x;
+    m_y = y;
+    m_rx = rx;
+    m_ry = ry;
 }
 
 std::shared_ptr<geometrize::Shape> Ellipse::clone() const
 {
-    std::shared_ptr<geometrize::Ellipse> ellipse{std::make_shared<geometrize::Ellipse>(m_model)};
+    std::shared_ptr<geometrize::Ellipse> ellipse{std::make_shared<geometrize::Ellipse>(*m_model)};
     ellipse->m_x = m_x;
     ellipse->m_y = m_y;
     ellipse->m_rx = m_rx;
@@ -33,8 +41,8 @@ std::vector<geometrize::Scanline> Ellipse::rasterize() const
 
     const float aspect{static_cast<float>(m_rx) / static_cast<float>(m_ry)};
 
-    const std::int32_t w{m_model.getWidth()};
-    const std::int32_t h{m_model.getHeight()};
+    const std::int32_t w{m_model->getWidth()};
+    const std::int32_t h{m_model->getHeight()};
 
     for (std::int32_t dy = 0; dy < m_ry; dy++) {
         const std::int32_t y1{m_y - dy};
@@ -62,12 +70,12 @@ std::vector<geometrize::Scanline> Ellipse::rasterize() const
         }
     }
 
-    return geometrize::Scanline::trim(lines, m_model.getWidth(), m_model.getHeight());
+    return geometrize::Scanline::trim(lines, m_model->getWidth(), m_model->getHeight());
 }
 
 void Ellipse::mutate()
 {
-    m_model.mutateShape(*this);
+    m_model->mutateShape(*this);
 }
 
 geometrize::ShapeTypes Ellipse::getType() const
