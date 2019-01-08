@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
+#include <memory>
 #include <vector>
 
 #include "bitmap/rgba.h"
@@ -66,7 +68,7 @@ float differencePartial(
 /**
  * @brief bestRandomState Gets the best state using a random algorithm.
  * @param model The model to query for constraints etc.
- * @param shapeTypes The types of shape to use.
+ * @param shapeCreator A function that will create the shapes that will be chosen from.
  * @param alpha The opacity of the shape.
  * @param n The number of states to try.
  * @param target The target bitmap.
@@ -77,7 +79,7 @@ float differencePartial(
  */
 geometrize::State bestRandomState(
         const geometrize::Model& model,
-        const geometrize::ShapeTypes shapeTypes,
+        const std::function<std::shared_ptr<geometrize::Shape>(void)>& shapeCreator,
         std::uint32_t alpha,
         std::uint32_t n,
         const geometrize::Bitmap& target,
@@ -106,7 +108,7 @@ geometrize::State hillClimb(
 /**
  * @brief bestHillClimbState Gets the best state using a hill climbing algorithm.
  * @param model The model to query for constraints etc.
- * @param shapeTypes The types of shape to use.
+ * @param shapeCreator A function that will create the shapes that will be chosen from.
  * @param alpha The opacity of the shape.
  * @param n The number of random states to generate.
  * @param age The number of hillclimbing steps.
@@ -118,7 +120,7 @@ geometrize::State hillClimb(
  */
 geometrize::State bestHillClimbState(
         const geometrize::Model& model,
-        geometrize::ShapeTypes shapeTypes,
+        const std::function<std::shared_ptr<geometrize::Shape>(void)>& shapeCreator,
         std::uint32_t alpha,
         std::uint32_t n,
         std::uint32_t age,

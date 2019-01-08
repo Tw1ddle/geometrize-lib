@@ -4,6 +4,8 @@
 #include <atomic>
 #include <cassert>
 #include <cstdint>
+#include <exception>
+#include <functional>
 #include <future>
 #include <iostream>
 #include <memory>
@@ -15,7 +17,6 @@
 #include "rasterizer/rasterizer.h"
 #include "shape/shape.h"
 #include "shaperesult.h"
-#include "shape/shapemutator.h"
 #include "shape/shapetypes.h"
 
 namespace geometrize
@@ -66,7 +67,7 @@ public:
     }
 
     std::vector<geometrize::State> getHillClimbState(
-            const geometrize::ShapeTypes shapeTypes,
+            const std::function<std::shared_ptr<geometrize::Shape>(void)> shapeCreator,
             const std::uint8_t alpha,
             const std::uint32_t shapeCount,
             const std::uint32_t maxShapeMutations,
@@ -90,30 +91,36 @@ public:
                 geometrize::commonutil::seedRandomGenerator(seed);
 
                 geometrize::Bitmap buffer{m_current};
-                return core::bestHillClimbState(*q, shapeTypes, alpha, shapeCount, maxShapeMutations, m_target, m_current, buffer, lastScore);
+                return core::bestHillClimbState(*q, shapeCreator, alpha, shapeCount, maxShapeMutations, m_target, m_current, buffer, lastScore);
             }, m_baseRandomSeed + m_randomSeedOffset++, m_lastScore)};
             futures[i] = std::move(handle);
         }
 
         std::vector<geometrize::State> states;
+
         for(auto& f : futures) {
             try {
                 states.emplace_back(f.get());
             } catch(std::exception& e) {
+                assert(0 && "Encountered exception when getting hill climb state");
                 std::cout << e.what() << std::endl;
+                throw e;
+            } catch (...) {
+                assert(0 && "Encountered exception when getting hill climb state");
+                throw;
             }
         }
         return states;
     }
 
     std::vector<geometrize::ShapeResult> step(
-            const geometrize::ShapeTypes shapeTypes,
+            const std::function<std::shared_ptr<geometrize::Shape>(void)> shapeCreator,
             const std::uint8_t alpha,
             const std::uint32_t shapeCount,
             const std::uint32_t maxShapeMutations,
             const std::uint32_t maxThreads)
     {
-        std::vector<geometrize::State> states{getHillClimbState(shapeTypes, alpha, shapeCount, maxShapeMutations, maxThreads)};
+        std::vector<geometrize::State> states{getHillClimbState(shapeCreator, alpha, shapeCount, maxShapeMutations, maxThreads)};
         if(states.empty()) {
             assert(0 && "Failed to get a hill climb state");
             return {};
@@ -131,7 +138,7 @@ public:
             const std::shared_ptr<geometrize::Shape> shape,
             const std::uint8_t alpha)
     {
-        const std::vector<geometrize::Scanline> lines{shape->rasterize()};
+        const std::vector<geometrize::Scanline> lines{shape->rasterize(*shape)};
         const geometrize::rgba color(geometrize::core::computeColor(m_target, m_current, lines, alpha));
         const geometrize::Bitmap before{m_current};
         geometrize::drawLines(m_current, color, lines);
@@ -146,7 +153,7 @@ public:
             const std::shared_ptr<geometrize::Shape> shape,
             const geometrize::rgba color)
     {
-        const std::vector<geometrize::Scanline> lines{shape->rasterize()};
+        const std::vector<geometrize::Scanline> lines{shape->rasterize(*shape)};
         const geometrize::Bitmap before{m_current};
         geometrize::drawLines(m_current, color, lines);
 
@@ -181,16 +188,6 @@ public:
         m_baseRandomSeed = seed;
     }
 
-    const geometrize::ShapeMutator& getShapeMutator() const
-    {
-        return m_shapeMutator;
-    }
-
-    geometrize::ShapeMutator& getShapeMutator()
-    {
-        return m_shapeMutator;
-    }
-
 private:
     geometrize::Model* q;
     geometrize::Bitmap m_target; ///< The target bitmap, the bitmap we aim to approximate.
@@ -199,7 +196,6 @@ private:
     const static std::uint32_t defaultMaxThreads{4};
     std::atomic<std::uint32_t> m_baseRandomSeed; ///< The base value used for seeding the random number generator (the one the user has control over).
     std::atomic<std::uint32_t> m_randomSeedOffset; ///< Seed used for random number generation. Note: incremented by each std::async call used for model stepping.
-    geometrize::ShapeMutator m_shapeMutator; ///< Object responsible for setting up and mutating shapes created by this model.
 };
 
 Model::Model(const geometrize::Bitmap& target) : d{std::unique_ptr<Model::ModelImpl>(new Model::ModelImpl(this, target))}
@@ -227,13 +223,13 @@ std::int32_t Model::getHeight() const
 }
 
 std::vector<geometrize::ShapeResult> Model::step(
-        const geometrize::ShapeTypes shapeTypes,
+        const std::function<std::shared_ptr<geometrize::Shape>(void)>& shapeCreator,
         const std::uint8_t alpha,
         const std::uint32_t shapeCount,
         const std::uint32_t maxShapeMutations,
         const std::uint32_t maxThreads)
 {
-    return d->step(shapeTypes, alpha, shapeCount, maxShapeMutations, maxThreads);
+    return d->step(shapeCreator, alpha, shapeCount, maxShapeMutations, maxThreads);
 }
 
 geometrize::ShapeResult Model::drawShape(const std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)
@@ -269,16 +265,6 @@ const geometrize::Bitmap& Model::getCurrent() const
 void Model::setSeed(const std::uint32_t seed)
 {
     d->setSeed(seed);
-}
-
-const geometrize::ShapeMutator& Model::getShapeMutator() const
-{
-    return d->getShapeMutator();
-}
-
-geometrize::ShapeMutator& Model::getShapeMutator()
-{
-    return d->getShapeMutator();
 }
 
 }

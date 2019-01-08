@@ -7,17 +7,9 @@
 #include <vector>
 
 #include "shape.h"
-#include "../commonutil.h"
-#include "../model.h"
-#include "../rasterizer/rasterizer.h"
 
 namespace geometrize
 {
-
-Line::Line(const geometrize::Model& model) : Shape{model}
-{
-    m_model->setupShape(*this);
-}
 
 Line::Line(const float x1, const float y1, const float x2, const float y2) : Shape()
 {
@@ -29,32 +21,15 @@ Line::Line(const float x1, const float y1, const float x2, const float y2) : Sha
 
 std::shared_ptr<geometrize::Shape> Line::clone() const
 {
-    std::shared_ptr<geometrize::Line> line{std::make_shared<geometrize::Line>(*m_model)};
+    std::shared_ptr<geometrize::Line> line{std::make_shared<geometrize::Line>()};
     line->m_x1 = m_x1;
     line->m_y1 = m_y1;
     line->m_x2 = m_x2;
     line->m_y2 = m_y2;
+    line->setup = setup;
+    line->mutate = mutate;
+    line->rasterize = rasterize;
     return line;
-}
-
-std::vector<geometrize::Scanline> Line::rasterize() const
-{
-    const std::int32_t xBound{m_model->getWidth()};
-    const std::int32_t yBound{m_model->getHeight()};
-
-    std::vector<geometrize::Scanline> lines;
-
-    const std::vector<std::pair<std::int32_t, std::int32_t>> points{geometrize::bresenham(static_cast<std::int32_t>(m_x1), static_cast<std::int32_t>(m_y1), static_cast<std::int32_t>(m_x2), static_cast<std::int32_t>(m_y2))};
-    for(const auto& point : points) {
-       lines.push_back(geometrize::Scanline(point.second, point.first, point.first));
-    }
-
-    return Scanline::trim(lines, xBound, yBound);
-}
-
-void Line::mutate()
-{
-    m_model->mutateShape(*this);
 }
 
 void Line::translate(const float x, const float y)

@@ -3,8 +3,6 @@
 #include <cstdint>
 #include <memory>
 
-#include "shape/shapetypes.h"
-
 namespace geometrize
 {
 class Bitmap;
@@ -27,10 +25,10 @@ public:
     /**
      * @brief Creates a new state.
      * @param model The model that created this state.
-     * @param shapeTypes The types of geometric primitive to select.
+     * @param shape The shape.
      * @param alpha The color alpha of the geometric shape.
      */
-    State(const geometrize::Model& model, ShapeTypes shapeTypes, std::uint8_t alpha);
+    State(const geometrize::Model& model, const std::shared_ptr<geometrize::Shape>& shape, std::uint8_t alpha);
 
     ~State() = default;
     State(const State& other);

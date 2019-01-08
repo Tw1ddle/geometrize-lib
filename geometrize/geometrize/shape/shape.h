@@ -1,16 +1,12 @@
 #pragma once
 
+#include <functional>
 #include <memory>
 #include <string>
 #include <vector>
 
 #include "../rasterizer/scanline.h"
 #include "shapetypes.h"
-
-namespace geometrize
-{
-class Model;
-}
 
 namespace geometrize
 {
@@ -22,29 +18,20 @@ namespace geometrize
 class Shape
 {
 public:
-    Shape();
-    Shape(const geometrize::Model& model);
+    Shape() = default;
     virtual ~Shape() = default;
     Shape& operator=(const geometrize::Shape& other) = default;
     Shape(const geometrize::Shape& other) = default;
+
+    std::function<void(geometrize::Shape&)> setup;
+    std::function<void(geometrize::Shape&)> mutate;
+    std::function<std::vector<geometrize::Scanline>(const geometrize::Shape&)> rasterize;
 
     /**
      * @brief clone Clones the shape, a virtual copy constructor.
      * @return A clone of the shape.
      */
     virtual std::shared_ptr<geometrize::Shape> clone() const = 0;
-
-    /**
-     * @brief rasterize Creates a raster scanline representation of the shape.
-     * @return Raster scanlines representing the shape.
-     */
-    virtual std::vector<geometrize::Scanline> rasterize() const = 0;
-
-    /**
-     * @brief mutate Modifies the shape a little, typically using a random component.
-     * Used to improve the shape's fit in a bitmap.
-     */
-    virtual void mutate() = 0;
 
     /**
      * @brief translate Translates the shape by the given x and y values.
@@ -82,30 +69,6 @@ public:
      * Note that shape subclasses should include this in shape data - so an SVG exporter implementation must remove/replace this hook string to produce correct SVG files.
      */
     static const std::string SVG_STYLE_HOOK;
-
-    /**
-     * @brief getModel Gets the model that created this shape.
-     * @return The model.
-     */
-    const Model* getModel();
-
-    const geometrize::Model* m_model; ///< The model that creates, sets up and mutates shapes
 };
-
-/**
- * @brief shapesOverlap Returns true if the given shapes overlap. Note this implementation is brute force and slow.
- * @param a The first shape.
- * @param b The second shape.
- * @return Returns true if the shapes overlap, else false.
- */
-bool shapesOverlap(const geometrize::Shape& a, const geometrize::Shape& b);
-
-/**
- * @brief shapeContains Returns true if the first shape contains the second one. Note this implementation is brute force and slow.
- * @param container The first shape.
- * @param containee The second shape.
- * @return Returns true if the first shape is contained within the second one, else false.
- */
-bool shapeContains(const geometrize::Shape& container, const geometrize::Shape& containee);
 
 }

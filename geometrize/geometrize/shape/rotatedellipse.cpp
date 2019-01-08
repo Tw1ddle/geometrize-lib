@@ -6,17 +6,9 @@
 #include <sstream>
 
 #include "shape.h"
-#include "../model.h"
-#include "../commonutil.h"
-#include "../rasterizer/rasterizer.h"
 
 namespace geometrize
 {
-
-RotatedEllipse::RotatedEllipse(const geometrize::Model& model) : Shape{model}
-{
-    m_model->setupShape(*this);
-}
 
 RotatedEllipse::RotatedEllipse(const float x, const float y, const float rx, const float ry, const float angle) : Shape()
 {
@@ -29,40 +21,16 @@ RotatedEllipse::RotatedEllipse(const float x, const float y, const float rx, con
 
 std::shared_ptr<geometrize::Shape> RotatedEllipse::clone() const
 {
-    std::shared_ptr<geometrize::RotatedEllipse> ellipse{std::make_shared<geometrize::RotatedEllipse>(*m_model)};
+    std::shared_ptr<geometrize::RotatedEllipse> ellipse{std::make_shared<geometrize::RotatedEllipse>()};
     ellipse->m_x = m_x;
     ellipse->m_y = m_y;
     ellipse->m_rx = m_rx;
     ellipse->m_ry = m_ry;
     ellipse->m_angle = m_angle;
+    ellipse->setup = setup;
+    ellipse->mutate = mutate;
+    ellipse->rasterize = rasterize;
     return ellipse;
-}
-
-std::vector<geometrize::Scanline> RotatedEllipse::rasterize() const
-{
-    const std::int32_t w{m_model->getWidth()};
-    const std::int32_t h{m_model->getHeight()};
-
-    const std::uint32_t pointCount{20};
-    std::vector<std::pair<float, float>> points;
-    const float rads{m_angle * (3.141f / 180.0f)};
-    const float c{std::cos(rads)};
-    const float s{std::sin(rads)};
-
-    for(std::uint32_t i = 0; i < pointCount; i++) {
-        const float angle{((360.0f / pointCount) * i) * (3.141f / 180.0f)};
-        const float crx{m_rx * std::cos(angle)};
-        const float cry{m_ry * std::sin(angle)};
-        points.push_back(std::make_pair(crx * c - cry * s + m_x, crx * s + cry * c + m_y));
-    }
-
-    std::vector<geometrize::Scanline> scanlines{geometrize::scanlinesForPolygon(points)};
-    return geometrize::Scanline::trim(scanlines, w, h);
-}
-
-void RotatedEllipse::mutate()
-{
-    m_model->mutateShape(*this);
 }
 
 void RotatedEllipse::translate(const float x, const float y)

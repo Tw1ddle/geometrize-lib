@@ -7,17 +7,9 @@
 #include <vector>
 
 #include "shape.h"
-#include "../model.h"
-#include "../commonutil.h"
-#include "../rasterizer/rasterizer.h"
 
 namespace geometrize
 {
-
-Polyline::Polyline(const geometrize::Model& model) : Shape{model}
-{
-    m_model->setupShape(*this);
-}
 
 Polyline::Polyline(const std::vector<std::pair<float, float>>& points) : Shape()
 {
@@ -26,34 +18,12 @@ Polyline::Polyline(const std::vector<std::pair<float, float>>& points) : Shape()
 
 std::shared_ptr<geometrize::Shape> Polyline::clone() const
 {
-    std::shared_ptr<geometrize::Polyline> polyline{std::make_shared<geometrize::Polyline>(*m_model)};
+    std::shared_ptr<geometrize::Polyline> polyline{std::make_shared<geometrize::Polyline>()};
     polyline->m_points = m_points;
+    polyline->setup = setup;
+    polyline->mutate = mutate;
+    polyline->rasterize = rasterize;
     return polyline;
-}
-
-std::vector<geometrize::Scanline> Polyline::rasterize() const
-{
-    const std::int32_t xBound{m_model->getWidth()};
-    const std::int32_t yBound{m_model->getHeight()};
-
-    std::vector<geometrize::Scanline> lines;
-
-    for(std::size_t i = 0; i < m_points.size(); i++) {
-        const std::pair<std::int32_t, std::int32_t> p0{m_points[i].first, m_points[i].second};
-        const std::pair<std::int32_t, std::int32_t> p1{i < (m_points.size() - 1) ? std::make_pair(static_cast<std::int32_t>(m_points[i + 1].first), static_cast<std::int32_t>(m_points[i + 1].second)) : p0};
-
-        const std::vector<std::pair<std::int32_t, std::int32_t>> points{geometrize::bresenham(p0.first, p0.second, p1.first, p1.second)};
-        for(const auto& point : points) {
-            lines.push_back(geometrize::Scanline(point.second, point.first, point.first));
-        }
-    }
-
-    return Scanline::trim(lines, xBound, yBound);
-}
-
-void Polyline::mutate()
-{
-    m_model->mutateShape(*this);
 }
 
 void Polyline::translate(const float x, const float y)

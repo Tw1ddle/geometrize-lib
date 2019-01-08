@@ -7,11 +7,6 @@
 
 namespace geometrize
 {
-class Model;
-}
-
-namespace geometrize
-{
 
 /**
  * @brief The RotatedEllipse class represents a rotated ellipse.
@@ -22,15 +17,8 @@ class RotatedEllipse : public Shape
 public:
     RotatedEllipse() = default;
     RotatedEllipse(float x, float y, float rx, float ry, float angle);
-    /**
-     * @brief RotatedEllipse Creates a new rotated ellipse.
-     * @param model The model that created this shape.
-     */
-    RotatedEllipse(const geometrize::Model& model);
 
     virtual std::shared_ptr<geometrize::Shape> clone() const override;
-    virtual std::vector<geometrize::Scanline> rasterize() const override;
-    virtual void mutate() override;
     virtual void translate(float x, float y) override;
     virtual void scale(float scaleFactor) override;
     virtual geometrize::ShapeTypes getType() const override;

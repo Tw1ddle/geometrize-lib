@@ -7,11 +7,6 @@
 
 namespace geometrize
 {
-class Model;
-}
-
-namespace geometrize
-{
 
 /**
  * @brief The QuadraticBezier class represents a quadratic bezier curve.
@@ -22,15 +17,8 @@ class QuadraticBezier : public Shape
 public:
     QuadraticBezier() = default;
     QuadraticBezier(float cx, float cy, float x1, float y1, float x2, float y2);
-    /**
-     * @brief QuadraticBezier Creates a new quadratic bezier curve.
-     * @param model The model that created this shape.
-     */
-    QuadraticBezier(const geometrize::Model& model);
 
     virtual std::shared_ptr<geometrize::Shape> clone() const override;
-    virtual std::vector<geometrize::Scanline> rasterize() const override;
-    virtual void mutate() override;
     virtual void translate(float x, float y) override;
     virtual void scale(float scaleFactor) override;
     virtual geometrize::ShapeTypes getType() const override;

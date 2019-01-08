@@ -1,12 +1,11 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
 #include <memory>
 #include <vector>
 
 #include "shaperesult.h"
-#include "shape/shapemutator.h"
-#include "shape/shapetypes.h"
 
 namespace geometrize
 {
@@ -61,7 +60,7 @@ public:
 
     /**
      * @brief step Steps the primitive optimization/fitting algorithm.
-     * @param shapeTypes The types of shape to use.
+     * @param shapeCreator A function that will produce the shapes.
      * @param alpha The alpha of the shape.
      * @param shapeCount The number of random shapes to generate (only 1 is chosen in the end).
      * @param maxShapeMutations The maximum number of times to mutate each random shape.
@@ -69,7 +68,7 @@ public:
      * @return A vector containing data about the shapes added to the model in this step.
      */
     std::vector<geometrize::ShapeResult> step(
-            geometrize::ShapeTypes shapeTypes,
+            const std::function<std::shared_ptr<geometrize::Shape>(void)>& shapeCreator,
             std::uint8_t alpha,
             std::uint32_t shapeCount,
             std::uint32_t maxShapeMutations,
@@ -120,58 +119,6 @@ public:
      * @param seed The random number generator seed.
      */
     void setSeed(std::uint32_t seed);
-
-    /**
-     * @brief getShapeMutator Gets the object the model uses for setting up/mutating shapes.
-     * @return The shape mutator.
-     */
-    const geometrize::ShapeMutator& getShapeMutator() const;
-
-    /**
-     * @brief getShapeMutator Gets the object the model uses for setting up/mutating shapes.
-     * @return The shape mutator.
-     */
-    geometrize::ShapeMutator& getShapeMutator();
-
-    /**
-     * @brief setupShape Performs the initial setup on a shape.
-     * @param shape The shape to set up.
-     */
-    template<typename T>
-    void setupShape(T& shape) const
-    {
-        getShapeMutator().setup(shape);
-    }
-
-    /**
-     * @brief mutateShape Mutates the given shape.
-     * @param shape The shape to mutate.
-     */
-    template<typename T>
-    void mutateShape(T& shape) const
-    {
-        getShapeMutator().mutate(shape);
-    }
-
-    /**
-     * @brief setShapeSetupFunction Sets the setup function for the type of shape passed as a parameter in the passed function.
-     * @param func The shape setup function to use for the type of shape this function accepts.
-     */
-    template<typename T>
-    void setShapeSetupFunction(const T& func)
-    {
-        getShapeMutator().setMutatorFunction(func);
-    }
-
-    /**
-     * @brief setShapeMutatorFunction Sets the mutation function for the type of shape passed as a parameter in the passed function.
-     * @param func The shape mutation function to use for the type of shape this function accepts.
-     */
-    template<typename T>
-    void setShapeMutatorFunction(const T& func)
-    {
-        getShapeMutator().setMutatorFunction(func);
-    }
 
 private:
     class ModelImpl;

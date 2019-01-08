@@ -9,8 +9,6 @@
 #include "core.h"
 #include "model.h"
 #include "shape/shape.h"
-#include "shape/shapefactory.h"
-#include "shape/shapetypes.h"
 #include "rasterizer/scanline.h"
 
 namespace geometrize
@@ -18,8 +16,8 @@ namespace geometrize
 
 State::State() : m_score{-1.0f}, m_alpha{0}, m_shape{nullptr} {}
 
-State::State(const geometrize::Model& model, const ShapeTypes shapeTypes, const std::uint8_t alpha) :
-    m_score{-1.0f}, m_alpha{alpha}, m_shape{geometrize::randomShapeOf(model, shapeTypes)}
+State::State(const geometrize::Model& model, const std::shared_ptr<geometrize::Shape>& shape, const std::uint8_t alpha) :
+    m_score{-1.0f}, m_alpha{alpha}, m_shape{shape}
 {}
 
 State& State::operator=(const geometrize::State& other)
@@ -39,14 +37,14 @@ State::State(const geometrize::State& other) : m_score{other.m_score}, m_alpha{o
 float State::calculateEnergy(const geometrize::Bitmap& target, const geometrize::Bitmap& current, geometrize::Bitmap& buffer, const float lastScore)
 {
     assert(m_score < 0 && "Score was not reset");
-    m_score = geometrize::core::energy(m_shape->rasterize(), m_alpha, target, current, buffer, lastScore);
+    m_score = geometrize::core::energy(m_shape->rasterize(*m_shape), m_alpha, target, current, buffer, lastScore);
     return m_score;
 }
 
 geometrize::State State::mutate()
 {
     geometrize::State oldState(*this);
-    m_shape->mutate();
+    m_shape->mutate(*m_shape);
     m_score = -1;
     return oldState;
 }
