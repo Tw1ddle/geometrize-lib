@@ -31,39 +31,9 @@ std::shared_ptr<geometrize::Shape> Rectangle::clone() const
     return rect;
 }
 
-void Rectangle::translate(const float x, const float y)
-{
-    m_x1 += x;
-    m_y1 += y;
-    m_x2 += x;
-    m_y2 += y;
-}
-
-void Rectangle::scale(const float scaleFactor)
-{
-    // TODO
-}
-
 geometrize::ShapeTypes Rectangle::getType() const
 {
     return geometrize::ShapeTypes::RECTANGLE;
-}
-
-std::vector<float> Rectangle::getRawShapeData() const
-{
-    return {
-        ((std::fmin)(m_x1, m_x2)),
-        ((std::fmin)(m_y1, m_y2)),
-        ((std::fmax)(m_x1, m_x2)),
-        ((std::fmax)(m_y1, m_y2))
-    };
-}
-
-std::string Rectangle::getSvgShapeData() const
-{
-    std::stringstream s;
-    s << "<rect x=\"" << (std::fmin)(m_x1, m_x2) << "\" y=\"" << (std::fmin)(m_y1, m_y2) << "\" width=\"" << (std::fmax)(m_x1, m_x2) - (std::fmin)(m_x1, m_x2) << "\" height=\"" << (std::fmax)(m_y1, m_y2) - (std::fmin)(m_y1, m_y2) << "\" " << SVG_STYLE_HOOK << " />";
-    return s.str();
 }
 
 }

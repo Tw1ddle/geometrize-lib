@@ -28,32 +28,9 @@ std::shared_ptr<geometrize::Shape> Circle::clone() const
     return circle;
 }
 
-void Circle::translate(const float x, const float y)
-{
-    m_x += x;
-    m_y += y;
-}
-
-void Circle::scale(const float scaleFactor)
-{
-    m_r *= scaleFactor;
-}
-
 geometrize::ShapeTypes Circle::getType() const
 {
     return geometrize::ShapeTypes::CIRCLE;
-}
-
-std::vector<float> Circle::getRawShapeData() const
-{
-    return { m_x, m_y, m_r };
-}
-
-std::string Circle::getSvgShapeData() const
-{
-    std::stringstream s;
-    s << "<circle cx=\"" << m_x << "\" cy=\"" << m_y << "\" r=\"" << m_r << "\" " << SVG_STYLE_HOOK << " />";
-    return s.str();
 }
 
 }

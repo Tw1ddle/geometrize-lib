@@ -32,34 +32,9 @@ std::shared_ptr<geometrize::Shape> Line::clone() const
     return line;
 }
 
-void Line::translate(const float x, const float y)
-{
-    m_x1 += x;
-    m_y1 += y;
-    m_x2 += x;
-    m_y2 += y;
-}
-
-void Line::scale(const float scaleFactor)
-{
-    // TODO
-}
-
 geometrize::ShapeTypes Line::getType() const
 {
     return geometrize::ShapeTypes::LINE;
-}
-
-std::vector<float> Line::getRawShapeData() const
-{
-    return { m_x1, m_y1, m_x2, m_y2 };
-}
-
-std::string Line::getSvgShapeData() const
-{
-    std::stringstream s;
-    s << "<line x1=\"" << m_x1 << "\" y1=\"" << m_y1 << "\" x2=\"" << m_x2 << "\" y2=\"" << m_y2 << "\" " << SVG_STYLE_HOOK << " />";
-    return s.str();
 }
 
 }

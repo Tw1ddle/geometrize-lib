@@ -34,42 +34,9 @@ std::shared_ptr<geometrize::Shape> RotatedRectangle::clone() const
     return rect;
 }
 
-void RotatedRectangle::translate(const float x, const float y)
-{
-    m_x1 += x;
-    m_y1 += y;
-    m_x2 += x;
-    m_y2 += y;
-}
-
-void RotatedRectangle::scale(const float scaleFactor)
-{
-    // TODO
-}
-
 geometrize::ShapeTypes RotatedRectangle::getType() const
 {
     return geometrize::ShapeTypes::ROTATED_RECTANGLE;
-}
-
-std::vector<float> RotatedRectangle::getRawShapeData() const
-{
-    return { ((std::fmin)(m_x1, m_x2)), ((std::fmin)(m_y1, m_y2)), ((std::fmax)(m_x1, m_x2)), ((std::fmax)(m_y1, m_y2)), m_angle};
-}
-
-std::string RotatedRectangle::getSvgShapeData() const
-{
-    const std::vector<std::pair<float, float>> points{geometrize::getCornerPoints(*this)};
-    std::stringstream s;
-    s << "<polygon points=\"";
-    for(std::size_t i = 0; i < points.size(); i++) {
-        s << points[i].first << "," << points[i].second;
-        if(i != points.size() - 1) {
-            s << " ";
-        }
-    }
-    s << "\" " << SVG_STYLE_HOOK << "/>";
-    return s.str();
 }
 
 }

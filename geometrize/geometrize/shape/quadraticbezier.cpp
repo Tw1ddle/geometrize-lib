@@ -35,36 +35,9 @@ std::shared_ptr<geometrize::Shape> QuadraticBezier::clone() const
     return bezier;
 }
 
-void QuadraticBezier::translate(const float x, const float y)
-{
-    m_cx += x;
-    m_cy += y;
-    m_x1 += x;
-    m_y1 += y;
-    m_x2 += x;
-    m_y2 += y;
-}
-
-void QuadraticBezier::scale(const float scaleFactor)
-{
-    // TODO
-}
-
 geometrize::ShapeTypes QuadraticBezier::getType() const
 {
     return geometrize::ShapeTypes::QUADRATIC_BEZIER;
-}
-
-std::vector<float> QuadraticBezier::getRawShapeData() const
-{
-    return { m_x1, m_y1, m_cx, m_cy, m_x2, m_y2 };
-}
-
-std::string QuadraticBezier::getSvgShapeData() const
-{
-    std::stringstream s;
-    s << "<path d=\"M" << m_x1 << " " << m_y1 << " Q " << m_cx << " " << m_cy << " " << m_x2 << " " << m_y2 << "\" " << SVG_STYLE_HOOK << " />";
-    return s.str();
 }
 
 }

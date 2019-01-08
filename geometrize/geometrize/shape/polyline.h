@@ -19,11 +19,7 @@ public:
     Polyline(const std::vector<std::pair<float, float>>& points);
 
     virtual std::shared_ptr<geometrize::Shape> clone() const override;
-    virtual void translate(float x, float y) override;
-    virtual void scale(float scaleFactor) override;
     virtual geometrize::ShapeTypes getType() const override;
-    virtual std::vector<float> getRawShapeData() const override;
-    virtual std::string getSvgShapeData() const override;
 
     std::vector<std::pair<float, float>> m_points; ///< The points on the polyline.
 };

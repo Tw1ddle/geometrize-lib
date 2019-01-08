@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include "shapeserializer.h"
 #include "../shape/shape.h"
 #include "../shaperesult.h"
 
@@ -22,7 +23,7 @@ std::string exportShapeArray(const std::vector<geometrize::ShapeResult>& data)
 
         stream << static_cast<std::underlying_type<geometrize::ShapeTypes>::type>(s.shape->getType()) << "\n";
 
-        const std::vector<float> shapeData{s.shape->getRawShapeData()};
+        const std::vector<float> shapeData{getRawShapeData(*s.shape.get())};
         for(std::size_t d = 0; d < shapeData.size(); d++) {
             stream << shapeData[d];
             if(d != (shapeData.size() - 1U)) {

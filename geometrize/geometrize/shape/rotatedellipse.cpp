@@ -33,34 +33,9 @@ std::shared_ptr<geometrize::Shape> RotatedEllipse::clone() const
     return ellipse;
 }
 
-void RotatedEllipse::translate(const float x, const float y)
-{
-    m_x += x;
-    m_y += y;
-}
-
-void RotatedEllipse::scale(const float scaleFactor)
-{
-    // TODO
-}
-
 geometrize::ShapeTypes RotatedEllipse::getType() const
 {
     return geometrize::ShapeTypes::ROTATED_ELLIPSE;
-}
-
-std::vector<float> RotatedEllipse::getRawShapeData() const
-{
-    return { m_x, m_y, m_rx, m_ry, m_angle };
-}
-
-std::string RotatedEllipse::getSvgShapeData() const
-{
-    std::stringstream s;
-    s << "<g transform=\"translate(" << m_x << " " << m_y << ") rotate(" << m_angle << ") scale(" << m_rx << " " << m_ry << ")\">"
-      << "<ellipse cx=\"" << 0 << "\" cy=\"" << 0 << "\" rx=\"" << 1 << "\" ry=\"" << 1 << "\" " << SVG_STYLE_HOOK << " />"
-      << "</g>";
-    return s.str();
 }
 
 }

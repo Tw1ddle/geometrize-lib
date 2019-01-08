@@ -35,36 +35,9 @@ std::shared_ptr<geometrize::Shape> Triangle::clone() const
     return triangle;
 }
 
-void Triangle::translate(const float x, const float y)
-{
-    m_x1 += x;
-    m_y1 += y;
-    m_x2 += x;
-    m_y2 += y;
-    m_x3 += x;
-    m_y3 += y;
-}
-
-void Triangle::scale(const float scaleFactor)
-{
-    // TODO
-}
-
 geometrize::ShapeTypes Triangle::getType() const
 {
     return ShapeTypes::TRIANGLE;
-}
-
-std::vector<float> Triangle::getRawShapeData() const
-{
-    return { m_x1, m_y1, m_x2, m_y2, m_x3, m_y3 };
-}
-
-std::string Triangle::getSvgShapeData() const
-{
-    std::stringstream s;
-    s << "<polygon points=\"" << m_x1 << "," << m_y1 << " " << m_x2 << "," << m_y2 << " " << m_x3 << "," << m_y3 << "\" " << SVG_STYLE_HOOK << " " << "/>";
-    return s.str();
 }
 
 }

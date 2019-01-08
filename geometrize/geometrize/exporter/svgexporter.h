@@ -19,6 +19,11 @@ namespace exporter
 {
 
 /**
+ * @brief SVG_STYLE_HOOK A hook that an SVG exporter should use to augment shape styling produced by the getSvgShapeData method.
+ */
+static const std::string SVG_STYLE_HOOK = "::svg_style_hook::";
+
+/**
  * @brief The SVGExportOptions struct represents the options that can be set for the SVG export.
  */
 struct SVGExportOptions

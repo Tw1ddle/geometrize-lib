@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "shapeserializer.h"
 #include "../shape/shape.h"
 #include "../shaperesult.h"
 
@@ -22,7 +23,7 @@ std::string exportShapeJson(const std::vector<geometrize::ShapeResult>& data)
     for(std::size_t i = 0; i < data.size(); i++) {
         const geometrize::ShapeResult& s(data[i]);
         const geometrize::ShapeTypes type{s.shape->getType()};
-        const std::vector<float> shapeData{s.shape->getRawShapeData()};
+        const std::vector<float> shapeData{getRawShapeData(*s.shape.get())};
         const geometrize::rgba color(s.color);
         const float score{s.score};
 
