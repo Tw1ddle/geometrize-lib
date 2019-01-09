@@ -1,6 +1,5 @@
 #include "shapefactory.h"
 
-#include <bitset>
 #include <cassert>
 #include <cstdint>
 #include <memory>
@@ -16,10 +15,82 @@
 #include "rotatedrectangle.h"
 #include "shapetypes.h"
 #include "triangle.h"
+#include "shapemutator.h"
 #include "../commonutil.h"
+#include "../rasterizer/rasterizer.h"
 
 namespace geometrize
 {
+
+std::function<std::shared_ptr<geometrize::Shape>()> createDefaultShapeCreator(const geometrize::ShapeTypes types, const std::int32_t w, const std::int32_t h)
+{
+    auto f = [types, w, h]() {
+        std::shared_ptr<geometrize::Shape> s = geometrize::randomShapeOf(types);
+
+        switch(s->getType()) {
+        case geometrize::ShapeTypes::RECTANGLE: {
+            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Rectangle&>(s), w, h); };
+            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Rectangle&>(s), w, h); };
+            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Rectangle&>(s), w, h); };
+            break;
+        }
+        case geometrize::ShapeTypes::ROTATED_RECTANGLE: {
+            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::RotatedRectangle&>(s), w, h); };
+            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::RotatedRectangle&>(s), w, h); };
+            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::RotatedRectangle&>(s), w, h); };
+            break;
+        }
+        case geometrize::ShapeTypes::TRIANGLE: {
+            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Triangle&>(s), w, h); };
+            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Triangle&>(s), w, h); };
+            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Triangle&>(s), w, h); };
+            break;
+        }
+        case geometrize::ShapeTypes::ELLIPSE: {
+            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Ellipse&>(s), w, h); };
+            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Ellipse&>(s), w, h); };
+            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Ellipse&>(s), w, h); };
+            break;
+        }
+        case geometrize::ShapeTypes::ROTATED_ELLIPSE: {
+            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::RotatedEllipse&>(s), w, h); };
+            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::RotatedEllipse&>(s), w, h); };
+            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::RotatedEllipse&>(s), w, h); };
+            break;
+        }
+        case geometrize::ShapeTypes::CIRCLE: {
+            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Circle&>(s), w, h); };
+            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Circle&>(s), w, h); };
+            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Circle&>(s), w, h); };
+            break;
+        }
+        case geometrize::ShapeTypes::LINE: {
+            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Line&>(s), w, h); };
+            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Line&>(s), w, h); };
+            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Line&>(s), w, h); };
+            break;
+        }
+        case geometrize::ShapeTypes::QUADRATIC_BEZIER: {
+            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::QuadraticBezier&>(s), w, h); };
+            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::QuadraticBezier&>(s), w, h); };
+            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::QuadraticBezier&>(s), w, h); };
+            break;
+        }
+        case geometrize::ShapeTypes::POLYLINE: {
+            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Polyline&>(s), w, h); };
+            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Polyline&>(s), w, h); };
+            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Polyline&>(s), w, h); };
+            break;
+        }
+        default:
+            assert(0 && "Bad shape type");
+        }
+
+        return s;
+    };
+
+    return f;
+}
 
 std::shared_ptr<geometrize::Shape> create(const geometrize::ShapeTypes t)
 {

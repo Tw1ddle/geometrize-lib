@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <memory>
 #include <vector>
 
@@ -10,6 +11,7 @@ namespace geometrize
 class Bitmap;
 class ImageRunnerOptions;
 class Model;
+class Shape;
 }
 
 namespace geometrize
@@ -44,7 +46,7 @@ public:
      * @param options Various configurable settings for doing the step e.g. the shape types to consider.
      * @return A vector containing data about the shapes just added to the internal model.
      */
-    std::vector<geometrize::ShapeResult> step(const geometrize::ImageRunnerOptions& options);
+    std::vector<geometrize::ShapeResult> step(const geometrize::ImageRunnerOptions& options, std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator = nullptr);
 
     /**
      * @brief getCurrent Gets the current bitmap with the primitives drawn on it.
