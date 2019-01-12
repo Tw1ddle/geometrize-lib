@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include <cstdint>
-#include <vector>
 
 #include "bitmap/rgba.h"
 

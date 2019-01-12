@@ -1,12 +1,9 @@
 #include "rotatedrectangle.h"
 
-#include <cmath>
 #include <cstdint>
 #include <memory>
-#include <sstream>
 
 #include "shape.h"
-#include "../rasterizer/rasterizer.h"
 
 namespace geometrize
 {

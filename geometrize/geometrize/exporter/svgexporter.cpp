@@ -1,6 +1,7 @@
 #include "svgexporter.h"
 
 #include <cassert>
+#include <cmath>
 #include <cstdint>
 #include <regex>
 #include <sstream>

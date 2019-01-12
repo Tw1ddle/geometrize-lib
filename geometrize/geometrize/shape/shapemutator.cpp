@@ -517,37 +517,83 @@ void scale(geometrize::Ellipse& s, const float scaleFactor)
 
 void scale(geometrize::Line& s, const float scaleFactor)
 {
-    // TODO
+    const float xLen = (s.m_x1 + s.m_x2) / 2;
+    const float yLen = (s.m_y1 + s.m_y2) / 2;
+
+    s.m_x1 = (s.m_x1 - xLen) * scaleFactor + xLen;
+    s.m_x2 = (s.m_x2 - xLen) * scaleFactor + xLen;
+
+    s.m_y1 = (s.m_y1 - yLen) * scaleFactor + yLen;
+    s.m_y2 = (s.m_y2 - yLen) * scaleFactor + yLen;
 }
 
 void scale(geometrize::Polyline& s, const float scaleFactor)
 {
-    // TODO
+    std::vector<std::pair<float, float>> points;
+
+    for(std::size_t i = 0; i < s.m_points.size(); i+=2) {
+        if(i == s.m_points.size() - 1 || i == s.m_points.size()) {
+            continue;
+        }
+        const float x1 = s.m_points[i].first;
+        const float x2 = s.m_points[i + 1].first;
+        const float y1 = s.m_points[i].second;
+        const float y2 = s.m_points[i + 1].second;
+
+        const float xLen = (x1 + x2) / 2;
+        const float yLen = (y1 + y2) / 2;
+
+        points.push_back({(x1 - xLen) * scaleFactor + xLen, (y1 - yLen) * scaleFactor + yLen});
+        points.push_back({(x1 - xLen) * scaleFactor + xLen, (y2 - yLen) * scaleFactor + yLen});
+    }
+
+    s.m_points = points;
 }
 
 void scale(geometrize::QuadraticBezier& s, const float scaleFactor)
 {
-    // TODO
+    assert(0 && "TODO");
 }
 
 void scale(geometrize::Rectangle& s, const float scaleFactor)
 {
-    // TODO
+    const float xMid = (s.m_x1 + s.m_x2) / 2;
+    const float yMid = (s.m_y1 + s.m_y2) / 2;
+
+    s.m_x1 = (s.m_x1 - xMid) * scaleFactor + xMid;
+    s.m_y1 = (s.m_y1 - yMid) * scaleFactor + yMid;
+    s.m_x2 = (s.m_x2 - xMid) * scaleFactor + xMid;
+    s.m_y2 = (s.m_y2 - yMid) * scaleFactor + yMid;
 }
 
 void scale(geometrize::RotatedEllipse& s, const float scaleFactor)
 {
-    // TODO
+    s.m_rx *= scaleFactor;
+    s.m_ry *= scaleFactor;
 }
 
 void scale(geometrize::RotatedRectangle& s, const float scaleFactor)
 {
-    // TODO
+    const float xMid = (s.m_x1 + s.m_x2) / 2;
+    const float yMid = (s.m_y1 + s.m_y2) / 2;
+
+    s.m_x1 = (s.m_x1 - xMid) * scaleFactor + xMid;
+    s.m_y1 = (s.m_y1 - yMid) * scaleFactor + yMid;
+    s.m_x2 = (s.m_x2 - xMid) * scaleFactor + xMid;
+    s.m_y2 = (s.m_y2 - yMid) * scaleFactor + yMid;
 }
 
 void scale(geometrize::Triangle& s, const float scaleFactor)
 {
-    // TODO
+    const float xMid = (s.m_x1 + s.m_x2 + s.m_x3) / 3;
+    const float yMid = (s.m_y1 + s.m_y2 + s.m_y3) / 3;
+
+    s.m_x1 = (s.m_x1 - xMid) * scaleFactor + xMid;
+    s.m_y1 = (s.m_y1 - yMid) * scaleFactor + yMid;
+    s.m_x2 = (s.m_x2 - xMid) * scaleFactor + xMid;
+    s.m_y2 = (s.m_y2 - yMid) * scaleFactor + yMid;
+    s.m_x3 = (s.m_x3 - xMid) * scaleFactor + xMid;
+    s.m_y3 = (s.m_y3 - yMid) * scaleFactor + yMid;
 }
 
 }

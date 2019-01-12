@@ -1,9 +1,7 @@
 #include "ellipse.h"
 
-#include <cmath>
 #include <cstdint>
 #include <memory>
-#include <sstream>
 
 #include "shape.h"
 

@@ -2,8 +2,6 @@
 
 #include <cstdint>
 #include <memory>
-#include <sstream>
-#include <utility>
 
 #include "shape.h"
 

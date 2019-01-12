@@ -6,6 +6,7 @@
 
 #include "shapeserializer.h"
 #include "../shape/shape.h"
+#include "../shape/shapetypes.h"
 #include "../shaperesult.h"
 
 namespace geometrize
