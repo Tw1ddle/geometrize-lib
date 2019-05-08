@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <cstdint>
+#include <cmath>
 
 #include "circle.h"
 #include "ellipse.h"
@@ -14,6 +15,21 @@
 #include "triangle.h"
 
 #include "../commonutil.h"
+
+namespace
+{
+
+float wrapMax(const float x, const float maximum)
+{
+    return std::fmod(maximum + std::fmod(x, maximum), maximum);
+}
+
+float wrapMinMax(const float x, const float minimum, const float maximum)
+{
+    return minimum + wrapMax(x - minimum, maximum - minimum);
+}
+
+}
 
 namespace geometrize
 {
@@ -517,14 +533,14 @@ void scale(geometrize::Ellipse& s, const float scaleFactor)
 
 void scale(geometrize::Line& s, const float scaleFactor)
 {
-    const float xLen = (s.m_x1 + s.m_x2) / 2;
-    const float yLen = (s.m_y1 + s.m_y2) / 2;
+    const float xMid = (s.m_x1 + s.m_x2) / 2;
+    const float yMid = (s.m_y1 + s.m_y2) / 2;
 
-    s.m_x1 = (s.m_x1 - xLen) * scaleFactor + xLen;
-    s.m_x2 = (s.m_x2 - xLen) * scaleFactor + xLen;
+    s.m_x1 = (s.m_x1 - xMid) * scaleFactor + xMid;
+    s.m_x2 = (s.m_x2 - xMid) * scaleFactor + xMid;
 
-    s.m_y1 = (s.m_y1 - yLen) * scaleFactor + yLen;
-    s.m_y2 = (s.m_y2 - yLen) * scaleFactor + yLen;
+    s.m_y1 = (s.m_y1 - yMid) * scaleFactor + yMid;
+    s.m_y2 = (s.m_y2 - yMid) * scaleFactor + yMid;
 }
 
 void scale(geometrize::Polyline& s, const float scaleFactor)
@@ -594,6 +610,84 @@ void scale(geometrize::Triangle& s, const float scaleFactor)
     s.m_y2 = (s.m_y2 - yMid) * scaleFactor + yMid;
     s.m_x3 = (s.m_x3 - xMid) * scaleFactor + xMid;
     s.m_y3 = (s.m_y3 - yMid) * scaleFactor + yMid;
+}
+
+void rotate(geometrize::Shape& s, const float angle)
+{
+    switch(s.getType()) {
+    case geometrize::ShapeTypes::ROTATED_RECTANGLE:
+        rotate(static_cast<geometrize::RotatedRectangle&>(s), angle);
+        break;
+    case geometrize::ShapeTypes::TRIANGLE:
+        rotate(static_cast<geometrize::Triangle&>(s), angle);
+        break;
+    case geometrize::ShapeTypes::ROTATED_ELLIPSE:
+        rotate(static_cast<geometrize::RotatedEllipse&>(s), angle);
+        break;
+    case geometrize::ShapeTypes::LINE:
+        rotate(static_cast<geometrize::Line&>(s), angle);
+        break;
+    default:
+        break;
+    }
+}
+
+void rotate(geometrize::Line& s, const float angle)
+{
+    const float xMid = (s.m_x1 + s.m_x2) / 2;
+    const float yMid = (s.m_y1 + s.m_y2) / 2;
+
+    translate(s, -xMid, -yMid);
+
+    const float x1 = s.m_x1;
+    const float x2 = s.m_x2;
+    const float y1 = s.m_y1;
+    const float y2 = s.m_y2;
+    const float cosAngle = std::cos(angle);
+    const float sinAngle = std::sin(angle);
+
+    s.m_x1 = x1 * cosAngle - y1 * sinAngle;
+    s.m_y1 = x1 * sinAngle + y1 * cosAngle;
+    s.m_x2 = x2 * cosAngle - y2 * sinAngle;
+    s.m_y2 = x2 * sinAngle + y2 * cosAngle;
+
+    translate(s, xMid, yMid);
+}
+
+void rotate(geometrize::RotatedEllipse& s, const float angle)
+{
+    s.m_angle = wrapMinMax(s.m_angle + angle, 0, 360);
+}
+
+void rotate(geometrize::RotatedRectangle& s, const float angle)
+{
+    s.m_angle = wrapMinMax(s.m_angle + angle, 0, 360);
+}
+
+void rotate(geometrize::Triangle& s, const float angle)
+{
+    const float xMid = (s.m_x1 + s.m_x2 + s.m_x3) / 3;
+    const float yMid = (s.m_y1 + s.m_y2 + s.m_y3) / 3;
+
+    translate(s, -xMid, -yMid);
+
+    const float x1 = s.m_x1;
+    const float x2 = s.m_x2;
+    const float x3 = s.m_x3;
+    const float y1 = s.m_y1;
+    const float y2 = s.m_y2;
+    const float y3 = s.m_y3;
+    const float cosAngle = std::cos(angle);
+    const float sinAngle = std::sin(angle);
+
+    s.m_x1 = x1 * cosAngle - y1 * sinAngle;
+    s.m_y1 = x1 * sinAngle + y1 * cosAngle;
+    s.m_x2 = x2 * cosAngle - y2 * sinAngle;
+    s.m_y2 = x2 * sinAngle + y2 * cosAngle;
+    s.m_x3 = x3 * cosAngle - y3 * sinAngle;
+    s.m_y3 = x3 * sinAngle + y3 * cosAngle;
+
+    translate(s, xMid, yMid);
 }
 
 }

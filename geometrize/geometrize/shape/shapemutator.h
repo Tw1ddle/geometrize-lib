@@ -67,4 +67,11 @@ void scale(geometrize::RotatedEllipse& s, float scaleFactor);
 void scale(geometrize::RotatedRectangle& s, float scaleFactor);
 void scale(geometrize::Triangle& s, float scaleFactor);
 
+// Default implementations that rotate each type of shape through an angle (those which support rotation anyway)
+void rotate(geometrize::Shape& s, float angle);
+void rotate(geometrize::Line& s, float angle);
+void rotate(geometrize::RotatedEllipse& s, float angle);
+void rotate(geometrize::RotatedRectangle& s, float angle);
+void rotate(geometrize::Triangle& s, float angle);
+
 }
