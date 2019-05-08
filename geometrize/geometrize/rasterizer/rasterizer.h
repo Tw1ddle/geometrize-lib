@@ -33,6 +33,13 @@ namespace geometrize
 std::vector<std::pair<float, float>> getCornerPoints(const geometrize::RotatedRectangle& r);
 
 /**
+ * @brief getPointsOnRotatedEllipse Calculates and returns a number of points on the given rotated ellipse.
+ * @param e The rotated ellipse.
+ * @return A vector containing the points on the rotated ellipse.
+ */
+std::vector<std::pair<float, float>> getPointsOnRotatedEllipse(const geometrize::RotatedEllipse& e, std::size_t numPoints);
+
+/**
  * @brief drawLines Draws scanlines onto an image.
  * @param image The image to be drawn to.
  * @param color The color of the scanlines.

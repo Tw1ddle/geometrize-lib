@@ -54,6 +54,23 @@ std::vector<std::pair<float, float>> getCornerPoints(const geometrize::RotatedRe
     return {ul, ur, br, bl};
 }
 
+std::vector<std::pair<float, float>> getPointsOnRotatedEllipse(const geometrize::RotatedEllipse& e, const std::size_t numPoints)
+{    
+    std::vector<std::pair<float, float>> points;
+    const float rads{e.m_angle * (3.141f / 180.0f)};
+    const float co{std::cos(rads)};
+    const float si{std::sin(rads)};
+
+    for(std::uint32_t i = 0; i < numPoints; i++) {
+        const float angle{((360.0f / numPoints) * i) * (3.141f / 180.0f)};
+        const float crx{e.m_rx * std::cos(angle)};
+        const float cry{e.m_ry * std::sin(angle)};
+        points.push_back(std::make_pair(crx * co - cry * si + e.m_x, crx * si + cry * co + e.m_y));
+    }
+
+    return points;
+}
+
 void drawLines(geometrize::Bitmap& image, const geometrize::rgba color, const std::vector<geometrize::Scanline>& lines)
 {
     // Convert the non-premultiplied color to alpha-premultiplied 16-bits per channel RGBA
@@ -332,17 +349,7 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Rectangle& s, cons
 std::vector<geometrize::Scanline> rasterize(const geometrize::RotatedEllipse& s, const std::int32_t w, const std::int32_t h)
 {
     const std::uint32_t pointCount{20};
-    std::vector<std::pair<float, float>> points;
-    const float rads{s.m_angle * (3.141f / 180.0f)};
-    const float co{std::cos(rads)};
-    const float si{std::sin(rads)};
-
-    for(std::uint32_t i = 0; i < pointCount; i++) {
-        const float angle{((360.0f / pointCount) * i) * (3.141f / 180.0f)};
-        const float crx{s.m_rx * std::cos(angle)};
-        const float cry{s.m_ry * std::sin(angle)};
-        points.push_back(std::make_pair(crx * co - cry * si + s.m_x, crx * si + cry * co + s.m_y));
-    }
+    std::vector<std::pair<float, float>> points = getPointsOnRotatedEllipse(s, pointCount);
 
     std::vector<geometrize::Scanline> scanlines{geometrize::scanlinesForPolygon(points)};
     return geometrize::Scanline::trim(scanlines, w, h);

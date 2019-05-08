@@ -23,12 +23,19 @@ namespace exporter
  */
 static const std::string SVG_STYLE_HOOK = "::svg_style_hook::";
 
+enum class RotatedEllipseSVGExportMode
+{
+    ELLIPSE_ITEM = 0, // Export as a translated, rotated and scaled svg <ellipse>. OpenFL's SVG library can't handle this
+    POLYGON = 1 // Export as a <polygon>, OpenFL's SVG library can handle this, but it looks quite ugly
+};
+
 /**
  * @brief The SVGExportOptions struct represents the options that can be set for the SVG export.
  */
 struct SVGExportOptions
 {
-    // NOTE currently unused
+    RotatedEllipseSVGExportMode rotatedEllipseExportMode{ RotatedEllipseSVGExportMode::ELLIPSE_ITEM }; // Technique to use when exporting rotated ellipses
+    std::size_t itemId{ 0 }; // Id to tag the exported SVG shapes with
 };
 
 /**

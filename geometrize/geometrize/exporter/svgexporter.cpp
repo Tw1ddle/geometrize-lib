@@ -6,6 +6,7 @@
 #include <regex>
 #include <sstream>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "../rasterizer/rasterizer.h"
@@ -79,12 +80,35 @@ std::string getSvgShapeData(const geometrize::Rectangle& s)
     return strm.str();
 }
 
-std::string getSvgShapeData(const geometrize::RotatedEllipse& s)
+std::string getSvgShapeData(const geometrize::RotatedEllipse& s, const geometrize::exporter::RotatedEllipseSVGExportMode mode)
 {
     std::stringstream strm;
-    strm << "<g transform=\"translate(" << s.m_x << " " << s.m_y << ") rotate(" << s.m_angle << ") scale(" << s.m_rx << " " << s.m_ry << ")\">"
-      << "<ellipse cx=\"" << 0 << "\" cy=\"" << 0 << "\" rx=\"" << 1 << "\" ry=\"" << 1 << "\" " << geometrize::exporter::SVG_STYLE_HOOK << " />"
-      << "</g>";
+
+    switch(mode) {
+    case geometrize::exporter::RotatedEllipseSVGExportMode::ELLIPSE_ITEM:
+        {
+            strm << "<g transform=\"translate(" << s.m_x << " " << s.m_y << ") rotate(" << s.m_angle << ") scale(" << s.m_rx << " " << s.m_ry << ")\">"
+              << "<ellipse cx=\"" << 0 << "\" cy=\"" << 0 << "\" rx=\"" << 1 << "\" ry=\"" << 1 << "\" " << geometrize::exporter::SVG_STYLE_HOOK << " />"
+              << "</g>";
+        }
+        break;
+    case geometrize::exporter::RotatedEllipseSVGExportMode::POLYGON:
+        {
+            const std::size_t pointCount = 20;
+            std::vector<std::pair<float, float>> points{geometrize::getPointsOnRotatedEllipse(s, pointCount)};
+
+            strm << "<polygon points=\"";
+            for(std::size_t i = 0; i < points.size(); i++) {
+                strm << points[i].first << "," << points[i].second;
+                if(i != points.size() - 1) {
+                    strm << " ";
+                }
+            }
+            strm << "\" " << geometrize::exporter::SVG_STYLE_HOOK << "/>";
+        }
+        break;
+    }
+
     return strm.str();
 }
 
@@ -110,7 +134,7 @@ std::string getSvgShapeData(const geometrize::Triangle& s)
     return strm.str();
 }
 
-std::string getSvgShapeData(const geometrize::Shape& s)
+std::string getSvgShapeData(const geometrize::Shape& s, const geometrize::exporter::SVGExportOptions& options)
 {
     switch(s.getType()) {
     case geometrize::ShapeTypes::RECTANGLE:
@@ -122,7 +146,7 @@ std::string getSvgShapeData(const geometrize::Shape& s)
     case geometrize::ShapeTypes::ELLIPSE:
         return getSvgShapeData(static_cast<const geometrize::Ellipse&>(s));
     case geometrize::ShapeTypes::ROTATED_ELLIPSE:
-        return getSvgShapeData(static_cast<const geometrize::RotatedEllipse&>(s));
+        return getSvgShapeData(static_cast<const geometrize::RotatedEllipse&>(s), options.rotatedEllipseExportMode);
     case geometrize::ShapeTypes::CIRCLE:
         return getSvgShapeData(static_cast<const geometrize::Circle&>(s));
     case geometrize::ShapeTypes::LINE:
@@ -175,16 +199,16 @@ std::string getSVGStrokeOpacityAttrib(const geometrize::rgba color)
     return stream.str();
 }
 
-std::string getSingleShapeSVGData(const geometrize::rgba& color, const geometrize::Shape& shape, const std::size_t id = 0)
+std::string getSingleShapeSVGData(const geometrize::rgba& color, const geometrize::Shape& shape, const geometrize::exporter::SVGExportOptions& options)
 {
     std::stringstream stream;
 
-    std::string shapeData{getSvgShapeData(shape)};
+    std::string shapeData{getSvgShapeData(shape, options)};
     const geometrize::ShapeTypes shapeType{shape.getType()};
 
     std::string styles{""};
 
-    styles.append("id=\"" + std::to_string(id) + "\" ");
+    styles.append("id=\"" + std::to_string(options.itemId) + "\" ");
 
     if(shapeType == geometrize::ShapeTypes::LINE
             || shapeType == geometrize::ShapeTypes::POLYLINE
@@ -213,12 +237,12 @@ namespace geometrize
 namespace exporter
 {
 
-std::string getSingleShapeSVGData(const geometrize::rgba& color, const geometrize::Shape& shape, SVGExportOptions /*options*/)
+std::string getSingleShapeSVGData(const geometrize::rgba& color, const geometrize::Shape& shape, SVGExportOptions options)
 {
-    return ::getSingleShapeSVGData(color, shape, 0);
+    return ::getSingleShapeSVGData(color, shape, options);
 }
 
-std::string exportSingleShapeSVG(const geometrize::rgba& color, const geometrize::Shape& shape, const std::uint32_t width, const std::uint32_t height, SVGExportOptions /*options*/)
+std::string exportSingleShapeSVG(const geometrize::rgba& color, const geometrize::Shape& shape, const std::uint32_t width, const std::uint32_t height, SVGExportOptions options)
 {
     std::stringstream stream;
 
@@ -227,14 +251,14 @@ std::string exportSingleShapeSVG(const geometrize::rgba& color, const geometrize
               "width=\"" << width << "\" " << "height=\"" << height << "\" " <<
               "viewBox=\"" << 0 << " " << 0 << " " << width << " " << height << "\">" << "\n";
 
-    stream << ::getSingleShapeSVGData(color, shape);
+    stream << ::getSingleShapeSVGData(color, shape, options);
 
     stream << "</svg>";
 
     return stream.str();
 }
 
-std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const std::uint32_t width, const std::uint32_t height, const SVGExportOptions /*options*/)
+std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const std::uint32_t width, const std::uint32_t height, SVGExportOptions options)
 {
     std::stringstream stream;
 
@@ -244,9 +268,11 @@ std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const st
               "viewBox=\"" << 0 << " " << 0 << " " << width << " " << height << "\">" << "\n";
 
     for(std::size_t i = 0; i < data.size(); i++) {
+        options.itemId = i;
+
         const geometrize::ShapeResult& s(data[i]);
 
-        stream << ::getSingleShapeSVGData(s.color, *(s.shape), i);
+        stream << ::getSingleShapeSVGData(s.color, *(s.shape), options);
     }
 
     stream << "</svg>";
