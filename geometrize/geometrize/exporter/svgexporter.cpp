@@ -23,30 +23,27 @@
 #include "../shaperesult.h"
 #include "../commonutil.h"
 
-namespace geometrize
-{
-
-namespace exporter
+namespace
 {
 
 std::string getSvgShapeData(const geometrize::Circle& s)
 {
     std::stringstream strm;
-    strm << "<circle cx=\"" << s.m_x << "\" cy=\"" << s.m_y << "\" r=\"" << s.m_r << "\" " << SVG_STYLE_HOOK << " />";
+    strm << "<circle cx=\"" << s.m_x << "\" cy=\"" << s.m_y << "\" r=\"" << s.m_r << "\" " << geometrize::exporter::SVG_STYLE_HOOK << " />";
     return strm.str();
 }
 
 std::string getSvgShapeData(const geometrize::Ellipse& s)
 {
     std::stringstream strm;
-    strm << "<ellipse cx=\"" << s.m_x << "\" cy=\"" << s.m_y << "\" rx=\"" << s.m_rx << "\" ry=\"" << s.m_ry << "\" " << SVG_STYLE_HOOK << " />";
+    strm << "<ellipse cx=\"" << s.m_x << "\" cy=\"" << s.m_y << "\" rx=\"" << s.m_rx << "\" ry=\"" << s.m_ry << "\" " << geometrize::exporter::SVG_STYLE_HOOK << " />";
     return strm.str();
 }
 
 std::string getSvgShapeData(const geometrize::Line& s)
 {
     std::stringstream strm;
-    strm << "<line x1=\"" << s.m_x1 << "\" y1=\"" << s.m_y1 << "\" x2=\"" << s.m_x2 << "\" y2=\"" << s.m_y2 << "\" " << SVG_STYLE_HOOK << " />";
+    strm << "<line x1=\"" << s.m_x1 << "\" y1=\"" << s.m_y1 << "\" x2=\"" << s.m_x2 << "\" y2=\"" << s.m_y2 << "\" " << geometrize::exporter::SVG_STYLE_HOOK << " />";
     return strm.str();
 }
 
@@ -62,7 +59,7 @@ std::string getSvgShapeData(const geometrize::Polyline& s)
     }
     strm << "\" ";
 
-    strm << SVG_STYLE_HOOK << " ";
+    strm << geometrize::exporter::SVG_STYLE_HOOK << " ";
     strm << "/>";
 
     return strm.str();
@@ -71,14 +68,14 @@ std::string getSvgShapeData(const geometrize::Polyline& s)
 std::string getSvgShapeData(const geometrize::QuadraticBezier& s)
 {
     std::stringstream strm;
-    strm << "<path d=\"M" << s.m_x1 << " " << s.m_y1 << " Q " << s.m_cx << " " << s.m_cy << " " << s.m_x2 << " " << s.m_y2 << "\" " << SVG_STYLE_HOOK << " />";
+    strm << "<path d=\"M" << s.m_x1 << " " << s.m_y1 << " Q " << s.m_cx << " " << s.m_cy << " " << s.m_x2 << " " << s.m_y2 << "\" " << geometrize::exporter::SVG_STYLE_HOOK << " />";
     return strm.str();
 }
 
 std::string getSvgShapeData(const geometrize::Rectangle& s)
 {
     std::stringstream strm;
-    strm << "<rect x=\"" << (std::fmin)(s.m_x1, s.m_x2) << "\" y=\"" << (std::fmin)(s.m_y1, s.m_y2) << "\" width=\"" << (std::fmax)(s.m_x1, s.m_x2) - (std::fmin)(s.m_x1, s.m_x2) << "\" height=\"" << (std::fmax)(s.m_y1, s.m_y2) - (std::fmin)(s.m_y1, s.m_y2) << "\" " << SVG_STYLE_HOOK << " />";
+    strm << "<rect x=\"" << (std::fmin)(s.m_x1, s.m_x2) << "\" y=\"" << (std::fmin)(s.m_y1, s.m_y2) << "\" width=\"" << (std::fmax)(s.m_x1, s.m_x2) - (std::fmin)(s.m_x1, s.m_x2) << "\" height=\"" << (std::fmax)(s.m_y1, s.m_y2) - (std::fmin)(s.m_y1, s.m_y2) << "\" " << geometrize::exporter::SVG_STYLE_HOOK << " />";
     return strm.str();
 }
 
@@ -86,7 +83,7 @@ std::string getSvgShapeData(const geometrize::RotatedEllipse& s)
 {
     std::stringstream strm;
     strm << "<g transform=\"translate(" << s.m_x << " " << s.m_y << ") rotate(" << s.m_angle << ") scale(" << s.m_rx << " " << s.m_ry << ")\">"
-      << "<ellipse cx=\"" << 0 << "\" cy=\"" << 0 << "\" rx=\"" << 1 << "\" ry=\"" << 1 << "\" " << SVG_STYLE_HOOK << " />"
+      << "<ellipse cx=\"" << 0 << "\" cy=\"" << 0 << "\" rx=\"" << 1 << "\" ry=\"" << 1 << "\" " << geometrize::exporter::SVG_STYLE_HOOK << " />"
       << "</g>";
     return strm.str();
 }
@@ -102,14 +99,14 @@ std::string getSvgShapeData(const geometrize::RotatedRectangle& s)
             strm << " ";
         }
     }
-    strm << "\" " << SVG_STYLE_HOOK << "/>";
+    strm << "\" " << geometrize::exporter::SVG_STYLE_HOOK << "/>";
     return strm.str();
 }
 
 std::string getSvgShapeData(const geometrize::Triangle& s)
 {
     std::stringstream strm;
-    strm << "<polygon points=\"" << s.m_x1 << "," << s.m_y1 << " " << s.m_x2 << "," << s.m_y2 << " " << s.m_x3 << "," << s.m_y3 << "\" " << SVG_STYLE_HOOK << " " << "/>";
+    strm << "<polygon points=\"" << s.m_x1 << "," << s.m_y1 << " " << s.m_x2 << "," << s.m_y2 << " " << s.m_x3 << "," << s.m_y3 << "\" " << geometrize::exporter::SVG_STYLE_HOOK << " " << "/>";
     return strm.str();
 }
 
@@ -178,21 +175,16 @@ std::string getSVGStrokeOpacityAttrib(const geometrize::rgba color)
     return stream.str();
 }
 
-std::string exportSingleShapeSVG(const geometrize::rgba& color, const geometrize::Shape& shape, const std::uint32_t width, const std::uint32_t height, SVGExportOptions /*options*/)
+std::string getSingleShapeSVGData(const geometrize::rgba& color, const geometrize::Shape& shape, const std::size_t id = 0)
 {
     std::stringstream stream;
-
-    stream << "<?xml version=\"1.0\" standalone=\"no\"?>" << "\n";
-    stream << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.2\" baseProfile=\"tiny\" " <<
-              "width=\"" << width << "\" " << "height=\"" << height << "\" " <<
-              "viewBox=\"" << 0 << " " << 0 << " " << width << " " << height << "\">" << "\n";
 
     std::string shapeData{getSvgShapeData(shape)};
     const geometrize::ShapeTypes shapeType{shape.getType()};
 
     std::string styles{""};
 
-    styles.append("id=\"" + std::to_string(0) + "\" ");
+    styles.append("id=\"" + std::to_string(id) + "\" ");
 
     if(shapeType == geometrize::ShapeTypes::LINE
             || shapeType == geometrize::ShapeTypes::POLYLINE
@@ -206,9 +198,36 @@ std::string exportSingleShapeSVG(const geometrize::rgba& color, const geometrize
         styles.append(getSVGFillOpacityAttrib(color));
     }
 
-    shapeData = std::regex_replace(shapeData, std::regex(SVG_STYLE_HOOK), styles);
+    shapeData = std::regex_replace(shapeData, std::regex(geometrize::exporter::SVG_STYLE_HOOK), styles);
 
     stream << shapeData << "\n";
+
+    return stream.str();
+}
+
+}
+
+namespace geometrize
+{
+
+namespace exporter
+{
+
+std::string getSingleShapeSVGData(const geometrize::rgba& color, const geometrize::Shape& shape, SVGExportOptions /*options*/)
+{
+    return ::getSingleShapeSVGData(color, shape, 0);
+}
+
+std::string exportSingleShapeSVG(const geometrize::rgba& color, const geometrize::Shape& shape, const std::uint32_t width, const std::uint32_t height, SVGExportOptions /*options*/)
+{
+    std::stringstream stream;
+
+    stream << "<?xml version=\"1.0\" standalone=\"no\"?>" << "\n";
+    stream << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.2\" baseProfile=\"tiny\" " <<
+              "width=\"" << width << "\" " << "height=\"" << height << "\" " <<
+              "viewBox=\"" << 0 << " " << 0 << " " << width << " " << height << "\">" << "\n";
+
+    stream << ::getSingleShapeSVGData(color, shape);
 
     stream << "</svg>";
 
@@ -226,28 +245,8 @@ std::string exportSVG(const std::vector<geometrize::ShapeResult>& data, const st
 
     for(std::size_t i = 0; i < data.size(); i++) {
         const geometrize::ShapeResult& s(data[i]);
-        std::string shapeData{getSvgShapeData(*s.shape.get())};
-        const geometrize::ShapeTypes shapeType{s.shape->getType()};
 
-        std::string styles{""};
-
-        styles.append("id=\"" + std::to_string(i) + "\" ");
-
-        if(shapeType == geometrize::ShapeTypes::LINE
-                || shapeType == geometrize::ShapeTypes::POLYLINE
-                || shapeType == geometrize::ShapeTypes::QUADRATIC_BEZIER) {
-            styles.append(getSVGStrokeAttrib(s.color));
-            styles.append(" stroke-width=\"1\" fill=\"none\" ");
-            styles.append(getSVGStrokeOpacityAttrib(s.color));
-        } else {
-            styles.append(getSVGFillAttrib(s.color));
-            styles.append(" ");
-            styles.append(getSVGFillOpacityAttrib(s.color));
-        }
-
-        shapeData = std::regex_replace(shapeData, std::regex(SVG_STYLE_HOOK), styles);
-
-        stream << shapeData << "\n";
+        stream << ::getSingleShapeSVGData(s.color, *(s.shape), i);
     }
 
     stream << "</svg>";

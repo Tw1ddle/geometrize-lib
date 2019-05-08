@@ -32,7 +32,16 @@ struct SVGExportOptions
 };
 
 /**
- * @brief exportSVG Exports a single shape to an SVG image.
+ * @brief getSvgShapeData Gets the SVG data for a single shape. This is just the <rect>/<path> etc block for the shape itself, not a complete SVG image.
+ * @param color The color of the shape.
+ * @param shape The shape to convert to SVG data.
+ * @param options additional options used by the exporter.
+ * @return The SVG shape data for the given shape.
+ */
+std::string getSingleShapeSVGData(const geometrize::rgba& color, const geometrize::Shape& shape, SVGExportOptions options = SVGExportOptions{});
+
+/**
+ * @brief exportSVG Exports a single shape as a complete SVG image.
  * @param color The color of the shape to export.
  * @param shape The shape to export.
  * @param width The width of the SVG image.
@@ -43,7 +52,7 @@ struct SVGExportOptions
 std::string exportSingleShapeSVG(const geometrize::rgba& color, const geometrize::Shape& shape, const std::uint32_t width, const std::uint32_t height, SVGExportOptions options = SVGExportOptions{});
 
 /**
- * @brief exportSVG Exports shape data to an SVG image.
+ * @brief exportSVG Exports shape data as a complete SVG image.
  * @param data The shape data to export.
  * @param width The width of the SVG image.
  * @param height The height of the SVG image.
