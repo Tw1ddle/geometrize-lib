@@ -62,7 +62,7 @@ void setup(geometrize::Shape& s, const std::int32_t xBound, const std::int32_t y
         setup(static_cast<geometrize::QuadraticBezier&>(s), xBound, yBound);
         break;
     case geometrize::ShapeTypes::POLYLINE:
-        setup(static_cast<geometrize::QuadraticBezier&>(s), xBound, yBound);
+        setup(static_cast<geometrize::Polyline&>(s), xBound, yBound);
         break;
     default:
         assert(0 && "Bad shape type");
