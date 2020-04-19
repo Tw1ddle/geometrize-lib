@@ -1,4 +1,5 @@
 os: linux
+language: cpp
 
 # Install Travis so we can get the token from Travis
 before_script:
