@@ -5,9 +5,8 @@ language: cpp
 before_script:
   - gem install travis
 
-# Do nothing
 script:
-  -
+  - echo "Not building anything here, will trigger build configs that depend on this library instead"
 
 # Tell downstream repositories that the Geometrize library has been updated
 after_script:
