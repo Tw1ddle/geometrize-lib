@@ -67,7 +67,6 @@ float differencePartial(
 
 /**
  * @brief bestRandomState Gets the best state using a random algorithm.
- * @param model The model to query for constraints etc.
  * @param shapeCreator A function that will create the shapes that will be chosen from.
  * @param alpha The opacity of the shape.
  * @param n The number of states to try.
@@ -78,7 +77,6 @@ float differencePartial(
  * @return The best random state i.e. the one with the lowest energy.
  */
 geometrize::State bestRandomState(
-        const geometrize::Model& model,
         const std::function<std::shared_ptr<geometrize::Shape>(void)>& shapeCreator,
         std::uint32_t alpha,
         std::uint32_t n,
@@ -107,7 +105,6 @@ geometrize::State hillClimb(
 
 /**
  * @brief bestHillClimbState Gets the best state using a hill climbing algorithm.
- * @param model The model to query for constraints etc.
  * @param shapeCreator A function that will create the shapes that will be chosen from.
  * @param alpha The opacity of the shape.
  * @param n The number of random states to generate.
@@ -119,7 +116,6 @@ geometrize::State hillClimb(
  * @return The best state acquired from hill climbing i.e. the one with the lowest energy.
  */
 geometrize::State bestHillClimbState(
-        const geometrize::Model& model,
         const std::function<std::shared_ptr<geometrize::Shape>(void)>& shapeCreator,
         std::uint32_t alpha,
         std::uint32_t n,

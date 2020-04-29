@@ -137,7 +137,6 @@ float differencePartial(
 }
 
 geometrize::State bestRandomState(
-        const geometrize::Model& model,
         const std::function<std::shared_ptr<geometrize::Shape>(void)>& shapeCreator,
         const std::uint32_t alpha,
         const std::uint32_t n,
@@ -146,11 +145,11 @@ geometrize::State bestRandomState(
         geometrize::Bitmap& buffer,
         const float lastScore)
 {
-    geometrize::State bestState(model, shapeCreator(), alpha);
+    geometrize::State bestState(shapeCreator(), alpha);
     float bestEnergy{bestState.calculateEnergy(target, current, buffer, lastScore)};
 
     for(std::uint32_t i = 0; i <= n; i++) {
-        geometrize::State state(model, shapeCreator(), alpha);
+        geometrize::State state(shapeCreator(), alpha);
 
         const float energy{state.calculateEnergy(target, current, buffer, lastScore)};
         if(i == 0 || energy < bestEnergy) {
@@ -192,7 +191,6 @@ geometrize::State hillClimb(
 }
 
 geometrize::State bestHillClimbState(
-        const geometrize::Model& model,
         const std::function<std::shared_ptr<geometrize::Shape>(void)>& shapeCreator,
         const std::uint32_t alpha,
         const std::uint32_t n,
@@ -202,7 +200,7 @@ geometrize::State bestHillClimbState(
         geometrize::Bitmap& buffer,
         const float lastScore)
 {
-    const geometrize::State state{bestRandomState(model, shapeCreator, alpha, n, target, current, buffer, lastScore)};
+    const geometrize::State state{bestRandomState(shapeCreator, alpha, n, target, current, buffer, lastScore)};
     return hillClimb(state, age, target, current, buffer, lastScore);
 }
 

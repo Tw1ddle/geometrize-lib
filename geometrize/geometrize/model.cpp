@@ -25,8 +25,7 @@ namespace geometrize
 class Model::ModelImpl
 {
 public:
-    ModelImpl(geometrize::Model* pQ, const geometrize::Bitmap& target) :
-        q{pQ},
+    ModelImpl(const geometrize::Bitmap& target) :
         m_target{target},
         m_current{target.getWidth(), target.getHeight(), geometrize::commonutil::getAverageImageColor(m_target)},
         m_lastScore{geometrize::core::differenceFull(m_target, m_current)},
@@ -34,8 +33,7 @@ public:
         m_randomSeedOffset{0U}
     {}
 
-    ModelImpl(geometrize::Model* pQ, const geometrize::Bitmap& target, const geometrize::Bitmap& initial) :
-        q{pQ},
+    ModelImpl(const geometrize::Bitmap& target, const geometrize::Bitmap& initial) :
         m_target{target},
         m_current{initial},
         m_lastScore{geometrize::core::differenceFull(m_target, m_current)},
@@ -91,7 +89,7 @@ public:
                 geometrize::commonutil::seedRandomGenerator(seed);
 
                 geometrize::Bitmap buffer{m_current};
-                return core::bestHillClimbState(*q, shapeCreator, alpha, shapeCount, maxShapeMutations, m_target, m_current, buffer, lastScore);
+                return core::bestHillClimbState(shapeCreator, alpha, shapeCount, maxShapeMutations, m_target, m_current, buffer, lastScore);
             }, m_baseRandomSeed + m_randomSeedOffset++, m_lastScore)};
             futures[i] = std::move(handle);
         }
@@ -189,7 +187,6 @@ public:
     }
 
 private:
-    geometrize::Model* q;
     geometrize::Bitmap m_target; ///< The target bitmap, the bitmap we aim to approximate.
     geometrize::Bitmap m_current; ///< The current bitmap.
     float m_lastScore; ///< Score derived from calculating the difference between bitmaps.
@@ -198,10 +195,10 @@ private:
     std::atomic<std::uint32_t> m_randomSeedOffset; ///< Seed used for random number generation. Note: incremented by each std::async call used for model stepping.
 };
 
-Model::Model(const geometrize::Bitmap& target) : d{std::unique_ptr<Model::ModelImpl>(new Model::ModelImpl(this, target))}
+Model::Model(const geometrize::Bitmap& target) : d{std::unique_ptr<Model::ModelImpl>(new Model::ModelImpl(target))}
 {}
 
-Model::Model(const geometrize::Bitmap& target, const geometrize::Bitmap& initial) : d{std::unique_ptr<Model::ModelImpl>(new Model::ModelImpl(this, target, initial))}
+Model::Model(const geometrize::Bitmap& target, const geometrize::Bitmap& initial) : d{std::unique_ptr<Model::ModelImpl>(new Model::ModelImpl(target, initial))}
 {}
 
 Model::~Model()
