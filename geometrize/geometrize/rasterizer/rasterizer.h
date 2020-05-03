@@ -102,4 +102,6 @@ bool scanlinesContain(const std::vector<geometrize::Scanline>& first, const std:
 bool shapesOverlap(const geometrize::Shape& a, const geometrize::Shape& b, std::int32_t xBound, std::int32_t yBound);
 bool shapeContains(const geometrize::Shape& container, const geometrize::Shape& containee, std::int32_t xBound, std::int32_t yBound);
 
+std::vector<std::pair<std::int32_t, std::int32_t>> shapeToPixels(const geometrize::Shape& shape, const std::uint32_t xBound, const std::uint32_t yBound);
+
 }

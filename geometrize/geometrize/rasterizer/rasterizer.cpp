@@ -411,4 +411,16 @@ bool shapeContains(const geometrize::Shape& container, const geometrize::Shape& 
     return geometrize::scanlinesContain(rasterize(container, xBound, yBound), rasterize(containee, xBound, yBound));
 }
 
+std::vector<std::pair<std::int32_t, std::int32_t>> shapeToPixels(const geometrize::Shape& shape, const std::uint32_t xBound, const std::uint32_t yBound)
+{
+    const auto scanlines = geometrize::rasterize(shape, static_cast<std::int32_t>(xBound), static_cast<std::int32_t>(yBound));
+    std::vector<std::pair<std::int32_t, std::int32_t>> points = {};
+    for(const auto& scanline : scanlines) {
+        for(std::int32_t x = scanline.x1; x < scanline.x2; x++) {
+            points.push_back({x, scanline.y});
+        }
+    }
+    return points;
+}
+
 }

@@ -30,13 +30,19 @@ public:
      * @brief clone Clones the shape, a virtual copy constructor.
      * @return A clone of the shape.
      */
-    virtual std::shared_ptr<geometrize::Shape> clone() const = 0;
+    virtual std::shared_ptr<geometrize::Shape> clone() const
+    {
+        throw "Unimplemented"; // NOTE not pure virtual because it breaks simple upcast in Chaiscript (and can't see how else to do it)
+    }
 
     /**
      * @brief getType Gets the ShapeType of the shape.
      * @return The ShapeType of the shape.
      */
-    virtual geometrize::ShapeTypes getType() const = 0;
+    virtual geometrize::ShapeTypes getType() const
+    {
+        throw "Unimplemented";
+    }
 };
 
 }
