@@ -66,44 +66,6 @@ float differencePartial(
         const std::vector<Scanline>& lines);
 
 /**
- * @brief bestRandomState Gets the best state using a random algorithm.
- * @param shapeCreator A function that will create the shapes that will be chosen from.
- * @param alpha The opacity of the shape.
- * @param n The number of states to try.
- * @param target The target bitmap.
- * @param current The current bitmap.
- * @param buffer The buffer bitmap.
- * @param lastScore The last score.
- * @return The best random state i.e. the one with the lowest energy.
- */
-geometrize::State bestRandomState(
-        const std::function<std::shared_ptr<geometrize::Shape>(void)>& shapeCreator,
-        std::uint32_t alpha,
-        std::uint32_t n,
-        const geometrize::Bitmap& target,
-        const geometrize::Bitmap& current,
-        geometrize::Bitmap& buffer,
-        float lastScore);
-
-/**
- * @brief hillClimb Hill climbing optimization algorithm, attempts to minimize energy (the error/difference).
- * @param state The state to optimize.
- * @param maxAge The maximum age.
- * @param target The target bitmap.
- * @param current The current bitmap.
- * @param buffer The buffer bitmap.
- * @param lastScore The last score.
- * @return The best state found from hillclimbing.
- */
-geometrize::State hillClimb(
-        const geometrize::State& state,
-        std::uint32_t maxAge,
-        const geometrize::Bitmap& target,
-        const geometrize::Bitmap& current,
-        geometrize::Bitmap& buffer,
-        float lastScore);
-
-/**
  * @brief bestHillClimbState Gets the best state using a hill climbing algorithm.
  * @param shapeCreator A function that will create the shapes that will be chosen from.
  * @param alpha The opacity of the shape.
@@ -124,24 +86,6 @@ geometrize::State bestHillClimbState(
         const geometrize::Bitmap& current,
         geometrize::Bitmap& buffer,
         float lastScore);
-
-/**
- * @brief energy Calculates a measure of the improvement adding the scanlines of a shape provides - lower energy is better.
- * @param lines The scanlines of the shape.
- * @param alpha The alpha of the scanlines.
- * @param target The target bitmap.
- * @param current The current bitmap.
- * @param buffer The buffer bitmap.
- * @param score The score.
- * @return The energy measure.
- */
-float energy(
-        const std::vector<geometrize::Scanline>& lines,
-        std::uint32_t alpha,
-        const geometrize::Bitmap& target,
-        const geometrize::Bitmap& current,
-        geometrize::Bitmap& buffer,
-        float score);
 
 }
 

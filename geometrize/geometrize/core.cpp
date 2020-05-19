@@ -15,6 +15,112 @@
 #include "shape/shape.h"
 #include "state.h"
 
+namespace
+{
+
+/**
+ * @brief energy Calculates a measure of the improvement adding the scanlines of a shape provides - lower energy is better.
+ * @param lines The scanlines of the shape.
+ * @param alpha The alpha of the scanlines.
+ * @param target The target bitmap.
+ * @param current The current bitmap.
+ * @param buffer The buffer bitmap.
+ * @param score The score.
+ * @return The energy measure.
+ */
+float energy(
+        const std::vector<geometrize::Scanline>& lines,
+        const std::uint32_t alpha,
+        const geometrize::Bitmap& target,
+        const geometrize::Bitmap& current,
+        geometrize::Bitmap& buffer,
+        const float score)
+{
+    const geometrize::rgba color(geometrize::core::computeColor(target, current, lines, alpha)); // Calculate best color for areas covered by the scanlines
+    geometrize::copyLines(buffer, current, lines); // Copy area covered by scanlines to buffer bitmap
+    geometrize::drawLines(buffer, color, lines); // Blend scanlines into the buffer using the color calculated earlier
+    return geometrize::core::differencePartial(target, current, buffer, score, lines); // Get error measure between areas of current and modified buffers covered by scanlines
+}
+
+/**
+* @brief hillClimb Hill climbing optimization algorithm, attempts to minimize energy (the error/difference).
+* @param state The state to optimize.
+* @param maxAge The maximum age.
+* @param target The target bitmap.
+* @param current The current bitmap.
+* @param buffer The buffer bitmap.
+* @param lastScore The last score.
+* @return The best state found from hillclimbing.
+*/
+geometrize::State hillClimb(
+        const geometrize::State& state,
+        const std::uint32_t maxAge,
+        const geometrize::Bitmap& target,
+        const geometrize::Bitmap& current,
+        geometrize::Bitmap& buffer,
+        const float lastScore)
+{
+    geometrize::State s(state);
+    geometrize::State bestState(state);
+    float bestEnergy{bestState.m_score};
+
+    std::uint32_t age{0};
+    while(age < maxAge) {
+        const geometrize::State undo{s.mutate()};
+        s.m_score = ::energy(s.m_shape->rasterize(*s.m_shape), s.m_alpha, target, current, buffer, lastScore);
+        const float energy = s.m_score;
+        if(energy >= bestEnergy) {
+            s = undo;
+        } else {
+            bestEnergy = energy;
+            bestState = s;
+            age = -1;
+        }
+        age++;
+    }
+
+    return bestState;
+}
+
+/**
+* @brief bestRandomState Gets the best state using a random algorithm.
+* @param shapeCreator A function that will create the shapes that will be chosen from.
+* @param alpha The opacity of the shape.
+* @param n The number of states to try.
+* @param target The target bitmap.
+* @param current The current bitmap.
+* @param buffer The buffer bitmap.
+* @param lastScore The last score.
+* @return The best random state i.e. the one with the lowest energy.
+*/
+geometrize::State bestRandomState(
+        const std::function<std::shared_ptr<geometrize::Shape>(void)>& shapeCreator,
+        const std::uint32_t alpha,
+        const std::uint32_t n,
+        const geometrize::Bitmap& target,
+        const geometrize::Bitmap& current,
+        geometrize::Bitmap& buffer,
+        const float lastScore)
+{
+    geometrize::State bestState(shapeCreator(), alpha);
+    bestState.m_score = ::energy(bestState.m_shape->rasterize(*bestState.m_shape), bestState.m_alpha, target, current, buffer, lastScore);
+    float bestEnergy = bestState.m_score;
+
+    for(std::uint32_t i = 0; i <= n; i++) {
+        geometrize::State state(shapeCreator(), alpha);
+        state.m_score = ::energy(state.m_shape->rasterize(*state.m_shape), state.m_alpha, target, current, buffer, lastScore);
+        const float energy = state.m_score;
+        if(i == 0 || energy < bestEnergy) {
+            bestEnergy = energy;
+            bestState = state;
+        }
+    }
+
+    return bestState;
+}
+
+}
+
 namespace geometrize
 {
 
@@ -137,62 +243,6 @@ float differencePartial(
     return result;
 }
 
-geometrize::State bestRandomState(
-        const std::function<std::shared_ptr<geometrize::Shape>(void)>& shapeCreator,
-        const std::uint32_t alpha,
-        const std::uint32_t n,
-        const geometrize::Bitmap& target,
-        const geometrize::Bitmap& current,
-        geometrize::Bitmap& buffer,
-        const float lastScore)
-{
-    geometrize::State bestState(shapeCreator(), alpha);
-    bestState.m_score = geometrize::core::energy(bestState.m_shape->rasterize(*bestState.m_shape), bestState.m_alpha, target, current, buffer, lastScore);
-    float bestEnergy = bestState.m_score;
-
-    for(std::uint32_t i = 0; i <= n; i++) {
-        geometrize::State state(shapeCreator(), alpha);
-        state.m_score = geometrize::core::energy(state.m_shape->rasterize(*state.m_shape), state.m_alpha, target, current, buffer, lastScore);
-        const float energy = state.m_score;
-        if(i == 0 || energy < bestEnergy) {
-            bestEnergy = energy;
-            bestState = state;
-        }
-    }
-
-    return bestState;
-}
-
-geometrize::State hillClimb(
-        const geometrize::State& state,
-        const std::uint32_t maxAge,
-        const geometrize::Bitmap& target,
-        const geometrize::Bitmap& current,
-        geometrize::Bitmap& buffer,
-        const float lastScore)
-{
-    geometrize::State s(state);
-    geometrize::State bestState(state);
-    float bestEnergy{bestState.m_score};
-
-    std::uint32_t age{0};
-    while(age < maxAge) {
-        const geometrize::State undo{s.mutate()};
-        s.m_score = geometrize::core::energy(s.m_shape->rasterize(*s.m_shape), s.m_alpha, target, current, buffer, lastScore);
-        const float energy = s.m_score;
-        if(energy >= bestEnergy) {
-            s = undo;
-        } else {
-            bestEnergy = energy;
-            bestState = s;
-            age = -1;
-        }
-        age++;
-    }
-
-    return bestState;
-}
-
 geometrize::State bestHillClimbState(
         const std::function<std::shared_ptr<geometrize::Shape>(void)>& shapeCreator,
         const std::uint32_t alpha,
@@ -204,21 +254,7 @@ geometrize::State bestHillClimbState(
         const float lastScore)
 {
     const geometrize::State state{bestRandomState(shapeCreator, alpha, n, target, current, buffer, lastScore)};
-    return hillClimb(state, age, target, current, buffer, lastScore);
-}
-
-float energy(
-        const std::vector<geometrize::Scanline>& lines,
-        const std::uint32_t alpha,
-        const geometrize::Bitmap& target,
-        const geometrize::Bitmap& current,
-        geometrize::Bitmap& buffer,
-        const float score)
-{
-    const geometrize::rgba color(computeColor(target, current, lines, alpha)); // Calculate best color for areas covered by the scanlines
-    geometrize::copyLines(buffer, current, lines); // Copy area covered by scanlines to buffer bitmap
-    geometrize::drawLines(buffer, color, lines); // Blend scanlines into the buffer using the color calculated earlier
-    return differencePartial(target, current, buffer, score, lines); // Get error measure between areas of current and modified buffers covered by scanlines
+    return ::hillClimb(state, age, target, current, buffer, lastScore);
 }
 
 }
