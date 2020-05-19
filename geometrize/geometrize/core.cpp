@@ -12,6 +12,7 @@
 #include "commonutil.h"
 #include "rasterizer/rasterizer.h"
 #include "rasterizer/scanline.h"
+#include "shape/shape.h"
 #include "state.h"
 
 namespace geometrize
@@ -146,12 +147,13 @@ geometrize::State bestRandomState(
         const float lastScore)
 {
     geometrize::State bestState(shapeCreator(), alpha);
-    float bestEnergy{bestState.calculateEnergy(target, current, buffer, lastScore)};
+    bestState.m_score = geometrize::core::energy(bestState.m_shape->rasterize(*bestState.m_shape), bestState.m_alpha, target, current, buffer, lastScore);
+    float bestEnergy = bestState.m_score;
 
     for(std::uint32_t i = 0; i <= n; i++) {
         geometrize::State state(shapeCreator(), alpha);
-
-        const float energy{state.calculateEnergy(target, current, buffer, lastScore)};
+        state.m_score = geometrize::core::energy(state.m_shape->rasterize(*state.m_shape), state.m_alpha, target, current, buffer, lastScore);
+        const float energy = state.m_score;
         if(i == 0 || energy < bestEnergy) {
             bestEnergy = energy;
             bestState = state;
@@ -176,7 +178,8 @@ geometrize::State hillClimb(
     std::uint32_t age{0};
     while(age < maxAge) {
         const geometrize::State undo{s.mutate()};
-        const float energy{s.calculateEnergy(target, current, buffer, lastScore)};
+        s.m_score = geometrize::core::energy(s.m_shape->rasterize(*s.m_shape), s.m_alpha, target, current, buffer, lastScore);
+        const float energy = s.m_score;
         if(energy >= bestEnergy) {
             s = undo;
         } else {

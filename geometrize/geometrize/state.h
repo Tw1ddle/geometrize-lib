@@ -28,17 +28,9 @@ public:
      * @param alpha The color alpha of the geometric shape.
      */
     State(const std::shared_ptr<geometrize::Shape>& shape, std::uint8_t alpha);
-
     ~State() = default;
     State(const State& other);
     State& operator=(const State& other);
-
-    /**
-     * @brief Calculates a measure of the improvement drawing the primitive to the current bitmap will have.
-     * The lower the energy, the better. The score is cached, set it to < 0 to recalculate it.
-     * @return The energy measure.
-     */
-    float calculateEnergy(const geometrize::Bitmap& target, const geometrize::Bitmap& current, geometrize::Bitmap& buffer, float lastScore);
 
     /**
      * @brief mutate Modifies the current state in a random fashion.
