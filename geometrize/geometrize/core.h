@@ -7,7 +7,6 @@
 
 #include "bitmap/rgba.h"
 #include "rasterizer/scanline.h"
-#include "shape/shapetypes.h"
 #include "state.h"
 
 namespace geometrize
@@ -23,7 +22,7 @@ namespace core
 
 /**
  * The core functions for Geometrize.
- * @author Sam Twidale (http://samcodes.co.uk/)
+ * @author Sam Twidale (https://samcodes.co.uk/)
  */
 
 /**

@@ -10,7 +10,7 @@ namespace geometrize
 
 /**
  * @brief The Circle class represents a circle.
- * @author Sam Twidale (http://samcodes.co.uk/)
+ * @author Sam Twidale (https://samcodes.co.uk/)
  */
 class Circle : public Shape
 {

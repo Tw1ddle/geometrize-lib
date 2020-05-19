@@ -11,7 +11,7 @@ namespace geometrize
 
 /**
  * @brief The ShapeTypes enum specifies the types of shapes that can be used. These can be combined to produce images composed of multiple primitive types.
- * @author Sam Twidale (http://samcodes.co.uk/)
+ * @author Sam Twidale (https://samcodes.co.uk/)
  */
 enum ShapeTypes : std::uint32_t
 {

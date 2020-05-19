@@ -10,7 +10,7 @@ namespace geometrize
 
 /**
  * @brief The Ellipse class represents an ellipse.
- * @author Sam Twidale (http://samcodes.co.uk/)
+ * @author Sam Twidale (https://samcodes.co.uk/)
  */
 class Ellipse : public Shape
 {

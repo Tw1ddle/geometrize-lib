@@ -18,7 +18,7 @@ namespace geometrize
 
 /**
  * @brief The Model class is the model for the core optimization/fitting algorithm.
- * @author Sam Twidale (http://samcodes.co.uk/)
+ * @author Sam Twidale (https://samcodes.co.uk/)
  */
 class Model
 {

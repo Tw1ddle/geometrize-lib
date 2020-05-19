@@ -14,7 +14,7 @@ namespace geometrize
 
 /**
  * @brief The ShapeResult struct is a container for info about a shape added to the model.
- * @author Sam Twidale (http://samcodes.co.uk/)
+ * @author Sam Twidale (https://samcodes.co.uk/)
  */
 struct ShapeResult
 {

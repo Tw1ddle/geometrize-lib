@@ -10,7 +10,7 @@ namespace geometrize
 
 /**
  * @brief The Triangle class represents a triangle.
- * @author Sam Twidale (http://samcodes.co.uk/)
+ * @author Sam Twidale (https://samcodes.co.uk/)
  */
 class Triangle : public Shape
 {
