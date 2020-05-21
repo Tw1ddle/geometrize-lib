@@ -44,9 +44,12 @@ public:
     /**
      * @brief step Updates the internal model once.
      * @param options Various configurable settings for doing the step e.g. the shape types to consider.
+     * @param shapeCreator An optional function for creating and mutating shapes
+     * @param
      * @return A vector containing data about the shapes just added to the internal model.
      */
-    std::vector<geometrize::ShapeResult> step(const geometrize::ImageRunnerOptions& options, std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator = nullptr);
+    std::vector<geometrize::ShapeResult> step(const geometrize::ImageRunnerOptions& options,
+                                              std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator = nullptr);
 
     /**
      * @brief getCurrent Gets the current bitmap with the primitives drawn on it.

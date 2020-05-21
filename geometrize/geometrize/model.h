@@ -5,6 +5,7 @@
 #include <memory>
 #include <vector>
 
+#include "core.h"
 #include "shaperesult.h"
 
 namespace geometrize
@@ -65,6 +66,7 @@ public:
      * @param shapeCount The number of random shapes to generate (only 1 is chosen in the end).
      * @param maxShapeMutations The maximum number of times to mutate each random shape.
      * @param maxThreads The maximum number of threads to use during this step.
+     * @param energyFunction An optional function to calculate the energy (if unspecified a default implementation is used).
      * @return A vector containing data about the shapes added to the model in this step.
      */
     std::vector<geometrize::ShapeResult> step(
@@ -72,7 +74,8 @@ public:
             std::uint8_t alpha,
             std::uint32_t shapeCount,
             std::uint32_t maxShapeMutations,
-            std::uint32_t maxThreads);
+            std::uint32_t maxThreads,
+            const geometrize::core::EnergyFunction& energyFunction = nullptr);
 
     /**
      * @brief drawShape Draws a shape on the model. The appropriate color to use is determined by the model.

@@ -69,7 +69,8 @@ public:
             const std::uint8_t alpha,
             const std::uint32_t shapeCount,
             const std::uint32_t maxShapeMutations,
-            std::uint32_t maxThreads)
+            std::uint32_t maxThreads,
+            const geometrize::core::EnergyFunction energyFunction)
     {
         // Ensure that the maximum number of threads is a sane value
         if(maxThreads == 0) {
@@ -89,7 +90,7 @@ public:
                 geometrize::commonutil::seedRandomGenerator(seed);
 
                 geometrize::Bitmap buffer{m_current};
-                return core::bestHillClimbState(shapeCreator, alpha, shapeCount, maxShapeMutations, m_target, m_current, buffer, lastScore);
+                return core::bestHillClimbState(shapeCreator, alpha, shapeCount, maxShapeMutations, m_target, m_current, buffer, lastScore, energyFunction);
             }, m_baseRandomSeed + m_randomSeedOffset++, m_lastScore)};
             futures[i] = std::move(handle);
         }
@@ -116,9 +117,10 @@ public:
             const std::uint8_t alpha,
             const std::uint32_t shapeCount,
             const std::uint32_t maxShapeMutations,
-            const std::uint32_t maxThreads)
+            const std::uint32_t maxThreads,
+            const geometrize::core::EnergyFunction& energyFunction)
     {
-        std::vector<geometrize::State> states{getHillClimbState(shapeCreator, alpha, shapeCount, maxShapeMutations, maxThreads)};
+        std::vector<geometrize::State> states{getHillClimbState(shapeCreator, alpha, shapeCount, maxShapeMutations, maxThreads, energyFunction)};
         if(states.empty()) {
             assert(0 && "Failed to get a hill climb state");
             return {};
@@ -224,9 +226,10 @@ std::vector<geometrize::ShapeResult> Model::step(
         const std::uint8_t alpha,
         const std::uint32_t shapeCount,
         const std::uint32_t maxShapeMutations,
-        const std::uint32_t maxThreads)
+        const std::uint32_t maxThreads,
+        const geometrize::core::EnergyFunction& energyFunction)
 {
-    return d->step(shapeCreator, alpha, shapeCount, maxShapeMutations, maxThreads);
+    return d->step(shapeCreator, alpha, shapeCount, maxShapeMutations, maxThreads, energyFunction);
 }
 
 geometrize::ShapeResult Model::drawShape(const std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)
