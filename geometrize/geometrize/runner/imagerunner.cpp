@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "../bitmap/bitmap.h"
+#include "../core.h"
 #include "../model.h"
 #include "../shape/shape.h"
 #include "../shape/shapefactory.h"
@@ -23,7 +24,7 @@ public:
     ImageRunnerImpl& operator=(const ImageRunnerImpl&) = delete;
     ImageRunnerImpl(const ImageRunnerImpl&) = delete;
 
-    std::vector<geometrize::ShapeResult> step(const geometrize::ImageRunnerOptions& options, std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator)
+    std::vector<geometrize::ShapeResult> step(const geometrize::ImageRunnerOptions& options, std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator, geometrize::core::EnergyFunction energyFunction)
     {
         const std::int32_t w = m_model.getTarget().getWidth();
         const std::int32_t h = m_model.getTarget().getHeight();
@@ -34,7 +35,7 @@ public:
         }
 
         m_model.setSeed(options.seed);
-        return m_model.step(shapeCreator, options.alpha, options.shapeCount, options.maxShapeMutations, options.maxThreads);
+        return m_model.step(shapeCreator, options.alpha, options.shapeCount, options.maxShapeMutations, options.maxThreads, energyFunction);
     }
 
     geometrize::Bitmap& getCurrent()
@@ -77,9 +78,9 @@ ImageRunner::ImageRunner(const geometrize::Bitmap& targetBitmap,  const geometri
 ImageRunner::~ImageRunner()
 {}
 
-std::vector<geometrize::ShapeResult> ImageRunner::step(const geometrize::ImageRunnerOptions& options, std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator)
+std::vector<geometrize::ShapeResult> ImageRunner::step(const geometrize::ImageRunnerOptions& options, std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator, geometrize::core::EnergyFunction energyFunction)
 {
-    return d->step(options, shapeCreator);
+    return d->step(options, shapeCreator, energyFunction);
 }
 
 geometrize::Bitmap& ImageRunner::getCurrent()
