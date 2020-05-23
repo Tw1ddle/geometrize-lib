@@ -18,21 +18,6 @@
 namespace
 {
 
-// Default energy calculation function, used if the user doesn't supply their own
-float energy(
-        const std::vector<geometrize::Scanline>& lines,
-        const std::uint32_t alpha,
-        const geometrize::Bitmap& target,
-        const geometrize::Bitmap& current,
-        geometrize::Bitmap& buffer,
-        const float score)
-{
-    const geometrize::rgba color(geometrize::core::computeColor(target, current, lines, alpha)); // Calculate best color for areas covered by the scanlines
-    geometrize::copyLines(buffer, current, lines); // Copy area covered by scanlines to buffer bitmap
-    geometrize::drawLines(buffer, color, lines); // Blend scanlines into the buffer using the color calculated earlier
-    return geometrize::core::differencePartial(target, current, buffer, score, lines); // Get error measure between areas of current and modified buffers covered by scanlines
-}
-
 /**
 * @brief hillClimb Hill climbing optimization algorithm, attempts to minimize energy (the error/difference).
 * @param state The state to optimize.
@@ -101,7 +86,7 @@ geometrize::State bestRandomState(
 
     for(std::uint32_t i = 0; i <= n; i++) {
         geometrize::State state(shapeCreator(), alpha);
-        state.m_score = ::energy(state.m_shape->rasterize(*state.m_shape), state.m_alpha, target, current, buffer, lastScore);
+        state.m_score = energyFunction(state.m_shape->rasterize(*state.m_shape), state.m_alpha, target, current, buffer, lastScore);
         const float energy = state.m_score;
         if(i == 0 || energy < bestEnergy) {
             bestEnergy = energy;
@@ -119,6 +104,20 @@ namespace geometrize
 
 namespace core
 {
+
+float defaultEnergyFunction(
+        const std::vector<geometrize::Scanline>& lines,
+        const std::uint32_t alpha,
+        const geometrize::Bitmap& target,
+        const geometrize::Bitmap& current,
+        geometrize::Bitmap& buffer,
+        const float score)
+{
+    const geometrize::rgba color(geometrize::core::computeColor(target, current, lines, alpha)); // Calculate best color for areas covered by the scanlines
+    geometrize::copyLines(buffer, current, lines); // Copy area covered by scanlines to buffer bitmap
+    geometrize::drawLines(buffer, color, lines); // Blend scanlines into the buffer using the color calculated earlier
+    return geometrize::core::differencePartial(target, current, buffer, score, lines); // Get error measure between areas of current and modified buffers covered by scanlines
+}
 
 geometrize::rgba computeColor(
         const geometrize::Bitmap& target,
@@ -247,7 +246,7 @@ geometrize::State bestHillClimbState(
         const float lastScore,
         const EnergyFunction& customEnergyFunction)
 {
-    const EnergyFunction& e = customEnergyFunction ? customEnergyFunction : ::energy;
+    const EnergyFunction& e = customEnergyFunction ? customEnergyFunction : geometrize::core::defaultEnergyFunction;
 
     const geometrize::State state{bestRandomState(shapeCreator, alpha, n, target, current, buffer, lastScore, e)};
     return ::hillClimb(state, age, target, current, buffer, lastScore, e);

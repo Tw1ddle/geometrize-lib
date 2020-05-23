@@ -44,6 +44,24 @@ using EnergyFunction = std::function<float(
     const float score)>;
 
 /**
+ * @brief defaultEnergyFunction The default/built-in energy function that calculates a measure of the improvement adding the scanlines of a shape provides - lower energy is better.
+ * @param lines The scanlines of the shape.
+ * @param alpha The alpha of the scanlines.
+ * @param target The target bitmap.
+ * @param current The current bitmap.
+ * @param buffer The buffer bitmap.
+ * @param score The score.
+ * @return The energy measure.
+ */
+float defaultEnergyFunction(
+        const std::vector<geometrize::Scanline>& lines,
+        const std::uint32_t alpha,
+        const geometrize::Bitmap& target,
+        const geometrize::Bitmap& current,
+        geometrize::Bitmap& buffer,
+        const float score);
+
+/**
  * @brief computeColor Calculates the color of the scanlines.
  * @param target The target image.
  * @param current The current image.
