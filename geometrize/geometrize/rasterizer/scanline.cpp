@@ -31,8 +31,8 @@ std::vector<geometrize::Scanline> trimScanlines(const std::vector<geometrize::Sc
         if(line.x1 > line.x2) {
             continue;
         }
-        float x1 = geometrize::commonutil::clamp(line.x1, 0, static_cast<std::int32_t>(w) - 1);
-        float x2 = geometrize::commonutil::clamp(line.x2, 0, static_cast<std::int32_t>(w) - 1);
+        const float x1 = geometrize::commonutil::clamp(line.x1, 0, static_cast<std::int32_t>(w) - 1);
+        const float x2 = geometrize::commonutil::clamp(line.x2, 0, static_cast<std::int32_t>(w) - 1);
         trimmedScanlines.emplace_back(Scanline(line.y, x1, x2));
     }
     return trimmedScanlines;

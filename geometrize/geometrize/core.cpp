@@ -81,14 +81,12 @@ geometrize::State bestRandomState(
         const geometrize::core::EnergyFunction& energyFunction)
 {
     geometrize::State bestState(shapeCreator(), alpha);
-    bestState.m_score = energyFunction(geometrize::trimScanlines(bestState.m_shape->rasterize(*bestState.m_shape), target.getWidth(), target.getHeight()),
-                                       bestState.m_alpha, target, current, buffer, lastScore);
+    bestState.m_score = energyFunction(bestState.m_shape->rasterize(*bestState.m_shape), bestState.m_alpha, target, current, buffer, lastScore);
     double bestEnergy = bestState.m_score;
 
     for(std::uint32_t i = 0; i <= n; i++) {
         geometrize::State state(shapeCreator(), alpha);
-        state.m_score = energyFunction(geometrize::trimScanlines(state.m_shape->rasterize(*state.m_shape), target.getWidth(), target.getHeight()),
-                                       state.m_alpha, target, current, buffer, lastScore);
+        state.m_score = energyFunction(state.m_shape->rasterize(*state.m_shape), state.m_alpha, target, current, buffer, lastScore);
         const double energy = state.m_score;
         if(i == 0 || energy < bestEnergy) {
             bestEnergy = energy;
@@ -127,6 +125,11 @@ geometrize::rgba computeColor(
         const std::vector<geometrize::Scanline>& lines,
         const std::uint8_t alpha)
 {
+    // Early out to avoid integer divide by 0
+    if(lines.empty()) {
+        return geometrize::rgba{0, 0, 0, 0};
+    }
+
     std::int64_t totalRed{0};
     std::int64_t totalGreen{0};
     std::int64_t totalBlue{0};
@@ -156,11 +159,6 @@ geometrize::rgba computeColor(
         }
     }
 
-    // Early out to avoid integer divide by 0
-    if(count == 0) {
-        return geometrize::rgba{0, 0, 0, 0};
-    }
-
     const std::int32_t rr{static_cast<std::int32_t>(totalRed / count) >> 8};
     const std::int32_t gg{static_cast<std::int32_t>(totalGreen / count) >> 8};
     const std::int32_t bb{static_cast<std::int32_t>(totalBlue / count) >> 8};
@@ -182,8 +180,8 @@ double differenceFull(const geometrize::Bitmap& first, const geometrize::Bitmap&
     const std::size_t height{first.getHeight()};
     std::uint64_t total{0};
 
-    for(std::uint32_t y = 0; y < height; y++) {
-        for(std::uint32_t x = 0; x < width; x++) {
+    for(std::size_t y = 0; y < height; y++) {
+        for(std::size_t x = 0; x < width; x++) {
             const geometrize::rgba f(first.getPixel(x, y));
             const geometrize::rgba s(second.getPixel(x, y));
 
@@ -204,7 +202,7 @@ double differencePartial(
         const double score,
         const std::vector<Scanline>& lines)
 {
-    const std::size_t rgbaCount{target.getWidth() * target.getHeight() * 4U};
+    const std::uint64_t rgbaCount{target.getWidth() * target.getHeight() * 4U};
     std::uint64_t total{static_cast<std::uint64_t>((score * 255.0) * (score * 255.0) * rgbaCount)};
     for(const geometrize::Scanline& line : lines) {
         const std::int32_t y{line.y};
