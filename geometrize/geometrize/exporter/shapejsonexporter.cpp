@@ -26,7 +26,7 @@ std::string exportShapeJson(const std::vector<geometrize::ShapeResult>& data)
         const geometrize::ShapeTypes type{s.shape->getType()};
         const std::vector<float> shapeData{getRawShapeData(*s.shape.get())};
         const geometrize::rgba color(s.color);
-        const float score{s.score};
+        const double score{s.score};
 
         stream << "{" << "\"type\":" << static_cast<std::underlying_type<geometrize::ShapeTypes>::type>(type) << ", \"data\":[";
         for(std::size_t d = 0; d < shapeData.size(); d++) {
