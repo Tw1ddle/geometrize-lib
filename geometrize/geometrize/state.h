@@ -38,7 +38,7 @@ public:
      */
     geometrize::State mutate();
 
-    float m_score; ///< The score of the state, a measure of the improvement applying the state to the current bitmap will have.
+    double m_score; ///< The score of the state, a measure of the improvement applying the state to the current bitmap will have.
     std::uint8_t m_alpha; ///< The alpha of the shape.
     std::shared_ptr<geometrize::Shape> m_shape; ///< The geometric primitive owned by the state.
 };

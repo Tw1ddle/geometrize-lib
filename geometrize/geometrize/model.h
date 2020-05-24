@@ -67,7 +67,7 @@ public:
      * @param maxShapeMutations The maximum number of times to mutate each random shape.
      * @param maxThreads The maximum number of threads to use during this step.
      * @param energyFunction An optional function to calculate the energy (if unspecified a default implementation is used).
-     * @return A vector containing data about the shapes added to the model in this step.
+     * @return A vector containing data about the shapes added to the model in this step. This may be empty if no shape that improved the image could be found.
      */
     std::vector<geometrize::ShapeResult> step(
             const std::function<std::shared_ptr<geometrize::Shape>(void)>& shapeCreator,
@@ -78,15 +78,8 @@ public:
             const geometrize::core::EnergyFunction& energyFunction = nullptr);
 
     /**
-     * @brief drawShape Draws a shape on the model. The appropriate color to use is determined by the model.
-     * @param shape The shape to draw.
-     * @param alpha The alpha/opacity of the shape.
-     * @return Data about the shape drawn on the model.
-     */
-    geometrize::ShapeResult drawShape(std::shared_ptr<geometrize::Shape> shape, std::uint8_t alpha);
-
-    /**
-     * @brief drawShape Draws a shape on the model.
+     * @brief drawShape Draws a shape on the model. Typically used when to manually add a shape to the image (e.g. when setting an initial background).
+     * NOTE this unconditionally draws the shape, even if it increases the difference between the source and target image.
      * @param shape The shape to draw.
      * @param color The color (including alpha) of the shape.
      * @return Data about the shape drawn on the model.

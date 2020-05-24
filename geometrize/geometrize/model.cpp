@@ -83,7 +83,7 @@ public:
 
         std::vector<std::future<geometrize::State>> futures{maxThreads};
         for(std::uint32_t i = 0; i < futures.size(); i++) {
-            std::future<geometrize::State> handle{std::async(std::launch::async, [&](const std::uint32_t seed, const float lastScore) {
+            std::future<geometrize::State> handle{std::async(std::launch::async, [&](const std::uint32_t seed, const double lastScore) {
                 // Ensure that the results of the random generation are the same between tasks with identical settings
                 // The RNG is thread-local and std::async may use a thread pool (which is why this is necessary)
                 // Note this implementation requires maxThreads to be the same between tasks for each task to produce the same results.
@@ -130,23 +130,24 @@ public:
             return a.m_score < b.m_score;
         });
 
-        const std::vector<geometrize::ShapeResult> results{drawShape((*it).m_shape, alpha)};
-        return results;
-    }
-
-    geometrize::ShapeResult drawShape(
-            const std::shared_ptr<geometrize::Shape> shape,
-            const std::uint8_t alpha)
-    {
+        // Draw the shape onto the image
+        const std::shared_ptr<geometrize::Shape> shape = it->m_shape;
         const std::vector<geometrize::Scanline> lines{shape->rasterize(*shape)};
         const geometrize::rgba color(geometrize::core::computeColor(m_target, m_current, lines, alpha));
         const geometrize::Bitmap before{m_current};
         geometrize::drawLines(m_current, color, lines);
 
-        m_lastScore = geometrize::core::differencePartial(m_target, before, m_current, m_lastScore, lines);
+        // Check for an improvement - if not, roll back and return no result
+        const double newScore = geometrize::core::differencePartial(m_target, before, m_current, m_lastScore, lines);
+        if(newScore >= m_lastScore) {
+            m_current = before;
+            return {};
+        }
 
+        // Improvement - set new baseline and return the new shape
+        m_lastScore = newScore;
         const geometrize::ShapeResult result{m_lastScore, color, shape};
-        return result;
+        return { result };
     }
 
     geometrize::ShapeResult drawShape(
@@ -191,7 +192,7 @@ public:
 private:
     geometrize::Bitmap m_target; ///< The target bitmap, the bitmap we aim to approximate.
     geometrize::Bitmap m_current; ///< The current bitmap.
-    float m_lastScore; ///< Score derived from calculating the difference between bitmaps.
+    double m_lastScore; ///< Score derived from calculating the difference between bitmaps.
     const static std::uint32_t defaultMaxThreads{4};
     std::atomic<std::uint32_t> m_baseRandomSeed; ///< The base value used for seeding the random number generator (the one the user has control over).
     std::atomic<std::uint32_t> m_randomSeedOffset; ///< Seed used for random number generation. Note: incremented by each std::async call used for model stepping.
@@ -230,11 +231,6 @@ std::vector<geometrize::ShapeResult> Model::step(
         const geometrize::core::EnergyFunction& energyFunction)
 {
     return d->step(shapeCreator, alpha, shapeCount, maxShapeMutations, maxThreads, energyFunction);
-}
-
-geometrize::ShapeResult Model::drawShape(const std::shared_ptr<geometrize::Shape> shape, const std::uint8_t alpha)
-{
-    return d->drawShape(shape, alpha);
 }
 
 geometrize::ShapeResult Model::drawShape(std::shared_ptr<geometrize::Shape> shape, geometrize::rgba color)

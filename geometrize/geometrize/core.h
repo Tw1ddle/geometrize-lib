@@ -35,13 +35,13 @@ namespace core
  * @param score The score.
  * @return The energy measure.
  */
-using EnergyFunction = std::function<float(
+using EnergyFunction = std::function<double(
     const std::vector<geometrize::Scanline>& lines,
     const std::uint32_t alpha,
     const geometrize::Bitmap& target,
     const geometrize::Bitmap& current,
     geometrize::Bitmap& buffer,
-    const float score)>;
+    double score)>;
 
 /**
  * @brief defaultEnergyFunction The default/built-in energy function that calculates a measure of the improvement adding the scanlines of a shape provides - lower energy is better.
@@ -53,13 +53,13 @@ using EnergyFunction = std::function<float(
  * @param score The score.
  * @return The energy measure.
  */
-float defaultEnergyFunction(
+double defaultEnergyFunction(
         const std::vector<geometrize::Scanline>& lines,
         const std::uint32_t alpha,
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
         geometrize::Bitmap& buffer,
-        const float score);
+        double score);
 
 /**
  * @brief computeColor Calculates the color of the scanlines.
@@ -81,7 +81,7 @@ geometrize::rgba computeColor(
  * @param second The second bitmap.
  * @return The difference/error measure between the two bitmaps.
  */
-float differenceFull(const geometrize::Bitmap& first, const geometrize::Bitmap& second);
+double differenceFull(const geometrize::Bitmap& first, const geometrize::Bitmap& second);
 
 /**
  * @brief differencePartial Calculates the root-mean-square error between the parts of the two bitmaps within the scanline mask.
@@ -93,11 +93,11 @@ float differenceFull(const geometrize::Bitmap& first, const geometrize::Bitmap& 
  * @param lines The scanlines.
  * @return The difference/error between the two bitmaps, masked by the scanlines.
  */
-float differencePartial(
+double differencePartial(
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& before,
         const geometrize::Bitmap& after,
-        float score,
+        double score,
         const std::vector<Scanline>& lines);
 
 /**
@@ -121,7 +121,7 @@ geometrize::State bestHillClimbState(
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
         geometrize::Bitmap& buffer,
-        float lastScore,
+        double lastScore,
         const EnergyFunction& customEnergyFunction = nullptr);
 
 }

@@ -34,18 +34,18 @@ geometrize::State hillClimb(
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
         geometrize::Bitmap& buffer,
-        const float lastScore,
+        const double lastScore,
         const geometrize::core::EnergyFunction& energyFunction)
 {
     geometrize::State s(state);
     geometrize::State bestState(state);
-    float bestEnergy{bestState.m_score};
+    double bestEnergy{bestState.m_score};
 
     std::uint32_t age{0};
     while(age < maxAge) {
         const geometrize::State undo{s.mutate()};
         s.m_score = energyFunction(s.m_shape->rasterize(*s.m_shape), s.m_alpha, target, current, buffer, lastScore);
-        const float energy = s.m_score;
+        const double energy = s.m_score;
         if(energy >= bestEnergy) {
             s = undo;
         } else {
@@ -77,17 +77,19 @@ geometrize::State bestRandomState(
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
         geometrize::Bitmap& buffer,
-        const float lastScore,
+        const double lastScore,
         const geometrize::core::EnergyFunction& energyFunction)
 {
     geometrize::State bestState(shapeCreator(), alpha);
-    bestState.m_score = energyFunction(bestState.m_shape->rasterize(*bestState.m_shape), bestState.m_alpha, target, current, buffer, lastScore);
-    float bestEnergy = bestState.m_score;
+    bestState.m_score = energyFunction(geometrize::trimScanlines(bestState.m_shape->rasterize(*bestState.m_shape), target.getWidth(), target.getHeight()),
+                                       bestState.m_alpha, target, current, buffer, lastScore);
+    double bestEnergy = bestState.m_score;
 
     for(std::uint32_t i = 0; i <= n; i++) {
         geometrize::State state(shapeCreator(), alpha);
-        state.m_score = energyFunction(state.m_shape->rasterize(*state.m_shape), state.m_alpha, target, current, buffer, lastScore);
-        const float energy = state.m_score;
+        state.m_score = energyFunction(geometrize::trimScanlines(state.m_shape->rasterize(*state.m_shape), target.getWidth(), target.getHeight()),
+                                       state.m_alpha, target, current, buffer, lastScore);
+        const double energy = state.m_score;
         if(i == 0 || energy < bestEnergy) {
             bestEnergy = energy;
             bestState = state;
@@ -105,13 +107,13 @@ namespace geometrize
 namespace core
 {
 
-float defaultEnergyFunction(
+double defaultEnergyFunction(
         const std::vector<geometrize::Scanline>& lines,
         const std::uint32_t alpha,
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
         geometrize::Bitmap& buffer,
-        const float score)
+        const double score)
 {
     const geometrize::rgba color(geometrize::core::computeColor(target, current, lines, alpha)); // Calculate best color for areas covered by the scanlines
     geometrize::copyLines(buffer, current, lines); // Copy area covered by scanlines to buffer bitmap
@@ -171,7 +173,7 @@ geometrize::rgba computeColor(
     return geometrize::rgba{r, g, b, alpha};
 }
 
-float differenceFull(const geometrize::Bitmap& first, const geometrize::Bitmap& second)
+double differenceFull(const geometrize::Bitmap& first, const geometrize::Bitmap& second)
 {
     assert(first.getWidth() == second.getWidth());
     assert(first.getHeight() == second.getHeight());
@@ -192,18 +194,18 @@ float differenceFull(const geometrize::Bitmap& first, const geometrize::Bitmap& 
             total += (dr * dr + dg * dg + db * db + da * da);
         }
     }
-    return std::sqrt(static_cast<float>(total) / (static_cast<float>(width) * static_cast<float>(height) * 4.0f)) / 255.0f;
+    return std::sqrt(static_cast<double>(total) / (static_cast<double>(width) * static_cast<double>(height) * 4.0)) / 255.0;
 }
 
-float differencePartial(
+double differencePartial(
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& before,
         const geometrize::Bitmap& after,
-        const float score,
+        const double score,
         const std::vector<Scanline>& lines)
 {
     const std::size_t rgbaCount{target.getWidth() * target.getHeight() * 4U};
-    std::uint64_t total{static_cast<std::uint64_t>((score * 255.0f) * (score * 255.0f) * rgbaCount)};
+    std::uint64_t total{static_cast<std::uint64_t>((score * 255.0) * (score * 255.0) * rgbaCount)};
     for(const geometrize::Scanline& line : lines) {
         const std::int32_t y{line.y};
         for(std::int32_t x = line.x1; x <= line.x2; x++) {
@@ -226,12 +228,7 @@ float differencePartial(
         }
     }
 
-    const float result{std::sqrt(static_cast<float>(total) / static_cast<float>(rgbaCount)) / 255.0f};
-
-    // NOTE needs work. This is a workaround because when score/energy is tiny total can unintentionally underflow
-    if(result > 1.0f) {
-        return score;
-    }
+    const double result{std::sqrt(static_cast<double>(total) / static_cast<double>(rgbaCount)) / 255.0};
     return result;
 }
 
@@ -243,7 +240,7 @@ geometrize::State bestHillClimbState(
         const geometrize::Bitmap& target,
         const geometrize::Bitmap& current,
         geometrize::Bitmap& buffer,
-        const float lastScore,
+        const double lastScore,
         const EnergyFunction& customEnergyFunction)
 {
     const EnergyFunction& e = customEnergyFunction ? customEnergyFunction : geometrize::core::defaultEnergyFunction;

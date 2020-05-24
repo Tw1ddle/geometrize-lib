@@ -18,7 +18,7 @@ namespace geometrize
  */
 struct ShapeResult
 {
-    const float score;
+    const double score;
     const geometrize::rgba color;
     const std::shared_ptr<geometrize::Shape> shape;
 };
