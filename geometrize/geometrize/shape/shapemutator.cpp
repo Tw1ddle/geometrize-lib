@@ -180,7 +180,7 @@ void mutate(geometrize::Shape& s, const std::int32_t xBound, const std::int32_t 
         mutate(static_cast<geometrize::QuadraticBezier&>(s), xBound, yBound);
         break;
     case geometrize::ShapeTypes::POLYLINE:
-        mutate(static_cast<geometrize::QuadraticBezier&>(s), xBound, yBound);
+        mutate(static_cast<geometrize::Polyline&>(s), xBound, yBound);
         break;
     default:
         assert(0 && "Bad shape type");
@@ -408,7 +408,7 @@ void translate(geometrize::Shape& s, const float x, const float y)
         translate(static_cast<geometrize::QuadraticBezier&>(s), x, y);
         break;
     case geometrize::ShapeTypes::POLYLINE:
-        translate(static_cast<geometrize::QuadraticBezier&>(s), x, y);
+        translate(static_cast<geometrize::Polyline&>(s), x, y);
         break;
     default:
         assert(0 && "Bad shape type");
@@ -513,7 +513,7 @@ void scale(geometrize::Shape& s, const float scaleFactor)
         scale(static_cast<geometrize::QuadraticBezier&>(s), scaleFactor);
         break;
     case geometrize::ShapeTypes::POLYLINE:
-        scale(static_cast<geometrize::QuadraticBezier&>(s), scaleFactor);
+        scale(static_cast<geometrize::Polyline&>(s), scaleFactor);
         break;
     default:
         assert(0 && "Bad shape type");
