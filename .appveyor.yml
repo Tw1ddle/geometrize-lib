@@ -2,6 +2,9 @@ branches:
   only:
     - master
 
+image:
+  - Ubuntu2004
+
 # Not actually building anything here, but downstream jobs are triggered after this build completes:
 # geometrize-lib-docs, geometrize-lib-unit-tests, geometrize-lib-fuzzing, geometrize-lib-example and geometrize
 install:
