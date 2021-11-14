@@ -1,7 +1,6 @@
 [![Geometrize Logo](https://github.com/Tw1ddle/geometrize-lib/blob/master/screenshots/logo.png?raw=true "Geometrize logo")](https://www.geometrize.co.uk/)
 
 [![License](https://img.shields.io/:license-mit-blue.svg?style=flat-square)](https://github.com/Tw1ddle/geometrize-lib/blob/master/LICENSE)
-[![Coverity Scan Status](https://scan.coverity.com/projects/12991/badge.svg)](https://scan.coverity.com/projects/geometrize)
 
 [Geometrize](https://www.geometrize.co.uk/) is a C++ library based on [primitive](https://github.com/fogleman/primitive). It recreates images as geometric primitives.
 
