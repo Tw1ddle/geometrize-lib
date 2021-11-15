@@ -1,3 +1,5 @@
+stack: python 3.9
+
 branches:
   only:
     - master
@@ -7,9 +9,13 @@ image:
 
 build: off
 
+install:
+  - ls -a
+
 # Not actually building anything here, but downstream jobs are triggered after this build completes:
 # geometrize-lib-docs, geometrize-lib-unit-tests, geometrize-lib-fuzzing, geometrize-lib-example and geometrize
-# Note: these are all triggered by a post-build script
 test_script:
   - cd $APPVEYOR_BUILD_FOLDER
   - ls -a
+
+# Note that the documentation generation etc are triggered as a post-build script
