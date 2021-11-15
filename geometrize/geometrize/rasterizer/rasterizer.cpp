@@ -293,13 +293,18 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Polyline& s, const
 {
     std::vector<geometrize::Scanline> lines;
 
+    // Prevent scanline overlap, it messes up the energy functions that rely on the scanlines not intersecting themselves
+    std::set<std::pair<std::int32_t, std::int32_t>> duplicates;
+
     for(std::size_t i = 0; i < s.m_points.size(); i++) {
         const std::pair<std::int32_t, std::int32_t> p0{s.m_points[i].first, s.m_points[i].second};
         const std::pair<std::int32_t, std::int32_t> p1{i < (s.m_points.size() - 1) ? std::make_pair(static_cast<std::int32_t>(s.m_points[i + 1].first), static_cast<std::int32_t>(s.m_points[i + 1].second)) : p0};
 
         const std::vector<std::pair<std::int32_t, std::int32_t>> points{geometrize::bresenham(p0.first, p0.second, p1.first, p1.second)};
         for(const auto& point : points) {
-            lines.push_back(geometrize::Scanline(point.second, point.first, point.first));
+            if(duplicates.insert(point).second) {
+                lines.push_back(geometrize::Scanline(point.second, point.first, point.first));
+            }
         }
     }
 
@@ -320,13 +325,18 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::QuadraticBezier& s
         points.push_back(std::make_pair(x, y));
     }
 
+    // Prevent scanline overlap, it messes up the energy functions that rely on the scanlines not intersecting themselves
+    std::set<std::pair<std::int32_t, std::int32_t>> duplicates;
+
     for(std::uint32_t i = 0; i < points.size() - 1; i++) {
         const std::pair<std::int32_t, std::int32_t> p0{points[i]};
         const std::pair<std::int32_t, std::int32_t> p1{points[i + 1]};
 
         const std::vector<std::pair<std::int32_t, std::int32_t>> points{geometrize::bresenham(static_cast<std::int32_t>(p0.first), static_cast<std::int32_t>(p0.second), static_cast<std::int32_t>(p1.first), static_cast<std::int32_t>(p1.second))};
         for(const std::pair<std::int32_t, std::int32_t>& point : points) {
-            scanlines.push_back(geometrize::Scanline(point.second, point.first, point.first));
+            if(duplicates.insert(point).second) {
+                scanlines.push_back(geometrize::Scanline(point.second, point.first, point.first));
+            }
         }
     }
 
