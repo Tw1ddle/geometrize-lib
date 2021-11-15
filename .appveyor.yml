@@ -2,6 +2,8 @@ branches:
   only:
     - master
 
+build: script
+
 image:
   - Ubuntu2004
 
@@ -9,3 +11,4 @@ image:
 # geometrize-lib-docs, geometrize-lib-unit-tests, geometrize-lib-fuzzing, geometrize-lib-example and geometrize
 install:
   - cd $APPVEYOR_BUILD_FOLDER
+  - ls -a
