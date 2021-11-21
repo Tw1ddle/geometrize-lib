@@ -1,6 +1,7 @@
 [![Geometrize Logo](https://github.com/Tw1ddle/geometrize-lib/blob/master/screenshots/logo.png?raw=true "Geometrize logo")](https://www.geometrize.co.uk/)
 
 [![License](https://img.shields.io/:license-mit-blue.svg?style=flat-square)](https://github.com/Tw1ddle/geometrize-lib/blob/master/LICENSE)
+[![Build Status Badge](https://ci.appveyor.com/api/projects/status/github/Tw1ddle/geometrize-lib)](https://ci.appveyor.com/project/Tw1ddle/geometrize-lib)
 
 [Geometrize](https://www.geometrize.co.uk/) is a C++ library based on [primitive](https://github.com/fogleman/primitive). It recreates images as geometric primitives.
 
@@ -15,13 +16,13 @@
 
 Refer to the minimal [example](https://github.com/Tw1ddle/geometrize-lib-example) project and read the [documentation](https://tw1ddle.github.io/geometrize-lib-docs/). These projects may also be useful references:
 
-| Project                                                            | Build Status
-|--------------------------------------------------------------------|-------------------------------------------|
-| [Geometrize App](https://github.com/Tw1ddle/geometrize)            | [![Geometrize App Build Status](https://ci.appveyor.com/api/projects/status/09l5nquksmev8ta4?svg=true)](https://ci.appveyor.com/project/Tw1ddle/geometrize-lib)
-| [Example](https://github.com/Tw1ddle/geometrize-lib-example)       | [![Geometrize Example Build Status](https://ci.appveyor.com/api/projects/status/tav5nu3isxvdjkbh?svg=true)](https://ci.appveyor.com/project/Tw1ddle/geometrize-lib-example)
-| [Fuzz Tests](https://github.com/Tw1ddle/geometrize-lib-fuzzing)    | [![Geometrize Fuzzing Build Status](https://ci.appveyor.com/api/projects/status/ebc5hbfu0mtofdom?svg=true)](https://ci.appveyor.com/project/Tw1ddle/geometrize-lib-fuzzing)
-| [Unit Tests](https://github.com/Tw1ddle/geometrize-lib-unit-tests) | [![Geometrize Unit Test Build Status](https://ci.appveyor.com/api/projects/status/github/Tw1ddle/geometrize-lib-unit-tests?branch=master&svg=true)](https://ci.appveyor.com/project/Tw1ddle/geometrize-lib-unit-tests)
-| [Documentation](https://github.com/Tw1ddle/geometrize-lib-docs)    | [![Geometrize Documentation Build Status](https://ci.appveyor.com/api/projects/status/github/Tw1ddle/geometrize-lib-docs?branch=master&svg=true)](https://ci.appveyor.com/project/Tw1ddle/geometrize-lib-docs)
+| Project                                                            |
+|--------------------------------------------------------------------|
+| [Geometrize App](https://github.com/Tw1ddle/geometrize)            |
+| [Example](https://github.com/Tw1ddle/geometrize-lib-example)       |
+| [Fuzz Tests](https://github.com/Tw1ddle/geometrize-lib-fuzzing)    |
+| [Unit Tests](https://github.com/Tw1ddle/geometrize-lib-unit-tests) |
+| [Documentation](https://github.com/Tw1ddle/geometrize-lib-docs)    |
 
 See the [top level repo](https://github.com/Tw1ddle/geometrize-top-level-repo) for a listing of all the repositories included in the Geometrize project.
 
