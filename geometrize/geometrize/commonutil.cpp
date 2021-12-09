@@ -61,7 +61,7 @@ bool scanlinesContainTransparentPixels(const std::vector<geometrize::Scanline>& 
     const auto& trimmedScanlines = geometrize::trimScanlines(scanlines, image.getWidth(), image.getHeight());
     for(const geometrize::Scanline& scanline : trimmedScanlines) {
         for(int x = scanline.x1; x < scanline.x2; x++) {
-            if(image.getPixel(x, scanline.y).a > minAlpha) {
+            if(image.getPixel(x, scanline.y).a < minAlpha) {
                 return true;
             }
         }
