@@ -24,7 +24,10 @@ public:
     ImageRunnerImpl& operator=(const ImageRunnerImpl&) = delete;
     ImageRunnerImpl(const ImageRunnerImpl&) = delete;
 
-    std::vector<geometrize::ShapeResult> step(const geometrize::ImageRunnerOptions& options, std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator, geometrize::core::EnergyFunction energyFunction)
+    std::vector<geometrize::ShapeResult> step(const geometrize::ImageRunnerOptions& options,
+                                              std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator,
+                                              geometrize::core::EnergyFunction energyFunction,
+                                              geometrize::ShapeAcceptancePreconditionFunction addShapePrecondition)
     {
         const std::int32_t w = m_model.getTarget().getWidth();
         const std::int32_t h = m_model.getTarget().getHeight();
@@ -35,7 +38,7 @@ public:
         }
 
         m_model.setSeed(options.seed);
-        return m_model.step(shapeCreator, options.alpha, options.shapeCount, options.maxShapeMutations, options.maxThreads, energyFunction);
+        return m_model.step(shapeCreator, options.alpha, options.shapeCount, options.maxShapeMutations, options.maxThreads, energyFunction, addShapePrecondition);
     }
 
     geometrize::Bitmap& getCurrent()
@@ -78,9 +81,12 @@ ImageRunner::ImageRunner(const geometrize::Bitmap& targetBitmap,  const geometri
 ImageRunner::~ImageRunner()
 {}
 
-std::vector<geometrize::ShapeResult> ImageRunner::step(const geometrize::ImageRunnerOptions& options, std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator, geometrize::core::EnergyFunction energyFunction)
+std::vector<geometrize::ShapeResult> ImageRunner::step(const geometrize::ImageRunnerOptions& options,
+                                                       std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator,
+                                                       geometrize::core::EnergyFunction energyFunction,
+                                                       geometrize::ShapeAcceptancePreconditionFunction addShapePrecondition)
 {
-    return d->step(options, shapeCreator, energyFunction);
+    return d->step(options, shapeCreator, energyFunction, addShapePrecondition);
 }
 
 geometrize::Bitmap& ImageRunner::getCurrent()

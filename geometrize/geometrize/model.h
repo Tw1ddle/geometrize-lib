@@ -11,11 +11,34 @@
 namespace geometrize
 {
 class Bitmap;
+class Scanline;
 class Shape;
 }
 
 namespace geometrize
 {
+
+/**
+ * @brief ShapeAcceptancePreconditionFunction Type alias for a function that is used to decide whether or not to finally add a shape to the image
+ * @param lastScore The image similarity score prior to adding the shape
+ * @param newScore What the image similarity score would be after adding the shape
+ * @param shape The shape that this function shall decide whether to add
+ * @param lines The scanlines for the pixels in the shape
+ * @param color The colour of the shape
+ * @param before The image prior to adding the shape
+ * @param after The image as it would be after adding the shape
+ * @param target The image that we are trying to replicate
+ * @return True to add the shape to the image, false not to
+ */
+using ShapeAcceptancePreconditionFunction = std::function<bool(
+    double lastScore,
+    double newScore,
+    const geometrize::Shape& shape,
+    const std::vector<geometrize::Scanline>& lines,
+    const geometrize::rgba& color,
+    const geometrize::Bitmap& before,
+    const geometrize::Bitmap& after,
+    const geometrize::Bitmap& target)>;
 
 /**
  * @brief The Model class is the model for the core optimization/fitting algorithm.
@@ -67,6 +90,7 @@ public:
      * @param maxShapeMutations The maximum number of times to mutate each random shape.
      * @param maxThreads The maximum number of threads to use during this step.
      * @param energyFunction An optional function to calculate the energy (if unspecified a default implementation is used).
+     * @param addShapePrecondition An optional function to determine whether to accept a shape (if unspecified a default implementation is used).
      * @return A vector containing data about the shapes added to the model in this step. This may be empty if no shape that improved the image could be found.
      */
     std::vector<geometrize::ShapeResult> step(
@@ -75,7 +99,8 @@ public:
             std::uint32_t shapeCount,
             std::uint32_t maxShapeMutations,
             std::uint32_t maxThreads,
-            const geometrize::core::EnergyFunction& energyFunction = nullptr);
+            const geometrize::core::EnergyFunction& energyFunction = nullptr,
+            const geometrize::ShapeAcceptancePreconditionFunction& addShapePrecondition = nullptr);
 
     /**
      * @brief drawShape Draws a shape on the model. Typically used when to manually add a shape to the image (e.g. when setting an initial background).

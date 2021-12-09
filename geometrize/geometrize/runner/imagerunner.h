@@ -5,13 +5,13 @@
 #include <vector>
 
 #include "../core.h"
+#include "../model.h"
 #include "../shaperesult.h"
 
 namespace geometrize
 {
 class Bitmap;
 class ImageRunnerOptions;
-class Model;
 class Shape;
 }
 
@@ -47,11 +47,13 @@ public:
      * @param options Various configurable settings for doing the step e.g. the shape types to consider.
      * @param shapeCreator An optional function for creating and mutating shapes
      * @param energyFunction An optional function to calculate the energy (if unspecified a default implementation is used).
+     * @param addShapePrecondition An optional function to determine whether to accept a shape (if unspecified a default implementation is used).
      * @return A vector containing data about the shapes just added to the internal model.
      */
     std::vector<geometrize::ShapeResult> step(const geometrize::ImageRunnerOptions& options,
                                               std::function<std::shared_ptr<geometrize::Shape>()> shapeCreator = nullptr,
-                                              geometrize::core::EnergyFunction energyFunction = nullptr);
+                                              geometrize::core::EnergyFunction energyFunction = nullptr,
+                                              geometrize::ShapeAcceptancePreconditionFunction addShapePrecondition = nullptr);
 
     /**
      * @brief getCurrent Gets the current bitmap with the primitives drawn on it.

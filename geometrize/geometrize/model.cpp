@@ -19,6 +19,24 @@
 #include "shaperesult.h"
 #include "shape/shapetypes.h"
 
+namespace
+{
+
+bool defaultAddShapePrecondition(
+    const double lastScore,
+    const double newScore,
+    const geometrize::Shape&,
+    const std::vector<geometrize::Scanline>&,
+    const geometrize::rgba&,
+    const geometrize::Bitmap&,
+    const geometrize::Bitmap&,
+    const geometrize::Bitmap&)
+{
+    return newScore < lastScore; // Adds the shape if the score improved (that is: the difference decreased)
+}
+
+}
+
 namespace geometrize
 {
 
@@ -118,7 +136,8 @@ public:
             const std::uint32_t shapeCount,
             const std::uint32_t maxShapeMutations,
             const std::uint32_t maxThreads,
-            const geometrize::core::EnergyFunction& energyFunction)
+            const geometrize::core::EnergyFunction& energyFunction,
+            const geometrize::ShapeAcceptancePreconditionFunction& addShapePrecondition)
     {
         std::vector<geometrize::State> states{getHillClimbState(shapeCreator, alpha, shapeCount, maxShapeMutations, maxThreads, energyFunction)};
         if(states.empty()) {
@@ -139,7 +158,8 @@ public:
 
         // Check for an improvement - if not, roll back and return no result
         const double newScore = geometrize::core::differencePartial(m_target, before, m_current, m_lastScore, lines);
-        if(newScore >= m_lastScore) {
+        const auto& addShapeCondition = addShapePrecondition ? addShapePrecondition : defaultAddShapePrecondition;
+        if(!addShapeCondition(m_lastScore, newScore, *shape, lines, color, before, m_current, m_target)) {
             m_current = before;
             return {};
         }
@@ -228,9 +248,10 @@ std::vector<geometrize::ShapeResult> Model::step(
         const std::uint32_t shapeCount,
         const std::uint32_t maxShapeMutations,
         const std::uint32_t maxThreads,
-        const geometrize::core::EnergyFunction& energyFunction)
+        const geometrize::core::EnergyFunction& energyFunction,
+        const geometrize::ShapeAcceptancePreconditionFunction& addShapePrecondition)
 {
-    return d->step(shapeCreator, alpha, shapeCount, maxShapeMutations, maxThreads, energyFunction);
+    return d->step(shapeCreator, alpha, shapeCount, maxShapeMutations, maxThreads, energyFunction, addShapePrecondition);
 }
 
 geometrize::ShapeResult Model::drawShape(std::shared_ptr<geometrize::Shape> shape, geometrize::rgba color)
