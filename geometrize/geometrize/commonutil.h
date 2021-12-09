@@ -2,12 +2,14 @@
 
 #include <algorithm>
 #include <cstdint>
+#include <vector>
 
 #include "bitmap/rgba.h"
 
 namespace geometrize
 {
 class Bitmap;
+class Scanline;
 }
 
 namespace geometrize
@@ -49,6 +51,15 @@ template<typename T> T clamp(const T& value, const T& lower, const T& upper)
  * @return The average RGB color of the image, RGBA8888 format. Alpha is set to opaque (255).
  */
 geometrize::rgba getAverageImageColor(const geometrize::Bitmap& image);
+
+/**
+ * @brief scanlinesContainTransparentPixels Returns true if the scanlines contain transparent pixels in the given image
+ * @param scanlines The scanlines to check
+ * @param image The image whose pixels to check
+ * @param minAlpha The minimum alpha level (0-255) to consider transparent
+ * @return True if the scanlines contains any transparent pixels
+ */
+bool scanlinesContainTransparentPixels(const std::vector<geometrize::Scanline>& scanlines, const geometrize::Bitmap& image, int minAlpha);
 
 }
 

@@ -3,9 +3,11 @@
 #include <assert.h>
 #include <cstdint>
 #include <random>
+#include <vector>
 
 #include "bitmap/bitmap.h"
 #include "bitmap/rgba.h"
+#include "rasterizer/scanline.h"
 
 namespace geometrize
 {
@@ -52,6 +54,19 @@ geometrize::rgba getAverageImageColor(const geometrize::Bitmap& image)
         static_cast<std::uint8_t>(totalBlue / numPixels),
         static_cast<std::uint8_t>(UINT8_MAX)
     };
+}
+
+bool scanlinesContainTransparentPixels(const std::vector<geometrize::Scanline>& scanlines, const geometrize::Bitmap& image, int minAlpha)
+{
+    const auto& trimmedScanlines = geometrize::trimScanlines(scanlines, image.getWidth(), image.getHeight());
+    for(const geometrize::Scanline& scanline : trimmedScanlines) {
+        for(int x = scanline.x1; x < scanline.x2; x++) {
+            if(image.getPixel(x, scanline.y).a > minAlpha) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 }
