@@ -191,34 +191,34 @@ std::vector<geometrize::Scanline> scanlinesForPolygon(const std::vector<std::pai
     return lines;
 }
 
-std::vector<geometrize::Scanline> rasterize(const geometrize::Shape& s, std::int32_t xBound, std::int32_t yBound)
+std::vector<geometrize::Scanline> rasterize(const geometrize::Shape& s, std::int32_t xMax, std::int32_t yMax)
 {
     switch(s.getType()) {
     case geometrize::ShapeTypes::RECTANGLE:
-        return rasterize(static_cast<const geometrize::Rectangle&>(s), xBound, yBound);
+        return rasterize(static_cast<const geometrize::Rectangle&>(s), xMax, yMax);
     case geometrize::ShapeTypes::ROTATED_RECTANGLE:
-        return rasterize(static_cast<const geometrize::RotatedRectangle&>(s), xBound, yBound);
+        return rasterize(static_cast<const geometrize::RotatedRectangle&>(s), xMax, yMax);
     case geometrize::ShapeTypes::TRIANGLE:
-        return rasterize(static_cast<const geometrize::Triangle&>(s), xBound, yBound);
+        return rasterize(static_cast<const geometrize::Triangle&>(s), xMax, yMax);
     case geometrize::ShapeTypes::ELLIPSE:
-        return rasterize(static_cast<const geometrize::Ellipse&>(s), xBound, yBound);
+        return rasterize(static_cast<const geometrize::Ellipse&>(s), xMax, yMax);
     case geometrize::ShapeTypes::ROTATED_ELLIPSE:
-        return rasterize(static_cast<const geometrize::RotatedEllipse&>(s), xBound, yBound);
+        return rasterize(static_cast<const geometrize::RotatedEllipse&>(s), xMax, yMax);
     case geometrize::ShapeTypes::CIRCLE:
-        return rasterize(static_cast<const geometrize::Circle&>(s), xBound, yBound);
+        return rasterize(static_cast<const geometrize::Circle&>(s), xMax, yMax);
     case geometrize::ShapeTypes::LINE:
-        return rasterize(static_cast<const geometrize::Line&>(s), xBound, yBound);
+        return rasterize(static_cast<const geometrize::Line&>(s), xMax, yMax);
     case geometrize::ShapeTypes::QUADRATIC_BEZIER:
-        return rasterize(static_cast<const geometrize::QuadraticBezier&>(s), xBound, yBound);
+        return rasterize(static_cast<const geometrize::QuadraticBezier&>(s), xMax, yMax);
     case geometrize::ShapeTypes::POLYLINE:
-        return rasterize(static_cast<const geometrize::Polyline&>(s), xBound, yBound);
+        return rasterize(static_cast<const geometrize::Polyline&>(s), xMax, yMax);
     default:
         assert(0 && "Bad shape type");
         return std::vector<geometrize::Scanline>{};
     }
 }
 
-std::vector<geometrize::Scanline> rasterize(const geometrize::Circle& s, const std::int32_t xBound, const std::int32_t yBound)
+std::vector<geometrize::Scanline> rasterize(const geometrize::Circle& s, const std::int32_t xMax, const std::int32_t yMax)
 {
     std::vector<geometrize::Scanline> lines;
 
@@ -233,13 +233,13 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Circle& s, const s
 
         if(!xScan.empty()) {
             const std::int32_t fy{static_cast<std::int32_t>(s.m_y) + y};
-            const std::int32_t x1{commonutil::clamp(static_cast<std::int32_t>(s.m_x) + xScan.front(), 0, xBound - 1)};
-            const std::int32_t x2{commonutil::clamp(static_cast<std::int32_t>(s.m_x) + xScan.back(), 0, xBound - 1)};
+            const std::int32_t x1{commonutil::clamp(static_cast<std::int32_t>(s.m_x) + xScan.front(), 0, xMax - 1)};
+            const std::int32_t x2{commonutil::clamp(static_cast<std::int32_t>(s.m_x) + xScan.back(), 0, xMax - 1)};
             lines.push_back(geometrize::Scanline(fy, x1, x2));
         }
     }
 
-    return geometrize::trimScanlines(lines, 0, 0, xBound, yBound);
+    return geometrize::trimScanlines(lines, 0, 0, xMax, yMax);
 }
 
 std::vector<geometrize::Scanline> rasterize(const geometrize::Ellipse& s, const std::int32_t w, const std::int32_t h)
@@ -277,7 +277,7 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Ellipse& s, const 
     return geometrize::trimScanlines(lines, 0, 0, w, h);
 }
 
-std::vector<geometrize::Scanline> rasterize(const geometrize::Line& s, const std::int32_t xBound, const std::int32_t yBound)
+std::vector<geometrize::Scanline> rasterize(const geometrize::Line& s, const std::int32_t xMax, const std::int32_t yMax)
 {
     std::vector<geometrize::Scanline> lines;
 
@@ -286,10 +286,10 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Line& s, const std
        lines.push_back(geometrize::Scanline(point.second, point.first, point.first));
     }
 
-    return geometrize::trimScanlines(lines, 0, 0, xBound, yBound);
+    return geometrize::trimScanlines(lines, 0, 0, xMax, yMax);
 }
 
-std::vector<geometrize::Scanline> rasterize(const geometrize::Polyline& s, const std::int32_t xBound, const std::int32_t yBound)
+std::vector<geometrize::Scanline> rasterize(const geometrize::Polyline& s, const std::int32_t xMax, const std::int32_t yMax)
 {
     std::vector<geometrize::Scanline> lines;
 
@@ -308,10 +308,10 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Polyline& s, const
         }
     }
 
-    return geometrize::trimScanlines(lines, 0, 0, xBound, yBound);
+    return geometrize::trimScanlines(lines, 0, 0, xMax, yMax);
 }
 
-std::vector<geometrize::Scanline> rasterize(const geometrize::QuadraticBezier& s, const std::int32_t xBound, const std::int32_t yBound)
+std::vector<geometrize::Scanline> rasterize(const geometrize::QuadraticBezier& s, const std::int32_t xMax, const std::int32_t yMax)
 {
     std::vector<geometrize::Scanline> scanlines;
 
@@ -340,10 +340,10 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::QuadraticBezier& s
         }
     }
 
-    return geometrize::trimScanlines(scanlines, 0, 0, xBound, yBound);
+    return geometrize::trimScanlines(scanlines, 0, 0, xMax, yMax);
 }
 
-std::vector<geometrize::Scanline> rasterize(const geometrize::Rectangle& s, const std::int32_t xBound, const std::int32_t yBound)
+std::vector<geometrize::Scanline> rasterize(const geometrize::Rectangle& s, const std::int32_t xMax, const std::int32_t yMax)
 {
     const std::int32_t x1{static_cast<std::int32_t>((std::fmin)(s.m_x1, s.m_x2))};
     const std::int32_t x2{static_cast<std::int32_t>((std::fmax)(s.m_x1, s.m_x2))};
@@ -354,32 +354,32 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Rectangle& s, cons
     for(std::int32_t y = y1; y < y2; y++) {
         lines.push_back(geometrize::Scanline(y, x1, x2));
     }
-    return geometrize::trimScanlines(lines, 0, 0, xBound, yBound);
+    return geometrize::trimScanlines(lines, 0, 0, xMax, yMax);
 }
 
-std::vector<geometrize::Scanline> rasterize(const geometrize::RotatedEllipse& s, const std::int32_t xBound, const std::int32_t yBound)
+std::vector<geometrize::Scanline> rasterize(const geometrize::RotatedEllipse& s, const std::int32_t xMax, const std::int32_t yMax)
 {
     const std::uint32_t pointCount{20};
     std::vector<std::pair<float, float>> points = getPointsOnRotatedEllipse(s, pointCount);
 
     std::vector<geometrize::Scanline> scanlines{geometrize::scanlinesForPolygon(points)};
-    return geometrize::trimScanlines(scanlines, 0, 0, xBound, yBound);
+    return geometrize::trimScanlines(scanlines, 0, 0, xMax, yMax);
 }
 
-std::vector<geometrize::Scanline> rasterize(const geometrize::RotatedRectangle& s, const std::int32_t xBound, const std::int32_t yBound)
+std::vector<geometrize::Scanline> rasterize(const geometrize::RotatedRectangle& s, const std::int32_t xMax, const std::int32_t yMax)
 {
     std::vector<geometrize::Scanline> scanlines{geometrize::scanlinesForPolygon(getCornerPoints(s))};
-    return geometrize::trimScanlines(scanlines, 0, 0, xBound, yBound);
+    return geometrize::trimScanlines(scanlines, 0, 0, xMax, yMax);
 }
 
-std::vector<geometrize::Scanline> rasterize(const geometrize::Triangle& s, const std::int32_t xBound, const std::int32_t yBound)
+std::vector<geometrize::Scanline> rasterize(const geometrize::Triangle& s, const std::int32_t xMax, const std::int32_t yMax)
 {
      std::vector<geometrize::Scanline> scanlines = geometrize::scanlinesForPolygon({
          {static_cast<std::int32_t>(s.m_x1), static_cast<std::int32_t>(s.m_y1)},
          {static_cast<std::int32_t>(s.m_x2), static_cast<std::int32_t>(s.m_y2)},
          {static_cast<std::int32_t>(s.m_x3), static_cast<std::int32_t>(s.m_y3)}});
 
-    return geometrize::trimScanlines(scanlines, 0, 0, xBound, yBound);
+    return geometrize::trimScanlines(scanlines, 0, 0, xMax, yMax);
 }
 
 bool scanlinesOverlap(const std::vector<geometrize::Scanline>& first, const std::vector<geometrize::Scanline>& second)
@@ -416,19 +416,19 @@ bool scanlinesContain(const std::vector<geometrize::Scanline>& first, const std:
     return true;
 }
 
-bool shapesOverlap(const geometrize::Shape& a, const geometrize::Shape& b, const std::int32_t xBound, const std::int32_t yBound)
+bool shapesOverlap(const geometrize::Shape& a, const geometrize::Shape& b, const std::int32_t xMax, const std::int32_t yMax)
 {
-    return geometrize::scanlinesOverlap(geometrize::rasterize(a, xBound, yBound), geometrize::rasterize(b, xBound, yBound));
+    return geometrize::scanlinesOverlap(geometrize::rasterize(a, xMax, yMax), geometrize::rasterize(b, xMax, yMax));
 }
 
-bool shapeContains(const geometrize::Shape& container, const geometrize::Shape& containee, const std::int32_t xBound, const std::int32_t yBound)
+bool shapeContains(const geometrize::Shape& container, const geometrize::Shape& containee, const std::int32_t xMax, const std::int32_t yMax)
 {
-    return geometrize::scanlinesContain(rasterize(container, xBound, yBound), rasterize(containee, xBound, yBound));
+    return geometrize::scanlinesContain(rasterize(container, xMax, yMax), rasterize(containee, xMax, yMax));
 }
 
-std::vector<std::pair<std::int32_t, std::int32_t>> shapeToPixels(const geometrize::Shape& shape, const std::uint32_t xBound, const std::uint32_t yBound)
+std::vector<std::pair<std::int32_t, std::int32_t>> shapeToPixels(const geometrize::Shape& shape, const std::uint32_t xMax, const std::uint32_t yMax)
 {
-    const auto scanlines = geometrize::rasterize(shape, static_cast<std::int32_t>(xBound), static_cast<std::int32_t>(yBound));
+    const auto scanlines = geometrize::rasterize(shape, static_cast<std::int32_t>(xMax), static_cast<std::int32_t>(yMax));
     std::vector<std::pair<std::int32_t, std::int32_t>> points = {};
     for(const auto& scanline : scanlines) {
         for(std::int32_t x = scanline.x1; x < scanline.x2; x++) {

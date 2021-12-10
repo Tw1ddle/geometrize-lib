@@ -72,16 +72,16 @@ std::vector<std::pair<std::int32_t, std::int32_t>> bresenham(std::int32_t x1, st
  */
 std::vector<geometrize::Scanline> scanlinesForPolygon(const std::vector<std::pair<float, float>>& points);
 
-std::vector<geometrize::Scanline> rasterize(const geometrize::Shape& s, std::int32_t xBound, std::int32_t yBound);
-std::vector<geometrize::Scanline> rasterize(const geometrize::Circle& s, std::int32_t xBound, std::int32_t yBound);
-std::vector<geometrize::Scanline> rasterize(const geometrize::Ellipse& s, std::int32_t xBound, std::int32_t yBound);
-std::vector<geometrize::Scanline> rasterize(const geometrize::Line& s, std::int32_t xBound, std::int32_t yBound);
-std::vector<geometrize::Scanline> rasterize(const geometrize::Polyline& s, std::int32_t xBound, std::int32_t yBound);
-std::vector<geometrize::Scanline> rasterize(const geometrize::QuadraticBezier& s, std::int32_t xBound, std::int32_t yBound);
-std::vector<geometrize::Scanline> rasterize(const geometrize::Rectangle& s, std::int32_t xBound, std::int32_t yBound);
-std::vector<geometrize::Scanline> rasterize(const geometrize::RotatedEllipse& s, std::int32_t xBound, std::int32_t yBound);
-std::vector<geometrize::Scanline> rasterize(const geometrize::RotatedRectangle& s, std::int32_t xBound, std::int32_t yBound);
-std::vector<geometrize::Scanline> rasterize(const geometrize::Triangle& s, std::int32_t xBound, std::int32_t yBound);
+std::vector<geometrize::Scanline> rasterize(const geometrize::Shape& s, std::int32_t xMax, std::int32_t yMax);
+std::vector<geometrize::Scanline> rasterize(const geometrize::Circle& s, std::int32_t xMax, std::int32_t yMax);
+std::vector<geometrize::Scanline> rasterize(const geometrize::Ellipse& s, std::int32_t xMax, std::int32_t yMax);
+std::vector<geometrize::Scanline> rasterize(const geometrize::Line& s, std::int32_t xMax, std::int32_t yMax);
+std::vector<geometrize::Scanline> rasterize(const geometrize::Polyline& s, std::int32_t xMax, std::int32_t yMax);
+std::vector<geometrize::Scanline> rasterize(const geometrize::QuadraticBezier& s, std::int32_t xMax, std::int32_t yMax);
+std::vector<geometrize::Scanline> rasterize(const geometrize::Rectangle& s, std::int32_t xMax, std::int32_t yMax);
+std::vector<geometrize::Scanline> rasterize(const geometrize::RotatedEllipse& s, std::int32_t xMax, std::int32_t yMax);
+std::vector<geometrize::Scanline> rasterize(const geometrize::RotatedRectangle& s, std::int32_t xMax, std::int32_t yMax);
+std::vector<geometrize::Scanline> rasterize(const geometrize::Triangle& s, std::int32_t xMax, std::int32_t yMax);
 
 /**
  * @brief scanlinesOverlap Returns true if any of the scanlines from the first vector overlap the second
@@ -99,9 +99,9 @@ bool scanlinesOverlap(const std::vector<geometrize::Scanline>& first, const std:
  */
 bool scanlinesContain(const std::vector<geometrize::Scanline>& first, const std::vector<geometrize::Scanline>& second);
 
-bool shapesOverlap(const geometrize::Shape& a, const geometrize::Shape& b, std::int32_t xBound, std::int32_t yBound);
-bool shapeContains(const geometrize::Shape& container, const geometrize::Shape& containee, std::int32_t xBound, std::int32_t yBound);
+bool shapesOverlap(const geometrize::Shape& a, const geometrize::Shape& b, std::int32_t xMax, std::int32_t yMax);
+bool shapeContains(const geometrize::Shape& container, const geometrize::Shape& containee, std::int32_t xMax, std::int32_t yMax);
 
-std::vector<std::pair<std::int32_t, std::int32_t>> shapeToPixels(const geometrize::Shape& shape, const std::uint32_t xBound, const std::uint32_t yBound);
+std::vector<std::pair<std::int32_t, std::int32_t>> shapeToPixels(const geometrize::Shape& shape, const std::uint32_t xMax, const std::uint32_t yMax);
 
 }
