@@ -58,7 +58,7 @@ geometrize::rgba getAverageImageColor(const geometrize::Bitmap& image)
 
 bool scanlinesContainTransparentPixels(const std::vector<geometrize::Scanline>& scanlines, const geometrize::Bitmap& image, int minAlpha)
 {
-    const auto& trimmedScanlines = geometrize::trimScanlines(scanlines, image.getWidth(), image.getHeight());
+    const auto& trimmedScanlines = geometrize::trimScanlines(scanlines, 0, 0, image.getWidth(), image.getHeight());
     for(const geometrize::Scanline& scanline : trimmedScanlines) {
         for(int x = scanline.x1; x < scanline.x2; x++) {
             if(image.getPixel(x, scanline.y).a < minAlpha) {

@@ -239,7 +239,7 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Circle& s, const s
         }
     }
 
-    return geometrize::trimScanlines(lines, xBound, yBound);
+    return geometrize::trimScanlines(lines, 0, 0, xBound, yBound);
 }
 
 std::vector<geometrize::Scanline> rasterize(const geometrize::Ellipse& s, const std::int32_t w, const std::int32_t h)
@@ -274,7 +274,7 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Ellipse& s, const 
         }
     }
 
-    return geometrize::trimScanlines(lines, w, h);
+    return geometrize::trimScanlines(lines, 0, 0, w, h);
 }
 
 std::vector<geometrize::Scanline> rasterize(const geometrize::Line& s, const std::int32_t xBound, const std::int32_t yBound)
@@ -286,7 +286,7 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Line& s, const std
        lines.push_back(geometrize::Scanline(point.second, point.first, point.first));
     }
 
-    return geometrize::trimScanlines(lines, xBound, yBound);
+    return geometrize::trimScanlines(lines, 0, 0, xBound, yBound);
 }
 
 std::vector<geometrize::Scanline> rasterize(const geometrize::Polyline& s, const std::int32_t xBound, const std::int32_t yBound)
@@ -308,7 +308,7 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Polyline& s, const
         }
     }
 
-    return geometrize::trimScanlines(lines, xBound, yBound);
+    return geometrize::trimScanlines(lines, 0, 0, xBound, yBound);
 }
 
 std::vector<geometrize::Scanline> rasterize(const geometrize::QuadraticBezier& s, const std::int32_t xBound, const std::int32_t yBound)
@@ -340,7 +340,7 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::QuadraticBezier& s
         }
     }
 
-    return geometrize::trimScanlines(scanlines, xBound, yBound);
+    return geometrize::trimScanlines(scanlines, 0, 0, xBound, yBound);
 }
 
 std::vector<geometrize::Scanline> rasterize(const geometrize::Rectangle& s, const std::int32_t xBound, const std::int32_t yBound)
@@ -354,7 +354,7 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Rectangle& s, cons
     for(std::int32_t y = y1; y < y2; y++) {
         lines.push_back(geometrize::Scanline(y, x1, x2));
     }
-    return geometrize::trimScanlines(lines, xBound, yBound);
+    return geometrize::trimScanlines(lines, 0, 0, xBound, yBound);
 }
 
 std::vector<geometrize::Scanline> rasterize(const geometrize::RotatedEllipse& s, const std::int32_t xBound, const std::int32_t yBound)
@@ -363,13 +363,13 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::RotatedEllipse& s,
     std::vector<std::pair<float, float>> points = getPointsOnRotatedEllipse(s, pointCount);
 
     std::vector<geometrize::Scanline> scanlines{geometrize::scanlinesForPolygon(points)};
-    return geometrize::trimScanlines(scanlines, xBound, yBound);
+    return geometrize::trimScanlines(scanlines, 0, 0, xBound, yBound);
 }
 
 std::vector<geometrize::Scanline> rasterize(const geometrize::RotatedRectangle& s, const std::int32_t xBound, const std::int32_t yBound)
 {
     std::vector<geometrize::Scanline> scanlines{geometrize::scanlinesForPolygon(getCornerPoints(s))};
-    return geometrize::trimScanlines(scanlines, xBound, yBound);
+    return geometrize::trimScanlines(scanlines, 0, 0, xBound, yBound);
 }
 
 std::vector<geometrize::Scanline> rasterize(const geometrize::Triangle& s, const std::int32_t xBound, const std::int32_t yBound)
@@ -379,7 +379,7 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Triangle& s, const
          {static_cast<std::int32_t>(s.m_x2), static_cast<std::int32_t>(s.m_y2)},
          {static_cast<std::int32_t>(s.m_x3), static_cast<std::int32_t>(s.m_y3)}});
 
-    return geometrize::trimScanlines(scanlines, xBound, yBound);
+    return geometrize::trimScanlines(scanlines, 0, 0, xBound, yBound);
 }
 
 bool scanlinesOverlap(const std::vector<geometrize::Scanline>& first, const std::vector<geometrize::Scanline>& second)

@@ -41,10 +41,12 @@ bool operator!=(const geometrize::Scanline& lhs, const geometrize::Scanline& rhs
 /**
  * @brief trimScanlines Crops the scanning width of an array of scanlines so they do not scan outside of the given area.
  * @param scanlines The scanlines to crop.
- * @param w The width to crop.
- * @param h The height to crop.
+ * @param minX The minimum x value to crop to.
+ * @param minY The minimum y value to crop to.
+ * @param maxX The maximum x value to crop to.
+ * @param maxY The maximum y value to crop to.
  * @return A new vector of cropped scanlines.
  */
-std::vector<geometrize::Scanline> trimScanlines(const std::vector<geometrize::Scanline>& scanlines, std::uint32_t w, std::uint32_t h);
+std::vector<geometrize::Scanline> trimScanlines(const std::vector<geometrize::Scanline>& scanlines, std::uint32_t minX, std::uint32_t minY, std::uint32_t maxX, std::uint32_t maxY);
 
 }

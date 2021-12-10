@@ -20,19 +20,19 @@ bool operator!=(const geometrize::Scanline& lhs, const geometrize::Scanline& rhs
     return lhs.y != rhs.y || lhs.x1 != rhs.x1 || lhs.x2 != rhs.x2;
 }
 
-std::vector<geometrize::Scanline> trimScanlines(const std::vector<geometrize::Scanline>& scanlines, const std::uint32_t w, const std::uint32_t h)
+std::vector<geometrize::Scanline> trimScanlines(const std::vector<geometrize::Scanline>& scanlines, std::uint32_t minX, std::uint32_t minY, std::uint32_t maxX, std::uint32_t maxY)
 {
     std::vector<geometrize::Scanline> trimmedScanlines;
 
     for(const geometrize::Scanline& line : scanlines) {
-        if(line.y < 0 || line.y >= static_cast<std::int32_t>(h)) {
+        if(line.y < minY || line.y >= static_cast<std::int32_t>(maxY)) {
             continue;
         }
         if(line.x1 > line.x2) {
             continue;
         }
-        const float x1 = geometrize::commonutil::clamp(line.x1, 0, static_cast<std::int32_t>(w) - 1);
-        const float x2 = geometrize::commonutil::clamp(line.x2, 0, static_cast<std::int32_t>(w) - 1);
+        const float x1 = geometrize::commonutil::clamp(line.x1, static_cast<std::int32_t>(minX), static_cast<std::int32_t>(maxX) - 1);
+        const float x2 = geometrize::commonutil::clamp(line.x2, static_cast<std::int32_t>(minX), static_cast<std::int32_t>(maxX) - 1);
         trimmedScanlines.emplace_back(Scanline(line.y, x1, x2));
     }
     return trimmedScanlines;
