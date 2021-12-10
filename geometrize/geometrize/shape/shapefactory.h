@@ -19,11 +19,13 @@ namespace geometrize
  * @brief createDefaultShapeCreator Creates an instance of the default shape creator object.
  * The setup, mutate and rasterize methods are bound with default methods.
  * @param types The types of shapes to create.
- * @param w The max width of the shapes.
- * @param h The max height of the shapes.
+ * @param xMin The minimum x coordinate of the shapes created.
+ * @param yMin The minimum y coordinate of the shapes created.
+ * @param xMax The maximum x coordinate of the shapes created.
+ * @param yMax The maximum y coordinate of the shapes created.
  * @return The default shape creator.
  */
-std::function<std::shared_ptr<geometrize::Shape>()> createDefaultShapeCreator(geometrize::ShapeTypes types, std::int32_t w, std::int32_t h);
+std::function<std::shared_ptr<geometrize::Shape>()> createDefaultShapeCreator(geometrize::ShapeTypes types, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
 
 /**
  * @brief create Creates a new shape of the specified type.

@@ -20,28 +20,28 @@ namespace geometrize
 {
 
 // Default implementations that perform initial setup on each type of shape
-void setup(geometrize::Shape& s, std::int32_t xMax, std::int32_t yMax);
-void setup(geometrize::Circle& s, std::int32_t xMax, std::int32_t yMax);
-void setup(geometrize::Ellipse& s, std::int32_t xMax, std::int32_t yMax);
-void setup(geometrize::Line& s, std::int32_t xMax, std::int32_t yMax);
-void setup(geometrize::Polyline& s, std::int32_t xMax, std::int32_t yMax);
-void setup(geometrize::QuadraticBezier& s, std::int32_t xMax, std::int32_t yMax);
-void setup(geometrize::Rectangle& s, std::int32_t xMax, std::int32_t yMax);
-void setup(geometrize::RotatedEllipse& s, std::int32_t xMax, std::int32_t yMax);
-void setup(geometrize::RotatedRectangle& s, std::int32_t xMax, std::int32_t yMax);
-void setup(geometrize::Triangle& s, std::int32_t xMax, std::int32_t yMax);
+void setup(geometrize::Shape& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void setup(geometrize::Circle& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void setup(geometrize::Ellipse& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void setup(geometrize::Line& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void setup(geometrize::Polyline& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void setup(geometrize::QuadraticBezier& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void setup(geometrize::Rectangle& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void setup(geometrize::RotatedEllipse& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void setup(geometrize::RotatedRectangle& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void setup(geometrize::Triangle& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
 
 // Default implementations that mutate each type of shape
-void mutate(geometrize::Shape& s, std::int32_t xMax, std::int32_t yMax);
-void mutate(geometrize::Circle& s, std::int32_t xMax, std::int32_t yMax);
-void mutate(geometrize::Ellipse& s, std::int32_t xMax, std::int32_t yMax);
-void mutate(geometrize::Line& s, std::int32_t xMax, std::int32_t yMax);
-void mutate(geometrize::Polyline& s, std::int32_t xMax, std::int32_t yMax);
-void mutate(geometrize::QuadraticBezier& s, std::int32_t xMax, std::int32_t yMax);
-void mutate(geometrize::Rectangle& s, std::int32_t xMax, std::int32_t yMax);
-void mutate(geometrize::RotatedEllipse& s, std::int32_t xMax, std::int32_t yMax);
-void mutate(geometrize::RotatedRectangle& s, std::int32_t xMax, std::int32_t yMax);
-void mutate(geometrize::Triangle& s, std::int32_t xMax, std::int32_t yMax);
+void mutate(geometrize::Shape& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void mutate(geometrize::Circle& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void mutate(geometrize::Ellipse& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void mutate(geometrize::Line& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void mutate(geometrize::Polyline& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void mutate(geometrize::QuadraticBezier& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void mutate(geometrize::Rectangle& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void mutate(geometrize::RotatedEllipse& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void mutate(geometrize::RotatedRectangle& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
+void mutate(geometrize::Triangle& s, std::int32_t xMin, std::int32_t yMin, std::int32_t xMax, std::int32_t yMax);
 
 // Default implementations that translate each type of shape
 void translate(geometrize::Shape& s, float x, float y);

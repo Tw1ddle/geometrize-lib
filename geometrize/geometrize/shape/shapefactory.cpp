@@ -22,64 +22,64 @@
 namespace geometrize
 {
 
-std::function<std::shared_ptr<geometrize::Shape>()> createDefaultShapeCreator(const geometrize::ShapeTypes types, const std::int32_t w, const std::int32_t h)
+std::function<std::shared_ptr<geometrize::Shape>()> createDefaultShapeCreator(const geometrize::ShapeTypes types, const std::int32_t xMin, const std::int32_t yMin, const std::int32_t xMax, const std::int32_t yMax)
 {
-    auto f = [types, w, h]() {
+    auto f = [types, xMin, yMin, xMax, yMax]() {
         std::shared_ptr<geometrize::Shape> s = geometrize::randomShapeOf(types);
 
         switch(s->getType()) {
         case geometrize::ShapeTypes::RECTANGLE: {
-            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Rectangle&>(s), w, h); };
-            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Rectangle&>(s), w, h); };
-            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Rectangle&>(s), w, h); };
+            s->setup = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Rectangle&>(s), xMin, yMin, xMax, yMax); };
+            s->mutate = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Rectangle&>(s), xMin, yMin, xMax, yMax); };
+            s->rasterize = [xMin, yMin, xMax, yMax](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Rectangle&>(s), xMin, yMin, xMax, yMax); };
             break;
         }
         case geometrize::ShapeTypes::ROTATED_RECTANGLE: {
-            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::RotatedRectangle&>(s), w, h); };
-            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::RotatedRectangle&>(s), w, h); };
-            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::RotatedRectangle&>(s), w, h); };
+            s->setup = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::RotatedRectangle&>(s), xMin, yMin, xMax, yMax); };
+            s->mutate = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::RotatedRectangle&>(s), xMin, yMin, xMax, yMax); };
+            s->rasterize = [xMin, yMin, xMax, yMax](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::RotatedRectangle&>(s), xMin, yMin, xMax, yMax); };
             break;
         }
         case geometrize::ShapeTypes::TRIANGLE: {
-            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Triangle&>(s), w, h); };
-            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Triangle&>(s), w, h); };
-            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Triangle&>(s), w, h); };
+            s->setup = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Triangle&>(s), xMin, yMin, xMax, yMax); };
+            s->mutate = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Triangle&>(s), xMin, yMin, xMax, yMax); };
+            s->rasterize = [xMin, yMin, xMax, yMax](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Triangle&>(s), xMin, yMin, xMax, yMax); };
             break;
         }
         case geometrize::ShapeTypes::ELLIPSE: {
-            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Ellipse&>(s), w, h); };
-            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Ellipse&>(s), w, h); };
-            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Ellipse&>(s), w, h); };
+            s->setup = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Ellipse&>(s), xMin, yMin, xMax, yMax); };
+            s->mutate = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Ellipse&>(s), xMin, yMin, xMax, yMax); };
+            s->rasterize = [xMin, yMin, xMax, yMax](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Ellipse&>(s), xMin, yMin, xMax, yMax); };
             break;
         }
         case geometrize::ShapeTypes::ROTATED_ELLIPSE: {
-            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::RotatedEllipse&>(s), w, h); };
-            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::RotatedEllipse&>(s), w, h); };
-            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::RotatedEllipse&>(s), w, h); };
+            s->setup = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::RotatedEllipse&>(s), xMin, yMin, xMax, yMax); };
+            s->mutate = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::RotatedEllipse&>(s), xMin, yMin, xMax, yMax); };
+            s->rasterize = [xMin, yMin, xMax, yMax](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::RotatedEllipse&>(s), xMin, yMin, xMax, yMax); };
             break;
         }
         case geometrize::ShapeTypes::CIRCLE: {
-            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Circle&>(s), w, h); };
-            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Circle&>(s), w, h); };
-            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Circle&>(s), w, h); };
+            s->setup = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Circle&>(s), xMin, yMin, xMax, yMax); };
+            s->mutate = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Circle&>(s), xMin, yMin, xMax, yMax); };
+            s->rasterize = [xMin, yMin, xMax, yMax](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Circle&>(s), xMin, yMin, xMax, yMax); };
             break;
         }
         case geometrize::ShapeTypes::LINE: {
-            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Line&>(s), w, h); };
-            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Line&>(s), w, h); };
-            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Line&>(s), w, h); };
+            s->setup = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Line&>(s), xMin, yMin, xMax, yMax); };
+            s->mutate = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Line&>(s), xMin, yMin, xMax, yMax); };
+            s->rasterize = [xMin, yMin, xMax, yMax](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Line&>(s), xMin, yMin, xMax, yMax); };
             break;
         }
         case geometrize::ShapeTypes::QUADRATIC_BEZIER: {
-            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::QuadraticBezier&>(s), w, h); };
-            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::QuadraticBezier&>(s), w, h); };
-            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::QuadraticBezier&>(s), w, h); };
+            s->setup = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::QuadraticBezier&>(s), xMin, yMin, xMax, yMax); };
+            s->mutate = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::QuadraticBezier&>(s), xMin, yMin, xMax, yMax); };
+            s->rasterize = [xMin, yMin, xMax, yMax](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::QuadraticBezier&>(s), xMin, yMin, xMax, yMax); };
             break;
         }
         case geometrize::ShapeTypes::POLYLINE: {
-            s->setup = [w, h](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Polyline&>(s), w, h); };
-            s->mutate = [w, h](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Polyline&>(s), w, h); };
-            s->rasterize = [w, h](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Polyline&>(s), w, h); };
+            s->setup = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { return geometrize::setup(static_cast<geometrize::Polyline&>(s), xMin, yMin, xMax, yMax); };
+            s->mutate = [xMin, yMin, xMax, yMax](geometrize::Shape& s) { geometrize::mutate(static_cast<geometrize::Polyline&>(s), xMin, yMin, xMax, yMax); };
+            s->rasterize = [xMin, yMin, xMax, yMax](const geometrize::Shape& s) { return geometrize::rasterize(static_cast<const geometrize::Polyline&>(s), xMin, yMin, xMax, yMax); };
             break;
         }
         default:

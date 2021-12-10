@@ -47,6 +47,6 @@ bool operator!=(const geometrize::Scanline& lhs, const geometrize::Scanline& rhs
  * @param maxY The maximum y value to crop to.
  * @return A new vector of cropped scanlines.
  */
-std::vector<geometrize::Scanline> trimScanlines(const std::vector<geometrize::Scanline>& scanlines, std::uint32_t minX, std::uint32_t minY, std::uint32_t maxX, std::uint32_t maxY);
+std::vector<geometrize::Scanline> trimScanlines(const std::vector<geometrize::Scanline>& scanlines, std::int32_t minX, std::int32_t minY, std::int32_t maxX, std::int32_t maxY);
 
 }

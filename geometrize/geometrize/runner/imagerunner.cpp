@@ -29,12 +29,14 @@ public:
                                               geometrize::core::EnergyFunction energyFunction,
                                               geometrize::ShapeAcceptancePreconditionFunction addShapePrecondition)
     {
-        const std::int32_t w = m_model.getTarget().getWidth();
-        const std::int32_t h = m_model.getTarget().getHeight();
+        const std::int32_t xMin = 0;
+        const std::int32_t yMin = 0;
+        const std::int32_t xMax = m_model.getTarget().getWidth();
+        const std::int32_t yMax = m_model.getTarget().getHeight();
         const geometrize::ShapeTypes types = options.shapeTypes;
 
         if(!shapeCreator) {
-            shapeCreator = geometrize::createDefaultShapeCreator(types, w, h);
+            shapeCreator = geometrize::createDefaultShapeCreator(types, xMin, yMin, xMax, yMax);
         }
 
         m_model.setSeed(options.seed);
