@@ -29,14 +29,12 @@ public:
                                               geometrize::core::EnergyFunction energyFunction,
                                               geometrize::ShapeAcceptancePreconditionFunction addShapePrecondition)
     {
-        const std::int32_t xMin = 0;
-        const std::int32_t yMin = 0;
-        const std::int32_t xMax = m_model.getTarget().getWidth();
-        const std::int32_t yMax = m_model.getTarget().getHeight();
+        const auto& target = m_model.getTarget();
+        const geometrize::ImageRunnerShapeBoundsOptions bounds = options.shapeBounds.enabled ? options.shapeBounds : geometrize::ImageRunnerShapeBoundsOptions{ true, 0, 0, target.getWidth(), target.getHeight()};
         const geometrize::ShapeTypes types = options.shapeTypes;
 
         if(!shapeCreator) {
-            shapeCreator = geometrize::createDefaultShapeCreator(types, xMin, yMin, xMax, yMax);
+            shapeCreator = geometrize::createDefaultShapeCreator(types, bounds.xMin, bounds.yMin, bounds.xMax, bounds.yMax);
         }
 
         m_model.setSeed(options.seed);
