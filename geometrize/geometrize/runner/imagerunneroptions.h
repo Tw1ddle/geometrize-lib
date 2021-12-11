@@ -16,8 +16,8 @@ struct ImageRunnerShapeBoundsOptions {
     bool enabled = false; // Whether to use these bounds, or to use the bounds of the target image instead (these can't be larger than the image in any case)
     double xMinPercent = 0.0;
     double yMinPercent = 0.0;
-    double xMaxPercent = 0.0;
-    double yMaxPercent = 0.0;
+    double xMaxPercent = 100.0;
+    double yMaxPercent = 100.0;
 };
 
 /**
