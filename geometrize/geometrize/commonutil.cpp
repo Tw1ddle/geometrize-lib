@@ -1,13 +1,16 @@
 #include "commonutil.h"
 
-#include <assert.h>
+#include <algorithm>
+#include <cassert>
 #include <cstdint>
 #include <random>
+#include <tuple>
 #include <vector>
 
 #include "bitmap/bitmap.h"
 #include "bitmap/rgba.h"
 #include "rasterizer/scanline.h"
+#include "runner/imagerunneroptions.h"
 
 namespace geometrize
 {
@@ -67,6 +70,35 @@ bool scanlinesContainTransparentPixels(const std::vector<geometrize::Scanline>& 
         }
     }
     return false;
+}
+
+std::tuple<std::int32_t, std::int32_t, std::int32_t, std::int32_t> mapShapeBoundsToImage(const geometrize::ImageRunnerShapeBoundsOptions& options, const geometrize::Bitmap& image)
+{
+    if(!options.enabled) {
+        return { 0, 0, image.getWidth() - 1, image.getHeight() - 1 };
+    }
+
+    const double xMinPx = options.xMinPercent / 100.0 * static_cast<double>(image.getWidth() - 1);
+    const double yMinPx = options.yMinPercent / 100.0 * static_cast<double>(image.getHeight() - 1);
+    const double xMaxPx = options.xMaxPercent / 100.0 * static_cast<double>(image.getWidth() - 1);
+    const double yMaxPx = options.yMaxPercent / 100.0 * static_cast<double>(image.getHeight() - 1);
+
+    std::int32_t xMin = static_cast<std::int32_t>(std::round(std::min(std::min(xMinPx, xMaxPx), image.getWidth() - 1.0)));
+    std::int32_t yMin = static_cast<std::int32_t>(std::round(std::min(std::min(yMinPx, yMaxPx), image.getHeight() - 1.0)));
+    std::int32_t xMax = static_cast<std::int32_t>(std::round(std::min(std::max(xMinPx, xMaxPx), image.getWidth() - 1.0)));
+    std::int32_t yMax = static_cast<std::int32_t>(std::round(std::min(std::max(yMinPx, yMaxPx), image.getHeight() - 1.0)));
+
+    // If we have a bad width or height, which is bound to cause problems - use the whole image
+    if(xMax - xMin <= 1) {
+        xMin = 0;
+        xMax = image.getWidth() - 1;
+    }
+    if(yMax - yMin <= 1) {
+        xMin = 0;
+        yMax = image.getHeight() - 1;
+    }
+
+    return std::make_tuple(xMin, yMin, xMax, yMax);
 }
 
 }

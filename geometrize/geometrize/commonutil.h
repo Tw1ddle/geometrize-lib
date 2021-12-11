@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cstdint>
+#include <tuple>
 #include <vector>
 
 #include "bitmap/rgba.h"
@@ -10,6 +11,7 @@ namespace geometrize
 {
 class Bitmap;
 class Scanline;
+struct ImageRunnerShapeBoundsOptions;
 }
 
 namespace geometrize
@@ -60,6 +62,14 @@ geometrize::rgba getAverageImageColor(const geometrize::Bitmap& image);
  * @return True if the scanlines contains any transparent pixels
  */
 bool scanlinesContainTransparentPixels(const std::vector<geometrize::Scanline>& scanlines, const geometrize::Bitmap& image, int minAlpha);
+
+/**
+ * @brief mapShapeBoundsToImage Maps the given shape bound percentages to the given image, returning a bounding rectangle, or the whole image if the bounds were invalid
+ * @param The options to map to the image
+ * @param The image to map the options around
+ * @return The mapped shape bounds (xMin, yMin, xMax, yMax)
+ */
+std::tuple<std::int32_t, std::int32_t, std::int32_t, std::int32_t> mapShapeBoundsToImage(const geometrize::ImageRunnerShapeBoundsOptions& options, const geometrize::Bitmap& image);
 
 }
 

@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "../bitmap/bitmap.h"
+#include "../commonutil.h"
 #include "../core.h"
 #include "../model.h"
 #include "../shape/shape.h"
@@ -29,12 +30,11 @@ public:
                                               geometrize::core::EnergyFunction energyFunction,
                                               geometrize::ShapeAcceptancePreconditionFunction addShapePrecondition)
     {
-        const auto& target = m_model.getTarget();
-        const geometrize::ImageRunnerShapeBoundsOptions bounds = options.shapeBounds.enabled ? options.shapeBounds : geometrize::ImageRunnerShapeBoundsOptions{ true, 0, 0, target.getWidth(), target.getHeight()};
+        const auto [xMin, yMin, xMax, yMax] = geometrize::commonutil::mapShapeBoundsToImage(options.shapeBounds, m_model.getTarget());
         const geometrize::ShapeTypes types = options.shapeTypes;
 
         if(!shapeCreator) {
-            shapeCreator = geometrize::createDefaultShapeCreator(types, bounds.xMin, bounds.yMin, bounds.xMax, bounds.yMax);
+            shapeCreator = geometrize::createDefaultShapeCreator(types, xMin, yMin, xMax, yMax);
         }
 
         m_model.setSeed(options.seed);
