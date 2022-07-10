@@ -387,7 +387,7 @@ bool scanlinesOverlap(const std::vector<geometrize::Scanline>& first, const std:
     for(const auto& f : first) {
         for(const auto& s : second) {
             if(f.y == s.y) {
-                if(f.x1 >= s.x1 && f.x2 <= s.x2) {
+                if(f.x1 <= s.x2 && f.x2 >= s.x1) {
                     return true;
                 }
             }
@@ -398,9 +398,9 @@ bool scanlinesOverlap(const std::vector<geometrize::Scanline>& first, const std:
 
 bool scanlinesContain(const std::vector<geometrize::Scanline>& first, const std::vector<geometrize::Scanline>& second)
 {
-    for(const auto& s : first) {
+    for(const auto& f : first) {
         bool contained = false;
-        for(const auto& f : second) {
+        for(const auto& s : second) {
             if(f.y == s.y) {
                 if(f.x1 <= s.x1 && f.x2 >= s.x2) {
                     contained = true;
