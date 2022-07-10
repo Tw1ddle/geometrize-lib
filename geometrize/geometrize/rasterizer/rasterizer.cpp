@@ -404,6 +404,7 @@ bool scanlinesContain(const std::vector<geometrize::Scanline>& first, const std:
             if(f.y == s.y) {
                 if(f.x1 <= s.x1 && f.x2 >= s.x2) {
                     contained = true;
+                    break;
                 }
             }
         }
