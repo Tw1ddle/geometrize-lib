@@ -113,7 +113,7 @@ void copyLines(geometrize::Bitmap& destination, const geometrize::Bitmap& source
 {
     for(const geometrize::Scanline& line : lines) {
         const std::int32_t y{line.y};
-        for(std::int32_t x = line.x1; x < line.x2; x++) {
+        for(std::int32_t x = line.x1; x <= line.x2; x++) {
             destination.setPixel(x, y, source.getPixel(x, y));
         }
     }
@@ -351,7 +351,7 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Rectangle& s, cons
     const std::int32_t y2{static_cast<std::int32_t>((std::fmax)(s.m_y1, s.m_y2))};
 
     std::vector<geometrize::Scanline> lines;
-    for(std::int32_t y = y1; y < y2; y++) {
+    for(std::int32_t y = y1; y <= y2; y++) {
         lines.push_back(geometrize::Scanline(y, x1, x2));
     }
     return geometrize::trimScanlines(lines, xMin, yMin, xMax, yMax);
@@ -387,7 +387,7 @@ bool scanlinesOverlap(const std::vector<geometrize::Scanline>& first, const std:
     for(const auto& f : first) {
         for(const auto& s : second) {
             if(f.y == s.y) {
-                if(f.x1 >= s.x1 && f.x2 <= s.x2) {
+                if(f.x1 <= s.x2 && f.x2 >= s.x1) {
                     return true;
                 }
             }
@@ -398,12 +398,13 @@ bool scanlinesOverlap(const std::vector<geometrize::Scanline>& first, const std:
 
 bool scanlinesContain(const std::vector<geometrize::Scanline>& first, const std::vector<geometrize::Scanline>& second)
 {
-    for(const auto& s : first) {
+    for(const auto& s : second) {
         bool contained = false;
-        for(const auto& f : second) {
+        for(const auto& f : first) {
             if(f.y == s.y) {
                 if(f.x1 <= s.x1 && f.x2 >= s.x2) {
                     contained = true;
+                    break;
                 }
             }
         }
@@ -431,7 +432,7 @@ std::vector<std::pair<std::int32_t, std::int32_t>> shapeToPixels(const geometriz
     const auto scanlines = geometrize::rasterize(shape, xMin, yMin, xMax, yMax);
     std::vector<std::pair<std::int32_t, std::int32_t>> points = {};
     for(const auto& scanline : scanlines) {
-        for(std::int32_t x = scanline.x1; x < scanline.x2; x++) {
+        for(std::int32_t x = scanline.x1; x <= scanline.x2; x++) {
             points.push_back({x, scanline.y});
         }
     }
