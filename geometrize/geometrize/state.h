@@ -14,7 +14,7 @@ namespace geometrize
 {
 
 /**
- * @brief The State class relates a shape and related properties to a measure of how close it brings the working image closer to the target image.
+ * @brief The State class relates a shape and related properties to a measure of how close it brings the working image to the target image.
  * @author Sam Twidale (https://samcodes.co.uk/)
  */
 class State
