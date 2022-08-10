@@ -94,7 +94,7 @@ std::tuple<std::int32_t, std::int32_t, std::int32_t, std::int32_t> mapShapeBound
         xMax = image.getWidth() - 1;
     }
     if(yMax - yMin <= 1) {
-        xMin = 0;
+        yMin = 0;
         yMax = image.getHeight() - 1;
     }
 
