@@ -266,7 +266,7 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Ellipse& s, const 
             x2 = xMax - 1;
         }
 
-        if (y1 >= xMin && y1 < yMax) {
+        if (y1 >= yMin && y1 < yMax) {
             lines.push_back(Scanline(y1, x1, x2));
         }
         if (y2 >= yMin && y2 < yMax && dy > 0) {
