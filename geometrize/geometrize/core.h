@@ -124,6 +124,20 @@ geometrize::State bestHillClimbState(
         double lastScore,
         const EnergyFunction& customEnergyFunction = nullptr);
 
+/**
+ * @brief hillClimbState Optimizes an already-scored state using hill climbing.
+ * This entry point lets batch evaluators provide the initial random candidate
+ * while retaining the existing mutation sequence and acceptance behavior.
+ */
+geometrize::State hillClimbState(
+        const geometrize::State& state,
+        std::uint32_t age,
+        const geometrize::Bitmap& target,
+        const geometrize::Bitmap& current,
+        geometrize::Bitmap& buffer,
+        double lastScore,
+        const EnergyFunction& customEnergyFunction = nullptr);
+
 }
 
 }

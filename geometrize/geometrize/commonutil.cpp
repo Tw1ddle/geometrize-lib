@@ -26,6 +26,17 @@ void seedRandomGenerator(const std::uint32_t seed)
     mt.seed(seed);
 }
 
+RandomGeneratorState captureRandomGeneratorState()
+{
+    return RandomGeneratorState{mt, pick};
+}
+
+void restoreRandomGeneratorState(const RandomGeneratorState& state)
+{
+    mt = state.generator;
+    pick = state.distribution;
+}
+
 std::int32_t randomRange(const std::int32_t min, const std::int32_t max)
 {
     assert(min <= max);

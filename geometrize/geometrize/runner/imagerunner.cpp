@@ -30,15 +30,17 @@ public:
                                               geometrize::core::EnergyFunction energyFunction,
                                               geometrize::ShapeAcceptancePreconditionFunction addShapePrecondition)
     {
-        const auto [xMin, yMin, xMax, yMax] = geometrize::commonutil::mapShapeBoundsToImage(options.shapeBounds, m_model.getTarget());
+        const geometrize::Model& model{m_model};
+        const auto [xMin, yMin, xMax, yMax] = geometrize::commonutil::mapShapeBoundsToImage(options.shapeBounds, model.getTarget());
         const geometrize::ShapeTypes types = options.shapeTypes;
+        const bool usingDefaultShapeCreator{!shapeCreator};
 
         if(!shapeCreator) {
             shapeCreator = geometrize::createDefaultShapeCreator(types, xMin, yMin, xMax, yMax);
         }
 
         m_model.setSeed(options.seed);
-        return m_model.step(shapeCreator, options.alpha, options.shapeCount, options.maxShapeMutations, options.maxThreads, energyFunction, addShapePrecondition);
+        return m_model.stepWithGpuBatching(shapeCreator, options.alpha, options.shapeCount, options.maxShapeMutations, options.maxThreads, energyFunction, addShapePrecondition, usingDefaultShapeCreator);
     }
 
     geometrize::Bitmap& getCurrent()
@@ -53,12 +55,14 @@ public:
 
     const geometrize::Bitmap& getCurrent() const
     {
-        return m_model.getCurrent();
+        const geometrize::Model& model{m_model};
+        return model.getCurrent();
     }
 
     const geometrize::Bitmap& getTarget() const
     {
-        return m_model.getTarget();
+        const geometrize::Model& model{m_model};
+        return model.getTarget();
     }
 
     geometrize::Model& getModel()
@@ -101,12 +105,14 @@ geometrize::Bitmap& ImageRunner::getTarget()
 
 const geometrize::Bitmap& ImageRunner::getCurrent() const
 {
-    return d->getCurrent();
+    const ImageRunner::ImageRunnerImpl& impl{*d};
+    return impl.getCurrent();
 }
 
 const geometrize::Bitmap& ImageRunner::getTarget() const
 {
-    return d->getTarget();
+    const ImageRunner::ImageRunnerImpl& impl{*d};
+    return impl.getTarget();
 }
 
 geometrize::Model& ImageRunner::getModel()

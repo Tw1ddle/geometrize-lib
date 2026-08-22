@@ -11,6 +11,7 @@
 
  * Geometrize images into shapes.
  * Export the results as SVG, JSON and more.
+ * Optional [OpenCL backend](docs/opencl-backend.md) that scores candidate shapes on the GPU, producing the same shapes as the CPU path.
 
 ## Usage
 
@@ -25,6 +26,20 @@ Refer to the minimal [example](https://github.com/Tw1ddle/geometrize-lib-example
 | [Documentation](https://github.com/Tw1ddle/geometrize-lib-docs)    |
 
 See the [top level repo](https://github.com/Tw1ddle/geometrize-top-level-repo) for a listing of all the repositories included in the Geometrize project.
+
+## OpenCL backend
+
+Scoring candidate shapes is where almost all of the running time goes. This library ships an optional OpenCL backend that batches a whole hill-climbing round onto the GPU, and measured ~19x over the CPU path at 736x1104 on an RTX 4070 SUPER.
+
+It is **compiled out by default** — a stock build is CPU-only and behaves exactly as it did before. To enable it, build on Windows with `GEOMETRIZE_OPENCL` defined:
+
+```qmake
+DEFINES += GEOMETRIZE_OPENCL
+```
+
+No OpenCL SDK is needed to build; the runtime is loaded from the installed GPU driver. With the same seed and settings the backend picks the same shapes in the same order as the CPU path, and anything it cannot handle — a custom energy function, a small image, a missing or failing OpenCL runtime — silently falls back to the CPU.
+
+Read [docs/opencl-backend.md](docs/opencl-backend.md) for the gating rules, the determinism guarantees, device selection and the tuning environment variables.
 
 ## Shape Comparison
 
@@ -48,3 +63,4 @@ See the Geometrize [resources](https://resources.geometrize.co.uk/) page.
 
 ## Notes
  * Got an idea or suggestion? Open an issue on GitHub, or send Sam a message on [Twitter](https://twitter.com/Sam_Twidale).
+ * The OpenCL backend was contributed by [GleamEyes02](https://github.com/GleamEyes02).

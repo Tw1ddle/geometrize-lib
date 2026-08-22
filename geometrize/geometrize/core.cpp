@@ -18,6 +18,114 @@
 namespace
 {
 
+bool scanlinesAreNonOverlapping(const std::vector<geometrize::Scanline>& lines)
+{
+    if(lines.size() < 2U) {
+        return true;
+    }
+
+    std::vector<geometrize::Scanline> sortedLines;
+    const std::vector<geometrize::Scanline>* linesToCheck{&lines};
+    if(!std::is_sorted(lines.begin(), lines.end(), [](const geometrize::Scanline& a, const geometrize::Scanline& b) {
+        return a.y < b.y || (a.y == b.y && (a.x1 < b.x1 || (a.x1 == b.x1 && a.x2 < b.x2)));
+    })) {
+        sortedLines = lines;
+        std::sort(sortedLines.begin(), sortedLines.end(), [](const geometrize::Scanline& a, const geometrize::Scanline& b) {
+            return a.y < b.y || (a.y == b.y && (a.x1 < b.x1 || (a.x1 == b.x1 && a.x2 < b.x2)));
+        });
+        linesToCheck = &sortedLines;
+    }
+
+    std::int32_t previousY{INT32_MIN};
+    std::int32_t previousX2{INT32_MIN};
+    for(const geometrize::Scanline& line : *linesToCheck) {
+        if(line.y == previousY && line.x1 <= previousX2) {
+            return false;
+        }
+        if(line.y != previousY) {
+            previousY = line.y;
+        }
+        previousX2 = line.x2;
+    }
+    return true;
+}
+
+struct BlendParameters
+{
+    std::uint32_t red;
+    std::uint32_t green;
+    std::uint32_t blue;
+    std::uint32_t alpha;
+    std::uint32_t inverseAlpha;
+};
+
+BlendParameters getBlendParameters(const geometrize::rgba color)
+{
+    std::uint32_t sr{color.r};
+    sr |= sr << 8;
+    sr *= color.a;
+    sr /= UINT8_MAX;
+    std::uint32_t sg{color.g};
+    sg |= sg << 8;
+    sg *= color.a;
+    sg /= UINT8_MAX;
+    std::uint32_t sb{color.b};
+    sb |= sb << 8;
+    sb *= color.a;
+    sb /= UINT8_MAX;
+    std::uint32_t sa{color.a};
+    sa |= sa << 8;
+
+    const std::uint32_t m{UINT16_MAX};
+    const std::uint32_t aa{(m - sa) * 257U};
+    return BlendParameters{sr, sg, sb, sa, aa};
+}
+
+geometrize::rgba blendPixel(const geometrize::rgba destination, const BlendParameters& parameters)
+{
+    const std::uint32_t m{UINT16_MAX};
+    return geometrize::rgba{
+        static_cast<std::uint8_t>(((destination.r * parameters.inverseAlpha + parameters.red * m) / m) >> 8),
+        static_cast<std::uint8_t>(((destination.g * parameters.inverseAlpha + parameters.green * m) / m) >> 8),
+        static_cast<std::uint8_t>(((destination.b * parameters.inverseAlpha + parameters.blue * m) / m) >> 8),
+        static_cast<std::uint8_t>(((destination.a * parameters.inverseAlpha + parameters.alpha * m) / m) >> 8)};
+}
+
+double fusedDefaultEnergyFunction(
+        const std::vector<geometrize::Scanline>& lines,
+        const std::uint32_t alpha,
+        const geometrize::Bitmap& target,
+        const geometrize::Bitmap& current,
+        const double score)
+{
+    const geometrize::rgba color{geometrize::core::computeColor(target, current, lines, static_cast<std::uint8_t>(alpha))};
+    const BlendParameters blendParameters{getBlendParameters(color)};
+    const std::uint64_t rgbaCount{target.getWidth() * target.getHeight() * 4U};
+    std::uint64_t total{static_cast<std::uint64_t>((score * 255.0) * (score * 255.0) * rgbaCount)};
+
+    for(const geometrize::Scanline& line : lines) {
+        for(std::int32_t x = line.x1; x <= line.x2; ++x) {
+            const geometrize::rgba targetPixel{target.getPixel(x, line.y)};
+            const geometrize::rgba currentPixel{current.getPixel(x, line.y)};
+            const geometrize::rgba blendedPixel{blendPixel(currentPixel, blendParameters)};
+
+            const std::int32_t beforeRed{static_cast<std::int32_t>(targetPixel.r) - static_cast<std::int32_t>(currentPixel.r)};
+            const std::int32_t beforeGreen{static_cast<std::int32_t>(targetPixel.g) - static_cast<std::int32_t>(currentPixel.g)};
+            const std::int32_t beforeBlue{static_cast<std::int32_t>(targetPixel.b) - static_cast<std::int32_t>(currentPixel.b)};
+            const std::int32_t beforeAlpha{static_cast<std::int32_t>(targetPixel.a) - static_cast<std::int32_t>(currentPixel.a)};
+            const std::int32_t afterRed{static_cast<std::int32_t>(targetPixel.r) - static_cast<std::int32_t>(blendedPixel.r)};
+            const std::int32_t afterGreen{static_cast<std::int32_t>(targetPixel.g) - static_cast<std::int32_t>(blendedPixel.g)};
+            const std::int32_t afterBlue{static_cast<std::int32_t>(targetPixel.b) - static_cast<std::int32_t>(blendedPixel.b)};
+            const std::int32_t afterAlpha{static_cast<std::int32_t>(targetPixel.a) - static_cast<std::int32_t>(blendedPixel.a)};
+
+            total -= static_cast<std::uint64_t>(beforeRed * beforeRed + beforeGreen * beforeGreen + beforeBlue * beforeBlue + beforeAlpha * beforeAlpha);
+            total += static_cast<std::uint64_t>(afterRed * afterRed + afterGreen * afterGreen + afterBlue * afterBlue + afterAlpha * afterAlpha);
+        }
+    }
+
+    return std::sqrt(static_cast<double>(total) / static_cast<double>(rgbaCount)) / 255.0;
+}
+
 /**
 * @brief hillClimb Hill climbing optimization algorithm, attempts to minimize energy (the error/difference).
 * @param state The state to optimize.
@@ -113,6 +221,12 @@ double defaultEnergyFunction(
         geometrize::Bitmap& buffer,
         const double score)
 {
+    if(scanlinesAreNonOverlapping(lines)) {
+        return fusedDefaultEnergyFunction(lines, alpha, target, current, score);
+    }
+
+    // Preserve the historical behavior for custom shapes whose scanlines overlap.
+    // Such pixels must be blended repeatedly and therefore still need a bitmap buffer.
     const geometrize::rgba color(geometrize::core::computeColor(target, current, lines, alpha)); // Calculate best color for areas covered by the scanlines
     geometrize::copyLines(buffer, current, lines); // Copy area covered by scanlines to buffer bitmap
     geometrize::drawLines(buffer, color, lines); // Blend scanlines into the buffer using the color calculated earlier
@@ -244,6 +358,19 @@ geometrize::State bestHillClimbState(
     const EnergyFunction& e = customEnergyFunction ? customEnergyFunction : geometrize::core::defaultEnergyFunction;
 
     const geometrize::State state{bestRandomState(shapeCreator, alpha, n, target, current, buffer, lastScore, e)};
+    return ::hillClimb(state, age, target, current, buffer, lastScore, e);
+}
+
+geometrize::State hillClimbState(
+        const geometrize::State& state,
+        const std::uint32_t age,
+        const geometrize::Bitmap& target,
+        const geometrize::Bitmap& current,
+        geometrize::Bitmap& buffer,
+        const double lastScore,
+        const EnergyFunction& customEnergyFunction)
+{
+    const EnergyFunction& e = customEnergyFunction ? customEnergyFunction : geometrize::core::defaultEnergyFunction;
     return ::hillClimb(state, age, target, current, buffer, lastScore, e);
 }
 

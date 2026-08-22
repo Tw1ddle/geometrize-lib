@@ -57,6 +57,7 @@ std::vector<std::pair<float, float>> getCornerPoints(const geometrize::RotatedRe
 std::vector<std::pair<float, float>> getPointsOnRotatedEllipse(const geometrize::RotatedEllipse& e, const std::size_t numPoints)
 {    
     std::vector<std::pair<float, float>> points;
+    points.reserve(numPoints);
     const float rads{e.m_angle * (3.141f / 180.0f)};
     const float co{std::cos(rads)};
     const float si{std::sin(rads)};
@@ -130,6 +131,7 @@ std::vector<std::pair<std::int32_t, std::int32_t>> bresenham(std::int32_t x1, st
     dy = std::abs(dy) << 1;
 
     std::vector<std::pair<std::int32_t, std::int32_t>> points;
+    points.reserve(static_cast<std::size_t>((std::max)(dx, dy) >> 1) + 1U);
     points.push_back(std::make_pair(x1, y1));
 
     if (dx >= dy) {
@@ -167,25 +169,26 @@ std::vector<geometrize::Scanline> scanlinesForPolygon(const std::vector<std::pai
 {
     std::vector<geometrize::Scanline> lines;
 
-    // Get the pixel outline of the polygon
-    std::vector<std::pair<std::int32_t, std::int32_t>> edges;
+    // Only the minimum and maximum outline x for each y are needed. Recording
+    // every edge point in one vector and then inserting those points into a
+    // set allocated a tree node per pixel. Accumulating the two extents
+    // directly preserves the exact scanlines with substantially less work.
+    std::map<std::int32_t, std::pair<std::int32_t, std::int32_t>> yToExtents;
     for(std::size_t i = 0; i < points.size(); i++) {
         const std::pair<std::int32_t, std::int32_t> p1{static_cast<std::int32_t>(points[i].first), static_cast<std::int32_t>(points[i].second)};
         const std::pair<std::int32_t, std::int32_t> p2{(i == (points.size() - 1)) ? std::make_pair(static_cast<std::int32_t>(points[0U].first), static_cast<std::int32_t>(points[0U].second)) : std::make_pair(static_cast<std::int32_t>(points[i + 1U].first), static_cast<std::int32_t>(points[i + 1U].second))};
         const std::vector<std::pair<std::int32_t, std::int32_t>> p1p2{geometrize::bresenham(p1.first, p1.second, p2.first, p2.second)};
-        edges.insert(edges.end(), p1p2.begin(), p1p2.end());
+        for(const auto& point : p1p2) {
+            const auto inserted{yToExtents.emplace(point.second, std::make_pair(point.first, point.first))};
+            if(!inserted.second) {
+                inserted.first->second.first = (std::min)(inserted.first->second.first, point.first);
+                inserted.first->second.second = (std::max)(inserted.first->second.second, point.first);
+            }
+        }
     }
-
-    // Convert outline to scanlines
-    std::map<std::int32_t, std::set<std::int32_t>> yToXs;
-    for(std::pair<std::int32_t, std::int32_t> point : edges) {
-        yToXs[point.second].insert(point.first);
-    }
-    for(const auto& it : yToXs) {
-        const geometrize::Scanline scanline(it.first,
-        *(std::min_element(it.second.begin(), it.second.end())),
-        *(std::max_element(it.second.begin(), it.second.end())));
-        lines.push_back(scanline);
+    lines.reserve(yToExtents.size());
+    for(const auto& it : yToExtents) {
+        lines.emplace_back(it.first, it.second.first, it.second.second);
     }
 
     return lines;
@@ -223,20 +226,40 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Circle& s, const s
     std::vector<geometrize::Scanline> lines;
 
     const std::int32_t r{static_cast<std::int32_t>(s.m_r)};
+    if(r < 0) {
+        return lines;
+    }
+    if(yMax > yMin) {
+        lines.reserve(static_cast<std::size_t>(yMax - yMin));
+    }
+
+    // Track the largest covered x as y crosses the circle. The previous
+    // implementation tested every point in the enclosing square and built a
+    // temporary vector for every row (O(r^2)). This emits the identical spans
+    // with at most 2r increments and 2r decrements in total (O(r)). int64_t
+    // products also avoid overflowing for normal large-image radii.
+    const std::int64_t radiusSquared{static_cast<std::int64_t>(r) * r};
+    std::int32_t extent{0};
     for(std::int32_t y = -r; y <= r; y++) {
-        std::vector<std::int32_t> xScan;
-        for(std::int32_t x = -r; x <= r; x++) {
-            if(x * x + y * y <= r * r) {
-                xScan.push_back(x);
+        const std::int64_t ySquared{static_cast<std::int64_t>(y) * y};
+        if(y <= 0) {
+            while(extent < r) {
+                const std::int64_t next{static_cast<std::int64_t>(extent) + 1};
+                if(next * next + ySquared > radiusSquared) {
+                    break;
+                }
+                ++extent;
+            }
+        } else {
+            while(extent > 0 && static_cast<std::int64_t>(extent) * extent + ySquared > radiusSquared) {
+                --extent;
             }
         }
 
-        if(!xScan.empty()) {
-            const std::int32_t fy{static_cast<std::int32_t>(s.m_y) + y};
-            const std::int32_t x1{commonutil::clamp(static_cast<std::int32_t>(s.m_x) + xScan.front(), xMin, xMax - 1)};
-            const std::int32_t x2{commonutil::clamp(static_cast<std::int32_t>(s.m_x) + xScan.back(), xMin, xMax - 1)};
-            lines.push_back(geometrize::Scanline(fy, x1, x2));
-        }
+        const std::int32_t fy{static_cast<std::int32_t>(s.m_y) + y};
+        const std::int32_t x1{commonutil::clamp(static_cast<std::int32_t>(s.m_x) - extent, xMin, xMax - 1)};
+        const std::int32_t x2{commonutil::clamp(static_cast<std::int32_t>(s.m_x) + extent, xMin, xMax - 1)};
+        lines.emplace_back(fy, x1, x2);
     }
 
     return geometrize::trimScanlines(lines, xMin, yMin, xMax, yMax);
@@ -245,6 +268,9 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Circle& s, const s
 std::vector<geometrize::Scanline> rasterize(const geometrize::Ellipse& s, const std::int32_t xMin, const std::int32_t yMin, const std::int32_t xMax, const std::int32_t yMax)
 {
     std::vector<geometrize::Scanline> lines;
+    if(yMax > yMin) {
+        lines.reserve(static_cast<std::size_t>(yMax - yMin));
+    }
 
     const float aspect{static_cast<float>(s.m_rx) / static_cast<float>(s.m_ry)};
 
@@ -282,6 +308,7 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Line& s, const std
     std::vector<geometrize::Scanline> lines;
 
     const std::vector<std::pair<std::int32_t, std::int32_t>> points{geometrize::bresenham(static_cast<std::int32_t>(s.m_x1), static_cast<std::int32_t>(s.m_y1), static_cast<std::int32_t>(s.m_x2), static_cast<std::int32_t>(s.m_y2))};
+    lines.reserve(points.size());
     for(const auto& point : points) {
        lines.push_back(geometrize::Scanline(point.second, point.first, point.first));
     }
@@ -317,6 +344,7 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::QuadraticBezier& s
 
     std::vector<std::pair<std::int32_t, std::int32_t>> points;
     const std::uint32_t pointCount{20};
+    points.reserve(pointCount + 1U);
     for(std::uint32_t i = 0; i <= pointCount; i++) {
         const float t{static_cast<float>(i) / static_cast<float>(pointCount)};
         const float tp{1 - t};
@@ -351,6 +379,9 @@ std::vector<geometrize::Scanline> rasterize(const geometrize::Rectangle& s, cons
     const std::int32_t y2{static_cast<std::int32_t>((std::fmax)(s.m_y1, s.m_y2))};
 
     std::vector<geometrize::Scanline> lines;
+    if(yMax > yMin) {
+        lines.reserve(static_cast<std::size_t>(yMax - yMin));
+    }
     for(std::int32_t y = y1; y <= y2; y++) {
         lines.push_back(geometrize::Scanline(y, x1, x2));
     }

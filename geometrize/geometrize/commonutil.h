@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cstdint>
+#include <random>
 #include <tuple>
 #include <vector>
 
@@ -21,10 +22,29 @@ namespace commonutil
 {
 
 /**
+ * @brief Opaque snapshot of the thread-local random generator.
+ *
+ * GPU hill climbing uses this to score several rejection-path mutations in a
+ * single batch. If an earlier mutation is accepted, restoring its checkpoint
+ * keeps the subsequent random sequence identical to the scalar algorithm.
+ */
+struct RandomGeneratorState
+{
+    std::mt19937 generator;
+    std::uniform_int_distribution<std::int32_t> distribution;
+};
+
+/**
  * @brief seedRandomGenerator Seeds the (thread-local) random number generators.
  * @param seed The random seed.
  */
 void seedRandomGenerator(std::uint32_t seed);
+
+/** @brief Captures the current thread-local random-generator state. */
+RandomGeneratorState captureRandomGeneratorState();
+
+/** @brief Restores a state captured on the current worker thread. */
+void restoreRandomGeneratorState(const RandomGeneratorState& state);
 
 /**
  * @brief randomRange Returns a random integer in the range, inclusive. Uses thread-local random number generators under the hood.

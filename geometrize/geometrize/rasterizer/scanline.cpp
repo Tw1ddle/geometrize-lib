@@ -23,6 +23,7 @@ bool operator!=(const geometrize::Scanline& lhs, const geometrize::Scanline& rhs
 std::vector<geometrize::Scanline> trimScanlines(const std::vector<geometrize::Scanline>& scanlines, std::int32_t minX, std::int32_t minY, std::int32_t maxX, std::int32_t maxY)
 {
     std::vector<geometrize::Scanline> trimmedScanlines;
+    trimmedScanlines.reserve(scanlines.size());
 
     for(const geometrize::Scanline& line : scanlines) {
         if(line.y < minY || line.y >= maxY) {

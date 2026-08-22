@@ -31,6 +31,8 @@ public:
     ~State() = default;
     State(const State& other);
     State& operator=(const State& other);
+    State(State&& other) noexcept = default;
+    State& operator=(State&& other) noexcept = default;
 
     /**
      * @brief mutate Modifies the current state in a random fashion.

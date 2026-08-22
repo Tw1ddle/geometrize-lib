@@ -103,6 +103,28 @@ public:
             const geometrize::ShapeAcceptancePreconditionFunction& addShapePrecondition = nullptr);
 
     /**
+     * @brief stepWithGpuBatching Steps the primitive optimization/fitting algorithm with optional GPU batching.
+     * @param shapeCreator A function that will produce the shapes.
+     * @param alpha The alpha of the shape.
+     * @param shapeCount The number of random shapes to generate (only 1 is chosen in the end).
+     * @param maxShapeMutations The maximum number of times to mutate each random shape.
+     * @param maxThreads The maximum number of threads to use during this step.
+     * @param energyFunction An optional function to calculate the energy (if unspecified a default implementation is used).
+     * @param addShapePrecondition An optional function to determine whether to accept a shape (if unspecified a default implementation is used).
+     * @param allowGpuBatching Enables the optional batch GPU backend. Set this only for pure, thread-safe shape creators whose rasterized scanlines lie within the target and do not overlap. Custom energy functions remain on the CPU.
+     * @return A vector containing data about the shapes added to the model in this step. This may be empty if no shape that improved the image could be found.
+     */
+    std::vector<geometrize::ShapeResult> stepWithGpuBatching(
+            const std::function<std::shared_ptr<geometrize::Shape>(void)>& shapeCreator,
+            std::uint8_t alpha,
+            std::uint32_t shapeCount,
+            std::uint32_t maxShapeMutations,
+            std::uint32_t maxThreads,
+            const geometrize::core::EnergyFunction& energyFunction,
+            const geometrize::ShapeAcceptancePreconditionFunction& addShapePrecondition,
+            bool allowGpuBatching);
+
+    /**
      * @brief drawShape Draws a shape on the model. Typically used when to manually add a shape to the image (e.g. when setting an initial background).
      * NOTE this unconditionally draws the shape, even if it increases the difference between the source and target image.
      * @param shape The shape to draw.
